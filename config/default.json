@@ -1,0 +1,3 @@
+{
+    "mongoURI": "mongodb+srv://admin:admin@trekkingbsas.pjsax.mongodb.net/TrekkingBsAs?retryWrites=true&w=majority"
+}
