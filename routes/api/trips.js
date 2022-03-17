@@ -4,6 +4,6 @@ const router = express.Router();
 // @route   GET api/events
 // @desc    Test route
 // @access  Public
-router.get('/', (req,res) => res.send('Events router'));
+router.get('/', (req,res) => res.send('Trips router'));
 
 module.exports = router;
