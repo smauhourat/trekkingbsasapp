@@ -62,7 +62,7 @@ router.post(
                 }
             );
 
-            res.send('User registered');
+            //res.send('User registered');
 
         } catch(err) {
             console.error(err);
