@@ -7,9 +7,17 @@ const { check, validationResult } = require('express-validator/check');
 const Trip = require('../../models/Trip');
 
 // @route   GET api/trips
-// @desc    Test route
+// @desc    Get all trips
 // @access  Public
-router.get('/', (req,res) => res.send('Trips router'));
+router.get('/', async (req,res) => {
+    try {
+        const trips = await Trip.find().sort({ created: -1 });
+        res.json(trips);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+});
 
 // @route   GET api/trips
 // @desc    Add Trip
