@@ -33,13 +33,13 @@ router.post(
                 return res.status(400).json({ errors: [{msg: 'User already exists'}] })
             }
 
-            // Encrypt password
             user = new User({
                 name,
                 email,
                 password
             });
 
+            // Encrypt password
             var salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(password, salt);
 
@@ -47,12 +47,15 @@ router.post(
 
             // Return jsonwebtoken
             const payload = {
-                id: user.id
+                user: {
+                    id: user.id
+                }
             };
 
-            jwt.sign(payload, 
+            jwt.sign(
+                payload, 
                 config.get('jwtSecret'),
-                { expireIn: 360000 },
+                { expiresIn: 360000 },
                 (err, token) => {
                     if (err) throw err;
                     res.json({ token });
