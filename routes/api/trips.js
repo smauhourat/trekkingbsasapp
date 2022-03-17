@@ -9,15 +9,39 @@ const Trip = require('../../models/Trip');
 // @route   GET api/trips
 // @desc    Get all trips
 // @access  Public
-router.get('/', async (req,res) => {
+// router.get('/', async (req,res) => {
+//     try {
+//         const trips = await Trip.find().sort({ created: -1 });
+//         res.json(trips);
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).send(err);
+//     }
+// });
+
+// @route    GET api/trips/?q
+// @desc     Get trips by query
+// @access   Public
+router.get('/', async (req, res) => {
     try {
-        const trips = await Trip.find().sort({ created: -1 });
-        res.json(trips);
+      const query = req.query.q;
+      const trips = await Trip.find().or([
+          { title: { $regex: query, '$options' : 'i' }},
+          { subtitle: { $regex: query, '$options' : 'i' }},
+          { description: { $regex: query, '$options' : 'i' }},
+          { location: { $regex: query, '$options' : 'i' }},
+        ])
+      res.json(trips);
+  
+      if (!trips) {
+        return res.status(404).json({ msg: 'Trips not found' });
+      }
     } catch (err) {
-        console.error(err);
-        res.status(500).send(err);
+      console.error(err.message);
+  
+      res.status(500).send('Server Error');
     }
-});
+  });
 
 // @route   GET api/trips
 // @desc    Add Trip
