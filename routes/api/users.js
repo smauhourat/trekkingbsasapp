@@ -26,7 +26,6 @@ router.post(
         const { name, email, password } = req.body;
 
         try {
-            // See if user exists
             let user = await User.findOne({ email: email });
 
             if (user) {
@@ -39,13 +38,11 @@ router.post(
                 password
             });
 
-            // Encrypt password
             var salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(password, salt);
 
             await user.save();
 
-            // Return jsonwebtoken
             const payload = {
                 user: {
                     id: user.id

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const TripSchema = new mongoose.Schema({
     user: {
@@ -6,6 +7,10 @@ const TripSchema = new mongoose.Schema({
         ref: 'users'
     },
     title: {
+        type: String,
+        required: true
+    },
+    subtitle: {
         type: String,
         required: true
     },
@@ -18,8 +23,8 @@ const TripSchema = new mongoose.Schema({
         default: Date.now
     },
     date: {
-        type: Date,
-        required: true 
+        type: Date
+        //required: true 
     },
     duration: {
         type: String
@@ -42,4 +47,4 @@ const TripSchema = new mongoose.Schema({
     }
 });
 
-module.exports = Trip = mongoose.model('trip', UserSchema);
+module.exports = Trip = mongoose.model('trip', TripSchema);
