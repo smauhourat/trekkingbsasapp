@@ -3,21 +3,27 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator/check');
 
-//const User = require('../../models/User');
 const Trip = require('../../models/Trip');
 
-// @route   GET api/trips
-// @desc    Get all trips
-// @access  Public
-// router.get('/', async (req,res) => {
-//     try {
-//         const trips = await Trip.find().sort({ created: -1 });
-//         res.json(trips);
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send(err);
-//     }
-// });
+// @route    GET api/trips/:id
+// @desc     Get trip by ID
+// @access   Public
+router.get('/:id', async (req, res) => {
+    try {
+      const trip = await Trip.findById(req.params.id);
+  
+      if (!trip) {
+        return res.status(404).json({ msg: 'Trip not found' });
+      }
+  
+      res.json(post);
+    } catch (err) {
+      console.error(err.message);
+  
+      res.status(500).send('Server Error');
+    }
+  });
+
 
 // @route    GET api/trips/?q
 // @desc     Get trips by query
@@ -79,6 +85,57 @@ router.post(
             });
 
             const trip = await newTrip.save();
+            res.json(trip);
+        } catch (err) {
+            console.error(err);
+            res.status(500).send(err);
+        }
+        
+    }
+);
+
+// @route    DELETE api/trips/:id
+// @desc     Delete a trip
+// @access   Private
+router.delete('/:id', auth,  async (req, res) => {
+    try {
+      const trip = await Trip.findById(req.params.id);
+  
+      if (!trip) {
+        return res.status(404).json({ msg: 'Trip not found' });
+      }
+  
+      await trip.remove();
+  
+      res.json({ msg: 'Trip removed' });
+    } catch (err) {
+      console.error(err.message);
+  
+      res.status(500).send('Server Error');
+    }
+  });
+
+// @route   PUT api/trips/:id
+// @desc    Update Trip
+// @access  Private
+router.put(
+    '/:id', 
+    [
+        auth,
+        [
+            check('title', 'Title is required').not().isEmpty(),
+            check('subtitle', 'Subtitle is required').not().isEmpty(),
+            check('description', 'Description is required').not().isEmpty(),
+            check('location', 'Location is required').not().isEmpty(),
+        ]
+    ],
+    async (req,res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+        try {
+            const trip = await Trip.findByIdAndUpdate(req.params.id, req.body, {new: true});
             res.json(trip);
         } catch (err) {
             console.error(err);
