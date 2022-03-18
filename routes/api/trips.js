@@ -25,12 +25,16 @@ const Trip = require('../../models/Trip');
 router.get('/', async (req, res) => {
     try {
       const query = req.query.q;
+      const limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
+      const page = req.query.page;
+        
       const trips = await Trip.find().or([
           { title: { $regex: query, '$options' : 'i' }},
           { subtitle: { $regex: query, '$options' : 'i' }},
           { description: { $regex: query, '$options' : 'i' }},
           { location: { $regex: query, '$options' : 'i' }},
-        ])
+        ]).sort({ created: 'asc' }).limit(limit).skip(limit*page);
+        
       res.json(trips);
   
       if (!trips) {
