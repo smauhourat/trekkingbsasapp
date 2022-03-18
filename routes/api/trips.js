@@ -73,14 +73,20 @@ router.post(
           return res.status(400).json({ errors: errors.array() });
         }
 
-        const { title, subtitle, description, location } = req.body;
+        const { title, subtitle, description, date, duration, price, location, grading, quota, reservations } = req.body;
 
         try {
             let newTrip = new Trip({
                 title,
                 subtitle,
                 description,
+                date,
+                duration,
+                price,
                 location,
+                grading,
+                quota,
+                reservations,
                 user: req.user.id
             });
 
