@@ -170,13 +170,6 @@ router.put(
   '/:id/images',
   async (req, res) => {
 
-    // const data = {
-    //   id: req.params.id,
-    //   image: req.body.image,
-    // };
-  
-    // res.json(data);
-
     try {
         // Get the trip
         const trip = await Trip.findById(req.params.id);
@@ -196,15 +189,9 @@ router.put(
             }
             
             trip.images.unshift(tripImage);
-
             trip.save();
 
             res.json(trip);
-
-            // res.status(200).send({
-            //   message: "success",
-            //   result,
-            // });
           })
           .catch((error) => {
             res.status(500).send({
