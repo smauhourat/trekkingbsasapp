@@ -19,7 +19,7 @@ router.post("/", (req, res) => {
   const data = {
     image: req.body.image,
   };
-  
+
   // upload image here
   cloudinary.uploader
     .upload(data.image)

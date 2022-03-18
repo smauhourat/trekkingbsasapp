@@ -3,7 +3,18 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator/check');
 
+const config = require('config');
+const cloudinary = require("cloudinary").v2;
+
 const Trip = require('../../models/Trip');
+
+// cloudinary configuration
+cloudinary.config({
+  cloud_name: config.get('cloud_name'),
+  api_key: config.get('api_key'),
+  api_secret: config.get('api_secret'),
+});
+
 
 // @route    GET api/trips/:id
 // @desc     Get trip by ID
@@ -149,6 +160,63 @@ router.put(
         }
         
     }
+);
+
+
+// @route    PUT api/images
+// @desc     Add trip image
+// @access   Public // TODO: change to Private
+router.put(
+  '/:id/images',
+  async (req, res) => {
+
+    // const data = {
+    //   id: req.params.id,
+    //   image: req.body.image,
+    // };
+  
+    // res.json(data);
+
+    try {
+        // Get the trip
+        const trip = await Trip.findById(req.params.id);
+
+        const data = {
+          image: req.body.image,
+        };        
+
+        // upload image here
+        cloudinary.uploader
+          .upload(data.image)
+          .then((result) => {
+
+            const tripImage = {
+              url: result.url,
+              public_id: result.public_id
+            }
+            
+            trip.images.unshift(tripImage);
+
+            trip.save();
+
+            res.json(trip);
+
+            // res.status(200).send({
+            //   message: "success",
+            //   result,
+            // });
+          })
+          .catch((error) => {
+            res.status(500).send({
+              message: "failure",
+              error,
+            });
+          });          
+     } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+     }
+  }
 );
 
 

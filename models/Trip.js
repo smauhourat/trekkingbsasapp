@@ -44,7 +44,17 @@ const TripSchema = new mongoose.Schema({
     },
     reservations: {
         type: Number
-    }
+    },
+    images: [
+        {
+            url: {
+                type: String
+            },
+            public_id : {
+                type: String
+            }
+        }
+    ]
 });
 
 module.exports = Trip = mongoose.model('trip', TripSchema);
