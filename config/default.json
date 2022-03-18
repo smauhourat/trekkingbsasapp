@@ -1,4 +1,7 @@
 {
     "mongoURI": "mongodb+srv://admin:admin@trekkingbsas.pjsax.mongodb.net/TrekkingBsAs?retryWrites=true&w=majority",
-    "jwtSecret": "mySecretToken"
+    "jwtSecret": "mySecretToken",
+    "cloud_name": "adhentux", 
+    "api_key": "452114644377464", 
+    "api_secret": "po4HaQTQjYRvFxhygVYOaQHH3g0" 
 }
