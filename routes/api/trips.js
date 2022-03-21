@@ -42,6 +42,7 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
       const query = req.query.q;
+      const dateFrom = req.query.df;
       const limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
       const page = req.query.page;
         
@@ -50,6 +51,7 @@ router.get('/', async (req, res) => {
           { subtitle: { $regex: query, '$options' : 'i' }},
           { description: { $regex: query, '$options' : 'i' }},
           { location: { $regex: query, '$options' : 'i' }},
+          { date:{ $gte: new Date("2022-01-01")}}
         ]).sort({ created: 'asc' }).limit(limit).skip(limit*page);
         
       res.json(trips);
