@@ -1,3 +1,4 @@
+const moment = require('moment');
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
@@ -41,20 +42,39 @@ router.get('/:id', async (req, res) => {
 // @access   Public
 router.get('/', async (req, res) => {
     try {
+      const currentDate = new Date();
+
       const query = req.query.q;
-      const dateFrom = req.query.df;
+      const dateFrom = req.query.df ? req.query.df : "1900-01-01";
+      const dateTo = req.query.dt ? req.query.dt : moment(currentDate).add(5, 'year').format('YYYY-MM-DD');
       const limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
       const page = req.query.page;
         
-      const trips = await Trip.find().or([
-          { title: { $regex: query, '$options' : 'i' }},
-          { subtitle: { $regex: query, '$options' : 'i' }},
-          { description: { $regex: query, '$options' : 'i' }},
-          { location: { $regex: query, '$options' : 'i' }},
-          { date:{ $gte: new Date("2022-01-01")}}
-        ]).sort({ created: 'asc' }).limit(limit).skip(limit*page);
+      const trips = await Trip
+        .find()
+        .or([
+            { title: { $regex: query, '$options' : 'i' }},
+            { subtitle: { $regex: query, '$options' : 'i' }},
+            { description: { $regex: query, '$options' : 'i' }},
+            { location: { $regex: query, '$options' : 'i' }},
+          ])
+        .and({ date:{ $gte: new Date(dateFrom)}})
+        .and({ date:{ $lt: new Date(dateTo)}})
+        .sort({ created: 'asc' })
+        .limit(limit)
+        .skip(limit*page);
         
-      res.json(trips);
+      res.json({ 
+        "metadata": {
+          "query": query,
+          "count": trips.length,
+          "limit": limit,
+          "page": page,
+          "dateFrom": dateFrom,
+          "dateTo": dateTo
+        },          
+        "data": trips
+      });
   
       if (!trips) {
         return res.status(404).json({ msg: 'Trips not found' });
