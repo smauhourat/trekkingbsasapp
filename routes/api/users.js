@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../../middleware/auth');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -67,5 +68,52 @@ router.post(
         }
     }
 );
+
+// @route    DELETE api/users/:id
+// @desc     Delete a user
+// @access   Private
+router.delete('/:id', auth,  async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id);
+  
+      if (!user) {
+        return res.status(404).json({ msg: 'User not found' });
+      }
+  
+      await user.remove();
+  
+      res.json({ msg: 'User removed' });
+    } catch (err) {
+      console.error(err.message);
+  
+      res.status(500).send('Server Error');
+    }
+});
+
+// @route   GET api/users
+// @desc    Get all users
+// @access  Private
+router.get('/', auth, async (req, res) => {
+    try {
+        const users = await User
+        .find()
+        .sort({ date: 'asc' });
+
+        res.json({ 
+            "metadata": {
+              "count": users.length
+            },          
+            "data": users
+          });
+
+        if (!users) {
+            return res.status(404).json({ msg: 'Users not found' });
+          }
+    } catch(err) {
+        console.error(err.message);
+  
+        res.status(500).send('Server Error');
+    }
+});
 
 module.exports = router;

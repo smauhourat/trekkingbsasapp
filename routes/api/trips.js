@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
     try {
       const currentDate = new Date();
 
-      const query = req.query.q;
+      const query = req.query.q ? req.query.q :  "";
       const dateFrom = req.query.df ? req.query.df : "1900-01-01";
       const dateTo = req.query.dt ? req.query.dt : moment(currentDate).add(5, 'year').format('YYYY-MM-DD');
       const limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
