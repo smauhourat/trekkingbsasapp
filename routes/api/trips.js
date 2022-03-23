@@ -187,7 +187,7 @@ router.put(
 
 // @route    PUT api/trips/:id/images
 // @desc     Add trip image
-// @access   Public // TODO: change to Private
+// @access   Private
 router.put(
   '/:id/images',
   auth,
@@ -229,6 +229,9 @@ router.put(
   }
 );
 
+// @route    POST api/trips/images/:id
+// @desc     Add trip image
+// @access   Private
 router.post(
   '/images/:id',
   auth,
