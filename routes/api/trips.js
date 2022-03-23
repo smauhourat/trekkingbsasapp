@@ -185,11 +185,12 @@ router.put(
 );
 
 
-// @route    PUT api/images
+// @route    PUT api/trips/:id/images
 // @desc     Add trip image
 // @access   Public // TODO: change to Private
 router.put(
   '/:id/images',
+  auth,
   async (req, res) => {
 
     try {
