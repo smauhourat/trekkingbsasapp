@@ -229,5 +229,46 @@ router.put(
   }
 );
 
+router.post(
+  '/images/:id',
+  auth,
+  async (req, res) => {
+
+    try {
+        // Get the trip
+        const trip = await Trip.findById(req.params.id);
+
+        const data = {
+          image: req.body.image,
+        };        
+
+        // upload image here
+        cloudinary.uploader
+          .upload(data.image)
+          .then((result) => {
+
+            const tripImage = {
+              url: result.url,
+              public_id: result.public_id
+            }
+            
+            trip.images.unshift(tripImage);
+            trip.save();
+
+            res.json(trip);
+          })
+          .catch((error) => {
+            res.status(500).send({
+              message: "failure",
+              error,
+            });
+          });          
+     } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+     }
+  }
+);
+
 
 module.exports = router;
