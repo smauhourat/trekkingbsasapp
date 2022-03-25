@@ -36,11 +36,11 @@ router.get('/:id', async (req, res) => {
     }
   });
 
-
 // @route    GET api/trips/?q
-// @desc     Get trips by query
+// @desc     Get Trips by query
 // @access   Public
-router.get('/', async (req, res) => {
+router.get('/', 
+    async (req, res) => {
     try {
       const currentDate = new Date();
 
@@ -89,8 +89,7 @@ router.get('/', async (req, res) => {
 // @route   GET api/trips
 // @desc    Add Trip
 // @access  Private
-router.post(
-    '/', 
+router.post('/', 
     [
         auth,
         [
@@ -134,9 +133,11 @@ router.post(
 );
 
 // @route    DELETE api/trips/:id
-// @desc     Delete a trip
+// @desc     Delete a Trip
 // @access   Private
-router.delete('/:id', auth,  async (req, res) => {
+router.delete('/:id', 
+  auth,  
+  async (req, res) => {
     try {
       const trip = await Trip.findById(req.params.id);
   
@@ -157,8 +158,7 @@ router.delete('/:id', auth,  async (req, res) => {
 // @route   PUT api/trips/:id
 // @desc    Update Trip
 // @access  Private
-router.put(
-    '/:id', 
+router.put('/:id', 
     [
         auth,
         [
@@ -184,12 +184,10 @@ router.put(
     }
 );
 
-
 // @route    PUT api/trips/:id/images
-// @desc     Add trip image
+// @desc     Add Trip Image
 // @access   Private
-router.put(
-  '/:id/images',
+router.put('/:id/images',
   auth,
   async (req, res) => {
 
@@ -228,50 +226,81 @@ router.put(
      }
   }
 );
+
+// @route   DELETE api/trips/:id/images/:id_image
+// @desc    Delete trip image from
+// @access  Private
+router.delete(':id/images/:id_image', 
+  auth, 
+  async (req, res) => {
+    try {
+      const trip = await Trip.findById(req.params.id);
+  
+      if (!trip) {
+        return res.status(404).json({ msg: 'Trip not found' });
+      }
+      
+      // delete image here
+      cloudinary.uploader.destroy(req.params.id_image, function(err, res) {
+        if (!err) {
+          trip.images = trip.images.filter(
+            (img) => img.public_id.toString() !== req.params.id_image
+          );
+
+          trip.save();
+
+          res.json(trip);
+        } 
+        res.status(500).send(res);
+      });
+    }catch(err) {
+      console.error(err.message);
+    
+      res.status(500).send('Server Error');
+    }
+});
 
 // @route    POST api/trips/images/:id
 // @desc     Add trip image
 // @access   Private
-router.post(
-  '/images/:id',
-  auth,
-  async (req, res) => {
+// router.post('/images/:id',
+//   auth,
+//   async (req, res) => {
 
-    try {
-        // Get the trip
-        const trip = await Trip.findById(req.params.id);
+//     try {
+//         // Get the trip
+//         const trip = await Trip.findById(req.params.id);
 
-        const data = {
-          image: req.body.image,
-        };        
+//         const data = {
+//           image: req.body.image,
+//         };        
 
-        // upload image here
-        cloudinary.uploader
-          .upload(data.image)
-          .then((result) => {
+//         // upload image here
+//         cloudinary.uploader
+//           .upload(data.image)
+//           .then((result) => {
 
-            const tripImage = {
-              url: result.url,
-              public_id: result.public_id
-            }
+//             const tripImage = {
+//               url: result.url,
+//               public_id: result.public_id
+//             }
             
-            trip.images.unshift(tripImage);
-            trip.save();
+//             trip.images.unshift(tripImage);
+//             trip.save();
 
-            res.json(trip);
-          })
-          .catch((error) => {
-            res.status(500).send({
-              message: "failure",
-              error,
-            });
-          });          
-     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-     }
-  }
-);
-
+//             res.json(trip);
+//           })
+//           .catch((error) => {
+//             res.status(500).send({
+//               message: "failure",
+//               error,
+//             });
+//           });          
+//      } catch (err) {
+//         console.error(err.message);
+//         res.status(500).send('Server Error');
+//      }
+//   }
+// );
 
 module.exports = router;
