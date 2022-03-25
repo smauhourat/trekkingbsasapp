@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
         return res.status(404).json({ msg: 'Trip not found' });
       }
   
-      res.json(post);
+      res.json(trip);
     } catch (err) {
       console.error(err.message);
   
