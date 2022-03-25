@@ -59,6 +59,49 @@ router.get('/:id_image', async (req, res) => {
     }
   });
 
+// @route    POST api/trips/:id/images
+// @desc     Add Trip Image
+// @access   Private
+router.post('/',
+  auth,
+  async (req, res) => {
+
+    try {
+        // Get the trip
+        const trip = await Trip.findById(req.params.id);
+
+        const data = {
+          image: req.body.image,
+        };        
+
+        // upload image here
+        cloudinary.uploader
+          .upload(data.image)
+          .then((result) => {
+
+            const tripImage = {
+              url: result.url,
+              public_id: result.public_id
+            }
+            
+            trip.images.unshift(tripImage);
+            trip.save();
+
+            res.json(trip);
+          })
+          .catch((error) => {
+            res.status(500).send({
+              message: "failure",
+              error,
+            });
+          });          
+     } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+     }
+  }
+);
+
 // @route   DELETE api/trips/:id/images/:id_image
 // @desc    Delete trip image from
 // @access  Private
