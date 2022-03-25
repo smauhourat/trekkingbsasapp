@@ -69,6 +69,25 @@ router.post(
     }
 );
 
+// @route    GET api/users/:id
+// @desc     Get user by ID
+// @access   Public
+router.get('/:id', auth, async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id);
+  
+      if (!user) {
+        return res.status(404).json({ msg: 'User not found' });
+      }
+  
+      res.json(user);
+    } catch (err) {
+      console.error(err.message);
+  
+      res.status(500).send('Server Error');
+    }
+  });
+
 // @route    DELETE api/users/:id
 // @desc     Delete a user
 // @access   Private
