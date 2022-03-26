@@ -5,11 +5,12 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator/check');
+const checkObjectId = require('../../middleware/checkObjectId');
 
 const User = require('../../models/User');
 
 // @route   POST api/users
-// @desc    Register route
+// @desc    Add user
 // @access  Public
 router.post(
     '/', 
@@ -69,10 +70,39 @@ router.post(
     }
 );
 
+// @route   POST api/users/:id
+// @desc    Update user
+// @access  Private
+router.put(
+  '/:id', 
+  checkObjectId('id'),
+  auth,
+  [
+      check('name', 'Name is required').not().isEmpty()
+  ],
+  async (req,res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
+
+        res.json(user);
+      } catch(err) {
+          console.error(err);
+          res.status(500).send(err);
+      }
+  }
+);
+
 // @route    GET api/users/:id
 // @desc     Get user by ID
 // @access   Public
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', 
+  auth, 
+  async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
   

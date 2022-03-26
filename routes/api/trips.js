@@ -135,7 +135,6 @@ router.post('/',
 // @route    DELETE api/trips/:id
 // @desc     Delete a Trip
 // @access   Private
-// @todo     Delete all images
 router.delete('/:id', 
   auth,  
   async (req, res) => {
