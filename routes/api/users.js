@@ -70,7 +70,7 @@ router.post(
     }
 );
 
-// @route   POST api/users/:id
+// @route   PUT api/users/:id
 // @desc    Update user
 // @access  Private
 router.put(

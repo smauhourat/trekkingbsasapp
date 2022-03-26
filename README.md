@@ -52,3 +52,11 @@ Result:
 "api_key": "452114644377464"
 }
 }
+
+
+4. run **npx create-react-app client** to create client react.
+5. setup on root package.json script 
+      "client": "npm start --prefix client",
+      "dev": "concurrently \"npm run server\" \"npm run client\""
+6. cd client and install dependencies
+   npm i axios react-router-dom redux react-redux redux-thunk redux-devtools-extension moment react-moment
