@@ -102,6 +102,7 @@ router.put(
 // @access   Public
 router.get('/:id', 
   auth, 
+  checkObjectId('id'),
   async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
