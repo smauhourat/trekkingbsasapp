@@ -72,7 +72,7 @@ router.post('/',
 
         const data = {
           image: req.body.image,
-        };        
+        };         
 
         // upload image here
         cloudinary.uploader
