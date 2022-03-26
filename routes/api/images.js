@@ -16,9 +16,10 @@ cloudinary.config({
 
 
 // @route    GET api/trips/:id/images
-// @desc     Get images trip by ID
+// @desc     Get images trip by TripId
 // @access   Public
-router.get('/', async (req, res) => {
+router.get('/', 
+    async (req, res) => {
     try {
       const trip = await Trip.findById(req.params.id);
   
@@ -34,11 +35,11 @@ router.get('/', async (req, res) => {
     }
   });
 
-
 // @route    GET api/trips/:id/images/:id_image
 // @desc     Get image by ID trip by ID
 // @access   Public
-router.get('/:id_image', async (req, res) => {
+router.get('/:id_image', 
+    async (req, res) => {
     try {
       const trip = await Trip.findById(req.params.id);
       const id_image = req.params.id_image;

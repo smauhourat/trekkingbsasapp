@@ -20,7 +20,8 @@ cloudinary.config({
 // @route    GET api/trips/:id
 // @desc     Get trip by ID
 // @access   Public
-router.get('/:id', async (req, res) => {
+router.get('/:id', 
+    async (req, res) => {
     try {
       const trip = await Trip.findById(req.params.id);
   

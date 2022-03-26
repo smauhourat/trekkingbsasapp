@@ -122,7 +122,9 @@ router.get('/:id',
 // @route    DELETE api/users/:id
 // @desc     Delete a user
 // @access   Private
-router.delete('/:id', auth,  async (req, res) => {
+router.delete('/:id', 
+  auth,  
+  async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
   
@@ -143,7 +145,9 @@ router.delete('/:id', auth,  async (req, res) => {
 // @route   GET api/users
 // @desc    Get all users
 // @access  Private
-router.get('/', auth, async (req, res) => {
+router.get('/', 
+  auth, 
+  async (req, res) => {
     try {
         const users = await User
         .find()
