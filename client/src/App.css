@@ -35,7 +35,7 @@ img {
 }
 
 .img-logo {
-  /*content:url("../img/logo.jpg");*/
+  content:url("./img/logo.svg");
   width: 40px;
 }
 
@@ -43,7 +43,12 @@ img {
   height: 35px
 }
 
+.brand-logo h1 {
+  font-size: 1.5rem;
+}
+
 .logo-big {
+  content:url("./img/logo.svg");
   width: 250px;
 }
 
@@ -731,4 +736,13 @@ button {
     height: 150px;
   }
   
+  .img-logo {
+    /* content:url("./img/logo.svg"); */
+    width: 30px;
+  }
+
+  .brand-logo h1 {
+    font-size: 1.25rem;
+  }
+    
 }

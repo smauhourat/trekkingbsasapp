@@ -4,7 +4,10 @@ const Navbar = () => {
   return (
     <nav className="navbar bg-dark">
       <ul className="brand-logo">
-        <li><img src="img/logo.svg" className="img-logo" alt="logo" /></li>
+        <li>
+          {/* <img src="./img/logo.jpg" className="img-logo" alt="logo" /> */}
+          <div className="img-logo"></div>
+        </li>
         <li>
           <h1>
             <a href="index.html">

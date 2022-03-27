@@ -5,7 +5,7 @@ const Landing = () => {
     <section className="landing">
       <div className="dark-overlay">
         <div className="landing-inner">
-          <img src="img/logo.svg" className="logo-big" alt="logo" /> 
+          <div className="logo-big"></div>
           <h1 className="x-large">Bienvenidos a Trekking Buenos Aires</h1>
           <p className="lead">
             Somos un grupo de amigos, y amigos de amigos, sin intenciones de lucro que hacemos caminos de trekking, los inventamos y los conquistamos!!!!
