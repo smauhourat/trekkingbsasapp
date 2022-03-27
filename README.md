@@ -14,8 +14,8 @@
 
 cloudinary.config({
 cloud_name: 'adhentux',
-api_key: '452114644377464',
-api_secret: 'po4HaQTQjYRvFxhygVYOaQHH3g0'
+api_key: 'API_KEY',
+api_secret: 'API_SECRET'
 });
 
 ////////////////////////////////////
