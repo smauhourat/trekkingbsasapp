@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-
+import React, { Fragment, useState } from "react";
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+//import { login } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -18,38 +21,52 @@ const Login = () => {
     }
 
   return (
-    <section className="container">
-      <div className="alert alert-danger">
-        Credenciales inválidas
-      </div>
-      <h1 className="large text-primary">Ingreso</h1>
-      <p className="lead"><i className="fas fa-user"></i> Ingrese a su cuenta</p>
-      <form className="form" onSubmit={e => onSubmit(e)}>
-        <div className="form-group">
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            value={email}
-            onChange={e => onChange(e)}
-            required
-          />
+    <Fragment>
+      <section className="container">
+        <div className="alert alert-danger">
+          Credenciales inválidas
         </div>
-        <div className="form-group">
-          <input
-            type="password"
-            placeholder="Contraseña"
-            name="password"
-            value={password}
-            onChange={e => onChange(e)}
-            minLength="6"
-          />
-        </div>
-        <input type="submit" className="btn btn-primary" value="Ingresar" />
-      </form>
-    </section>
+        <h1 className="large text-primary">Ingreso</h1>
+        <p className="lead"><i className="fas fa-user"></i> Ingrese a su cuenta</p>
+        <form className="form" onSubmit={e => onSubmit(e)}>
+          <div className="form-group">
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={email}
+              onChange={e => onChange(e)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="password"
+              placeholder="Contraseña"
+              name="password"
+              value={password}
+              onChange={e => onChange(e)}
+              minLength="6"
+            />
+          </div>
+          <input type="submit" className="btn btn-primary" value="Ingresar" />
+        </form>
+      </section>
+    </Fragment>
   );
 };
 
+Login.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  //login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+}
 
-export default Login;
+
+const mapStateToProps = (state) => ({
+  //isAuthenticated: state.auth.isAuthenticated
+});
+
+
+//export default connect(mapStateToProps, { setAlert, login })(Login);
+export default connect(mapStateToProps, { setAlert })(Login);
