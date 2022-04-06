@@ -53,14 +53,15 @@ Result:
 }
 }
 
-
 4. run **npx create-react-app client** to create client react.
-5. setup on root package.json script 
-      "client": "npm start --prefix client",
-      "dev": "concurrently \"npm run server\" \"npm run client\""
+5. setup on root package.json script
+   "client": "npm start --prefix client",
+   "dev": "concurrently \"npm run server\" \"npm run client\""
 6. cd client and install dependencies
    npm i axios react-router-dom redux react-redux redux-thunk redux-devtools-extension moment react-moment
 7. set proxy on root package.json
-      "proxy": "http://localhost:5000"
+   "proxy": "http://localhost:5000"
 8. clean up client react app
-      delete: App.test.js index.css logo.svg
+   delete: App.test.js index.css logo.svg
+9. run with **npm run dev**
+10. install uuid library in client to generate guid (used in alerts)

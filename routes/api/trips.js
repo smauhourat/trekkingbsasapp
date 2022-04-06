@@ -37,7 +37,7 @@ router.get('/:id',
     }
   });
 
-// @route    GET api/trips/?q
+// @route    GET api/trips/?q&df=&dt&limit&page
 // @desc     Get Trips by query
 // @access   Public
 router.get('/', 
