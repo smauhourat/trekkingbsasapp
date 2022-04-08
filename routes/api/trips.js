@@ -48,9 +48,9 @@ router.get('/',
       const query = req.query.q ? req.query.q :  "";
       const dateFrom = req.query.df ? req.query.df : "1900-01-01";
       const dateTo = req.query.dt ? req.query.dt : moment(currentDate).add(5, 'year').format('YYYY-MM-DD');
-      const limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
-      const page = req.query.page;
-        
+      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
+      const page = req.query.page && !isNaN(req.query.page) ? (parseInt(req.query.page) <= 0 ? 1 : parseInt(req.query.page) ) : 1;
+
       const trips = await Trip
         .find()
         .or([
