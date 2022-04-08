@@ -63,7 +63,7 @@ router.get('/',
         .and({ date:{ $lt: new Date(dateTo)}})
         .sort({ created: 'asc' })
         .limit(limit)
-        .skip(limit*page);
+        .skip(limit*(page-1));
         
       res.json({ 
         "metadata": {
