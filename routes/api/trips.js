@@ -51,16 +51,22 @@ router.get('/',
       const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
       const page = req.query.page && !isNaN(req.query.page) ? (parseInt(req.query.page) <= 0 ? 1 : parseInt(req.query.page) ) : 1;
 
-      const trips = await Trip
-        .find()
-        .or([
+      const db_query = {
+          date:{ $gte: new Date(dateFrom), $lt: new Date(dateTo)},
+          $or: [
             { title: { $regex: query, '$options' : 'i' }},
             { subtitle: { $regex: query, '$options' : 'i' }},
             { description: { $regex: query, '$options' : 'i' }},
             { location: { $regex: query, '$options' : 'i' }},
-          ])
-        .and({ date:{ $gte: new Date(dateFrom)}})
-        .and({ date:{ $lt: new Date(dateTo)}})
+          ]
+      };
+
+      const totalItems = await Trip
+        .find(db_query)
+        .countDocuments();
+
+      const trips = await Trip
+        .find(db_query)
         .sort({ created: 'asc' })
         .limit(limit)
         .skip(limit*(page-1));
@@ -68,6 +74,7 @@ router.get('/',
       res.json({ 
         "metadata": {
           "query": query,
+          "total": totalItems,
           "count": trips.length,
           "limit": limit,
           "page": page,
