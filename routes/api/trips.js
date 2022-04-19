@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator/check');
+const checkObjectId = require('../../middleware/checkObjectId');
 
 const config = require('config');
 const cloudinary = require("cloudinary").v2;
@@ -21,6 +22,7 @@ cloudinary.config({
 // @desc     Get trip by ID
 // @access   Public
 router.get('/:id', 
+    checkObjectId('id'),
     async (req, res) => {
     try {
       const trip = await Trip.findById(req.params.id);
@@ -145,6 +147,7 @@ router.post('/',
 // @access   Private
 router.delete('/:id', 
   auth,  
+  checkObjectId('id'),
   async (req, res) => {
     try {
       const trip = await Trip.findById(req.params.id);
@@ -177,6 +180,7 @@ router.delete('/:id',
 // @desc    Update Trip
 // @access  Private
 router.put('/:id', 
+    checkObjectId('id'),
     [
         auth,
         [
