@@ -1,3 +1,4 @@
+import api from '../utils/api';
 import { setAlert } from './alert';
 
 import { ADDUSER_SUCCESS, ADDUSER_FAIL } from './types';
@@ -5,8 +6,7 @@ import { ADDUSER_SUCCESS, ADDUSER_FAIL } from './types';
 
 export const addUser = ( formData, navigate ) => async (dispatch) => {
     try {
-        //const res = await api.put('/api/users', formData);
-        const res = {};
+        const res = await api.post('/users', formData);
     
         dispatch({
           type: ADDUSER_SUCCESS,

@@ -8,10 +8,13 @@ const AddUser = ({ addUser }) => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        name: ''
+        name: '',
+        email: '',
+        password: '',
+        password2: ''
       });
     
-      const { name } = formData;      
+      const { name, email, password, password2 } = formData;
 
       const onChange = (e) =>
       setFormData({ ...formData, [e.target.name]: e.target.value });      
@@ -36,12 +39,14 @@ const AddUser = ({ addUser }) => {
                 onChange={onChange}
                 required />
           </div>
-          {/* <div className="form-group">
-            <input type="email" placeholder="Email Address" name="email" />
-            <small className="form-text"
-              >This site uses Gravatar so if you want a profile image, use a
-              Gravatar email</small
-            >
+          <div className="form-group">
+            <input 
+              type="email" 
+              placeholder="Email Address" 
+              name="email" 
+              value={email}
+              onChange={onChange}              
+            />
           </div>
           <div className="form-group">
             <input
@@ -49,6 +54,8 @@ const AddUser = ({ addUser }) => {
               placeholder="Password"
               name="password"
               minLength="6"
+              value={password}
+              onChange={onChange}              
             />
           </div>
           <div className="form-group">
@@ -57,8 +64,10 @@ const AddUser = ({ addUser }) => {
               placeholder="Confirm Password"
               name="password2"
               minLength="6"
+              value={password2}
+              onChange={onChange}              
             />
-          </div> */}
+          </div>
           <input type="submit" className="btn btn-primary" value="Register" />
         </form>
       </section>
