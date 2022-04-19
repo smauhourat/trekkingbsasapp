@@ -1,0 +1,73 @@
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux';
+import { addUser } from '../../actions/user';
+
+const AddUser = ({ addUser }) => {
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        name: ''
+      });
+    
+      const { name } = formData;      
+
+      const onChange = (e) =>
+      setFormData({ ...formData, [e.target.name]: e.target.value });      
+
+      return (
+        <section className="container">
+        <h1 className="large text-primary">Sign Up</h1>
+        <p className="lead"><i className="fas fa-user"></i> Create Account</p>
+        <form
+                className="form"
+                onSubmit={(e) => {
+                e.preventDefault();
+                addUser(formData, navigate);
+                }}
+            >
+          <div className="form-group">
+            <input 
+                type="text" 
+                placeholder="Name" 
+                name="name" 
+                value={name}
+                onChange={onChange}
+                required />
+          </div>
+          {/* <div className="form-group">
+            <input type="email" placeholder="Email Address" name="email" />
+            <small className="form-text"
+              >This site uses Gravatar so if you want a profile image, use a
+              Gravatar email</small
+            >
+          </div>
+          <div className="form-group">
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              minLength="6"
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              name="password2"
+              minLength="6"
+            />
+          </div> */}
+          <input type="submit" className="btn btn-primary" value="Register" />
+        </form>
+      </section>
+    );
+};
+    
+
+AddUser.propTypes = {
+    addUser: PropTypes.func.isRequired
+};
+  
+  export default connect(null, { addUser })(AddUser);
