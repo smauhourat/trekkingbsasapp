@@ -1,10 +1,11 @@
 import React, { Fragment, useState } from "react";
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
-//import { login } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import { login } from '../../actions/auth';
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -18,14 +19,20 @@ const Login = () => {
     const onSubmit = async e => {
         e.preventDefault();
         console.log('SUCCESS');
+        login(email, password);
+    }
+
+    // Redirect if is logged in
+    if (isAuthenticated) {
+      return <Navigate to="/dashboard" />
     }
 
   return (
     <Fragment>
       <section className="container">
-        <div className="alert alert-danger">
+        {/* <div className="alert alert-danger">
           Credenciales inválidas
-        </div>
+        </div> */}
         <h1 className="large text-primary">Ingreso</h1>
         <p className="lead"><i className="fas fa-user"></i> Ingrese a su cuenta</p>
         <form className="form" onSubmit={e => onSubmit(e)}>
@@ -58,15 +65,15 @@ const Login = () => {
 
 Login.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  //login: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 }
 
 
 const mapStateToProps = (state) => ({
-  //isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 
 //export default connect(mapStateToProps, { setAlert, login })(Login);
-export default connect(mapStateToProps, { setAlert })(Login);
+export default connect(mapStateToProps, { setAlert, login })(Login);
