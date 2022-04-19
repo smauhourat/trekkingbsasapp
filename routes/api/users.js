@@ -124,6 +124,7 @@ router.get('/:id',
 // @access   Private
 router.delete('/:id', 
   auth,  
+  checkObjectId('id'),
   async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
@@ -138,7 +139,7 @@ router.delete('/:id',
     } catch (err) {
       console.error(err.message);
   
-      res.status(500).send('Server Error');
+      res.status(500).send('Server ErrorX');
     }
 });
 
