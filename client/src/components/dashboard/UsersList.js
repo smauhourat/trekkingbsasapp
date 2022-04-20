@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { deleteUser } from '../../actions/user';
-import formatDate from '../../utils/formatDate';
+//import formatDate from '../../utils/formatDate';
 
 const UsersList = ({ users }) => {
   const usersList = users.map((user) => (
@@ -27,23 +27,6 @@ const UsersList = ({ users }) => {
           </thead>
           <tbody>
             {usersList}
-            {/* <tr>
-              <td>Jose Perez</td>
-              <td class="hide-sm">jperez@hotmail.com</td>
-              <td class="hide-sm">
-                activo
-              </td>
-              <td>
-                <button class="btn btn-success">
-                  Editar
-                </button>
-              </td>              
-              <td>
-                <button class="btn btn-danger">
-                  Eliminar
-                </button>
-              </td>
-            </tr> */}
           </tbody>
         </table>
     </div>

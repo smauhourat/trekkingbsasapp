@@ -14,13 +14,6 @@ const Dashboard = ({
     getUsers();
   }, [getUsers]);
 
-  const usersList = [];
-  // const usersList = users.map((item) => (
-  //   <tr key={item.id}>
-  //     <td>{item.name}</td>
-  //   </tr>
-  // ))
-
   return (
     <section className="container">
       <h1 className="large text-primary">Dashboard</h1>
@@ -30,9 +23,6 @@ const Dashboard = ({
         <>
           <DashboardActions />
           <UsersList users={users}/>
-          
-            {/* {users.length}   */}
-          
         </>
     </section>
   );
@@ -40,8 +30,8 @@ const Dashboard = ({
 
 Dashboard.propTypes = {
     auth: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
     getUsers: PropTypes.func.isRequired
-    //users: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state) => ({

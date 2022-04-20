@@ -1,12 +1,27 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../../actions/auth';
 
-const Navbar = () => {
+const Navbar = ({ auth: { isAuthenticated }, logout }) => {
+  const loginLink = (
+    <li><Link to="/login">Login</Link></li>
+  );
+
+  const logoutLink = (
+    <li>
+      <a onClick={logout} href="#!">
+        <i className="fas fa-sign-out-alt" />{' '}
+        <span className="hide-sm">Logout</span>
+      </a>
+    </li>  
+  );
+
   return (
     <nav className="navbar bg-dark">
       <ul className="brand-logo">
         <li>
-          {/* <img src="./img/logo.jpg" className="img-logo" alt="logo" /> */}
           <div className="img-logo"></div>
         </li>
         <li>
@@ -21,10 +36,19 @@ const Navbar = () => {
         <li><Link to="profiles.html">Calendario</Link></li>
         <li><Link to="register.html">La Empresa</Link></li>
         <li><Link to="contact.html">Contacto</Link></li>
-        <li><Link to="/login">Login</Link></li>
+        {isAuthenticated ? logoutLink : loginLink}
       </ul>
     </nav>    
   )
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);
