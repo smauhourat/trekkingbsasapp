@@ -127,6 +127,10 @@ router.delete('/:id',
   checkObjectId('id'),
   async (req, res) => {
     try {
+      if (auth.user._id === req.params.id) {
+        return res.status(409).json({ msg: 'User is same to logged' });
+      }
+
       const user = await User.findById(req.params.id);
   
       if (!user) {
@@ -139,7 +143,7 @@ router.delete('/:id',
     } catch (err) {
       console.error(err.message);
   
-      res.status(500).send('Server ErrorX');
+      res.status(500).send('Server Error');
     }
 });
 

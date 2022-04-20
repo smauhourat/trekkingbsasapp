@@ -4,12 +4,20 @@ import PropTypes from 'prop-types'
 import { deleteUser } from '../../actions/user';
 //import formatDate from '../../utils/formatDate';
 
-const UsersList = ({ users }) => {
+const UsersList = ({ users, deleteUser }) => {
   const usersList = users.map((user) => (
     <tr key={user.id}>
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>-</td>
+      <td>
+        <button
+          onClick={() => deleteUser(user._id)}
+          className="btn btn-danger"
+        >
+          Delete
+        </button>
+      </td>      
     </tr>
   ))
   return (
