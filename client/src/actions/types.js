@@ -7,3 +7,5 @@ export const ADDUSER_FAIL = 'ADDUSER_FAIL';
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGOUT = 'LOGOUT';
+export const DELETEUSER_SUCCESS = 'DELETEUSER_SUCCESS';
+export const DELETEUSER_FAIL = 'DELETEUSER_FAIL';
