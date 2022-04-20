@@ -1,7 +1,15 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
 
-import { ADDUSER_SUCCESS, ADDUSER_FAIL, DELETEUSER_SUCCESS, DELETEUSER_FAIL } from './types';
+import { 
+  ADDUSER_SUCCESS, 
+  ADDUSER_FAIL, 
+  DELETEUSER_SUCCESS,
+  DELETEUSER_FAIL,
+  CLEAR_USERS,
+  GET_USERS,
+  USERS_ERROR
+} from './types';
 
 
 export const addUser = ( formData, navigate ) => async (dispatch) => {
@@ -44,6 +52,25 @@ export const deleteUser = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: DELETEUSER_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Get all Users
+export const getUsers = () => async (dispatch) => {
+  dispatch({ type: CLEAR_USERS });
+
+  try {
+    const res = await api.get('/users');
+
+    dispatch({
+      type: GET_USERS,
+      payload: res.data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: USERS_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
     });
   }

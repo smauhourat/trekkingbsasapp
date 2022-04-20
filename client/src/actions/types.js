@@ -9,3 +9,6 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGOUT = 'LOGOUT';
 export const DELETEUSER_SUCCESS = 'DELETEUSER_SUCCESS';
 export const DELETEUSER_FAIL = 'DELETEUSER_FAIL';
+export const CLEAR_USERS = 'CLEAR_USERS';
+export const GET_USERS = 'GET_USERS';
+export const USERS_ERROR = 'USERS_ERROR';
