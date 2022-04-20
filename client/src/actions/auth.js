@@ -1,6 +1,6 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
-import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT } from './types';
+import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT, CLEAR_USERS } from './types';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -48,4 +48,8 @@ export const login = (email, password) => async dispatch => {
 };
 
 // Logout
-export const logout = () => ({ type: LOGOUT });
+//export const logout = () => ({ type: LOGOUT });
+export const logout = () => async (dispatch) => {
+  dispatch({type: LOGOUT});
+  dispatch({type: CLEAR_USERS});
+}
