@@ -6,7 +6,7 @@ import { deleteUser } from '../../actions/user';
 
 const UsersList = ({ users, deleteUser }) => {
   const usersList = users.map((user) => (
-    <tr key={user.id}>
+    <tr key={user._id}>
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>-</td>
@@ -22,13 +22,13 @@ const UsersList = ({ users, deleteUser }) => {
   ))
   return (
     <div>
-      <h2 class="my-2">Usuarios</h2>
-      <table class="table">
+      <h2 className="my-2">Usuarios</h2>
+      <table className="table">
           <thead>
             <tr>
               <th>Nombre</th>
-              <th class="hide-sm">Email</th>
-              <th class="hide-sm">Estado</th>
+              <th className="hide-sm">Email</th>
+              <th className="hide-sm">Estado</th>
               <th></th>
               <th></th>
             </tr>

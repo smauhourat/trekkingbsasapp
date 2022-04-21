@@ -3,7 +3,8 @@ import {
     GET_USERS,
     USERS_ERROR,
     ADDUSER_SUCCESS,
-    DELETEUSER_SUCCESS
+    DELETEUSER_SUCCESS,
+    DELETEUSER_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -45,7 +46,13 @@ export default function(state = initialState, action) {
                 ...state,
                 users: state.users.filter((user) => user._id !== payload),
                 loading: false
-            };             
+            };           
+        case DELETEUSER_FAIL:
+            return {
+                ...state,
+                error: payload,
+                loading: false
+            };              
         default:
             return state;            
     }
