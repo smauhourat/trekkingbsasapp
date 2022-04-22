@@ -44,7 +44,7 @@ const App = () => {
             <Route exact path="/login" element={<Login />} />
             <Route path="dashboard" element={<PrivateRoute component={Dashboard} />}/>
             <Route path="add-user" element={<PrivateRoute component={AddUser} />} />
-            {/* <Route path="trips" element={<PrivateRoute component={Trips} />}/> */}
+            <Route path="/trips" element={<PrivateRoute component={Trips} />} />
         </Fragment>
       </Routes>
     </Router>

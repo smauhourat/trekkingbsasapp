@@ -16,14 +16,14 @@ const Trips = ({ getTrips, trip: { trips, loading } }) => {
             <i className="fab fa-connectdevelop" /> asd asdad
             </p>
             <div className="profiles">
-            {trips.length > 0 ? (
+            {/* {trips.length > 0 ? (
                 trips.map((trip) => (
                 // <ProfileItem key={trip._id} trip={trip} />
                     <div>trip.title</div>
                 ))
             ) : (
                 <h4>No se econtraron Trips...</h4>
-            )}
+            )} */}
             </div>
         </Fragment>
         </section>
