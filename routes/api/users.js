@@ -31,7 +31,7 @@ router.post(
             let user = await User.findOne({ email: email });
 
             if (user) {
-                return res.status(400).json({ errors: [{msg: 'User already exists'}] })
+                return res.status(400).json({ errors: [{msg: 'El usuario ya existe'}] })
             }
 
             user = new User({
@@ -134,12 +134,12 @@ router.delete('/:id',
       const user = await User.findById(req.params.id);
   
       if (!user) {
-        return res.status(404).json({ msg: 'User not found' });
+        return res.status(404).json({ msg: 'Usuario no encontrado' });
       }
   
       await user.remove();
   
-      res.json({ msg: 'User removed' });
+      res.json({ msg: 'Usuario eliminado' });
     } catch (err) {
       console.error(err.message);
   
@@ -166,7 +166,7 @@ router.get('/',
           });
 
         if (!users) {
-            return res.status(404).json({ msg: 'Users not found' });
+            return res.status(404).json({ msg: 'Usuario no encontrado' });
           }
     } catch(err) {
         console.error(err.message);
