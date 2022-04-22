@@ -5,6 +5,7 @@ import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
+import Trips from './components/trips/Trips';
 import AddUser from './components/user/AddUser';
 import PrivateRoute from './components/routing/PrivateRoute';
 import { LOGOUT } from './actions/types';
@@ -40,14 +41,10 @@ const App = () => {
       <Routes>
         <Fragment>
           <Route exact path="/" element={<Landing/>} />
-            {/* <section className="container"> */}
-            
-              <Route exact path="/login" element={<Login />} />
-              <Route path="dashboard" element={<PrivateRoute component={Dashboard} />}
-          />              
-              <Route path="add-user" element={<PrivateRoute component={AddUser} />}
-          />              
-            {/* </section> */}
+            <Route exact path="/login" element={<Login />} />
+            <Route path="dashboard" element={<PrivateRoute component={Dashboard} />}/>
+            <Route path="add-user" element={<PrivateRoute component={AddUser} />} />
+            {/* <Route path="trips" element={<PrivateRoute component={Trips} />}/> */}
         </Fragment>
       </Routes>
     </Router>
