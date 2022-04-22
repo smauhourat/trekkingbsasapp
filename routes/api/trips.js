@@ -28,7 +28,7 @@ router.get('/:id',
       const trip = await Trip.findById(req.params.id);
   
       if (!trip) {
-        return res.status(404).json({ msg: 'Trip not found' });
+        return res.status(404).json({ msg: 'Evento no encontrado' });
       }
   
       res.json(trip);
@@ -87,7 +87,7 @@ router.get('/',
       });
   
       if (!trips) {
-        return res.status(404).json({ msg: 'Trips not found' });
+        return res.status(404).json({ msg: 'Evento no encontrado' });
       }
     } catch (err) {
       console.error(err.message);
@@ -103,10 +103,10 @@ router.post('/',
     [
         auth,
         [
-            check('title', 'Title is required').not().isEmpty(),
-            check('subtitle', 'Subtitle is required').not().isEmpty(),
-            check('description', 'Description is required').not().isEmpty(),
-            check('location', 'Location is required').not().isEmpty(),
+            check('title', 'Titulo es requerido').not().isEmpty(),
+            check('subtitle', 'Subtitulo es requerido').not().isEmpty(),
+            check('description', 'Descripcion es requerido').not().isEmpty(),
+            check('location', 'Lugar es requerido').not().isEmpty(),
         ]
     ],
     async (req,res) => {
@@ -168,7 +168,7 @@ router.delete('/:id',
 
       await trip.remove();
   
-      res.json({ msg: 'Trip removed' });
+      res.json({ msg: 'Evento eliminado' });
     } catch (err) {
       console.error(err.message);
   
@@ -184,10 +184,10 @@ router.put('/:id',
     [
         auth,
         [
-            check('title', 'Title is required').not().isEmpty(),
-            check('subtitle', 'Subtitle is required').not().isEmpty(),
-            check('description', 'Description is required').not().isEmpty(),
-            check('location', 'Location is required').not().isEmpty(),
+            check('title', 'Titulo es requerido').not().isEmpty(),
+            check('subtitle', 'Subtitulo es requerido').not().isEmpty(),
+            check('description', 'Descripcion es requerido').not().isEmpty(),
+            check('location', 'Lugar es requerido').not().isEmpty(),
         ]
     ],
     async (req,res) => {

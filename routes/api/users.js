@@ -15,9 +15,9 @@ const User = require('../../models/User');
 router.post(
     '/', 
     [
-        check('name', 'Name is required').not().isEmpty(),
-        check('email', 'Please include a valid email').isEmail(),
-        check('password', 'Please enter a password with 6 or more characters').isLength({ min:6 })
+        check('name', 'Nombre es requerido').not().isEmpty(),
+        check('email', 'Por favor incluya el mail').isEmail(),
+        check('password', 'Por favor ingrese la contraseña con 6 o mas caracteres').isLength({ min:6 })
     ],
     async (req,res) => {
         const errors = validationResult(req);
@@ -31,7 +31,7 @@ router.post(
             let user = await User.findOne({ email: email });
 
             if (user) {
-                return res.status(400).json({ errors: [{msg: 'El usuario ya existe'}] })
+                return res.status(400).json({ errors: [{msg: 'El Usuario ya existe'}] })
             }
 
             user = new User({
@@ -78,7 +78,7 @@ router.put(
   checkObjectId('id'),
   auth,
   [
-      check('name', 'Name is required').not().isEmpty()
+      check('name', 'Nombre es requerido').not().isEmpty()
   ],
   async (req,res) => {
       const errors = validationResult(req);

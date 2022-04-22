@@ -27,8 +27,8 @@ router.get('/', auth, async (req,res) => {
 router.post(
     '/', 
     [
-        check('email', 'Please include a valid email').isEmail(),
-        check('password', 'Password is required').exists()
+        check('email', 'Por favor ingrese un mail valido').isEmail(),
+        check('password', 'Password es requerido').exists()
     ],
     async (req,res) => {
         const errors = validationResult(req);
@@ -42,13 +42,13 @@ router.post(
             let user = await User.findOne({ email: email });
 
             if (!user) {
-                return res.status(400).json({ errors: [{msg: 'Invalid Credentials'}] })
+                return res.status(400).json({ errors: [{msg: 'Credenciales Invalidas'}] })
             }
 
             const isMatch = await bcrypt.compare(password, user.password);
 
             if(!isMatch) {
-                return res.status(400).json({ errors: [{msg: 'Invalid Credentials'}] })
+                return res.status(400).json({ errors: [{msg: 'Credenciales Invalidas'}] })
             }
 
             // Return jsonwebtoken

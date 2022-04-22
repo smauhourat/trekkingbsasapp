@@ -21,7 +21,7 @@ export const addUser = ( formData, navigate ) => async (dispatch) => {
           payload: res.data
         });
     
-        dispatch(setAlert('User Added', 'success'));
+        dispatch(setAlert('Usuario agregado', 'success'));
     
         navigate('/dashboard');
       } catch (err) {
@@ -48,7 +48,7 @@ export const deleteUser = (id) => async (dispatch) => {
       payload: id
     });
 
-    dispatch(setAlert('User Removed', 'success'));
+    dispatch(setAlert('Usuario eliminado', 'success'));
   } catch (err) {
     const errors = err.response.data.errors;
 
