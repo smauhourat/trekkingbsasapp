@@ -33,7 +33,7 @@ const App = () => {
       if (!localStorage.token) store.dispatch({ type: LOGOUT });
     });
   }, []);  
-  return (
+  return (  
   <Provider store={store}>
     <Router>
       <Navbar />
@@ -44,7 +44,7 @@ const App = () => {
             <Route exact path="/login" element={<Login />} />
             <Route path="dashboard" element={<PrivateRoute component={Dashboard} />}/>
             <Route path="add-user" element={<PrivateRoute component={AddUser} />} />
-            <Route path="/trips" element={<PrivateRoute component={Trips} />} />
+            <Route path="trips" element={<Trips />} />
         </Fragment>
       </Routes>
     </Router>

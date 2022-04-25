@@ -1,11 +1,16 @@
 import React, { Fragment, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTrips } from '../../actions/trip';
 
 const Trips = ({ getTrips, trip: { trips, loading } }) => {
+
+    const query = new URLSearchParams(useLocation().search).get("q");
+    
+
     useEffect(() => {
-        getTrips();
+        getTrips(query);
     }, [getTrips])
 
     return (
@@ -16,14 +21,17 @@ const Trips = ({ getTrips, trip: { trips, loading } }) => {
             <i className="fab fa-connectdevelop" /> asd asdad
             </p>
             <div className="profiles">
-            {/* {trips.length > 0 ? (
-                trips.map((trip) => (
+            {trips.data?.length > 0 ? (
+                trips.data.map((trip) => (
                 // <ProfileItem key={trip._id} trip={trip} />
-                    <div>trip.title</div>
+                <div key={trip._id}>
+                    <div>{trip.title}</div>
+                    <div>{query}</div>
+                </div>
                 ))
             ) : (
                 <h4>No se econtraron Trips...</h4>
-            )} */}
+            )}
             </div>
         </Fragment>
         </section>

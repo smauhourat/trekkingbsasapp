@@ -24,7 +24,7 @@ const Login = ({ login, isAuthenticated }) => {
 
     // Redirect if is logged in
     if (isAuthenticated) {
-      return <Navigate to="/dashboard" />
+       return <Navigate to="/dashboard" />
     }
 
   return (

@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { Fragment, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 
 const Landing = () => {
+  const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+  const onChange = e => 
+    setSearch(e.target.value);
+
+
   return (
     <section className="landing">
       <div className="dark-overlay">
@@ -16,9 +23,17 @@ const Landing = () => {
               className="textinput"
               placeholder="Que actividad estas buscando realizar?"
               name="search"
+              value={search}
+              onChange={e => onChange(e)}
             />           
             <div className="buttons">
-              <a href="search-result.html" className="btn btn-primary">Buscar</a>
+        <button
+          onClick={() => navigate(`/trips/?q=${search}`)}
+          className="btn btn-primary"
+        >
+          Buscar
+        </button>
+
             </div>          
           </div>
           <div>
