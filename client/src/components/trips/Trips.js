@@ -6,7 +6,8 @@ import { getTrips } from '../../actions/trip';
 
 const Trips = ({ getTrips, trip: { trips, loading } }) => {
 
-    const query = new URLSearchParams(useLocation().search).get("q");
+    const queryParam = new URLSearchParams(useLocation().search).get("q");
+    const query = queryParam !== undefined || queryParam !== null ? queryParam : '';
     
 
     useEffect(() => {
@@ -18,7 +19,7 @@ const Trips = ({ getTrips, trip: { trips, loading } }) => {
         <Fragment>
             <h1 className="large text-primary">Trips</h1>
             <p className="lead">
-            <i className="fab fa-connectdevelop" /> asd asdad
+            <i className="fab fa-connectdevelop" /> Resultado de la busqueda...
             </p>
             <div className="profiles">
             {trips.data?.length > 0 ? (
@@ -26,7 +27,7 @@ const Trips = ({ getTrips, trip: { trips, loading } }) => {
                 // <ProfileItem key={trip._id} trip={trip} />
                 <div key={trip._id}>
                     <div>{trip.title}</div>
-                    <div>{query}</div>
+                    <div>{query}XX</div>
                 </div>
                 ))
             ) : (
