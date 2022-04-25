@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import TripItem from './TripItem';
 import { getTrips } from '../../actions/trip';
 
 const Trips = ({ getTrips, trip: { trips, loading } }) => {
@@ -24,11 +25,11 @@ const Trips = ({ getTrips, trip: { trips, loading } }) => {
             <div className="profiles">
             {trips.data?.length > 0 ? (
                 trips.data.map((trip) => (
-                // <ProfileItem key={trip._id} trip={trip} />
-                <div key={trip._id}>
-                    <div>{trip.title}</div>
-                    <div>{query}XX</div>
-                </div>
+                <TripItem key={trip._id} trip={trip} />
+                // <div key={trip._id}>
+                //     <div>{trip.title}</div>
+                //     <div>{query}XX</div>
+                // </div>
                 ))
             ) : (
                 <h4>No se econtraron Trips...</h4>

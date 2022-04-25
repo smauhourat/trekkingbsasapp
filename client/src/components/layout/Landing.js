@@ -7,7 +7,12 @@ const Landing = () => {
   const onChange = e => 
     setSearch(e.target.value);
 
-
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        navigate(`/trips/?q=${search}`)
+      }
+    }
+      
   return (
     <section className="landing">
       <div className="dark-overlay">
@@ -25,6 +30,7 @@ const Landing = () => {
               name="search"
               value={search}
               onChange={e => onChange(e)}
+              onKeyDown={handleKeyDown}
             />           
             <div className="buttons">
         <button
