@@ -5,19 +5,15 @@ import DashboardActions from './DashboardActions';
 import UsersList from './UsersList';
 import TripsList from './TripsList';
 import { getUsers } from '../../actions/user';
-import { getTrips } from '../../actions/trip';
 
 const Dashboard = ({
     getUsers,
     auth: { user },
-    user: { users },
-    getTrips,
-    trip: { trips }
+    user: { users }
 }) => {
   useEffect(() => {
-    getUsers();
-    getTrips('')
-  }, [getUsers, getTrips]);
+    getUsers()
+  }, [getUsers]);
 
   return (
     <section className="container">
@@ -28,7 +24,7 @@ const Dashboard = ({
         <>
           <DashboardActions />
           <UsersList users={users}/>
-          <TripsList trips={trips}/>
+          <TripsList />
         </>
     </section>
   );
@@ -37,16 +33,13 @@ const Dashboard = ({
 Dashboard.propTypes = {
     auth: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
-    trip: PropTypes.object.isRequired,
     getUsers: PropTypes.func.isRequired,
-    getTrips: PropTypes.func.isRequired,
 
 };
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
     user: state.user,
-    trip: state.trip
   });
 
-export default connect(mapStateToProps, { getUsers, getTrips })(Dashboard);
+export default connect(mapStateToProps, { getUsers })(Dashboard);
