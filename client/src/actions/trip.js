@@ -4,7 +4,9 @@ import { setAlert } from './alert';
 import { 
   CLEAR_TRIPS,
   GET_TRIPS,
-  TRIPS_ERROR
+  TRIPS_ERROR,
+  DELETETRIP_SUCCESS,
+  DELETETRIP_FAIL
 } from './types';
 
 // Get trips
@@ -25,5 +27,29 @@ export const getTrips = (query) => async (dispatch) => {
       
     }
 }
+
+export const deleteTrip = (id) => async (dispatch) => {
+  try {
+    await api.delete(`/trips/${id}`);
+
+    dispatch({
+      type: DELETETRIP_SUCCESS,
+      payload: id
+    });
+
+    dispatch(setAlert('Trip eliminado', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: DELETETRIP_FAIL
+      //payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
 
 

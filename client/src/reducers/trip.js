@@ -1,6 +1,8 @@
 import {
     CLEAR_TRIPS,
-    GET_TRIPS
+    GET_TRIPS,
+    DELETETRIP_SUCCESS,
+    DELETETRIP_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -22,8 +24,20 @@ export default function(state = initialState, action) {
         case CLEAR_TRIPS:
             return {
                 ...state,
-                users: []
+                trips: []
             };
+        case DELETETRIP_SUCCESS:
+            return {
+                ...state,
+                trips: state.trips.filter((trip) => trip._id !== payload),
+                loading: false
+            };           
+        case DELETETRIP_FAIL:
+            return {
+                ...state,
+                error: payload,
+                loading: false
+            };              
         default:
             return state;            
     }

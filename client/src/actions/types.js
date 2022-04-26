@@ -15,3 +15,5 @@ export const USERS_ERROR = 'USERS_ERROR';
 export const GET_TRIPS = 'GET_TRIPS';
 export const CLEAR_TRIPS = 'CLEAR_TRIPS';
 export const TRIPS_ERROR = 'TRIPS_ERROR';
+export const DELETETRIP_SUCCESS = 'DELETETRIP_SUCCESS';
+export const DELETETRIP_FAIL = 'DELETETRIP_FAIL';

@@ -3,26 +3,32 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DashboardActions from './DashboardActions';
 import UsersList from './UsersList';
+import TripsList from './TripsList';
 import { getUsers } from '../../actions/user';
+import { getTrips } from '../../actions/trip';
 
 const Dashboard = ({
     getUsers,
     auth: { user },
-    user: { users }
+    user: { users },
+    getTrips,
+    trip: { trips }
 }) => {
   useEffect(() => {
     getUsers();
-  }, [getUsers]);
+    getTrips('')
+  }, [getUsers, getTrips]);
 
   return (
     <section className="container">
       <h1 className="large text-primary">Dashboard</h1>
       <p className="lead">
-        <i className="fas fa-user" /> Welcome {user && user.name}
+        <i className="fas fa-user" /> Bienvenido {user && user.name}
       </p>
         <>
           <DashboardActions />
           <UsersList users={users}/>
+          <TripsList trips={trips.data}/>
         </>
     </section>
   );
@@ -31,12 +37,16 @@ const Dashboard = ({
 Dashboard.propTypes = {
     auth: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
-    getUsers: PropTypes.func.isRequired
+    trip: PropTypes.object.isRequired,
+    getUsers: PropTypes.func.isRequired,
+    getTrips: PropTypes.func.isRequired,
+
 };
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
-    user: state.user
+    user: state.user,
+    trip: state.trip
   });
 
-export default connect(mapStateToProps, { getUsers })(Dashboard);
+export default connect(mapStateToProps, { getUsers, getTrips })(Dashboard);
