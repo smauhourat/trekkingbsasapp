@@ -52,6 +52,8 @@ router.get('/',
       const dateTo = req.query.dt ? req.query.dt : moment(currentDate).add(5, 'year').format('YYYY-MM-DD');
       const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
       const page = req.query.page && !isNaN(req.query.page) ? (parseInt(req.query.page) <= 0 ? 1 : parseInt(req.query.page) ) : 1;
+      const sort = req.query.sort ? req.query.sort : "date";
+      const order = req.query.order ? req.query.order : "-1";
 
       const db_query = {
           date:{ $gte: new Date(dateFrom), $lt: new Date(dateTo)},
@@ -69,9 +71,9 @@ router.get('/',
 
       const trips = await Trip
         .find(db_query)
-        .sort({ created: 'asc' })
         .limit(limit)
-        .skip(limit*(page-1));
+        .skip(limit*(page-1))
+        .sort({[sort]: order});
         
       res.json({ 
         "metadata": {

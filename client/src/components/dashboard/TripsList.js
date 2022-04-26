@@ -9,6 +9,7 @@ const TripsList = ({ trips, deleteTrip }) => {
     <tr key={trip._id}>
       <td>{trip.title}</td>
       <td>{formatDate(trip.date)}</td>
+      <td>{formatDate(trip.created)}</td>
       <td>-</td>
       <td>
         <button
@@ -28,6 +29,7 @@ const TripsList = ({ trips, deleteTrip }) => {
             <tr>
               <th>Nombre</th>
               <th className="hide-sm">Fecha</th>
+              <th className="hide-sm">Creacion</th>
               <th className="hide-sm">Estado</th>
               <th></th>
               <th></th>
