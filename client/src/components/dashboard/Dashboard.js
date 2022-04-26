@@ -28,7 +28,7 @@ const Dashboard = ({
         <>
           <DashboardActions />
           <UsersList users={users}/>
-          <TripsList trips={trips.data}/>
+          <TripsList trips={trips}/>
         </>
     </section>
   );

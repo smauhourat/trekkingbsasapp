@@ -5,7 +5,7 @@ import { deleteTrip } from '../../actions/trip';
 import formatDate from '../../utils/formatDate';
 
 const TripsList = ({ trips, deleteTrip }) => {
-  const tripsList = trips?.map((trip) => (
+  const tripsList = trips?.data?.map((trip) => (
     <tr key={trip._id}>
       <td>{trip.title}</td>
       <td>{formatDate(trip.date)}</td>
@@ -24,6 +24,8 @@ const TripsList = ({ trips, deleteTrip }) => {
   return (
     <div>
       <h2 className="my-2">Trips</h2>
+      {/* <div>{trips.metadata.total}</div> */}
+      {/* <div>{JSON.stringify(trips.metadata.total)}</div> */}
       <table className="table">
           <thead>
             <tr>
@@ -45,7 +47,7 @@ const TripsList = ({ trips, deleteTrip }) => {
 }
 
 TripsList.propTypes = {
-    trips: PropTypes.array.isRequired,
+    trips: PropTypes.object.isRequired,
     deleteTrip: PropTypes.func.isRequired
 }
 
