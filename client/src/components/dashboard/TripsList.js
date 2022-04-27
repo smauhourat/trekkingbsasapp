@@ -48,8 +48,7 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
   return (
     <div>
       <h2 className="my-2">Trips</h2>
-      {/* <div>{JSON.stringify(trip)}</div> */}
-      <code>{JSON.stringify(trips.metadata)}</code>
+      {/* <code>{JSON.stringify(trips.metadata)}</code> */}
       <table className="table">
           <thead>
             <tr>
