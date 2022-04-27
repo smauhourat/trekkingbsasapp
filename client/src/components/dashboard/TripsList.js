@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { deleteTrip } from '../../actions/trip';
@@ -6,10 +6,33 @@ import formatDate from '../../utils/formatDate';
 import { getTrips } from '../../actions/trip';
 
 const TripsList = ({ getTrips, trip: { trips } }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
-    getTrips('&limit=3&page=1')
+    getTrips('&limit=3&page=1');
+    setCurrentPage(1);
+    console.log('useEffect');
   }, [getTrips]);
 
+  
+
+  const goToPage = (page) => {
+    getTrips(`&limit=3&page=${page}`)
+  };
+
+  const goToNextPage = () => {
+    if ( ((currentPage-1)*trips.metadata.limit)+trips.metadata.count < trips.metadata.total) {
+      setCurrentPage(currentPage+1);
+      getTrips(`&limit=3&page=${currentPage}`)
+    }
+  };
+
+  const goToPrevPage = () => {
+    if (currentPage >= 1) {
+      setCurrentPage(currentPage-1);
+      getTrips(`&limit=3&page=${currentPage}`)
+    }
+  };  
 
   const tripsList =  
     trips?.data?.map((trip) => (
@@ -41,12 +64,36 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
               <th className="hide-sm">Creacion</th>
               <th className="hide-sm">Estado</th>
               <th></th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
             {tripsList}
           </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td>
+                <button
+                    onClick={() => goToPrevPage()}
+                    className="btn btn-primary btn-small"
+                    title="Anterior"
+                  >
+                    &lt;
+                  </button>            
+              </td>
+              <td></td>
+              <td>
+              <button
+                  onClick={() => goToNextPage()}
+                  className="btn btn-primary btn-small"
+                  title="Siguiente"
+                >
+                  &gt;
+                </button>
+              </td>
+              <td></td>
+            </tr>
+          </tfoot>
         </table>
     </div>
   )

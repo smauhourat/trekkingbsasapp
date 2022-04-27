@@ -5,6 +5,7 @@
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
+  --disabled-color: #c4bbbb;
 }
 
 * {
@@ -272,6 +273,14 @@ img {
   transition: opacity 0.2s ease-in;
   outline: none;
   border-radius: 4px;
+}
+
+.btn-small {
+  font-size:0.8rem
+}
+
+.btn-disabled {
+  background: var(--disabled-color);
 }
 
 .badge {

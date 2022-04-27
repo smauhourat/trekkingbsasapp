@@ -23,8 +23,8 @@ const Dashboard = ({
       </p>
         <>
           <DashboardActions />
-          <UsersList users={users}/>
           <TripsList />
+          <UsersList users={users}/>
         </>
     </section>
   );
