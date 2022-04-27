@@ -159,15 +159,17 @@ router.delete('/:id',
         return res.status(404).json({ msg: 'Trip not found' });
       }
 
-      const images = trip.images.map(function(item) {
-        return item["public_id"];
-      })
-
-      cloudinary.api.delete_resources(images, function(err, result){
-        if (err) {
-          res.status(500).send(res);
-        }           
-      })
+      if (trip.images.length > 0) {
+        const images = trip.images.map(function(item) {
+          return item["public_id"];
+        })
+  
+        cloudinary.api.delete_resources(images, function(err, result){
+          if (err) {
+            res.status(500).send(res);
+          }           
+        })
+      }
 
       await trip.remove();
   
