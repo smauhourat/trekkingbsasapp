@@ -12,7 +12,8 @@ const Dashboard = ({
     user: { users }
 }) => {
   useEffect(() => {
-    getUsers()
+    getUsers();
+    console.log('useEffect in Dashboard');
   }, [getUsers]);
 
   return (

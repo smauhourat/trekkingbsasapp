@@ -1,5 +1,6 @@
 import {
     CLEAR_TRIPS,
+    TRIPS_ERROR,
     GET_TRIPS,
     DELETETRIP_SUCCESS,
     DELETETRIP_FAIL
@@ -21,6 +22,13 @@ export default function(state = initialState, action) {
                 trips: payload,
                 loading: false
             }
+        // case TRIPS_ERROR:
+        //     return {
+        //         ...state,
+        //         error: payload,
+        //         trips: null,
+        //         loading: false,
+        //     }            
         case CLEAR_TRIPS:
             return {
                 ...state,

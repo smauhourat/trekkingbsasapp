@@ -11,7 +11,7 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
   useEffect(() => {
     getTrips('&limit=3&page=1');
     setCurrentPage(1);
-    console.log('useEffect');
+    console.log('useEffect in TripsList');
   }, [getTrips]);
 
   
@@ -21,6 +21,7 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
   };
 
   const goToNextPage = () => {
+    console.log(`goToNextPage:${currentPage}`);
     if ( ((currentPage-1)*trips.metadata.limit)+trips.metadata.count < trips.metadata.total) {
       setCurrentPage(currentPage+1);
       getTrips(`&limit=3&page=${currentPage}`)
