@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import { deleteTrip } from '../../actions/trip';
-import formatDate from '../../utils/formatDate';
-import { getTrips } from '../../actions/trip';
+import { getTrips, deleteTrip } from '../../actions/trip';
+import TripsListContent from './TripsListContent';
 
-const TripsList = ({ getTrips, trip: { trips } }) => {
+const TripsList = ({ getTrips, deleteTrip, trip: { trips } }) => {
   const [currentPage, setCurrentPage] = useState();
 
   useEffect(() => {
@@ -28,23 +27,6 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
     }
   };  
 
-  const tripsList =  
-    trips?.data?.map((trip) => (
-      <tr key={trip._id}>
-        <td>{trip.title}</td>
-        <td>{formatDate(trip.date)}</td> 
-        <td>{formatDate(trip.created)}</td>
-        <td>-</td>
-        <td>
-          <button
-            onClick={() => deleteTrip(trip._id)}
-            className="btn btn-danger"
-          >
-            Delete
-          </button>
-        </td>      
-      </tr>
-    ))
   return (
     <div>
       <h2 className="my-2">Trips</h2>
@@ -52,17 +34,18 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
       <table className="table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th className="hide-sm">Fecha</th>
-              <th className="hide-sm">Creacion</th>
-              <th className="hide-sm">Estado</th>
-              <th></th>
+              <th width="40%">Nombre</th>
+              {/* <th className="hide-sm">Fecha</th> */}
+              <th width="15%">Fecha</th>
+              <th width="15%">Creacion</th>
+              <th width="10%">Estado</th>
+              <th width="20%"></th>
             </tr>
           </thead>
           <tbody>
-            {tripsList}
+            <TripsListContent trips={trips?.data} deleteTrip={deleteTrip}/>
           </tbody>
-          <tfoot>
+          <tfoot> 
             <tr>
               <td></td>
               <td>

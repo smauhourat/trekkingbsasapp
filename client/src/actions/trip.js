@@ -30,7 +30,8 @@ export const getTrips = (query) => async (dispatch) => {
 
 export const deleteTrip = (id) => async (dispatch) => {
   try {
-    await api.delete(`/trips/${id}`);
+    //await api.delete(`/trips/${id}`);
+    dispatch(setAlert(`Trip a eliminar ${id}`, 'success'));
 
     dispatch({
       type: DELETETRIP_SUCCESS,
