@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import formatDate from '../../utils/formatDate';
 
 const TripsListContent = ({trips, deleteTrip}) => {
-    console.log(deleteTrip);
     const tripsList =  
     trips?.map((trip) => (
       <tr key={trip._id}>
