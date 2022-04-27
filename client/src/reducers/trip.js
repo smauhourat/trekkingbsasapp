@@ -22,13 +22,13 @@ export default function(state = initialState, action) {
                 trips: payload,
                 loading: false
             }
-        // case TRIPS_ERROR:
-        //     return {
-        //         ...state,
-        //         error: payload,
-        //         trips: null,
-        //         loading: false,
-        //     }            
+        case TRIPS_ERROR:
+            return {
+                ...state,
+                error: payload,
+                trips: null,
+                loading: false,
+            }            
         case CLEAR_TRIPS:
             return {
                 ...state,

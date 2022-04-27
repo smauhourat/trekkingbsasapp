@@ -6,7 +6,7 @@ import formatDate from '../../utils/formatDate';
 import { getTrips } from '../../actions/trip';
 
 const TripsList = ({ getTrips, trip: { trips } }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState();
 
   useEffect(() => {
     getTrips('&limit=3&page=1');
@@ -14,24 +14,17 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
     console.log('useEffect in TripsList');
   }, [getTrips]);
 
-  
-
-  const goToPage = (page) => {
-    getTrips(`&limit=3&page=${page}`)
-  };
-
   const goToNextPage = () => {
-    console.log(`goToNextPage:${currentPage}`);
     if ( ((currentPage-1)*trips.metadata.limit)+trips.metadata.count < trips.metadata.total) {
       setCurrentPage(currentPage+1);
-      getTrips(`&limit=3&page=${currentPage}`)
+      getTrips(`&limit=3&page=${currentPage+1}`)
     }
   };
 
   const goToPrevPage = () => {
-    if (currentPage >= 1) {
+    if (currentPage > 1) {
       setCurrentPage(currentPage-1);
-      getTrips(`&limit=3&page=${currentPage}`)
+      getTrips(`&limit=3&page=${currentPage-1}`)
     }
   };  
 
