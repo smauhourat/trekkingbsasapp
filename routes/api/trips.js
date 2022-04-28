@@ -2,7 +2,6 @@ const moment = require('moment');
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
-//const { check, validationResult } = require('express-validator/check');
 const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 
@@ -52,7 +51,11 @@ router.get('/',
       const dateFrom = req.query.df ? req.query.df : "1900-01-01";
       const dateTo = req.query.dt ? req.query.dt : moment(currentDate).add(5, 'year').format('YYYY-MM-DD');
       const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
-      const page = req.query.page && !isNaN(req.query.page) ? (parseInt(req.query.page) <= 0 ? 1 : parseInt(req.query.page) ) : 1;
+      //const page = req.query.page && !isNaN(req.query.page) ? (parseInt(req.query.page) <= 0 ? 1 : parseInt(req.query.page) ) : 1;
+      let page = 1;
+      if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
+          page = parseInt(req.query.page);
+
       const sort = req.query.sort ? req.query.sort : "date";
       const order = req.query.order ? req.query.order : "-1";
 
@@ -177,7 +180,6 @@ router.delete('/:id',
     } catch (err) {
       console.error(err.message);
   
-      //res.status(500).send('Server Error');
       return res.status(500).json({ msg: 'Server error' });
     }
   });

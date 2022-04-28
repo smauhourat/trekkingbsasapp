@@ -1,11 +1,7 @@
 import {SET_ALERT, REMOVE_ALERT} from '../actions/types';
 
 const initialState = [
-    // {
-    //     id: 1,
-    //     msg: 'Please login',
-    //     alertType: 'success'
-    // },
+
 ];
 
 export default function(state = initialState, action) {

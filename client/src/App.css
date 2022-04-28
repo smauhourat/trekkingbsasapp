@@ -1,6 +1,7 @@
 /* Global Styles */
 :root {
   --primary-color: #17a2b8;
+  --secondary-color: #c27380;
   --dark-color: #343a40;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
@@ -356,6 +357,11 @@ img {
   border: #ccc solid 1px;
 }
 
+.btn-secondary {
+  background: var(--secondary-color);
+  color: #fff
+}
+
 .btn:hover {
   opacity: 0.8;
 }
@@ -416,10 +422,10 @@ img {
   border: 1px solid #ccc;
 }
 
-.form input[type='submit'],
+/* .form input[type='submit'],
 button {
   font: inherit;
-}
+} */
 
 .form .social-input {
   display: flex;

@@ -61,8 +61,6 @@ router.post(
                 }
             );
 
-            //res.send('User registered');
-
         } catch(err) {
             console.error(err);
             res.status(500).send(err);

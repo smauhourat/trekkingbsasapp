@@ -52,7 +52,6 @@ router.get('/:id_image',
         res.json(result);
       });
   
-      //res.json({"caca": id_image});
     } catch (err) {
       console.error(err.message);
   
