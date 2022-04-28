@@ -36,16 +36,23 @@ export default function(state = initialState, action) {
                 trips: {}
             };
         case ADDTRIP_SUCCESS:
-            return {
-                ...state,
-                trips: [payload, ...state.trips.data],
-                loading: false
-            };            
+            let newAddState = {...state};
+            newAddState.trips.metadata.total = newAddState.trips.metadata.total+1;
+            newAddState.trips.data = [payload, ...newAddState.trips.data];
+            newAddState.loading = false;
+
+            return newAddState;
+            // return {
+            //     ...state,
+            //     trips: [payload, ...state.trips.data],
+            //     loading: false
+            // };            
         case DELETETRIP_SUCCESS:
             let newState = {...state};
             newState.trips.metadata.total = newState.trips.metadata.total-1;
             newState.trips.data = newState.trips.data.filter((trip) => trip._id !== payload);
             newState.loading = false;
+
             return newState;
         case DELETETRIP_FAIL:
             return {

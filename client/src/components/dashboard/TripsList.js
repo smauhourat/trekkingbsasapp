@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import { getTrips, deleteTrip } from '../../actions/trip';
+import { getTrips } from '../../actions/trip';
 import TripsListContent from './TripsListContent';
 
 const TripsList = ({ getTrips, trip: { trips } }) => {
@@ -10,7 +10,6 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
   useEffect(() => {
     getTrips('&limit=3&page=1');
     setCurrentPage(1);
-    console.log('useEffect in TripsList');
   }, [getTrips]);
 
   const goToNextPage = () => {

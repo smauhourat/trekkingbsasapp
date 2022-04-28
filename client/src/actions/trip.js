@@ -6,7 +6,9 @@ import {
   GET_TRIPS,
   TRIPS_ERROR,
   DELETETRIP_SUCCESS,
-  DELETETRIP_FAIL
+  DELETETRIP_FAIL,
+  ADDTRIP_SUCCESS,
+  ADDTRIP_FAIL
 } from './types';
 
 // Get trips
@@ -28,6 +30,34 @@ export const getTrips = (query) => async (dispatch) => {
     }
 }
 
+// Add trip
+export const addTrip = ( formData, navigate ) => async (dispatch) => {
+  try {
+      const res = await api.post('/trips', formData);
+  
+      dispatch({
+        type: ADDTRIP_SUCCESS,
+        payload: res.data
+      });
+  
+      dispatch(setAlert('Trip agregado', 'success'));
+  
+      navigate('/dashboard');
+    } catch (err) {
+      const errors = err.response.data.errors;
+  
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      }
+  
+      dispatch({
+        type: ADDTRIP_FAIL,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    }    
+};
+
+// Delete trip
 export const deleteTrip = (id) => async (dispatch) => {
   try {
     await api.delete(`/trips/${id}`);
@@ -39,13 +69,6 @@ export const deleteTrip = (id) => async (dispatch) => {
 
     dispatch(setAlert('Trip eliminado', 'success'));
   } catch (err) {
-    
-    // const errors = err.response.data.errors;
-
-    // if (errors) {
-    //   errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-    // }
-
     dispatch({
       type: DELETETRIP_FAIL,
       payload: { msg: err.response.statusText, status: err.response.status }

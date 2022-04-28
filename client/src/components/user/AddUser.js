@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { addUser } from '../../actions/user';
@@ -21,8 +21,8 @@ const AddUser = ({ addUser }) => {
 
       return (
         <section className="container">
-        <h1 className="large text-primary">Sign Up</h1>
-        <p className="lead"><i className="fas fa-user"></i> Create Account</p>
+        <h1 className="large text-primary">Usuarios</h1>
+        <p className="lead"><i className="fas fa-user"></i> Crear Usuario</p>
         <form
                 className="form"
                 onSubmit={(e) => {
@@ -68,7 +68,7 @@ const AddUser = ({ addUser }) => {
               onChange={onChange}              
             />
           </div>
-          <input type="submit" className="btn btn-primary" value="Register" />
+          <input type="submit" className="btn btn-primary" value="Aceptar" />
         </form>
       </section>
     );
