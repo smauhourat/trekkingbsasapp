@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const Landing = () => {
   const [search, setSearch] = useState('');

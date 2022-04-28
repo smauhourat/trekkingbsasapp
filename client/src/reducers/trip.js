@@ -23,18 +23,21 @@ export default function(state = initialState, action) {
                 error: payload,
                 trips: null,
                 loading: false,
-            } 
+            };
+
         case GET_TRIPS:
             return {
                 ...state,
                 trips: payload,
                 loading: false
-            }
+            };
+
         case CLEAR_TRIPS:
             return {
                 ...state,
                 trips: {}
             };
+
         case ADDTRIP_SUCCESS:
             let newAddState = {...state};
             newAddState.trips.metadata.total = newAddState.trips.metadata.total+1;
@@ -42,11 +45,7 @@ export default function(state = initialState, action) {
             newAddState.loading = false;
 
             return newAddState;
-            // return {
-            //     ...state,
-            //     trips: [payload, ...state.trips.data],
-            //     loading: false
-            // };            
+
         case DELETETRIP_SUCCESS:
             let newState = {...state};
             newState.trips.metadata.total = newState.trips.metadata.total-1;
@@ -54,13 +53,15 @@ export default function(state = initialState, action) {
             newState.loading = false;
 
             return newState;
+
         case DELETETRIP_FAIL:
             return {
                 ...state,
                 error: payload,
                 loading: false,
                 trips: null
-            };              
+            };
+                  
         default:
             return state;            
     }
