@@ -1,10 +1,12 @@
 import React from "react";
+import { connect } from 'react-redux';
 import PropTypes from "prop-types";
+import { deleteTrip } from '../../actions/trip';
 import formatDate from '../../utils/formatDate';
 
-const TripsListContent = ({trips, deleteTrip}) => {
+const TripsListContent = ({trip: {trips}, deleteTrip}) => {
     const tripsList =  
-    trips?.map((trip) => (
+    trips?.data?.map((trip) => (
       <tr key={trip._id}>
         <td>{trip.title}</td>
         <td>{formatDate(trip.date)}</td> 
@@ -21,9 +23,16 @@ const TripsListContent = ({trips, deleteTrip}) => {
       </tr>
     ));
   
-    return <>{tripsList}</>;
+    return <>{tripsList}<tr><td>{trips?.metadata?.total} registros en total</td></tr></>;
 };
 
-TripsListContent.propTypes = {};
+TripsListContent.propTypes = {
+    deleteTrip: PropTypes.func.isRequired
+}
 
-export default TripsListContent;
+
+const mapStateToProps = (state) => ({
+    trip: state.trip
+  });
+
+export default connect(mapStateToProps, { deleteTrip })(TripsListContent);

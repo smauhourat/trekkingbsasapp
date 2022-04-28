@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { getTrips, deleteTrip } from '../../actions/trip';
 import TripsListContent from './TripsListContent';
 
-const TripsList = ({ getTrips, deleteTrip, trip: { trips } }) => {
+const TripsList = ({ getTrips, trip: { trips } }) => {
   const [currentPage, setCurrentPage] = useState();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const TripsList = ({ getTrips, deleteTrip, trip: { trips } }) => {
             </tr>
           </thead>
           <tbody>
-            <TripsListContent trips={trips?.data} deleteTrip={deleteTrip}/>
+            <TripsListContent/>
           </tbody>
           <tfoot> 
             <tr>
@@ -77,12 +77,11 @@ const TripsList = ({ getTrips, deleteTrip, trip: { trips } }) => {
 }
 
 TripsList.propTypes = {
-    getTrips: PropTypes.func.isRequired,
-    deleteTrip: PropTypes.func.isRequired
+    getTrips: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
   trip: state.trip
 });
 
-export default connect(mapStateToProps, { getTrips, deleteTrip })(TripsList);
+export default connect(mapStateToProps, { getTrips })(TripsList);

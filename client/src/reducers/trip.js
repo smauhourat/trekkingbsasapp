@@ -9,7 +9,7 @@ import {
 
 const initialState = {
     loading: true,
-    trips: [],
+    trips: {},
     error: {}
   };
 
@@ -33,7 +33,7 @@ export default function(state = initialState, action) {
         case CLEAR_TRIPS:
             return {
                 ...state,
-                trips: []
+                trips: {}
             };
         case ADDTRIP_SUCCESS:
             return {
@@ -42,16 +42,17 @@ export default function(state = initialState, action) {
                 loading: false
             };            
         case DELETETRIP_SUCCESS:
-            return {
-                ...state,
-                trips: state.trips.data.filter((trip) => trip._id !== payload),
-                loading: false
-            };           
+            let newState = {...state};
+            newState.trips.metadata.total = newState.trips.metadata.total-1;
+            newState.trips.data = newState.trips.data.filter((trip) => trip._id !== payload);
+            newState.loading = false;
+            return newState;
         case DELETETRIP_FAIL:
             return {
                 ...state,
                 error: payload,
-                loading: false
+                loading: false,
+                trips: null
             };              
         default:
             return state;            
