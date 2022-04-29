@@ -65,3 +65,5 @@ Result:
    delete: App.test.js index.css logo.svg
 9. run with **npm run dev**
 10. install uuid library in client to generate guid (used in alerts)
+
+11. upload image cloudinary

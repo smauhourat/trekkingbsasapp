@@ -77,3 +77,4 @@ export const deleteTrip = (id) => async (dispatch) => {
 };
 
 
+//export const addImage = ()

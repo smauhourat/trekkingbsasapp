@@ -6,7 +6,7 @@ const config = require('config');
 const cloudinary = require("cloudinary").v2;
 
 const Trip = require('../../models/Trip');
-
+//  https://www.youtube.com/watch?v=Rw_QeJLnCK4
 // cloudinary configuration
 cloudinary.config({
   cloud_name: config.get('cloud_name'),
@@ -78,7 +78,6 @@ router.post('/',
         cloudinary.uploader
           .upload(data.image)
           .then((result) => {
-
             const tripImage = {
               url: result.url,
               public_id: result.public_id
@@ -91,8 +90,8 @@ router.post('/',
           })
           .catch((error) => {
             res.status(500).send({
-              message: "failure",
-              error,
+              msg: "failureX",
+              err: error,
             });
           });          
      } catch (err) {
