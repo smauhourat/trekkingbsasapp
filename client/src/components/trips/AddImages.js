@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { setAlert } from '../../actions/alert'
+import { setAlert } from '../../actions/alert';
 import api from '../../utils/api';
 import PropTypes from 'prop-types'
 
-const AddImages = props => {
+const AddImages = ({setAlert}) => {
     const id = useParams().id;
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
@@ -46,7 +47,7 @@ const AddImages = props => {
             const res = await api.post(`/trips/${id}/images`, image);
             setFileInputState('');
             setPreviewSource('');
-            //setAlert()
+            setAlert('Imagen cargada', 'success');
             navigate('/dashboard');
         } catch (err) {
             console.error(err);
@@ -82,7 +83,7 @@ const AddImages = props => {
 }
 
 AddImages.propTypes = {
+    setAlert: PropTypes.func.isRequired,
+  };
 
-}
-
-export default AddImages;
+export default connect(null, { setAlert })(AddImages);
