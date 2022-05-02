@@ -69,9 +69,11 @@ router.post('/',
     try {
         // Get the trip
         const trip = await Trip.findById(req.params.id);
+        console.log(`id trip: ${req.params.id}`);
+        console.log(`image: ${req.body.data}`);
 
         const data = {
-          image: req.body.image,
+          image: req.body.data,
         };         
 
         // upload image here

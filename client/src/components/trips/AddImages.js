@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import api from '../../utils/api';
 import PropTypes from 'prop-types'
-import api from '../utils/api';
 
-const AddImage = props => {
+const AddImages = props => {
+    const id = useParams().id;
+    console.log(id);
+
     const [fileInputState, setFileInputState] = useState('');
-    const [previewSource, setPreviewSource] = useState('');
     const [selectedFile, setSelectedFile] = useState();
     const navigate = useNavigate();
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
-        previewFile(file);
+        //previewFile(file);
         setSelectedFile(file);
         setFileInputState(e.target.value);
-    };
-
-    const previewFile = (file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            setPreviewSource(reader.result);
-        };
     };
 
     const handleSubmitFile = (e) => {
         e.preventDefault();
         if (!selectedFile) return;
+
         const reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onloadend = () => {
@@ -34,35 +29,28 @@ const AddImage = props => {
         };
         reader.onerror = () => {
             console.error('AHHHHHHHH!!');
-            //setErrMsg('something went wrong!');
         };
     };
 
     const uploadImage = async (base64EncodedImage) => {
         try {
-            // await fetch('/api/upload', {
-            //     method: 'POST',
-            //     body: JSON.stringify({ data: base64EncodedImage }),
-            //     headers: { 'Content-Type': 'application/json' },
-            // });
-            const image = { data: JSON.stringify({ data: base64EncodedImage })};
-            const res = await api.post(`/trips/${props.id}`, image);
+            //const image = { image: JSON.stringify({ data: base64EncodedImage })};
+            const image = JSON.stringify({ data: base64EncodedImage });
+            const res = await api.post(`/trips/${id}/images`, image);
             setFileInputState('');
-            setPreviewSource('');
+            //setPreviewSource('');
             navigate('/dashboard');
-            //setSuccessMsg('Image uploaded successfully');
         } catch (err) {
             console.error(err);
-            //setErrMsg('Something went wrong!');
         }
-    };
+    };    
 
   return (
     <section className="container">
         <h1 className="large text-primary">Trips Images</h1>
         <p className="lead"><i className="fas fa-user"></i> Cargar Imagen</p>
         <form onSubmit={handleSubmitFile} className="form">
-            <input
+        <input
                 id="fileInput"
                 type="file"
                 name="image"
@@ -70,23 +58,16 @@ const AddImage = props => {
                 value={fileInputState}
                 className="form-input"
             />
-            <button className="btn" type="submit">
-                Submit
+            <button className="btn btn-primary" type="submit">
+                Cargar
             </button>
         </form>
-        {previewSource && (
-                <img
-                    src={previewSource}
-                    alt="chosen"
-                    style={{ height: '300px' }}
-                />
-            )}      
     </section>
   )
 }
 
-AddImage.propTypes = {
+AddImages.propTypes = {
 
 }
 
-export default AddImage;
+export default AddImages;

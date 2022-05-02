@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import { deleteTrip } from '../../actions/trip';
@@ -13,6 +14,9 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip}) => {
         <td>{formatDate(trip.created)}</td>
         <td>-</td>
         <td>
+          <Link to={`/add-images/${trip._id}`} className='btn btn-primary'>
+            Imagenes
+          </Link>          
           <button
             onClick={() => deleteTrip(trip._id)}
             className="btn btn-danger"

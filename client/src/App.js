@@ -8,6 +8,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import Trips from './components/trips/Trips';
 import AddUser from './components/user/AddUser';
 import AddTrip from './components/trips/AddTrip';
+import AddImages from './components/trips/AddImages';
 import PrivateRoute from './components/routing/PrivateRoute';
 import { LOGOUT } from './actions/types';
 
@@ -46,6 +47,7 @@ const App = () => {
             <Route path="dashboard" element={<PrivateRoute component={Dashboard} />}/>
             <Route path="add-user" element={<PrivateRoute component={AddUser} />} />
             <Route path="add-trip" element={<PrivateRoute component={AddTrip} />} />
+            <Route path="add-images/:id" element={<PrivateRoute component={AddImages} />} />
             <Route path="trips" element={<Trips />} />
         </Fragment>
       </Routes>
