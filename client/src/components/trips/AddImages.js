@@ -36,8 +36,9 @@ const AddImages = ({setAlert}) => {
         reader.onloadend = () => {
             uploadImage(reader.result);
         };
-        reader.onerror = (e) => {
-            console.error('Error reading file: ' + e.target.error.code);
+        reader.onerror = (err) => {
+            console.error('Error reading file: ' + err.target.error.code);
+            setAlert('Error cargando imagen', 'danger');
         };
     };
 
@@ -51,6 +52,7 @@ const AddImages = ({setAlert}) => {
             navigate('/dashboard');
         } catch (err) {
             console.error(err);
+            setAlert('Error cargando imagen', 'danger');
         }
     };    
 
