@@ -37,7 +37,7 @@ const AddImages = ({setAlert}) => {
             uploadImage(reader.result);
         };
         reader.onerror = (err) => {
-            console.error('Error reading file: ' + err.target.error.code);
+            console.error('Error leyendo el archivo: ' + err.target.error.code);
             setAlert('Error cargando imagen', 'danger');
         };
     };
@@ -61,16 +61,22 @@ const AddImages = ({setAlert}) => {
         <h1 className="large text-primary">Trips Images</h1>
         <p className="lead"><i className="fas fa-user"></i> Cargar Imagen</p>
         <form onSubmit={handleSubmitFile} className="form">
-        <input
+
+        <label for="fileInput" className="btn btn-secondary btn-link">
+            <i class="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
+        </label>
+        <input id="fileInput" type="file" name="image" onChange={handleFileInputChange} value={fileInputState}/>            
+
+        {/* <input
                 id="fileInput"
                 type="file"
                 name="image"
                 onChange={handleFileInputChange}
                 value={fileInputState}
                 className="form-input"
-            />
+            /> */}
             <button className="btn btn-primary" type="submit">
-                Cargar
+                Aceptar
             </button>
         </form>
         {previewSource && (

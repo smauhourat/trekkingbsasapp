@@ -14,7 +14,7 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip}) => {
         <td>{formatDate(trip.created)}</td>
         <td>-</td>
         <td>
-          <Link to={`/add-images/${trip._id}`} className='btn btn-primary'>
+          <Link to={`/add-images/${trip._id}`} className='btn btn-primary btn-link'>
             Imagenes
           </Link>          
           <button
