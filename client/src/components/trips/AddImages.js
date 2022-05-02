@@ -8,15 +8,24 @@ const AddImages = props => {
     console.log(id);
 
     const [fileInputState, setFileInputState] = useState('');
+    const [previewSource, setPreviewSource] = useState('');
     const [selectedFile, setSelectedFile] = useState();
     const navigate = useNavigate();
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
-        //previewFile(file);
+        previewFile(file);
         setSelectedFile(file);
         setFileInputState(e.target.value);
     };
+
+    const previewFile = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreviewSource(reader.result);
+        };
+    };    
 
     const handleSubmitFile = (e) => {
         e.preventDefault();
@@ -38,7 +47,7 @@ const AddImages = props => {
             const image = JSON.stringify({ data: base64EncodedImage });
             const res = await api.post(`/trips/${id}/images`, image);
             setFileInputState('');
-            //setPreviewSource('');
+            setPreviewSource('');
             navigate('/dashboard');
         } catch (err) {
             console.error(err);
@@ -62,6 +71,13 @@ const AddImages = props => {
                 Cargar
             </button>
         </form>
+        {previewSource && (
+                <img
+                    src={previewSource}
+                    alt="chosen"
+                    style={{ height: '300px' }}
+                />
+            )}        
     </section>
   )
 }
