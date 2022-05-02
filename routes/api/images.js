@@ -69,8 +69,8 @@ router.post('/',
     try {
         // Get the trip
         const trip = await Trip.findById(req.params.id);
-        console.log(`id trip: ${req.params.id}`);
-        console.log(`image: ${req.body.data}`);
+        //console.log(`id trip: ${req.params.id}`);
+        //console.log(`image: ${req.body.data}`);
 
         const data = {
           image: req.body.data,
@@ -92,7 +92,7 @@ router.post('/',
           })
           .catch((error) => {
             res.status(500).send({
-              msg: "failureX",
+              msg: "failure",
               err: error,
             });
           });          

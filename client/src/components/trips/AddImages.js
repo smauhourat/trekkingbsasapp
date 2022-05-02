@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { setAlert } from '../../actions/alert'
 import api from '../../utils/api';
 import PropTypes from 'prop-types'
 
 const AddImages = props => {
     const id = useParams().id;
-    console.log(id);
-
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
     const [selectedFile, setSelectedFile] = useState();
@@ -36,18 +35,18 @@ const AddImages = props => {
         reader.onloadend = () => {
             uploadImage(reader.result);
         };
-        reader.onerror = () => {
-            console.error('AHHHHHHHH!!');
+        reader.onerror = (e) => {
+            console.error('Error reading file: ' + e.target.error.code);
         };
     };
 
     const uploadImage = async (base64EncodedImage) => {
         try {
-            //const image = { image: JSON.stringify({ data: base64EncodedImage })};
             const image = JSON.stringify({ data: base64EncodedImage });
             const res = await api.post(`/trips/${id}/images`, image);
             setFileInputState('');
             setPreviewSource('');
+            //setAlert()
             navigate('/dashboard');
         } catch (err) {
             console.error(err);

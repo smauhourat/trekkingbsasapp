@@ -3,24 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { addTrip } from '../../actions/trip';
-import axios from 'axios';
 //https://www.youtube.com/watch?v=Rw_QeJLnCK4
 //https://www.youtube.com/watch?v=Y-VgaRwWS3o
 const AddTrip = ({ addTrip }) => {
     const navigate = useNavigate();
-
-    const [imageSelected, setImageSelected] = useState('');
-
-    const uploadImage = () => {
-      const formDataImage = new FormData();
-      formDataImage.append("file", imageSelected);
-      formDataImage.append("upload_preset", "qt74lccw");
-      console.log(imageSelected);
-
-       axios.post("http://api.cloudinary.com/v1_1/adhentux/image/upload/", formDataImage)
-       .then((res) => console.log(res));
-
-    }
 
     const [formData, setFormData] = useState({
         title: '',
@@ -141,13 +127,6 @@ const AddTrip = ({ addTrip }) => {
               onChange={onChange}              
             />                                    
           </div>
-          <div className="form-group">
-            <input 
-              type="file" 
-              onChange={(event) => setImageSelected(event.target.files[0])}
-            />
-            <button onClick={() => uploadImage()}>Upload</button>
-          </div>                  
           <input type="submit" className="btn btn-primary" value="Aceptar" />
           <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/dashboard')} />
         </form>

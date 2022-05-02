@@ -8,7 +8,9 @@ import {
   DELETETRIP_SUCCESS,
   DELETETRIP_FAIL,
   ADDTRIP_SUCCESS,
-  ADDTRIP_FAIL
+  ADDTRIP_FAIL,
+  ADDIMAGE_SUCCESS,
+  ADDIMAGE_FAIL
 } from './types';
 
 // Get trips
@@ -75,6 +77,33 @@ export const deleteTrip = (id) => async (dispatch) => {
     });
   }
 };
+
+// Add image
+// export const addImage = (id, image) => async (dispatch) => {
+//   try {
+//     const res = await api.post(`/trips/${id}/images`, image);
+
+//     dispatch({
+//       type: ADDIMAGE_SUCCESS,
+//       payload: res.data
+//     });
+
+//     dispatch(setAlert('Imagen agregada', 'success'));
+
+//     navigate('/dashboard');
+//   } catch (err) {
+//     const errors = err.response.data.errors;
+
+//     if (errors) {
+//       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+//     }
+
+//     dispatch({
+//       type: ADDIMAGE_FAIL,
+//       payload: { msg: err.response.statusText, status: err.response.status }
+//     });
+//   }    
+// }
 
 
 //export const addImage = ()
