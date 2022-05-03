@@ -21,3 +21,6 @@ export const ADDTRIP_SUCCESS = 'ADDTRIP_SUCCESS';
 export const ADDTRIP_FAIL = 'ADDTRIP_FAIL';
 export const ADDIMAGE_SUCCESS = 'ADDIMAGE_SUCCESS';
 export const ADDIMAGE_FAIL = 'ADDIMAGE_FAIL';
+export const GET_TRIP = 'GET_TRIP';
+export const TRIP_ERROR = 'TRIP_ERROR';
+export const CLEAR_TRIP = 'CLEAR_TRIP';

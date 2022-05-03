@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import api from '../../utils/api';
 import PropTypes from 'prop-types'
+import ImagesList from './ImagesList';
 
 const AddImages = ({setAlert}) => {
     const id = useParams().id;
@@ -63,7 +64,7 @@ const AddImages = ({setAlert}) => {
         <form onSubmit={handleSubmitFile} className="form">
 
         <label for="fileInput" className="btn btn-secondary btn-link">
-            <i class="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
+            <i className="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
         </label>
         <input id="fileInput" type="file" name="image" onChange={handleFileInputChange} value={fileInputState}/>            
 
@@ -83,9 +84,10 @@ const AddImages = ({setAlert}) => {
                 <img
                     src={previewSource}
                     alt="chosen"
-                    style={{ height: '300px' }}
+                    style={{ height: '100px' }}
                 />
-            )}        
+            )}     
+        <ImagesList tripId={id} />   
     </section>
   )
 }

@@ -9,8 +9,9 @@ import {
   DELETETRIP_FAIL,
   ADDTRIP_SUCCESS,
   ADDTRIP_FAIL,
-  ADDIMAGE_SUCCESS,
-  ADDIMAGE_FAIL
+  CLEAR_TRIP,
+  GET_TRIP,
+  TRIP_ERROR
 } from './types';
 
 // Get trips
@@ -28,7 +29,6 @@ export const getTrips = (query) => async (dispatch) => {
             type: TRIPS_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
           });
-      
     }
 }
 
@@ -78,6 +78,22 @@ export const deleteTrip = (id) => async (dispatch) => {
   }
 };
 
+export const getTrip = (id) => async (dispatch) => {
+  dispatch({ type: CLEAR_TRIP });
+  try {
+    const res = await api.get(`/trips/${id}`);
+
+    dispatch({
+        type: GET_TRIP,
+        payload: res.data
+      });
+  }catch (err) {
+    dispatch({
+        type: TRIP_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+}
+}
 // Add image
 // export const addImage = (id, image) => async (dispatch) => {
 //   try {
