@@ -50,7 +50,7 @@ const AddImages = ({setAlert}) => {
             setFileInputState('');
             setPreviewSource('');
             setAlert('Imagen cargada', 'success');
-            navigate('/dashboard');
+            //navigate('/dashboard');
         } catch (err) {
             console.error(err);
             setAlert('Error cargando imagen', 'danger');
@@ -63,7 +63,7 @@ const AddImages = ({setAlert}) => {
         <p className="lead"><i className="fas fa-user"></i> Cargar Imagen</p>
         <form onSubmit={handleSubmitFile} className="form">
 
-        <label for="fileInput" className="btn btn-secondary btn-link">
+        <label  htmlFor="fileInput" className="btn btn-secondary btn-link">
             <i className="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
         </label>
         <input id="fileInput" type="file" name="image" onChange={handleFileInputChange} value={fileInputState}/>            

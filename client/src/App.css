@@ -462,6 +462,10 @@ button {
   background: var(--light-color);
 }
 
+.table tfoot td {
+  background: var(--light-color);
+}
+
 /* Navbar */
 .navbar {
   display: flex;

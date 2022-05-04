@@ -28,16 +28,15 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
 
   return (
     <div>
-      <h2 className="my-2">Trips</h2>
+      <h2 className="my-2">Eventos</h2>
       {/* <code>{JSON.stringify(trips.metadata)}</code> */}
       <table className="table">
           <thead>
             <tr>
-              <th width="40%">Nombre</th>
-              {/* <th className="hide-sm">Fecha</th> */}
               <th width="15%">Fecha</th>
-              <th width="15%">Creacion</th>
-              <th width="10%">Estado</th>
+              <th width="40%">Titulo</th>
+              <th width="15%">Cupo</th>
+              <th width="10%"></th>
               <th width="20%"></th>
             </tr>
           </thead>
@@ -53,7 +52,7 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
                     className="btn btn-primary btn-small"
                     title="Anterior"
                   >
-                    &lt;
+                    <li className="fas fa-angle-left"></li>
                   </button>            
               </td>
               <td></td>
@@ -63,7 +62,7 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
                   className="btn btn-primary btn-small"
                   title="Siguiente"
                 >
-                  &gt;
+                  <li className="fas fa-angle-right"></li>
                 </button>
               </td>
               <td></td>

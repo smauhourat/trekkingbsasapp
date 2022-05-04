@@ -9,19 +9,20 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip}) => {
     const tripsList =  
     data?.map((trip) => (
       <tr key={trip._id}>
-        <td>{trip.title}</td>
         <td>{formatDate(trip.date)}</td> 
-        <td>{formatDate(trip.created)}</td>
-        <td>-</td>
+        <td>{trip.title}</td>
+        <td>{trip.quota}</td>
         <td>
           <Link to={`/add-images/${trip._id}`} className='btn btn-primary btn-link'>
-            Imagenes
+            <i className="fas fa-file-image" title="Multimedia"></i>
           </Link>          
+        </td>
+        <td>
           <button
             onClick={() => deleteTrip(trip._id)}
             className="btn btn-danger"
           >
-            Eliminar
+            <i className="fas fa-trash-alt" title="Eliminar"></i>
           </button>
         </td>      
       </tr>

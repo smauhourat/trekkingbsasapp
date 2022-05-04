@@ -14,7 +14,7 @@ const UsersList = ({ users, deleteUser }) => {
           onClick={() => deleteUser(user._id)}
           className="btn btn-danger"
         >
-          Eliminar
+          <i className="fas fa-trash-alt" title="Eliminar"></i>
         </button>
       </td>      
     </tr>

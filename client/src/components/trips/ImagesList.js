@@ -13,7 +13,8 @@ const ImagesList = ({ getTrip, tripId, trip: { selectedTrip }}) => {
     
     const images = selectedTrip?.images?.map((img) => 
         <tr key={img._id}>
-            <td>{img.url}</td>
+            <td><img src={img.url.replace('upload', 'upload/ar_1.0,c_limit,h_150')} /></td>
+            <td></td>
         </tr>
     );
 
