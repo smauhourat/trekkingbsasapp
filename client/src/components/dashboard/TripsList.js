@@ -36,8 +36,9 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
               <th width="15%">Fecha</th>
               <th width="40%">Titulo</th>
               <th width="15%">Cupo</th>
+              <th width="10%">Reservas</th>
               <th width="10%"></th>
-              <th width="20%"></th>
+              <th width="10%"></th>
             </tr>
           </thead>
           <tbody>

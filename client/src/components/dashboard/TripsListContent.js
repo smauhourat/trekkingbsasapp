@@ -11,7 +11,8 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip}) => {
       <tr key={trip._id}>
         <td>{formatDate(trip.date)}</td> 
         <td>{trip.title}</td>
-        <td>{trip.quota}</td>
+        <td className="text-center">{trip.quota}</td>
+        <td>{trip.reservations}</td>
         <td>
           <Link to={`/add-images/${trip._id}`} className='btn btn-primary btn-link'>
             <i className="fas fa-file-image" title="Multimedia"></i>
