@@ -792,3 +792,81 @@ input[type="file"] {
 .btn-link {
   line-height: 1;
 }
+
+/* cards styles */
+.cards {
+  padding: 2rem;
+}
+
+.cards > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-gap: 1rem;
+}
+
+.cards > ul > li {
+  border: 1px solid #E2E2E2;
+  border-radius: .5rem;
+}
+
+.cards > ul > li > figure {
+  max-height: 220px;
+  overflow: hidden;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  position: relative;
+}
+
+.cards > ul > li > figure > img {
+  width: 100%;
+}
+
+.cards > ul > li > figure > figcaption {
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(0,0,0,.7);
+  width: 100%;
+}
+
+.cards > ul > li > figure > figcaption > h3 {
+  color: white;
+  padding: .75rem;
+  font-size: 1.25rem;
+}
+
+.cards > ul > li > figure > figcaption > h3 > a{
+  color: white;
+  padding: .75rem;
+  font-size: 1.25rem;
+}
+
+.cards > ul > li > p {
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 1rem .75rem;
+  color: #666666;
+}
+
+.cards > ul > li > a {
+  padding: .5rem 1rem;
+  margin: .5rem;
+}
+
+.card-load {
+  max-height: 220px;
+  overflow: hidden;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  position: relative;
+}
+
+.card-load > figure > img {
+  width: 100%;
+}
+
+
+/* gral*/
+.no-wrap {
+  white-space: nowrap; 
+  min-width: max-content;
+}

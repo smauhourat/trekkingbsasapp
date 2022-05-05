@@ -62,31 +62,31 @@ const AddImages = ({setAlert}) => {
         <h1 className="large text-primary">Trips Images</h1>
         <p className="lead"><i className="fas fa-user"></i> Cargar Imagen</p>
         <form onSubmit={handleSubmitFile} className="form">
-
-        <label  htmlFor="fileInput" className="btn btn-secondary btn-link">
-            <i className="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
-        </label>
-        <input id="fileInput" type="file" name="image" onChange={handleFileInputChange} value={fileInputState}/>            
-
-        {/* <input
-                id="fileInput"
-                type="file"
-                name="image"
-                onChange={handleFileInputChange}
-                value={fileInputState}
-                className="form-input"
-            /> */}
+            <label  htmlFor="fileInput" className="btn btn-success btn-link no-wrap">
+                <i className="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
+            </label>
+            <input id="fileInput" type="file" name="image" onChange={handleFileInputChange} value={fileInputState}/>            
             <button className="btn btn-primary" type="submit">
                 Aceptar
             </button>
+            <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/dashboard')} />
         </form>
         {previewSource && (
-                <img
-                    src={previewSource}
-                    alt="chosen"
-                    style={{ height: '100px' }}
-                />
-            )}     
+            <div>
+                <div className="my-1"></div>
+                <div className="card-load">
+                    <figure>
+                        <img
+                            src={previewSource}
+                            alt="seleccionada"
+                            
+                        />
+                    </figure>
+                </div>
+            </div>
+            )}    
+        
+        <hr className="my-2"/>
         <ImagesList tripId={id} />   
     </section>
   )
