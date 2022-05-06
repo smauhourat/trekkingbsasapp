@@ -150,7 +150,7 @@ router.delete('/:id',
 // @access  Private
 router.get('/', 
   auth, 
-  async (req, res) => {
+  async (_req, res) => {
     try {
         const users = await User
         .find()

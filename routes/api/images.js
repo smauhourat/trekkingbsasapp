@@ -48,7 +48,7 @@ router.get('/:id_image',
         return res.status(404).json({ msg: 'Trip not found' });
       }
 
-      cloudinary.api.resource(id_image, function (err, result) {
+      cloudinary.api.resource(id_image, function (_err, result) {
         res.json(result);
       });
   
@@ -69,8 +69,6 @@ router.post('/',
     try {
         // Get the trip
         const trip = await Trip.findById(req.params.id);
-        // console.log(`id trip: ${req.params.id}`);
-        // console.log(`image: ${req.body.data.substr(0, 1000)}`);
 
         if (!trip) {
           return res.status(404).json({ msg: 'Evento no encontrado' });
@@ -84,7 +82,6 @@ router.post('/',
         cloudinary.uploader
           .upload(data.image)
           .then((result) => {
-            //console.log(result);
             const tripImage = {
               url: result.url,
               public_id: result.public_id,
@@ -129,7 +126,7 @@ router.delete('/:id_image',
       }
 
       // delete image here
-      cloudinary.uploader.destroy(id_image, function(err, result) {
+      cloudinary.uploader.destroy(id_image, function(err, _result) {
         if (!err) {
           trip.images = trip.images.filter(
             (img) => img.public_id.toString() !== id_image

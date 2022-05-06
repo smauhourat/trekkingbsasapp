@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import { deleteTrip } from '../../actions/trip';
@@ -29,7 +29,18 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip}) => {
       </tr>
     ));
   
-    return <>{tripsList}<tr><td colSpan="5"><div className="tiny">página {metadata?.page} de {Math.ceil(metadata?.total/metadata?.limit)} - total de Registros: {metadata?.total}</div></td></tr></>;
+    return (
+            <>
+              {tripsList}
+              <tr>
+                <td colSpan="5">
+                  <div className="tiny">
+                    página {metadata?.page} de {Math.ceil(metadata?.total/metadata?.limit)} - total de Registros: {metadata?.total}
+                  </div>
+                </td>
+              </tr>
+            </>
+    );
 };
 
 TripsListContent.propTypes = {

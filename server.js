@@ -9,7 +9,7 @@ connectDB();
 // Init Middleware
 app.use(express.json({extended: false, limit: '50mb'}))
 
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -17,7 +17,7 @@ app.use((req, res, next) => {
     return next();
 })
 
-app.get('/', (req, res) => res.send('API running'));
+app.get('/', (_req, res) => res.send('API running'));
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));

@@ -51,7 +51,6 @@ router.get('/',
       const dateFrom = req.query.df ? req.query.df : "1900-01-01";
       const dateTo = req.query.dt ? req.query.dt : moment(currentDate).add(5, 'year').format('YYYY-MM-DD');
       const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
-      //const page = req.query.page && !isNaN(req.query.page) ? (parseInt(req.query.page) <= 0 ? 1 : parseInt(req.query.page) ) : 1;
       let page = 1;
       if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
           page = parseInt(req.query.page);
@@ -167,7 +166,7 @@ router.delete('/:id',
           return item["public_id"];
         })
   
-        cloudinary.api.delete_resources(images, function(err, result){
+        cloudinary.api.delete_resources(images, function(err, _result){
           if (err) {
             res.status(500).send(res);
           }           
@@ -213,124 +212,5 @@ router.put('/:id',
         
     }
 );
-
-// @route    PUT api/trips/:id/images
-// @desc     Add Trip Image
-// @access   Private
-// router.put('/:id/images',
-//   auth,
-//   async (req, res) => {
-
-//     try {
-//         // Get the trip
-//         const trip = await Trip.findById(req.params.id);
-
-//         const data = {
-//           image: req.body.image,
-//         };        
-
-//         // upload image here
-//         cloudinary.uploader
-//           .upload(data.image)
-//           .then((result) => {
-
-//             const tripImage = {
-//               url: result.url,
-//               public_id: result.public_id
-//             }
-            
-//             trip.images.unshift(tripImage);
-//             trip.save();
-
-//             res.json(trip);
-//           })
-//           .catch((error) => {
-//             res.status(500).send({
-//               message: "failure",
-//               error,
-//             });
-//           });          
-//      } catch (err) {
-//         console.error(err.message);
-//         res.status(500).send('Server Error');
-//      }
-//   }
-// );
-
-// // @route   DELETE api/trips/:id/images/:id_image
-// // @desc    Delete trip image from
-// // @access  Private
-// router.delete(':id/images/:id_image', 
-//   auth, 
-//   async (req, res) => {
-//     try {
-//       const trip = await Trip.findById(req.params.id);
-  
-//       if (!trip) {
-//         return res.status(404).json({ msg: 'Trip not found' });
-//       }
-      
-//       // delete image here
-//       cloudinary.uploader.destroy(req.params.id_image, function(err, res) {
-//         if (!err) {
-//           trip.images = trip.images.filter(
-//             (img) => img.public_id.toString() !== req.params.id_image
-//           );
-
-//           trip.save();
-
-//           res.json(trip);
-//         } 
-//         res.status(500).send(res);
-//       });
-//     }catch(err) {
-//       console.error(err.message);
-    
-//       res.status(500).send('Server Error');
-//     }
-// });
-
-// @route    POST api/trips/images/:id
-// @desc     Add trip image
-// @access   Private
-// router.post('/images/:id',
-//   auth,
-//   async (req, res) => {
-
-//     try {
-//         // Get the trip
-//         const trip = await Trip.findById(req.params.id);
-
-//         const data = {
-//           image: req.body.image,
-//         };        
-
-//         // upload image here
-//         cloudinary.uploader
-//           .upload(data.image)
-//           .then((result) => {
-
-//             const tripImage = {
-//               url: result.url,
-//               public_id: result.public_id
-//             }
-            
-//             trip.images.unshift(tripImage);
-//             trip.save();
-
-//             res.json(trip);
-//           })
-//           .catch((error) => {
-//             res.status(500).send({
-//               message: "failure",
-//               error,
-//             });
-//           });          
-//      } catch (err) {
-//         console.error(err.message);
-//         res.status(500).send('Server Error');
-//      }
-//   }
-// );
 
 module.exports = router;

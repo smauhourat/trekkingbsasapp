@@ -29,7 +29,6 @@ const TripsList = ({ getTrips, trip: { trips } }) => {
   return (
     <div>
       <h2 className="my-2">Eventos</h2>
-      {/* <code>{JSON.stringify(trips.metadata)}</code> */}
       <table className="table">
           <thead>
             <tr>

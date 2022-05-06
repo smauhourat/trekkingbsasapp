@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
-import api from '../../utils/api';
 import PropTypes from 'prop-types'
 import ImagesList from './ImagesList';
 import { addImage } from '../../actions/trip';
@@ -86,7 +85,6 @@ const AddImages = ({ addImage, setAlert }) => {
             )}    
         
         <hr className="my-2"/>
-        {/* <ImagesList tripId={id} />    */}
         <ImagesList tripId={id} />   
     </section>
   )
