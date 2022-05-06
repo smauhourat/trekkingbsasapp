@@ -24,7 +24,7 @@ router.get('/',
       const trip = await Trip.findById(req.params.id);
   
       if (!trip) {
-        return res.status(404).json({ msg: 'Trip not found' });
+        return res.status(404).json({ msg: 'Evento no encontrado' });
       }
   
       res.json(trip);
@@ -69,8 +69,12 @@ router.post('/',
     try {
         // Get the trip
         const trip = await Trip.findById(req.params.id);
-        //console.log(`id trip: ${req.params.id}`);
-        //console.log(`image: ${req.body.data}`);
+        // console.log(`id trip: ${req.params.id}`);
+        // console.log(`image: ${req.body.data.substr(0, 1000)}`);
+
+        if (!trip) {
+          return res.status(404).json({ msg: 'Evento no encontrado' });
+        }
 
         const data = {
           image: req.body.data,
@@ -80,12 +84,19 @@ router.post('/',
         cloudinary.uploader
           .upload(data.image)
           .then((result) => {
+            console.log(result);
             const tripImage = {
               url: result.url,
-              public_id: result.public_id
+              public_id: result.public_id,
+              width: result.width,
+              height: result.height,
+              format: result.format,
+              resource_type: result.resource_type,
+              created_at: result.created_at,
+              bytes: result.bytes
             }
             
-            trip.images.unshift(tripImage);
+            trip.images?.unshift(tripImage);
             trip.save();
 
             res.json(trip);
@@ -93,7 +104,7 @@ router.post('/',
           .catch((error) => {
             res.status(500).send({
               msg: "failure",
-              err: error,
+              err: error.message,
             });
           });          
      } catch (err) {
@@ -114,9 +125,9 @@ router.delete('/:id_image',
       const id_image = req.params.id_image;
   
       if (!trip) {
-        return res.status(404).json({ msg: 'Trip not found' });
+        return res.status(404).json({ msg: 'Evento no encontrado' });
       }
-      
+
       // delete image here
       cloudinary.uploader.destroy(id_image, function(err, result) {
         if (!err) {

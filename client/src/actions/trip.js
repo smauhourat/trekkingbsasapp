@@ -11,7 +11,9 @@ import {
   ADDTRIP_FAIL,
   CLEAR_TRIP,
   GET_TRIP,
-  TRIP_ERROR
+  TRIP_ERROR,
+  ADDIMAGE_SUCCESS,
+  ADDIMAGE_FAIL
 } from './types';
 
 // Get trips
@@ -95,31 +97,31 @@ export const getTrip = (id) => async (dispatch) => {
 }
 }
 // Add image
-// export const addImage = (id, image) => async (dispatch) => {
-//   try {
-//     const res = await api.post(`/trips/${id}/images`, image);
+export const addImage = (id, image) => async (dispatch) => {
+  try {
+    const res = await api.post(`/trips/${id}/images`, image);
 
-//     dispatch({
-//       type: ADDIMAGE_SUCCESS,
-//       payload: res.data
-//     });
+    dispatch({
+      type: ADDIMAGE_SUCCESS,
+      payload: res.data
+    });
 
-//     dispatch(setAlert('Imagen agregada', 'success'));
+    dispatch(setAlert('Imagen agregada', 'success'));
 
-//     navigate('/dashboard');
-//   } catch (err) {
-//     const errors = err.response.data.errors;
+    //navigate('/dashboard');
+  } catch (err) {
+    const errors = err.response.data.errors;
 
-//     if (errors) {
-//       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-//     }
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
 
-//     dispatch({
-//       type: ADDIMAGE_FAIL,
-//       payload: { msg: err.response.statusText, status: err.response.status }
-//     });
-//   }    
-// }
+    dispatch({
+      type: ADDIMAGE_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }    
+}
 
 
 //export const addImage = ()

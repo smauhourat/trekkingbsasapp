@@ -1,20 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import formatBytes from '../../utils/formatBytes';
 
-const Image = ({ id, url }) => {
+const Image = ({ img }) => {
   return (
-    <li key={id}>
+    <li key={img._id}>
       <figure>
         {/* <img src={url.replace('upload', 'upload/ar_1.0,c_limit,h_150')} /> */}
-        <img src={url} />
-        <figcaption><h3><a href={url} target="_blank">tqebqtkibaapsc310hzi</a></h3></figcaption>
+        <img src={img.url} />
+        <figcaption><h3><a href={img.url} target="_blank">{img._id}</a></h3></figcaption>
       </figure>
       <p>
-        formato | tamaño | dimensiones
+        <div className="tiny">
+          formato: {img.format} | tamaño: {formatBytes(img.bytes)} | dimensiones {img.width} x {img.height}
+        </div>
       </p>
       <hr />
-      <button class="btn btn-danger m">
-        <i class="fas fa-trash-alt" title="Eliminar"></i>
+      <button className="btn btn-danger m">
+        <i className="fas fa-trash-alt" title="Eliminar"></i>
       </button>              
     </li>
   )

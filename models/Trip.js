@@ -50,8 +50,26 @@ const TripSchema = new mongoose.Schema({
             url: {
                 type: String
             },
-            public_id : {
+            public_id: {
                 type: String
+            },
+            width: {
+                type: Number
+            },
+            height: {
+                type: Number
+            },
+            format: {
+                type: String
+            },
+            resource_type: {
+                type: String
+            },
+            created_at: {
+                type: Date
+            },
+            bytes: {
+                type: Number
             }
         }
     ]

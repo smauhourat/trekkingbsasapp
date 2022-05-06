@@ -5,8 +5,9 @@ import { setAlert } from '../../actions/alert';
 import api from '../../utils/api';
 import PropTypes from 'prop-types'
 import ImagesList from './ImagesList';
+import { addImage } from '../../actions/trip';
 
-const AddImages = ({setAlert}) => {
+const AddImages = ({ addImage, setAlert }) => {
     const id = useParams().id;
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
@@ -44,12 +45,17 @@ const AddImages = ({setAlert}) => {
     };
 
     const uploadImage = async (base64EncodedImage) => {
+        
         try {
             const image = JSON.stringify({ data: base64EncodedImage });
-            const res = await api.post(`/trips/${id}/images`, image);
+            addImage(id, image);
             setFileInputState('');
             setPreviewSource('');
-            setAlert('Imagen cargada', 'success');
+            
+            // const res = await api.post(`/trips/${id}/images`, image);
+            // setFileInputState('');
+            // setPreviewSource('');
+            // setAlert('Imagen cargada', 'success');
             //navigate('/dashboard');
         } catch (err) {
             console.error(err);
@@ -93,7 +99,8 @@ const AddImages = ({setAlert}) => {
 }
 
 AddImages.propTypes = {
+    addImage: PropTypes.func.isRequired,
     setAlert: PropTypes.func.isRequired,
   };
 
-export default connect(null, { setAlert })(AddImages);
+export default connect(null, { addImage, setAlert })(AddImages);

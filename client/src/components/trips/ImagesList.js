@@ -10,13 +10,13 @@ const ImagesList = ({ getTrip, tripId, trip: { selectedTrip }}) => {
       }, [getTrip]);
     
     const images = selectedTrip?.images?.map((img) => 
-        <Image id={img._id} url={img.url}/>
+        <Image img={img}/>
     );
 
     return (
     <div>
       <h2 className="my-2">Imagenes</h2>
-      <div class="cards">
+      <div className="cards">
           <ul>
             {images}
           </ul>

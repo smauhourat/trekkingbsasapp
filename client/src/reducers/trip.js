@@ -7,7 +7,8 @@ import {
     DELETETRIP_FAIL,
     GET_TRIP,
     TRIP_ERROR,
-    CLEAR_TRIP
+    CLEAR_TRIP,
+    ADDIMAGE_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -21,6 +22,13 @@ export default function(state = initialState, action) {
     const { type, payload } = action;   
 
     switch (type) {
+        case ADDIMAGE_SUCCESS:
+            let newAddStateAddImage = {...state};
+            newAddStateAddImage.selectedTrip.images = [payload, ...newAddStateAddImage.selectedTrip.images];
+            newAddStateAddImage.loading = false;
+
+            return newAddStateAddImage;
+
         case GET_TRIP:
             return {
                 ...state,

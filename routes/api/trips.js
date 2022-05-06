@@ -159,9 +159,9 @@ router.delete('/:id',
       const trip = await Trip.findById(req.params.id);
   
       if (!trip) {
-        return res.status(404).json({ msg: 'Trip not found' });
+        return res.status(404).json({ msg: 'Evento no encontrado' });
       }
-
+      
       if (trip.images.length > 0) {
         const images = trip.images.map(function(item) {
           return item["public_id"];
