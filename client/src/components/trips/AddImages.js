@@ -45,18 +45,11 @@ const AddImages = ({ addImage, setAlert }) => {
     };
 
     const uploadImage = async (base64EncodedImage) => {
-        
         try {
             const image = JSON.stringify({ data: base64EncodedImage });
             addImage(id, image);
             setFileInputState('');
             setPreviewSource('');
-            
-            // const res = await api.post(`/trips/${id}/images`, image);
-            // setFileInputState('');
-            // setPreviewSource('');
-            // setAlert('Imagen cargada', 'success');
-            //navigate('/dashboard');
         } catch (err) {
             console.error(err);
             setAlert('Error cargando imagen', 'danger');
@@ -93,6 +86,7 @@ const AddImages = ({ addImage, setAlert }) => {
             )}    
         
         <hr className="my-2"/>
+        {/* <ImagesList tripId={id} />    */}
         <ImagesList tripId={id} />   
     </section>
   )

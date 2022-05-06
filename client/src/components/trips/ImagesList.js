@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { getTrip } from '../../actions/trip';
 import Image from './Image';
+import ImagesListContent from './ImagesListContent';
 
 const ImagesList = ({ getTrip, tripId, trip: { selectedTrip }}) => {
     useEffect(() => {
@@ -10,7 +11,7 @@ const ImagesList = ({ getTrip, tripId, trip: { selectedTrip }}) => {
       }, [getTrip]);
     
     const images = selectedTrip?.images?.map((img) => 
-        <Image img={img}/>
+        <Image img={img} tripId={tripId}/>
     );
 
     return (
@@ -18,7 +19,8 @@ const ImagesList = ({ getTrip, tripId, trip: { selectedTrip }}) => {
       <h2 className="my-2">Imagenes</h2>
       <div className="cards">
           <ul>
-            {images}
+            {/* {images} */}
+            <ImagesListContent />
           </ul>
       </div>
     </div>

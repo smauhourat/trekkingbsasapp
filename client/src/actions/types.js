@@ -24,3 +24,5 @@ export const ADDIMAGE_FAIL = 'ADDIMAGE_FAIL';
 export const GET_TRIP = 'GET_TRIP';
 export const TRIP_ERROR = 'TRIP_ERROR';
 export const CLEAR_TRIP = 'CLEAR_TRIP';
+export const DELETEIMAGE_SUCCESS = 'DELETEIMAGE_SUCCESS';
+export const DELETEIMAGE_FAIL = 'DELETEIMAGE_FAIL';

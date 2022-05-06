@@ -13,7 +13,9 @@ import {
   GET_TRIP,
   TRIP_ERROR,
   ADDIMAGE_SUCCESS,
-  ADDIMAGE_FAIL
+  ADDIMAGE_FAIL,
+  DELETEIMAGE_SUCCESS,
+  DELETEIMAGE_FAIL
 } from './types';
 
 // Get trips
@@ -94,8 +96,9 @@ export const getTrip = (id) => async (dispatch) => {
         type: TRIP_ERROR,
         payload: { msg: err.response.statusText, status: err.response.status }
       });
+  }
 }
-}
+
 // Add image
 export const addImage = (id, image) => async (dispatch) => {
   try {
@@ -107,8 +110,6 @@ export const addImage = (id, image) => async (dispatch) => {
     });
 
     dispatch(setAlert('Imagen agregada', 'success'));
-
-    //navigate('/dashboard');
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -123,5 +124,24 @@ export const addImage = (id, image) => async (dispatch) => {
   }    
 }
 
+// Delete image
+export const deleteImage = (id, idImage) => async (dispatch) => {
+  try {
+    await api.delete(`/trips/${id}/images/${idImage}`);
+
+    dispatch({
+      type: DELETEIMAGE_SUCCESS,
+      payload: idImage
+    });
+
+    dispatch(setAlert('Imagen eliminada', 'success'));
+  } catch (err) {
+    dispatch(setAlert(err, 'error'));
+    dispatch({
+      type: DELETEIMAGE_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}
 
 //export const addImage = ()

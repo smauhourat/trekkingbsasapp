@@ -84,7 +84,7 @@ router.post('/',
         cloudinary.uploader
           .upload(data.image)
           .then((result) => {
-            console.log(result);
+            //console.log(result);
             const tripImage = {
               url: result.url,
               public_id: result.public_id,
@@ -123,7 +123,7 @@ router.delete('/:id_image',
     try {
       const trip = await Trip.findById(req.params.id);
       const id_image = req.params.id_image;
-  
+
       if (!trip) {
         return res.status(404).json({ msg: 'Evento no encontrado' });
       }

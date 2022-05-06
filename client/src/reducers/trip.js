@@ -8,7 +8,8 @@ import {
     GET_TRIP,
     TRIP_ERROR,
     CLEAR_TRIP,
-    ADDIMAGE_SUCCESS
+    ADDIMAGE_SUCCESS,
+    DELETEIMAGE_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -28,6 +29,13 @@ export default function(state = initialState, action) {
             newAddStateAddImage.loading = false;
 
             return newAddStateAddImage;
+
+        case DELETEIMAGE_SUCCESS:
+            let newStateDeleteImage = {...state};
+            newStateDeleteImage.selectedTrip.images = newStateDeleteImage.selectedTrip.images.filter((image) => image.public_id !== payload);
+            newStateDeleteImage.loading = false;
+
+            return newStateDeleteImage;
 
         case GET_TRIP:
             return {
