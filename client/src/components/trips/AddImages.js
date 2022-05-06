@@ -49,6 +49,7 @@ const AddImages = ({ addImage, setAlert }) => {
             addImage(id, image);
             setFileInputState('');
             setPreviewSource('');
+            setSelectedFile();
         } catch (err) {
             console.error(err);
             setAlert('Error cargando imagen', 'danger');

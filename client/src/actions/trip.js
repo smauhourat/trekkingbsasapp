@@ -106,7 +106,7 @@ export const addImage = (id, image) => async (dispatch) => {
 
     dispatch({
       type: ADDIMAGE_SUCCESS,
-      payload: res.data
+      payload: res.data.images[0]
     });
 
     dispatch(setAlert('Imagen agregada', 'success'));
