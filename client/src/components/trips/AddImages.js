@@ -58,7 +58,7 @@ const AddImages = ({ addImage, setAlert }) => {
 
   return (
     <section className="container">
-        <h1 className="large text-primary">Trips Images</h1>
+        <h1 className="large text-primary">Imagenes del Evento</h1>
         <p className="lead"><i className="fas fa-user"></i> Cargar Imagen</p>
         <form onSubmit={handleSubmitFile} className="form">
             <label  htmlFor="fileInput" className="btn btn-success btn-link no-wrap">
