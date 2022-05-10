@@ -13,9 +13,9 @@ const ImagesListContent = ({trip: {selectedTrip}, deleteImage}) => {
                     <figcaption><h3><a href={img.url} target="_blank">{img.public_id}</a></h3></figcaption>
                 </figure>
                 <p>
-                    <div className="tiny">
+                    <span className="tiny">
                         formato: {img.format} | tamaño: {formatBytes(img.bytes)} | dimensiones {img.width} x {img.height}
-                    </div>
+                    </span>
                 </p>
                 <hr />
                 <button

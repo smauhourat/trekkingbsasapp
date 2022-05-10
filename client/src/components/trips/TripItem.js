@@ -1,35 +1,40 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import formatDate from '../../utils/formatDate';
 
 const TripItem = ({
-    trip: {
-        title,
-        subtitle,
-        location,
-        duration,
-        date,
-        quota,
-        images
-    }
+    trip
+    // trip: {
+    //     _id,
+    //     title,
+    //     subtitle,
+    //     location,
+    //     duration,
+    //     date,
+    //     quota,
+    //     images
+    // }
 }) => {
   return (
     <div className="profile bg-white">
     <img
       className="round-img-slow"
-      src={images[0]?.url}
+      src={trip.images[0]?.url}
       alt=""
     />
     <div>
-      <h2>{title}</h2>
-      <p>{subtitle}</p>
-      <p>{location}</p>
-      <a href="profile2.html" className="btn btn-primary mg-top-1">Ver Detalle</a>
+      <h2>{trip.title}</h2>
+      <p>{trip.subtitle}</p>
+      <p>{trip.location}</p>
+      <Link to={'/trip-details/'+trip._id} state={{data: trip}} className='btn btn-primary'>
+        <i className='text-primary' /> Ver Detalle
+      </Link>      
     </div>
     <div>
-      <h3>Fecha:</h3>{formatDate(date)}
-      <h3>Duración:</h3>{duration}
-      <h3>Disponibilidad:</h3>{quota} lugares
+      <h3>Fecha:</h3>{formatDate(trip.date)}
+      <h3>Duración:</h3>{trip.duration}
+      <h3>Disponibilidad:</h3>{trip.quota} lugares
     </div>
   </div>
   )

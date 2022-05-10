@@ -18,10 +18,11 @@ const AddTrip = ({ addTrip }) => {
         location: '',
         grading: '',
         quota: '',
-        reservations: ''
+        reservations: '',
+        suggested_equipment: ''
       });
     
-      const { title, subtitle, description, date, duration, price, location, grading, quota, reservations } = formData;
+      const { title, subtitle, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = formData;
 
       const onChange = (e) =>
       setFormData({ ...formData, [e.target.name]: e.target.value });      
@@ -56,14 +57,23 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>
           <div className="form-group">
-            <input
-              type="text"
+            <textarea 
               placeholder="Descripcion"
+              rows="5"
               name="description"
               value={description}
               onChange={onChange}              
             />
           </div>
+          <div className="form-group">
+            <textarea
+              placeholder="Equipo Sugerido"
+              rows="5"
+              name="suggested_equipment"
+              value={suggested_equipment}
+              onChange={onChange}              
+            />
+          </div>          
           <div className="form-group">
             <input
               type="text"

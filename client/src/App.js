@@ -9,6 +9,7 @@ import Trips from './components/trips/Trips';
 import AddUser from './components/user/AddUser';
 import AddTrip from './components/trips/AddTrip';
 import AddImages from './components/trips/AddImages';
+import TripDetails from './components/trips/TripDetails';
 import PrivateRoute from './components/routing/PrivateRoute';
 import { LOGOUT } from './actions/types';
 
@@ -49,6 +50,7 @@ const App = () => {
             <Route path="add-trip" element={<PrivateRoute component={AddTrip} />} />
             <Route path="add-images/:id" element={<PrivateRoute component={AddImages} />} />
             <Route path="trips" element={<Trips />} />
+            <Route path="trip-details/:id" element={<TripDetails/>} />
         </Fragment>
       </Routes>
     </Router>

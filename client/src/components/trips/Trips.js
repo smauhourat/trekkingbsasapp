@@ -18,7 +18,7 @@ const Trips = ({ getTrips, trip: { trips } }) => {
     return (
         <section className="container">
         <Fragment>
-            <h1 className="large text-primary">Trips</h1>
+            <h1 className="large text-primary">Eventos</h1>
             <p className="lead">
             <i className="fab fa-connectdevelop" /> Resultado de la busqueda...
             </p>
@@ -28,7 +28,7 @@ const Trips = ({ getTrips, trip: { trips } }) => {
                 <TripItem key={trip._id} trip={trip} />
                 ))
             ) : (
-                <h4>No se econtraron Trips...</h4>
+                <h4>No se econtraron Eventos...</h4>
             )}
             </div>
         </Fragment>

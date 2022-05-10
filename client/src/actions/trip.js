@@ -46,14 +46,18 @@ export const addTrip = ( formData, navigate ) => async (dispatch) => {
         payload: res.data
       });
   
-      dispatch(setAlert('Trip agregado', 'success'));
+      dispatch(setAlert('Evento agregado', 'success'));
   
       navigate('/dashboard');
     } catch (err) {
       const errors = err.response.data.errors;
   
       if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+        if (Array.isArray(errors)) {
+          errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+        }
+      } else {
+        dispatch(setAlert(err.msg, 'danger'))
       }
   
       dispatch({
@@ -73,7 +77,7 @@ export const deleteTrip = (id) => async (dispatch) => {
       payload: id
     });
 
-    dispatch(setAlert('Trip eliminado', 'success'));
+    dispatch(setAlert('Evento eliminado', 'success'));
   } catch (err) {
     dispatch({
       type: DELETETRIP_FAIL,
