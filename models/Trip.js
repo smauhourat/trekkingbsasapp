@@ -45,6 +45,9 @@ const TripSchema = new mongoose.Schema({
     reservations: {
         type: Number
     },
+    suggested_equipment: {
+        type: String
+    },
     images: [
         {
             url: {

@@ -5,14 +5,17 @@ import DashboardActions from './DashboardActions';
 import UsersList from './UsersList';
 import TripsList from './TripsList';
 import { getUsers } from '../../actions/user';
+import { clearTrip } from '../../actions/trip';
 
 const Dashboard = ({
     getUsers,
+    clearTrip,
     auth: { user },
     user: { users }
 }) => {
   useEffect(() => {
     getUsers();
+    clearTrip();
   }, [getUsers]);
 
   return (
@@ -34,7 +37,7 @@ Dashboard.propTypes = {
     auth: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     getUsers: PropTypes.func.isRequired,
-
+    clearTrip: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -42,4 +45,4 @@ const mapStateToProps = (state) => ({
     user: state.user,
   });
 
-export default connect(mapStateToProps, { getUsers })(Dashboard);
+export default connect(mapStateToProps, { getUsers, clearTrip })(Dashboard);

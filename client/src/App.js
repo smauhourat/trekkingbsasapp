@@ -8,6 +8,8 @@ import Dashboard from './components/dashboard/Dashboard';
 import Trips from './components/trips/Trips';
 import AddUser from './components/user/AddUser';
 import AddTrip from './components/trips/AddTrip';
+import EditTrip from './components/trips/EditTrip';
+//import TripForm from './components/trips/TripForm';
 import AddImages from './components/trips/AddImages';
 import TripDetails from './components/trips/TripDetails';
 import PrivateRoute from './components/routing/PrivateRoute';
@@ -48,6 +50,7 @@ const App = () => {
             <Route path="dashboard" element={<PrivateRoute component={Dashboard} />}/>
             <Route path="add-user" element={<PrivateRoute component={AddUser} />} />
             <Route path="add-trip" element={<PrivateRoute component={AddTrip} />} />
+            <Route path="edit-trip/:id" element={<PrivateRoute component={EditTrip} />} />
             <Route path="add-images/:id" element={<PrivateRoute component={AddImages} />} />
             <Route path="trips" element={<Trips />} />
             <Route path="trip-details/:id" element={<TripDetails/>} />

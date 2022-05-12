@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TripItem from './TripItem';
 import { getTrips } from '../../actions/trip';
+import Spinner from '../layout/Spinner';
 
-const Trips = ({ getTrips, trip: { trips } }) => {
+const Trips = ({ getTrips, trip: { trips, loading } }) => {
 
     const queryParam = new URLSearchParams(useLocation().search).get("q");
     const query = queryParam !== undefined || queryParam !== null ? queryParam : '';
@@ -17,6 +18,9 @@ const Trips = ({ getTrips, trip: { trips } }) => {
 
     return (
         <section className="container">
+      {loading ? (
+        <Spinner />
+      ) : (            
         <Fragment>
             <h1 className="large text-primary">Eventos</h1>
             <p className="lead">
@@ -32,6 +36,7 @@ const Trips = ({ getTrips, trip: { trips } }) => {
             )}
             </div>
         </Fragment>
+      )}
         </section>
       );    
 } 

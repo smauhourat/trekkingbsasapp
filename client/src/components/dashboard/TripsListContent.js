@@ -1,11 +1,18 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import { deleteTrip } from '../../actions/trip';
 import formatDate from '../../utils/formatDate';
 
+
 const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip}) => {
+  const navigate = useNavigate();
+
+  const editTrip = (id) => {
+    navigate(`/edit-trip/${id}`);
+  }
+
     const tripsList =  
     data?.map((trip) => (
       <tr key={trip._id}>
@@ -19,6 +26,15 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip}) => {
           </Link>          
         </td>
         <td>
+          {/* <button
+            onClick={() => editTrip(trip._id)}
+            className="btn btn-success"
+          >
+            <i className="fas fa-edit" title="Edit"></i>
+          </button>           */}
+          <Link to={`/edit-trip/${trip._id}`} className='btn btn-success btn-link'>
+            <i className="fas fa-edit" title="Edit"></i>
+          </Link>           
           <button
             onClick={() => deleteTrip(trip._id)}
             className="btn btn-danger"
