@@ -28,8 +28,8 @@ const EditTrip = ({
       const id = useParams().id;
 
       useEffect(() => {
-        console.log(id);
-        getTrip(id);
+        //console.log(id);
+        //getTrip(id);
 
         setFormData({
             title: loading || !selectedTrip.title ? 'cacacac' : selectedTrip.title,
