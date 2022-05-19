@@ -6,7 +6,7 @@ import { deleteTrip, getTrip } from '../../actions/trip';
 import formatDate from '../../utils/formatDate';
 
 
-const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip, getTrip, history}) => {
+const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip, getTrip}) => {
   const navigate = useNavigate();
 
   const editTrip = (id) => {
