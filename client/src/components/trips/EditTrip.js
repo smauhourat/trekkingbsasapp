@@ -5,53 +5,91 @@ import { connect } from 'react-redux';
 import { addTrip, getTrip } from '../../actions/trip';
 
 const EditTrip = ({ 
-    trip: {selectedTrip, loading}, 
+    trip: {trips, selectedTrip, loading}, 
     addTrip, 
-    getTrip 
+    getTrip
 }) => {
     const navigate = useNavigate();
+    
+    const [editedTrip, setEditedTrip] = useState({
+    title: '',
+    subtitle: '',
+    description: '',
+    created: Date.now,
+    date: null,
+    duration: '',
+    price: 0,
+    location: '',
+    grading: 0,
+    quota: 0,
+    reservations: 0,
+    suggested_equipment: ''
+  })    
 
-    const [formData, setFormData] = useState({
-        title: '',
-        subtitle: '',
-        description: '',
-        date: '',
-        duration: '',
-        price: '',
-        location: '',
-        grading: '',
-        quota: '',
-        reservations: '',
-        suggested_equipment: ''
-      });
+    // const [formData, setFormData] = useState({
+    //     title: '',
+    //     subtitle: '',
+    //     description: '',
+    //     date: '',
+    //     duration: '',
+    //     price: '',
+    //     location: '',
+    //     grading: '',
+    //     quota: '',
+    //     reservations: '',
+    //     suggested_equipment: ''
+    //   });
     
       const id = useParams().id;
 
       useEffect(() => {
-        console.log(id);
-        getTrip(id);
+        
+        const trip = trips.data.find(trip  => trip._id === id);
+        console.log(trip);
+        //console.log(selectedTrip);
+        //console.log(loading);
+        setEditedTrip(trip);
 
-        setFormData({
-            title: loading || !selectedTrip.title ? 'cacacac' : selectedTrip.title,
-            subtitle: loading || !selectedTrip.subtitle ? '' : selectedTrip.subtitle,
-            description: loading || !selectedTrip.description ? '' : selectedTrip.description,
-            date: loading || !selectedTrip.date ? '' : selectedTrip.date,
-            duration: loading || !selectedTrip.duration ? '' : selectedTrip.duration,
-            price: loading || !selectedTrip.price ? '' : selectedTrip.price,
-            location: loading || !selectedTrip.location ? '' : selectedTrip.location,
-            grading: loading || !selectedTrip.grading ? '' : selectedTrip.grading,
-            quota: loading || !selectedTrip.quota ? '' : selectedTrip.quota,
-            reservations: loading || !selectedTrip.reservations ? '' : selectedTrip.reservations,
-            suggested_equipment: loading || !selectedTrip.suggested_equipment ? '' : selectedTrip.suggested_equipment
-        });
+        // setFormData({
+        //     title: editedTrip.title,
+        //     subtitle: loading || !editedTrip.subtitle ? '' : editedTrip.subtitle,
+        //     description: loading || !editedTrip.description ? '' : editedTrip.description,
+        //     date: loading || !editedTrip.date ? '' : editedTrip.date,
+        //     duration: loading || !editedTrip.duration ? '' : editedTrip.duration,
+        //     price: loading || !editedTrip.price ? '' : editedTrip.price,
+        //     location: loading || !editedTrip.location ? '' : editedTrip.location,
+        //     grading: loading || !editedTrip.grading ? '' : editedTrip.grading,
+        //     quota: loading || !editedTrip.quota ? '' : editedTrip.quota,
+        //     reservations: loading || !editedTrip.reservations ? '' : editedTrip.reservations,
+        //     suggested_equipment: loading || !editedTrip.suggested_equipment ? '' : editedTrip.suggested_equipment
+        // });        
+      }, [id, trips.data]);
+      
+      // useEffect(() => {
+      //    console.log(id);
+      //   getTrip(id);
 
-        console.log(selectedTrip);
-      }, [])
+      //   setFormData({
+      //       title: loading || !selectedTrip.title ? 'cacacac' : selectedTrip.title,
+      //       subtitle: loading || !selectedTrip.subtitle ? '' : selectedTrip.subtitle,
+      //       description: loading || !selectedTrip.description ? '' : selectedTrip.description,
+      //       date: loading || !selectedTrip.date ? '' : selectedTrip.date,
+      //       duration: loading || !selectedTrip.duration ? '' : selectedTrip.duration,
+      //       price: loading || !selectedTrip.price ? '' : selectedTrip.price,
+      //       location: loading || !selectedTrip.location ? '' : selectedTrip.location,
+      //       grading: loading || !selectedTrip.grading ? '' : selectedTrip.grading,
+      //       quota: loading || !selectedTrip.quota ? '' : selectedTrip.quota,
+      //       reservations: loading || !selectedTrip.reservations ? '' : selectedTrip.reservations,
+      //       suggested_equipment: loading || !selectedTrip.suggested_equipment ? '' : selectedTrip.suggested_equipment
+      //   });
 
-      const { title, subtitle, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = formData;
+      //   console.log(selectedTrip);
+      // }, [])
+
+      const { title, subtitle, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = editedTrip;
 
       const onChange = (e) =>
-      setFormData({ ...formData, [e.target.name]: e.target.value });      
+        setEditedTrip({ ...editedTrip, [e.target.name]: e.target.value });      
 
       return (
         <section className="container">
@@ -61,7 +99,7 @@ const EditTrip = ({
                 className="form"
                 onSubmit={(e) => {
                 e.preventDefault();
-                addTrip(formData, navigate);
+                addTrip(editedTrip, navigate);
                 }}
             >
           <div className="form-group">

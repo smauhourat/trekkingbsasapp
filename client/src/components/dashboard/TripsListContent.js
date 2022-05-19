@@ -2,15 +2,17 @@ import React from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
-import { deleteTrip } from '../../actions/trip';
+import { deleteTrip, getTrip } from '../../actions/trip';
 import formatDate from '../../utils/formatDate';
 
 
-const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip}) => {
+const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip, getTrip, history}) => {
   const navigate = useNavigate();
 
   const editTrip = (id) => {
+    getTrip(id);
     navigate(`/edit-trip/${id}`);
+    //history.push(`/edit-trip/${id}`);
   }
 
     const tripsList =  
@@ -26,15 +28,15 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip}) => {
           </Link>          
         </td>
         <td>
-          {/* <button
+          <button
             onClick={() => editTrip(trip._id)}
             className="btn btn-success"
           >
             <i className="fas fa-edit" title="Edit"></i>
-          </button>           */}
-          <Link to={`/edit-trip/${trip._id}`} className='btn btn-success btn-link'>
+          </button>          
+          {/* <Link to={`/edit-trip/${trip._id}`} className='btn btn-success btn-link'>
             <i className="fas fa-edit" title="Edit"></i>
-          </Link>           
+          </Link>            */}
           <button
             onClick={() => deleteTrip(trip._id)}
             className="btn btn-danger"
@@ -60,7 +62,8 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip}) => {
 };
 
 TripsListContent.propTypes = {
-    deleteTrip: PropTypes.func.isRequired
+    deleteTrip: PropTypes.func.isRequired,
+    getTrip: PropTypes.func.isRequired
 }
 
 
@@ -68,4 +71,4 @@ const mapStateToProps = (state) => ({
     trip: state.trip
   });
 
-export default connect(mapStateToProps, { deleteTrip })(TripsListContent);
+export default connect(mapStateToProps, { deleteTrip, getTrip })(TripsListContent);
