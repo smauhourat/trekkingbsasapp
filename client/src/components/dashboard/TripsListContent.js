@@ -26,7 +26,7 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip, getTrip}
             <i className="fas fa-file-image" title="Multimedia"></i>
           </Link>          
         </td>
-        <td className="nowrap">
+        <td className="no-wrap">
           <div className="align-center">
             <button
               onClick={() => editTrip(trip._id)}
@@ -48,13 +48,6 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip, getTrip}
     return (
             <>
               {tripsList}
-              <tr>
-                <td colSpan="5">
-                  <div className="tiny">
-                    página {metadata?.page} de {Math.ceil(metadata?.total/metadata?.limit)} - total de Registros: {metadata?.total}
-                  </div>
-                </td>
-              </tr>
             </>
     );
 };

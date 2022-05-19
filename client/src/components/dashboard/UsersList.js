@@ -25,10 +25,9 @@ const UsersList = ({ users, deleteUser }) => {
       <table className="table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th className="hide-sm">Email</th>
-              <th className="hide-sm">Estado</th>
-              <th></th>
+              <th width="25%">Nombre</th>
+              <th width="50%" className="hide-sm">Email</th>
+              <th width="25%" className="hide-sm">Estado</th>
               <th></th>
             </tr>
           </thead>

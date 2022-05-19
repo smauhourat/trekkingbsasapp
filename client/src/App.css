@@ -176,7 +176,7 @@ img {
 }
 
 .tiny {
-  font-size:0.8rem;
+  font-size:0.90rem;
   line-height: 1;
   justify-items: center;
 }
@@ -882,6 +882,7 @@ label {
   font-size: 1.1rem;
 }
 
-.nowrap {
-  white-space: nowrap;
+.inline {
+  display: inline-block;
 }
+

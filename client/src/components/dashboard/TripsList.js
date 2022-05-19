@@ -50,8 +50,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
           </tbody>
           <tfoot> 
             <tr>
-              <td></td>
-              <td>
+              <td colSpan="6">
                 <button
                     onClick={() => goToPrevPage()}
                     className="btn btn-primary btn-small"
@@ -59,9 +58,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
                   >
                     <li className="fas fa-angle-left"></li>
                   </button>            
-              </td>
-              <td></td>
-              <td>
+
                 <button
                   onClick={() => goToNextPage()}
                   className="btn btn-primary btn-small"
@@ -69,8 +66,10 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
                 >
                   <li className="fas fa-angle-right"></li>
                 </button>
+                <div className="tiny inline">
+                  Página {trips.metadata?.page} de {Math.ceil(trips.metadata?.total/trips.metadata?.limit)} - total de registros: {trips.metadata?.total}
+                </div>
               </td>
-              <td></td>
             </tr>
           </tfoot>
         </table>
