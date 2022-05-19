@@ -9,6 +9,8 @@ import {
   DELETETRIP_FAIL,
   ADDTRIP_SUCCESS,
   ADDTRIP_FAIL,
+  UPDATETRIP_SUCCESS,
+  UPDATETRIP_FAIL,
   CLEAR_TRIP,
   GET_TRIP,
   TRIP_ERROR,
@@ -71,6 +73,38 @@ export const addTrip = ( formData, navigate ) => async (dispatch) => {
       });
     }    
 };
+
+// Add trip
+export const updateTrip = ( id, formData, navigate ) => async (dispatch) => {
+  try {
+      const res = await api.put(`/trips/${id}`, formData);
+  
+      dispatch({
+        type: UPDATETRIP_SUCCESS,
+        payload: res.data
+      });
+  
+      dispatch(setAlert('Evento Modificado', 'success'));
+  
+      navigate('/dashboard');
+    } catch (err) {
+      const errors = err.response.data.errors;
+  
+      if (errors) {
+        if (Array.isArray(errors)) {
+          errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+        }
+      } else {
+        dispatch(setAlert(err.msg, 'danger'))
+      }
+  
+      dispatch({
+        type: UPDATETRIP_FAIL,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    }    
+};
+
 
 // Delete trip
 export const deleteTrip = (id) => async (dispatch) => {

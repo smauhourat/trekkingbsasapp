@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
-import { addTrip, getTrip } from '../../actions/trip';
+import { updateTrip } from '../../actions/trip';
 
 const EditTrip = ({ 
-    trip: {trips, selectedTrip, loading}, 
-    addTrip, 
-    getTrip
+    trip: {trips}, 
+    updateTrip
 }) => {
     const navigate = useNavigate();
     
@@ -26,66 +25,15 @@ const EditTrip = ({
     suggested_equipment: ''
   })    
 
-    // const [formData, setFormData] = useState({
-    //     title: '',
-    //     subtitle: '',
-    //     description: '',
-    //     date: '',
-    //     duration: '',
-    //     price: '',
-    //     location: '',
-    //     grading: '',
-    //     quota: '',
-    //     reservations: '',
-    //     suggested_equipment: ''
-    //   });
-    
+   
       const id = useParams().id;
 
       useEffect(() => {
         
         const trip = trips.data.find(trip  => trip._id === id);
-        console.log(trip);
-        //console.log(selectedTrip);
-        //console.log(loading);
         setEditedTrip(trip);
-
-        // setFormData({
-        //     title: editedTrip.title,
-        //     subtitle: loading || !editedTrip.subtitle ? '' : editedTrip.subtitle,
-        //     description: loading || !editedTrip.description ? '' : editedTrip.description,
-        //     date: loading || !editedTrip.date ? '' : editedTrip.date,
-        //     duration: loading || !editedTrip.duration ? '' : editedTrip.duration,
-        //     price: loading || !editedTrip.price ? '' : editedTrip.price,
-        //     location: loading || !editedTrip.location ? '' : editedTrip.location,
-        //     grading: loading || !editedTrip.grading ? '' : editedTrip.grading,
-        //     quota: loading || !editedTrip.quota ? '' : editedTrip.quota,
-        //     reservations: loading || !editedTrip.reservations ? '' : editedTrip.reservations,
-        //     suggested_equipment: loading || !editedTrip.suggested_equipment ? '' : editedTrip.suggested_equipment
-        // });        
       }, [id, trips.data]);
       
-      // useEffect(() => {
-      //    console.log(id);
-      //   getTrip(id);
-
-      //   setFormData({
-      //       title: loading || !selectedTrip.title ? 'cacacac' : selectedTrip.title,
-      //       subtitle: loading || !selectedTrip.subtitle ? '' : selectedTrip.subtitle,
-      //       description: loading || !selectedTrip.description ? '' : selectedTrip.description,
-      //       date: loading || !selectedTrip.date ? '' : selectedTrip.date,
-      //       duration: loading || !selectedTrip.duration ? '' : selectedTrip.duration,
-      //       price: loading || !selectedTrip.price ? '' : selectedTrip.price,
-      //       location: loading || !selectedTrip.location ? '' : selectedTrip.location,
-      //       grading: loading || !selectedTrip.grading ? '' : selectedTrip.grading,
-      //       quota: loading || !selectedTrip.quota ? '' : selectedTrip.quota,
-      //       reservations: loading || !selectedTrip.reservations ? '' : selectedTrip.reservations,
-      //       suggested_equipment: loading || !selectedTrip.suggested_equipment ? '' : selectedTrip.suggested_equipment
-      //   });
-
-      //   console.log(selectedTrip);
-      // }, [])
-
       const { title, subtitle, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = editedTrip;
 
       const onChange = (e) =>
@@ -99,10 +47,11 @@ const EditTrip = ({
                 className="form"
                 onSubmit={(e) => {
                 e.preventDefault();
-                addTrip(editedTrip, navigate);
+                updateTrip(id, editedTrip, navigate);
                 }}
             >
           <div className="form-group">
+            <label>Titulo</label>
             <input 
                 type="text" 
                 placeholder="Titulo" 
@@ -112,6 +61,7 @@ const EditTrip = ({
                 required />
           </div>
           <div className="form-group">
+            <label>Subtitulo</label>
             <input 
               type="text" 
               placeholder="Subtitulo" 
@@ -121,6 +71,7 @@ const EditTrip = ({
             />
           </div>
           <div className="form-group">
+          <label>Descripcion</label>
             <textarea 
               placeholder="Descripcion"
               rows="5"
@@ -130,6 +81,7 @@ const EditTrip = ({
             />
           </div>
           <div className="form-group">
+            <label>Equipo Sugerido</label>
             <textarea
               placeholder="Equipo Sugerido"
               rows="5"
@@ -139,6 +91,7 @@ const EditTrip = ({
             />
           </div>          
           <div className="form-group">
+            <label>Fecha</label>
             <input
               type="text"
               placeholder="Fecha"
@@ -148,6 +101,7 @@ const EditTrip = ({
             />
           </div>
           <div className="form-group">
+            <label>Duración</label>
             <input
               type="text"
               placeholder="Duracion"
@@ -157,6 +111,7 @@ const EditTrip = ({
             />
           </div>
           <div className="form-group">
+            <label>Precio</label>
             <input
               type="text"
               placeholder="Precio"
@@ -166,6 +121,7 @@ const EditTrip = ({
             />
           </div>
           <div className="form-group">
+            <label>Lugar</label>
             <input
               type="text"
               placeholder="Lugar"
@@ -175,6 +131,7 @@ const EditTrip = ({
             />
           </div>
           <div className="form-group">
+            <label>Grado Dificultad</label>
             <input
               type="text"
               placeholder="Grado dificultad"
@@ -184,6 +141,7 @@ const EditTrip = ({
             />
           </div>
           <div className="form-group">
+            <label>Cupo</label>
             <input
               type="text"
               placeholder="Cupo"
@@ -193,6 +151,7 @@ const EditTrip = ({
             />
           </div>
           <div className="form-group">
+            <label>Reservas</label>
             <input
               type="text"
               placeholder="Reservas"
@@ -210,8 +169,7 @@ const EditTrip = ({
     
 
 EditTrip.propTypes = {
-    addTrip: PropTypes.func.isRequired,
-    getTrip: PropTypes.func.isRequired,
+    updateTrip: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -219,4 +177,4 @@ const mapStateToProps = (state) => ({
   });
 
   
-export default connect(mapStateToProps, { addTrip, getTrip })(EditTrip);
+export default connect(mapStateToProps, { updateTrip })(EditTrip);
