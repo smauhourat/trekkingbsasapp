@@ -39,6 +39,7 @@ const AddTrip = ({ addTrip }) => {
                 }}
             >
           <div className="form-group">
+            <label>Titulo</label>
             <input 
                 type="text" 
                 placeholder="Titulo" 
@@ -48,6 +49,7 @@ const AddTrip = ({ addTrip }) => {
                 required />
           </div>
           <div className="form-group">
+            <label>Subtitulo</label>
             <input 
               type="text" 
               placeholder="Subtitulo" 
@@ -57,6 +59,7 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>
           <div className="form-group">
+            <label>Descripcion</label>
             <textarea 
               placeholder="Descripcion"
               rows="5"
@@ -66,6 +69,7 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>
           <div className="form-group">
+            <label>Equipo Sugerido</label>
             <textarea
               placeholder="Equipo Sugerido"
               rows="5"
@@ -75,6 +79,7 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>          
           <div className="form-group">
+            <label>Fecha</label>
             <input
               type="text"
               placeholder="Fecha"
@@ -84,6 +89,7 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>
           <div className="form-group">
+            <label>Duración</label>
             <input
               type="text"
               placeholder="Duracion"
@@ -93,6 +99,7 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>
           <div className="form-group">
+            <label>Precio</label>
             <input
               type="text"
               placeholder="Precio"
@@ -102,6 +109,7 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>
           <div className="form-group">
+            <label>Lugar</label>
             <input
               type="text"
               placeholder="Lugar"
@@ -111,6 +119,7 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>
           <div className="form-group">
+            <label>Grado Dificultad</label>
             <input
               type="text"
               placeholder="Grado dificultad"
@@ -120,6 +129,7 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>
           <div className="form-group">
+            <label>Cupo</label>
             <input
               type="text"
               placeholder="Cupo"
@@ -129,6 +139,7 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>
           <div className="form-group">
+            <label>Reservas</label>
             <input
               type="text"
               placeholder="Reservas"
