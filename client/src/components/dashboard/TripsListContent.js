@@ -12,7 +12,6 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip, getTrip}
   const editTrip = (id) => {
     getTrip(id);
     navigate(`/edit-trip/${id}`);
-    //history.push(`/edit-trip/${id}`);
   }
 
     const tripsList =  
@@ -27,22 +26,21 @@ const TripsListContent = ({trip: {trips: {data, metadata}}, deleteTrip, getTrip}
             <i className="fas fa-file-image" title="Multimedia"></i>
           </Link>          
         </td>
-        <td>
-          <button
-            onClick={() => editTrip(trip._id)}
-            className="btn btn-success"
-          >
-            <i className="fas fa-edit" title="Edit"></i>
-          </button>          
-          {/* <Link to={`/edit-trip/${trip._id}`} className='btn btn-success btn-link'>
-            <i className="fas fa-edit" title="Edit"></i>
-          </Link>            */}
-          <button
-            onClick={() => deleteTrip(trip._id)}
-            className="btn btn-danger"
-          >
-            <i className="fas fa-trash-alt" title="Eliminar"></i>
-          </button>
+        <td className="nowrap">
+          <div className="align-center">
+            <button
+              onClick={() => editTrip(trip._id)}
+              className="btn btn-success"
+            >
+              <i className="fas fa-edit" title="Edit"></i>
+            </button>          
+            <button
+              onClick={() => deleteTrip(trip._id)}
+              className="btn btn-danger"
+            >
+              <i className="fas fa-trash-alt" title="Eliminar"></i>
+            </button>
+          </div>
         </td>      
       </tr>
     ));

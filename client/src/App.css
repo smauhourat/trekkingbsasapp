@@ -881,3 +881,7 @@ label {
   font-weight:550;
   font-size: 1.1rem;
 }
+
+.nowrap {
+  white-space: nowrap;
+}

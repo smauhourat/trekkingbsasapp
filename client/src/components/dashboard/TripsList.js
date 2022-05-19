@@ -62,7 +62,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
               </td>
               <td></td>
               <td>
-              <button
+                <button
                   onClick={() => goToNextPage()}
                   className="btn btn-primary btn-small"
                   title="Siguiente"

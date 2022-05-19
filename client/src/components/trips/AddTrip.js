@@ -29,8 +29,8 @@ const AddTrip = ({ addTrip }) => {
 
       return (
         <section className="container">
-        <h1 className="large text-primary">Trips</h1>
-        <p className="lead"><i className="fas fa-user"></i> Crear Trip</p>
+        <h1 className="large text-primary">Eventos</h1>
+        <p className="lead"><i className="fas fa-user"></i> Crear Evento</p>
         <form
                 className="form"
                 onSubmit={(e) => {
