@@ -43,7 +43,7 @@ const Landing = () => {
             </div>          
           </div>
           <div>
-            <a href="#">Trekking</a> | <a href="#">Caminatas</a> | <a href="#">Kayaks</a> | <a href="#">Mountain Bike</a>
+            <a>Trekking</a> | <a>Caminatas</a> | <a>Kayaks</a> | <a>Mountain Bike</a>
           </div>
         </div>
       </div>

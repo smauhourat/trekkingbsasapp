@@ -1,9 +1,8 @@
 import React from 'react'
 import { useLocation } from "react-router-dom";
-import PropTypes from 'prop-types'
 import formatDate from '../../utils/formatDate';
 
-const TripDetails = (props) => {
+const TripDetails = () => {
     const location = useLocation();
     const trip = location.state?.data;
 
@@ -78,10 +77,6 @@ const TripDetails = (props) => {
         </div>
     </section>
   )
-}
-
-TripDetails.propTypes = {
-
 }
 
 export default TripDetails

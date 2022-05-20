@@ -81,7 +81,7 @@ const AddTrip = ({ addTrip }) => {
           <div className="form-group">
             <label>Fecha</label>
             <input
-              type="text"
+              type="date"
               placeholder="Fecha"
               name="date"
               value={date}

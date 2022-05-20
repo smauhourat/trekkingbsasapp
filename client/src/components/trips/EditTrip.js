@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { updateTrip } from '../../actions/trip';
+import formatDateISO from '../../utils/formatDateISO';
 
 const EditTrip = ({ 
     trip: {trips}, 
@@ -93,10 +94,10 @@ const EditTrip = ({
           <div className="form-group">
             <label>Fecha</label>
             <input
-              type="text"
+              type="date"
               placeholder="Fecha"
               name="date"
-              value={date}
+              value={formatDateISO(date)}
               onChange={onChange}              
             />
           </div>
