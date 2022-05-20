@@ -67,3 +67,13 @@ Result:
 10. install uuid library in client to generate guid (used in alerts)
 
 11. upload image cloudinary
+
+### Deploy to Heroku
+
+1. Install Heroku client ([heroku-cli])(https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli)
+2. Add **config/default.json** to .gitignore file.
+3. Add new file **config/production.json**
+4. Add **"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"** to scripts section in package.json
+5. Run `heroku create`, to create app into heroku cloud. At the end show the `<name_of_app_in_heroku>`
+6. Add heroku as a remote repository `heroku git:remote -a <name_of_app_in_heroku>`
+7. Push master to heroku `git push heroku master`
