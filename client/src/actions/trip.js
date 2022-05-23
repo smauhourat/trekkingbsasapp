@@ -39,7 +39,6 @@ export const getTrips = (query) => async (dispatch) => {
 }
 
 export const clearTrip = () => async (dispatch) => {
-  console.log('dispatch CLEAR_TRIP');
   dispatch({ type: CLEAR_TRIP });
 }
 

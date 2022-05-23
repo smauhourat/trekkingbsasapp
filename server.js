@@ -26,6 +26,7 @@ app.use('/api/trips', require('./routes/api/trips'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/image-upload', require('./routes/api/image-upload'));
 app.use('/api/trips/:id/images', require('./routes/api/images'));
+app.use('/api/tripcategory', require('./routes/api/tripcategory'));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

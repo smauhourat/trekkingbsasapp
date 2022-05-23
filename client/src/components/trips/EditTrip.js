@@ -37,8 +37,12 @@ const EditTrip = ({
       
       const { title, subtitle, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = editedTrip;
 
-      const onChange = (e) =>
+      const onChange = (e) => {
+        if (e.target.name === 'date') {
+          console.log(e.target.value);
+        }        
         setEditedTrip({ ...editedTrip, [e.target.name]: e.target.value });      
+      };
 
       return (
         <section className="container">
