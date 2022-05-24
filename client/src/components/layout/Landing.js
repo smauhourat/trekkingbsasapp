@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Landing = () => {
   const [search, setSearch] = useState('');
@@ -43,7 +43,21 @@ const Landing = () => {
             </div>          
           </div>
           <div>
-            <a>Trekking</a> | <a>Caminatas</a> | <a>Kayaks</a> | <a>Mountain Bike</a>
+            <Link to={`/trips/?q=${search}&category=Trekking`} className="link">
+              Trekking
+            </Link>       
+            |
+            <Link to={`/trips/?q=${search}&category=Caminatas`} className="link">
+              Caminatas
+            </Link>                  
+            |
+            <Link to={`/trips/?q=${search}&category=Kayaks`} className="link">
+              Kayaks
+            </Link>  
+            |
+            <Link to={`/trips/?q=${search}&category=Mountain Bike`} className="link">
+              Mountain Bike
+            </Link>              
           </div>
         </div>
       </div>

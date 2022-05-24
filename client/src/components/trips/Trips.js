@@ -9,7 +9,9 @@ import Spinner from '../layout/Spinner';
 const Trips = ({ getTrips, trip: { trips, loading } }) => {
 
     const queryParam = new URLSearchParams(useLocation().search).get("q");
-    const query = queryParam !== undefined || queryParam !== null ? queryParam : '';
+    const queryParam2 = new URLSearchParams(useLocation().search);
+    const query = queryParam2 !== undefined || queryParam2 !== null ? queryParam2 : '';
+    //debugger;
     
 
     useEffect(() => {

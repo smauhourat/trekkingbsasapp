@@ -886,3 +886,7 @@ label {
   display: inline-block;
 }
 
+.link {
+  cursor: pointer;
+  margin: 0 0.25rem;
+}
