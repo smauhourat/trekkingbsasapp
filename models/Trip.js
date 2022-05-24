@@ -16,8 +16,6 @@ const TripSchema = new mongoose.Schema({
     },
     category: {
         type: String
-        // type: Schema.Types.ObjectId,
-        // ref: 'tripcategories'
     },
     description: {
         type: String,
