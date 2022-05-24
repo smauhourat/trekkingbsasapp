@@ -42,5 +42,28 @@ router.post('/',
     }
 );
 
+// @route   GET api/tripcategory
+// @desc    Get all tripcategory
+// @access  Private
+router.get('/', 
+  auth, 
+  async (_req, res) => {
+    try {
+        const tripscategory = await TripCategory
+        .find()
+        .sort({ name: 'asc' });
+
+        res.json(tripscategory);
+
+        if (!tripscategory) {
+            return res.status(404).json({ msg: 'Categorias no encontradas' });
+          }
+    } catch(err) {
+        console.error(err.message);
+  
+        res.status(500).send('Server Error');
+    }
+});
+
 
 module.exports = router;
