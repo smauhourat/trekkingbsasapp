@@ -14,6 +14,11 @@ const TripSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        type: String
+        // type: Schema.Types.ObjectId,
+        // ref: 'tripcategories'
+    },
     description: {
         type: String,
         required: true

@@ -120,12 +120,13 @@ router.post('/',
           return res.status(400).json({ errors: errors.array() });
         }
 
-        const { title, subtitle, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = req.body;
+        const { title, subtitle, category, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = req.body;
 
         try {
             let newTrip = new Trip({
                 title,
                 subtitle,
+                category,
                 description,
                 date,
                 duration,

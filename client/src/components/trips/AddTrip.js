@@ -11,6 +11,7 @@ const AddTrip = ({ addTrip }) => {
     const [formData, setFormData] = useState({
         title: '',
         subtitle: '',
+        category: '',
         description: '',
         date: '',
         duration: '',
@@ -22,7 +23,7 @@ const AddTrip = ({ addTrip }) => {
         suggested_equipment: ''
       });
     
-      const { title, subtitle, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = formData;
+      const { title, subtitle, category, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = formData;
 
       const onChange = (e) =>
       setFormData({ ...formData, [e.target.name]: e.target.value });      
@@ -57,6 +58,16 @@ const AddTrip = ({ addTrip }) => {
               value={subtitle}
               onChange={onChange}              
             />
+          </div>
+          <div>
+            <label>Categoria</label>
+            <select name="category" value={category} onChange={onChange}>
+              <option>* Selecione una Categoria</option>
+              <option value="Trekking">Trekking</option>
+              <option value="Caminatas">Caminatas</option>
+              <option value="Mountain Bike">Mountain Bike</option>
+              <option value="Kayaks">Kayaks</option>
+            </select>            
           </div>
           <div className="form-group">
             <label>Descripcion</label>

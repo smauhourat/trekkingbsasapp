@@ -14,6 +14,7 @@ const EditTrip = ({
     const [editedTrip, setEditedTrip] = useState({
     title: '',
     subtitle: '',
+    category: '',
     description: '',
     created: Date.now,
     date: null,
@@ -35,7 +36,7 @@ const EditTrip = ({
         setEditedTrip(trip);
       }, [id, trips.data]);
       
-      const { title, subtitle, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = editedTrip;
+      const { title, subtitle, category, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = editedTrip;
 
       const onChange = (e) => {
         if (e.target.name === 'date') {
@@ -75,6 +76,16 @@ const EditTrip = ({
               onChange={onChange}              
             />
           </div>
+          <div>
+            <label>Categoria</label>
+            <select name="category" value={category} onChange={onChange}>
+              <option>* Selecione una Categoria</option>
+              <option value="Trekking">Trekking</option>
+              <option value="Caminatas">Caminatas</option>
+              <option value="Mountain Bike">Mountain Bike</option>
+              <option value="Kayaks">Kayaks</option>
+            </select>            
+          </div>          
           <div className="form-group">
           <label>Descripcion</label>
             <textarea 
