@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -9,6 +10,7 @@ connectDB();
 
 // Init Middleware
 app.use(express.json({extended: false, limit: '50mb'}))
+app.use(morgan('tiny'));
 
 app.use((_req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

@@ -13,6 +13,7 @@ import EditTrip from './components/trips/EditTrip';
 import AddImages from './components/trips/AddImages';
 import TripDetails from './components/trips/TripDetails';
 import PrivateRoute from './components/routing/PrivateRoute';
+import ContactForm from './components/contact/ContactForm';
 import { LOGOUT } from './actions/types';
 
 import './App.css';
@@ -54,6 +55,7 @@ const App = () => {
             <Route path="add-images/:id" element={<PrivateRoute component={AddImages} />} />
             <Route path="trips" element={<Trips />} />
             <Route path="trip-details/:id" element={<TripDetails/>} />
+            <Route path="contact" element={<ContactForm />} />
         </Fragment>
       </Routes>
     </Router>
