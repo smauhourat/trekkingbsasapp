@@ -20,12 +20,22 @@ const ContactForm = ({ setAlert }) => {
     const onChange = (e) =>
       setFormData({ ...formData, [e.target.name]: e.target.value });     
 
+    const resetForm = () => {
+        setFormData({
+            title: '',
+            email: '',
+            subject: '',
+            message: ''
+          });
+    }
+
     const sendContactForm = async (formData) => {
         
         try {
             const res = await api.post('/contact', formData);
             if (res.data.status === 'success') {
                 setAlert('Mensaje enviado', 'success');
+                resetForm();
                 console.log('Mensaje enviado');
             } else {
                 setAlert('Mensaje erroneo', 'danger');    
