@@ -3,5 +3,10 @@
     "jwtSecret": "mySecretToken",
     "cloud_name": "adhentux", 
     "api_key": "452114644377464", 
-    "api_secret": "po4HaQTQjYRvFxhygVYOaQHH3g0" 
+    "api_secret": "po4HaQTQjYRvFxhygVYOaQHH3g0",
+    "contact_user": "trekbsas@gmail.com",
+    "contact_to": "adhentux@gmail.com",
+    "contact_pwd": "",
+    "contact_host": "smtp.gmail.com",
+    "contact_port": 587
 }
