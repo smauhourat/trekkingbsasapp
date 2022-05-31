@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { setAlert } from '../../actions/alert';
 import api from '../../utils/api'
-
 import PropTypes from 'prop-types'
 
-const ContactForm = props => {
+const ContactForm = ({ setAlert }) => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -19,10 +20,18 @@ const ContactForm = props => {
     const onChange = (e) =>
       setFormData({ ...formData, [e.target.name]: e.target.value });     
 
-    const sendContactForm = (formData) => {
+    const sendContactForm = async (formData) => {
+        
         try {
-            api.post('/contact', formData);
+            const res = await api.post('/contact', formData);
+            if (res.data.status === 'success') {
+                setAlert('Mensaje enviado', 'success');
+                console.log('Mensaje enviado');
+            } else {
+                setAlert('Mensaje erroneo', 'danger');    
+            }
         } catch(err) {
+            setAlert('Mensaje erroneo', 'danger');
             console.error(err);
         }
     }
@@ -85,7 +94,7 @@ const ContactForm = props => {
 }
 
 ContactForm.propTypes = {
+    setAlert: PropTypes.func.isRequired,
+  };
 
-}
-
-export default ContactForm
+export default connect(null, { setAlert })(ContactForm);
