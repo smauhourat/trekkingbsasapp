@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import api from '../../utils/api'
 import PropTypes from 'prop-types'
+import Recaptcha from 'react-recaptcha';
 
 const ContactForm = ({ setAlert }) => {
     const navigate = useNavigate();
@@ -17,6 +18,9 @@ const ContactForm = ({ setAlert }) => {
 
     const { title, email, subject, message } = formData;
 
+    const [isVerified, setIsVerified] = useState(false);
+    const reRef = useRef();
+
     const onChange = (e) =>
       setFormData({ ...formData, [e.target.name]: e.target.value });     
 
@@ -29,13 +33,30 @@ const ContactForm = ({ setAlert }) => {
           });
     }
 
+    const onLoadRecaptcha = () => {
+        console.log('onLoadRecaptcha');
+        console.log(isVerified);
+    }
+
+    const verifyRecaptcha = () => {
+        console.log('verifyRecaptcha');
+        setIsVerified(true);
+        console.log(isVerified);
+    }
+
     const sendContactForm = async (formData) => {
-        
+
+        if (!isVerified) {
+            setAlert('Debe verificar el captcha', 'danger');
+            return;
+        }
+
         try {
             const res = await api.post('/contact', formData);
             if (res.data.status === 'success') {
                 setAlert('Mensaje enviado', 'success');
                 resetForm();
+                reRef.current.reset();
                 console.log('Mensaje enviado');
             } else {
                 setAlert('Mensaje erroneo', 'danger');    
@@ -66,22 +87,30 @@ const ContactForm = ({ setAlert }) => {
                         <input type="text" placeholder="Nombre" name="title" value={title} onChange={onChange} required />
                     </div>
                     <div className="form-group">
-                    <input type="text" placeholder="Email" name="email" value={email} onChange={onChange} required />
+                        <input type="text" placeholder="Email" name="email" value={email} onChange={onChange} required />
                     </div>
                     <div className="form-group">
-                    <input type="text" placeholder="Asunto" name="subject" value={subject} onChange={onChange}/>
+                        <input type="text" placeholder="Asunto" name="subject" value={subject} onChange={onChange}/>
                     </div>
                     <div className="form-group">
-                    <textarea
-                        name="message"
-                        cols="30"
-                        rows="5"
-                        placeholder="Mensaje"
-                        value={message}
-                        onChange={onChange}
-                    ></textarea>
+                        <textarea
+                            name="message"
+                            cols="30"
+                            rows="5"
+                            placeholder="Mensaje"
+                            value={message}
+                            onChange={onChange}
+                        ></textarea>
                     </div>
-                    <input type="submit" className="btn btn-primary my-1" />
+                    <Recaptcha
+                        sitekey="6Lf75TIgAAAAAOD8F6iyFcVdfbWW8GNs7p5tiK3p"
+                        render="explicit"
+                        ref={reRef}
+                        verifyCallback={verifyRecaptcha}
+                        onloadCallback={onLoadRecaptcha}
+                    />                    
+                    <input type="submit" className="btn btn-primary my-1" value="Enviar" disabled={!isVerified} />
+                    {/* <input type="submit" className="btn btn-primary my-1" value="Enviar" /> */}
                     <input type="button" className="btn btn-light my-1" value="Volver" onClick={() => navigate('/')} />
                 </form>
             </section>

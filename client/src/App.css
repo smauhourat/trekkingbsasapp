@@ -429,6 +429,10 @@ button {
   font: inherit;
 } */
 
+.form input[type='submit']:disabled{
+  background: var(--disabled-color);
+} 
+
 .form .social-input {
   display: flex;
 }
