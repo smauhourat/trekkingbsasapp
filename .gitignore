@@ -2,3 +2,11 @@ node_modules
 local
 config/default.json
 config/production.json
+
+# misc
+.DS_Store
+.env.local
+.env.development
+.env.development.local
+.env.test.local
+.env.production.local
