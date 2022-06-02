@@ -35,13 +35,13 @@ const ContactForm = ({ setAlert }) => {
 
     const onLoadRecaptcha = () => {
         console.log('onLoadRecaptcha');
-        console.log(isVerified);
+        console.log('isVerified1: ', isVerified);
     }
 
     const verifyRecaptcha = () => {
         console.log('verifyRecaptcha');
         setIsVerified(true);
-        console.log(isVerified);
+        console.log('isVerified2: ', isVerified);
     }
 
     const sendContactForm = async (formData) => {
@@ -103,7 +103,7 @@ const ContactForm = ({ setAlert }) => {
                         ></textarea>
                     </div>
                     <Recaptcha
-                        sitekey="XXX6Lf75TIgAAAAAOD8F6iyFcVdfbWW8GNs7p5tiK3p"
+                        sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
                         render="explicit"
                         ref={reRef}
                         verifyCallback={verifyRecaptcha}
