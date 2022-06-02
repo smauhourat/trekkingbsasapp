@@ -103,7 +103,7 @@ const ContactForm = ({ setAlert }) => {
                         ></textarea>
                     </div>
                     <Recaptcha
-                        sitekey="6Lf75TIgAAAAAOD8F6iyFcVdfbWW8GNs7p5tiK3p"
+                        sitekey="XXX6Lf75TIgAAAAAOD8F6iyFcVdfbWW8GNs7p5tiK3p"
                         render="explicit"
                         ref={reRef}
                         verifyCallback={verifyRecaptcha}

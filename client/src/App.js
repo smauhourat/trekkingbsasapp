@@ -24,6 +24,8 @@ import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
 const App = () => {
+  console.log(process.env.NODE_ENV);
+  console.log(process.env.RECAPTCHA_KEY);
   useEffect(() => {
     // check for token in LS when app first runs
     if (localStorage.token) {
