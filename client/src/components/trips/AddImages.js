@@ -11,6 +11,7 @@ const AddImages = ({ addImage, setAlert }) => {
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
     const [selectedFile, setSelectedFile] = useState();
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
     const handleFileInputChange = (e) => {
@@ -28,10 +29,13 @@ const AddImages = ({ addImage, setAlert }) => {
         };
     };    
 
-    const handleSubmitFile = (e) => {
+    const handleSubmitFile = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
+        console.log('isSubmitting 1', isSubmitting);
+        
         if (!selectedFile) return;
-
+        
         const reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onloadend = () => {
@@ -41,6 +45,9 @@ const AddImages = ({ addImage, setAlert }) => {
             console.error('Error leyendo el archivo: ' + err.target.error.code);
             setAlert('Error cargando imagen', 'danger');
         };
+
+        setIsSubmitting(false);
+        console.log('isSubmitting 2', isSubmitting);
     };
 
     const uploadImage = async (base64EncodedImage) => {
@@ -65,9 +72,10 @@ const AddImages = ({ addImage, setAlert }) => {
                 <i className="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
             </label>
             <input id="fileInput" type="file" name="image" onChange={handleFileInputChange} value={fileInputState}/>            
-            <button className="btn btn-primary" type="submit">
-                Aceptar
-            </button>
+            {/* <button className="btn btn-primary" type="submit">
+                {isSubmitting ? 'Cargando Imagen' : 'Aceptar'}
+            </button> */}
+            <input type="submit" className="btn btn-primary my-1" value={isSubmitting ? 'Cargando Imagen' : 'Aceptar'} disabled={!previewSource || isSubmitting} />
             <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/dashboard')} />
         </form>
         {previewSource && (
