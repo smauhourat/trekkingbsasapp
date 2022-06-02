@@ -19,6 +19,7 @@ const ContactForm = ({ setAlert }) => {
     const { title, email, subject, message } = formData;
 
     const [isVerified, setIsVerified] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const reRef = useRef();
 
     const onChange = (e) =>
@@ -31,6 +32,8 @@ const ContactForm = ({ setAlert }) => {
             subject: '',
             message: ''
           });
+          reRef.current.reset();
+          setIsVerified(false);
     }
 
     const onLoadRecaptcha = () => {
@@ -51,12 +54,12 @@ const ContactForm = ({ setAlert }) => {
             return;
         }
 
+        setIsSubmitting(true);
         try {
             const res = await api.post('/contact', formData);
             if (res.data.status === 'success') {
                 setAlert('Mensaje enviado', 'success');
                 resetForm();
-                reRef.current.reset();
                 console.log('Mensaje enviado');
             } else {
                 setAlert('Mensaje erroneo', 'danger');    
@@ -65,6 +68,7 @@ const ContactForm = ({ setAlert }) => {
             setAlert('Mensaje erroneo', 'danger');
             console.error(err);
         }
+        setIsSubmitting(false);
     }
 
     return (
@@ -109,8 +113,7 @@ const ContactForm = ({ setAlert }) => {
                         verifyCallback={verifyRecaptcha}
                         onloadCallback={onLoadRecaptcha}
                     />                    
-                    <input type="submit" className="btn btn-primary my-1" value="Enviar" disabled={!isVerified} />
-                    {/* <input type="submit" className="btn btn-primary my-1" value="Enviar" /> */}
+                    <input type="submit" className="btn btn-primary my-1" value={isSubmitting ? 'Enviando' : 'Enviar'} disabled={!isVerified || isSubmitting} />
                     <input type="button" className="btn btn-light my-1" value="Volver" onClick={() => navigate('/')} />
                 </form>
             </section>
