@@ -116,7 +116,7 @@ const ContactForm = ({ setAlert }) => {
             
             <div className="footer-basic bg-dark">
                 <footer>
-                    <div className="social"><a><i className="fab fa-instagram"></i></a><a><i className="fab fa-facebook-f"></i></a><a><i className="fab fa-twitter"></i></a><a><i className="fab fa-youtube"></i></a></div>
+                <div className="social"><a href="http://www.instagram.com/trekkingbsas"><i className="fab fa-instagram"></i></a><a href="http://www.facebook.com/trekkingbsas"><i className="fab fa-facebook-f"></i></a><a href="http://www.twitter.com/trekkingbsas"><i className="fab fa-twitter"></i></a><a href="http://www.youtube.com/trekkingbsas"><i className="fab fa-youtube"></i></a></div>
                     <ul className="list-inline">
                         <li className="list-inline-item"><Link to="/">Home</Link></li>
                         <li className="list-inline-item"><a>Calendario</a></li>

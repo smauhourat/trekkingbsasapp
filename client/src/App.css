@@ -2,7 +2,8 @@
 :root {
   --primary-color: #17a2b8;
   --secondary-color: #c27380;
-  --dark-color: #343a40;
+  --dark-color: #0a1416; 
+  /* #343a40; */
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
@@ -73,12 +74,30 @@ img {
 } */
 
 .footer-basic {
-  padding:40px 0;
+  padding:30px 0;
   background-color:#ffffff;
   color:#4b4c4d;
 }
 
+.footer-home {
+  padding:10px;
+  background-color:#ffffff;
+  color:#4b4c4d;
+  height: 20vh;
+  border-top: solid 1px var(--dark-color);
+  opacity: 0.9;  
+}
+
 .footer-basic ul {
+  padding:0;
+  list-style:none;
+  text-align:center;
+  font-size:18px;
+  line-height:1.6;
+  margin-bottom:0;
+}
+
+.footer-home ul {
   padding:0;
   list-style:none;
   text-align:center;
@@ -91,7 +110,17 @@ img {
   padding:0 10px;
 }
 
+.footer-home li {
+  padding:0 10px;
+}
+
 .footer-basic ul a {
+  color:inherit;
+  text-decoration:none;
+  opacity:0.8;
+}
+
+.footer-home ul a {
   color:inherit;
   text-decoration:none;
   opacity:0.8;
@@ -101,7 +130,16 @@ img {
   opacity:1;
 }
 
+.footer-home ul a:hover {
+  opacity:1;
+}
+
 .footer-basic .social {
+  text-align:center;
+  padding-bottom:25px;
+}
+
+.footer-home .social {
   text-align:center;
   padding-bottom:25px;
 }
@@ -120,18 +158,43 @@ img {
   opacity:0.75;
 }
 
+.footer-home .social > a {
+  font-size:24px;
+  width:40px;
+  height:40px;
+  line-height:40px;
+  display:inline-block;
+  text-align:center;
+  border-radius:50%;
+  border:1px solid #ccc;
+  margin:0 8px;
+  color:inherit;
+  opacity:0.75;
+}
+
 .footer-basic .social > a:hover {
   opacity:0.9;
 }
 
+.footer-home .social > a:hover {
+  opacity:0.9;
+}
+
 .footer-basic .copyright {
-  margin-top:15px;
+  margin-top:7px;
   text-align:center;
   font-size:13px;
   color:#aaa;
   margin-bottom:0;
 }
 
+.footer-home .copyright {
+  margin-top:7px;
+  text-align:center;
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:0;
+}
 
 .list-inline {
   padding-left: 0;
@@ -508,7 +571,7 @@ button {
 .landing {
   position: relative;
   background: url('./img/showcase.jpg') no-repeat center center/cover;
-  height: 100vh;
+  height: 80vh;
 }
 
 .landing-inner {
@@ -893,4 +956,12 @@ label {
 .link {
   cursor: pointer;
   margin: 0 0.25rem;
+}
+
+.footer2 {
+  padding:0;
+  text-align:center;
+  font-size:18px;
+  line-height:1.6;
+  margin-bottom:0;
 }
