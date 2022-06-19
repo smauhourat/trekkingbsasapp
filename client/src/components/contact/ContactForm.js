@@ -38,13 +38,17 @@ const ContactForm = ({ setAlert }) => {
 
     const onLoadRecaptcha = () => {
         console.log('onLoadRecaptcha');
+        console.log('isVerified1: ', isVerified);
     }
 
     const verifyRecaptcha = () => {
+        console.log('verifyRecaptcha');
         setIsVerified(true);
+        console.log('isVerified2: ', isVerified);
     }
 
     const sendContactForm = async (formData) => {
+
         if (!isVerified) {
             setAlert('Debe verificar el captcha', 'danger');
             return;
