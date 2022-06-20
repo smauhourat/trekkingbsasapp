@@ -6,9 +6,11 @@ const TripDetails = () => {
     const location = useLocation();
     const trip = location.state?.data;
 
+    console.log(trip.images);
+    // <li key={img._id}><img src={img.url} style={{maxWidth: '100%',height: '100%'}} loading="lazy"/></li>
     const images = trip.images.map((img) => {
         return (
-            <li key={img._id}><img src={img.url} style={{maxWidth: '100%',height: '100%'}} /></li>
+            <li key={img._id}><img src={img.url} loading="lazy"/></li>
         )
     })
 
@@ -18,8 +20,27 @@ const TripDetails = () => {
             <div className="profile-top p-2">
                 <h1 className="medium mg-top-1">{trip.title}</h1>
                 <p className="small">{trip.subtitle}</p>
-                <div className="slider-item-show2 swiffy-slider slider-item-ratio slider-item-ratio-16x9 slider-nav-animation slider-nav-animation-fadein slider-nav-animation-scale slider-item-first-visible" id="swiffy-animation">
-                    <ul className="slider-container">
+
+                <div className="swiffy-slider slider-item-ratio slider-item-ratio-16x9 slider-nav-animation slider-nav-animation-fadein" id="swiffy-animation">
+                    <ul className="slider-container" id="container1">
+                        {images}
+                    </ul>
+                
+                    <button type="button" className="slider-nav" aria-label="Go to previous"></button>
+                    <button type="button" className="slider-nav slider-nav-next" aria-label="Go to next"></button>
+                
+                    <div className="slider-indicators">
+                        <button aria-label="Go to slide" className=""></button>
+                        <button aria-label="Go to slide" className=""></button>
+                        <button aria-label="Go to slide"></button>
+                        <button aria-label="Go to slide"></button>
+                        <button aria-label="Go to slide" className="active"></button>
+                        <button aria-label="Go to slide"></button>
+                    </div>
+                </div>  
+                {/* <div className="slider-item-show2 swiffy-slider slider-item-ratio slider-item-ratio-16x9 slider-nav-animation slider-nav-animation-fadein 
+                slider-nav-animation-scale slider-item-first-visible" id="swiffy-animation">
+                    <ul className="slider-container" id="container1">
                         {images}
                     </ul>
                     <button type="button" className="slider-nav"></button>
@@ -29,7 +50,8 @@ const TripDetails = () => {
                         <button></button>
                         <button></button>
                     </div>
-                </div>
+                </div> */}
+
             </div>
             <div className="profile-about bg-light p-2">
                 <p>

@@ -34,7 +34,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
       </ul>
       <ul>
         <li><Link to="profiles.html">Calendario</Link></li>
-        <li><Link to="register.html">La Empresa</Link></li>
+        <li><Link to="company">La Empresa</Link></li>
         <li><Link to="contact">Contacto</Link></li>
         {isAuthenticated ? <li><Link to="dashboard">Dashboard</Link></li> : ''}
         {isAuthenticated ? logoutLink : loginLink}

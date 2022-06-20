@@ -77,22 +77,6 @@ const Landing = () => {
 
         </div>
       </section>
-      <section>
-      <div className="footer-home bg-dark">
-            <footer>
-              <div className="social"><a href="http://www.instagram.com/trekkingbsas"><i className="fab fa-instagram"></i></a><a href="http://www.facebook.com/trekkingbsas"><i className="fab fa-facebook-f"></i></a><a href="http://www.twitter.com/trekkingbsas"><i className="fab fa-twitter"></i></a><a href="http://www.youtube.com/trekkingbsas"><i className="fab fa-youtube"></i></a></div>
-              <ul className="list-inline">
-                  <li className="list-inline-item"><Link to="/">Home</Link></li>
-                  <li className="list-inline-item"><a>Calendario</a></li>
-                  <li className="list-inline-item"><a>La Empresa</a></li>
-                  <li className="list-inline-item"><Link to="/contact">Contacto</Link></li>
-              </ul>
-              <p className="copyright">©TrekkingBsAs 2022 - Todos los Derechos Reservados</p>
-              <p className="copyright text-dark"><strong>Desarrollado por <a href="http://www.adhentux.com" target="_blank">Adhentux</a></strong></p>
-            </footer>
-          </div>
-
-      </section>
     </>
   )
 }

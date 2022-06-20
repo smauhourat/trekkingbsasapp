@@ -14,6 +14,7 @@ import AddImages from './components/trips/AddImages';
 import TripDetails from './components/trips/TripDetails';
 import PrivateRoute from './components/routing/PrivateRoute';
 import ContactForm from './components/contact/ContactForm';
+import Company from './components/static/Company';
 import { LOGOUT } from './actions/types';
 
 import './App.css';
@@ -56,6 +57,7 @@ const App = () => {
             <Route path="trips" element={<Trips />} />
             <Route path="trip-details/:id" element={<TripDetails/>} />
             <Route path="contact" element={<ContactForm />} />
+            <Route path="company" element={<Company />} />
         </Fragment>
       </Routes>
     </Router>
