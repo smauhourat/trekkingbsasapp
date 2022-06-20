@@ -26,7 +26,7 @@ const Trips = ({ getTrips, trip: { trips, loading } }) => {
         <Fragment>
             <h1 className="large text-primary">Eventos</h1>
             <p className="lead">
-            <i className="fab fa-list" /> Resultado de la busqueda...
+            <i class="fa-solid fa-arrow-down-wide-short"></i> Resultado de la busqueda...
             </p>
             <div className="profiles">
             {trips.data?.length > 0 ? (
