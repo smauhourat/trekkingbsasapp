@@ -1001,3 +1001,49 @@ label {
   line-height:1.6;
   margin-bottom:0;
 }
+
+.rubber-stamp {
+  background: var(--dark-color);
+  color:#fff
+}
+/* end gral*/
+
+/* Nav Calendar*/
+.nav-months ul {
+  float: left;
+  list-style: none;
+}
+.nav-months li {
+  float:left;
+  margin: 5px;
+  border-radius:4px;
+}
+.nav-months a {
+  width: 110px;
+  text-align: center;
+  float:left;
+  padding: .5em 1.1em;
+  text-decoration: none;
+  
+  color: #333;
+  background: var(--white-color);
+  border: #ccc solid 1px;  
+
+  cursor: pointer;
+  border-radius: 4px;
+}
+.nav-months a:hover, nav a:focus {
+  outline: 0;
+  color: #fff;
+  background: var(--dark-color);
+}
+.nav-months ul li a.active {
+  color: #fff;
+  background: var(--success-color);
+}
+.nav-months ul li a.disabled {
+  color: #333;
+  background: var(--light-color);
+  border: #eee solid 1px;
+}
+/* End Nav Calendar*/
