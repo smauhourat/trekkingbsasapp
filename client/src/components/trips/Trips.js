@@ -22,8 +22,6 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
     // console.log(fecha);
     // console.log(fecha.getMonth());
 
-    console.log(monthSearch);
-
     function getQueryGral(arg) {
       const params = new URLSearchParams(arg);
       return params !== undefined || params !== null ? params : '';
@@ -37,7 +35,6 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
       var lastDay = (new Date(currentYear, selectedMonth, 0)).getDate();
 
       const ret = 'df=' + currentYear + '-' + selectedMonth + '-01&dt=' + currentYear + '-' + selectedMonth + '-' + lastDay;
-      console.log(ret);
       return ret;
     }
 
