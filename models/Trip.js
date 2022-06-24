@@ -21,6 +21,9 @@ const TripSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    itinerary: {
+        type: String
+    },
     created: {
         type: Date,
         default: Date.now

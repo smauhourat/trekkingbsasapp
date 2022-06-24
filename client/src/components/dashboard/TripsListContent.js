@@ -32,7 +32,7 @@ const TripsListContent = ({trip: {trips: {data}}, deleteTrip, getTrip}) => {
               onClick={() => editTrip(trip._id)}
               className="btn btn-success"
             >
-              <i className="fas fa-edit" title="Edit"></i>
+              <i className="fas fa-edit" title="Editar"></i>
             </button>          
             <button
               onClick={() => deleteTrip(trip._id)}

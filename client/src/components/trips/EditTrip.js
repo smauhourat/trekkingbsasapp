@@ -16,6 +16,7 @@ const EditTrip = ({
     subtitle: '',
     category: '',
     description: '',
+    itinerary: '',
     created: Date.now,
     date: null,
     duration: '',
@@ -36,7 +37,7 @@ const EditTrip = ({
         setEditedTrip(trip);
       }, [id, trips.data]);
       
-      const { title, subtitle, category, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = editedTrip;
+      const { title, subtitle, category, description, itinerary, date, duration, price, location, grading, quota, reservations, suggested_equipment } = editedTrip;
 
       const onChange = (e) => {
         if (e.target.name === 'date') {
@@ -96,6 +97,16 @@ const EditTrip = ({
               onChange={onChange}              
             />
           </div>
+          <div className="form-group">
+          <label>Itinerario</label>
+            <textarea 
+              placeholder="Itinerario"
+              rows="5"
+              name="itinerary"
+              value={itinerary}
+              onChange={onChange}              
+            />
+          </div>          
           <div className="form-group">
             <label>Equipo Sugerido</label>
             <textarea
