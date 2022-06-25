@@ -48,6 +48,11 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
     getTrips(`&limit=3&page=${currentPage}&sort=${sort}&order=${order}&df=${currentDate}`);
   }
 
+  const sortOrderIcon = (e) => {
+    const classIcon = order === 1 ? "fas fa-arrow-down" : "fas fa-arrow-up";
+    return e === sort ? <i className={classIcon} /> : "";
+  }
+
   return (
     <Fragment>
     {loading ? (
@@ -59,10 +64,10 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
       <table className="table">
           <thead>
             <tr>
-              <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('date')}>Fecha</div></th>
-              <th width="40%"><div className="link"  onClick={() => handleOnChangeOrder('title')}>Titulo</div></th>
-              <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('quota')}>Cupo</div></th>
-              <th width="10%"><div className="link" onClick={() => handleOnChangeOrder('reservations')}>Reservas</div></th>
+              <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('date')}>Fecha {sortOrderIcon('date')}</div></th>
+              <th width="40%"><div className="link"  onClick={() => handleOnChangeOrder('title')}>Titulo {sortOrderIcon('title')}</div></th>
+              <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('quota')}>Cupo {sortOrderIcon('quota')}</div></th>
+              <th width="10%" className="no-wrap"><div className="link" onClick={() => handleOnChangeOrder('reservations')}>Reservas  {sortOrderIcon('reservations')}</div></th>
               <th width="10%"></th>
               <th width="10%"></th>
             </tr>
