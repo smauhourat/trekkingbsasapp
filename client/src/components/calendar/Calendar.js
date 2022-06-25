@@ -20,7 +20,7 @@ const Calendar = () => {
         <h1 className="large text-primary">Calendario</h1>
         <div className="nav-months">
             <ul>
-                <li><a className="disabled"> enero </a></li>
+                <li><a className={selectedMonth==1 ? 'active':''} onClick={() => handleMonthClick(1)}> enero </a></li>
                 <li><a className={selectedMonth==2 ? 'active':''} onClick={() => handleMonthClick(2)}> febrero </a></li>
                 <li><a className={selectedMonth==3 ? 'active':''} onClick={() => handleMonthClick(3)}> marzo </a></li>
                 <li><a className={selectedMonth==4 ? 'active':''} onClick={() => handleMonthClick(4)}> abril </a></li>
