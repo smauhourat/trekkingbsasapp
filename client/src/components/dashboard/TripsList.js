@@ -9,35 +9,43 @@ import formatDateISOFromDate from '../../utils/formatDateISOFromDate';
 const TripsList = ({ getTrips, trip: { trips, loading } }) => {
   const [currentPage, setCurrentPage] = useState();
   const [showActive, setShowActive] = useState(false); 
+  const [sort, setSort] = useState("date");
+  const [order, setOrder] = useState(-1);
 
   useEffect(() => {
-    getTrips('&limit=3&page=1');
+    getTrips(`&limit=3&page=1&sort=${sort}&order=${order}`);
     setCurrentPage(1);
   }, [getTrips]);
 
   const goToNextPage = () => {
     if ( ((currentPage-1)*trips?.metadata.limit)+trips?.metadata.count < trips?.metadata.total) {
       setCurrentPage(currentPage+1);
-      getTrips(`&limit=3&page=${currentPage+1}`)
+      getTrips(`&limit=3&page=${currentPage+1}&sort=${sort}&order=${order}`)
     }
   };
 
   const goToPrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage-1);
-      getTrips(`&limit=3&page=${currentPage-1}`)
+      getTrips(`&limit=3&page=${currentPage-1}&sort=${sort}&order=${order}`)
     }
   };  
 
-  const handlerOnChangeActive = (e) => {
+  const handleOnChangeActive = (e) => {
     setShowActive(!showActive);
     if (!showActive) {
       const currentDate = formatDateISOFromDate(new Date());
-      getTrips(`&limit=3&page=${currentPage}&df=${currentDate}`);
+      getTrips(`&limit=3&page=${currentPage}&sort=${sort}&order=${order}&df=${currentDate}`);
     } else {
-      getTrips(`&limit=3&page=${currentPage}`);
+      getTrips(`&limit=3&page=${currentPage}&sort=${sort}&order=${order}`);
     }
-    
+  }
+
+  const handleOnChangeOrder = (e) => {
+    setSort(e);
+    setOrder(order === 1 ? -1 : 1);
+    const currentDate = showActive ? formatDateISOFromDate(new Date()) : "";
+    getTrips(`&limit=3&page=${currentPage}&sort=${sort}&order=${order}&df=${currentDate}`);
   }
 
   return (
@@ -47,14 +55,14 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
     ) : (
     <div>
       <h2 className="my-2">Eventos</h2>
-      <div><input type="checkbox" id="showActive" onChange={handlerOnChangeActive} /><label htmlFor="showActive"> Mostrar solo activos</label>{showActive}</div>
+      <div><input type="checkbox" id="showActive" onChange={handleOnChangeActive} /><label htmlFor="showActive"> Mostrar solo activos</label>{showActive}</div>
       <table className="table">
           <thead>
             <tr>
-              <th width="15%">Fecha</th>
-              <th width="40%">Titulo</th>
-              <th width="15%">Cupo</th>
-              <th width="10%">Reservas</th>
+              <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('date')}>Fecha</div></th>
+              <th width="40%"><div className="link"  onClick={() => handleOnChangeOrder('title')}>Titulo</div></th>
+              <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('quota')}>Cupo</div></th>
+              <th width="10%"><div className="link" onClick={() => handleOnChangeOrder('reservations')}>Reservas</div></th>
               <th width="10%"></th>
               <th width="10%"></th>
             </tr>
