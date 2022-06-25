@@ -49,7 +49,7 @@ const EditTrip = ({
       return (
         <section className="container">
         <h1 className="large text-primary">Eventos</h1>
-        <p className="lead"><i className="fas fa-user"></i> Crear Evento</p>
+        <p className="lead"><i className="fas fa-calendar"></i> Crear Evento</p>
         <form
                 className="form"
                 onSubmit={(e) => {
@@ -158,7 +158,7 @@ const EditTrip = ({
             />
           </div>
           <div className="form-group">
-            <label>Grado Dificultad</label>
+            <label>Grado Dificultad</label><small> (Valor numerico del 1 al 5)</small>
             <input
               type="text"
               placeholder="Grado dificultad"

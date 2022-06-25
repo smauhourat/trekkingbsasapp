@@ -33,7 +33,7 @@ const AddUser = ({ addUser }) => {
           <div className="form-group">
             <input 
                 type="text" 
-                placeholder="Name" 
+                placeholder="Nombre" 
                 name="name" 
                 value={name}
                 onChange={onChange}
@@ -42,7 +42,7 @@ const AddUser = ({ addUser }) => {
           <div className="form-group">
             <input 
               type="email" 
-              placeholder="Email Address" 
+              placeholder="Email" 
               name="email" 
               value={email}
               onChange={onChange}              
@@ -51,7 +51,7 @@ const AddUser = ({ addUser }) => {
           <div className="form-group">
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Contraseña"
               name="password"
               minLength="6"
               value={password}
@@ -61,7 +61,7 @@ const AddUser = ({ addUser }) => {
           <div className="form-group">
             <input
               type="password"
-              placeholder="Confirm Password"
+              placeholder="Repita Contraseña"
               name="password2"
               minLength="6"
               value={password2}
