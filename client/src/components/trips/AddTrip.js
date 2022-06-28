@@ -13,6 +13,7 @@ const AddTrip = ({ addTrip }) => {
         subtitle: '',
         category: '',
         description: '',
+        itinerary: '',
         date: '',
         duration: '',
         price: '',
@@ -23,7 +24,7 @@ const AddTrip = ({ addTrip }) => {
         suggested_equipment: ''
       });
     
-      const { title, subtitle, category, description, date, duration, price, location, grading, quota, reservations, suggested_equipment } = formData;
+      const { title, subtitle, category, description, itinerary, date, duration, price, location, grading, quota, reservations, suggested_equipment } = formData;
 
       const onChange = (e) =>
       setFormData({ ...formData, [e.target.name]: e.target.value });      
@@ -31,7 +32,7 @@ const AddTrip = ({ addTrip }) => {
       return (
         <section className="container">
         <h1 className="large text-primary">Eventos</h1>
-        <p className="lead"><i className="fas fa-user"></i> Crear Evento</p>
+        <p className="lead"><i className="fas fa-calendar"></i> Crear Evento</p>
         <form
                 className="form"
                 onSubmit={(e) => {
@@ -76,6 +77,16 @@ const AddTrip = ({ addTrip }) => {
               rows="5"
               name="description"
               value={description}
+              onChange={onChange}              
+            />
+          </div>
+          <div className="form-group">
+            <label>Itinerario</label>
+            <textarea 
+              placeholder="Itinerario"
+              rows="5"
+              name="itinerary"
+              value={itinerary}
               onChange={onChange}              
             />
           </div>
@@ -130,7 +141,7 @@ const AddTrip = ({ addTrip }) => {
             />
           </div>
           <div className="form-group">
-            <label>Grado Dificultad</label>
+          <label>Grado Dificultad</label><small> (Valor numerico del 1 al 5)</small>
             <input
               type="text"
               placeholder="Grado dificultad"

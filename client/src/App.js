@@ -17,6 +17,8 @@ import ContactForm from './components/contact/ContactForm';
 import Company from './components/static/Company';
 import Calendar from './components/calendar/Calendar';
 import { LOGOUT } from './actions/types';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Fallback } from './components/Fallback';
 
 import './App.css';
 // Redux
@@ -41,9 +43,15 @@ const App = () => {
       if (!localStorage.token) store.dispatch({ type: LOGOUT });
     });
   }, []);  
+
+  const errorHandler = (error, errorInfo) => {
+    console.log('Logging', error, errorInfo);
+  }
+
   return (  
   <Provider store={store}>
     <Router>
+      <ErrorBoundary FallbackComponent={Fallback} onError={errorHandler}>
       <Navbar />
       <Alert />
       <Routes>
@@ -62,6 +70,7 @@ const App = () => {
             <Route path="calendar" element={<Calendar />} />
         </Fragment>
       </Routes>
+      </ErrorBoundary>
     </Router>
   </Provider>
   );

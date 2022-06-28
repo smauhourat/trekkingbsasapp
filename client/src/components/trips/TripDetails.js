@@ -71,8 +71,9 @@ const TripDetails = () => {
                     <p><strong>Precio: </strong>${trip?.price} (por persona)</p>
                 </div>
                 <div>
-                    <h3 className="text-dark">Recomendaciones</h3>
-                    <p><i className="fa fa-check"></i> LLevar calzado cómodo pero resistente.</p>
+                    <h3 className="text-dark">Itinerario</h3>
+                    <p>{trip?.itinerary}</p>
+                    {/* <p><i className="fa fa-check"></i> LLevar calzado cómodo pero resistente.</p>
                     <p><i className="fa fa-check"></i> Abrigo en capas.</p>
                     <p><i className="fa fa-check"></i> Gorra.</p>
                     <p><i className="fa fa-check"></i> Agua para consumo personal.</p>
@@ -82,7 +83,7 @@ const TripDetails = () => {
                     consectetur adipisicing elit. Dignissimos placeat, dolorum ullam
                     ipsam, sapiente suscipit dicta eius velit amet aspernatur
                     asperiores modi quidem expedita fugit.
-                    </p>
+                    </p> */}
                 </div>
             </div>
 

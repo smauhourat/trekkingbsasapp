@@ -123,7 +123,7 @@ const ContactForm = ({ setAlert }) => {
                 <div className="social"><a href="http://www.instagram.com/trekkingbsas"><i className="fab fa-instagram"></i></a><a href="http://www.facebook.com/trekkingbsas"><i className="fab fa-facebook-f"></i></a><a href="http://www.twitter.com/trekkingbsas"><i className="fab fa-twitter"></i></a><a href="http://www.youtube.com/trekkingbsas"><i className="fab fa-youtube"></i></a></div>
                     <ul className="list-inline">
                         <li className="list-inline-item"><Link to="/">Home</Link></li>
-                        <li className="list-inline-item"><a>Calendario</a></li>
+                        <li className="list-inline-item"><Link to="/calendar">Calendario</Link></li>
                         <li className="list-inline-item"><Link to="/company">La Empresa</Link></li>
                         <li className="list-inline-item"><Link to="/contact">Contacto</Link></li>
                     </ul>

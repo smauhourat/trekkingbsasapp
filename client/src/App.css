@@ -980,6 +980,10 @@ input[type="file"] {
   min-width: max-content;
 }
 
+p {
+  white-space: pre-wrap;
+}
+
 label {
   font-weight:550;
   font-size: 1.1rem;
