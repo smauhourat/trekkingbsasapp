@@ -44,6 +44,7 @@ const Login = ({ login, isAuthenticated }) => {
               value={email}
               onChange={e => onChange(e)}
               required
+              autoFocus
             />
           </div>
           <div className="form-group">

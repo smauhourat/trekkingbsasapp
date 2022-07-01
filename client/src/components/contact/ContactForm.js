@@ -88,7 +88,7 @@ const ContactForm = ({ setAlert }) => {
                     }}
                 >
                     <div className="form-group">
-                        <input type="text" placeholder="Nombre" name="title" value={title} onChange={onChange} required />
+                        <input type="text" placeholder="Nombre" name="title" value={title} onChange={onChange} required autoFocus />
                     </div>
                     <div className="form-group">
                         <input type="text" placeholder="Email" name="email" value={email} onChange={onChange} required />
