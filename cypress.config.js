@@ -1,16 +1,11 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  projectId: 'dpkhqc',
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
   },
-
-  component: {
-    devServer: {
-      framework: "react",
-      bundler: "webpack",
-    },
-  },
+  defaultCommandTimeout: 20000,
 });

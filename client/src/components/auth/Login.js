@@ -58,7 +58,7 @@ const Login = ({ login, isAuthenticated }) => {
               autoComplete="on"
             />
           </div>
-          <input type="submit" className="btn btn-primary" value="Ingresar" />
+          <input id="form-login-submit-button" type="submit" className="btn btn-primary" value="Ingresar" />
         </form>
       </section>
     </Fragment>
