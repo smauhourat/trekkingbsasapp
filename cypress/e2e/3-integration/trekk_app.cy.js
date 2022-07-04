@@ -50,8 +50,25 @@ describe('Trekk App', () => {
         })
 
         it('a new trip can be created', () => {
-            cy.contains('Agregar Evento').click()
+            cy.contains('Agregar Evento');
         })
+
+        it('a new user can be created', () => {
+            cy.contains('Agregar Usuario'); //.click()
+        })
+
+        it('a new trip go back', () => {
+            cy.contains('Agregar Evento').click();
+            // Verify the app redirected you to the homepage
+            cy.location().should((loc) => {
+                expect(loc.toString()).to.eq(
+                    'http://localhost:3000/add-trip'
+                )
+            })  
+            cy.contains('Crear Evento');
+            cy.contains('Cancelar').click();
+        })        
+
     })
 
 });
