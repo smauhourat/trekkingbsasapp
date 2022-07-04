@@ -30,8 +30,28 @@ describe('Trekk App', () => {
                 'http://localhost:3000/dashboard'
             )
         })
-
         cy.contains('Dashboard')
     });    
+
+
+    describe('when user is logged', () => {
+        beforeEach(() => {
+            cy.visit('http://localhost:3000/login')
+            cy.get('[placeholder="Email"]').type('santiagomauhourat@hotmail.com')
+            cy.get('[placeholder="Contraseña"]').type('123123')
+            cy.get('#form-login-submit-button').click()
+             
+            // Verify the app redirected you to the homepage
+            cy.location().should((loc) => {
+                expect(loc.toString()).to.eq(
+                    'http://localhost:3000/dashboard'
+                )
+            })            
+        })
+
+        it('a new trip can be created', () => {
+            cy.contains('Agregar Evento').click()
+        })
+    })
 
 });
