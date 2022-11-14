@@ -59,15 +59,33 @@ describe('Trekk App', () => {
 
         it('a new trip go back', () => {
             cy.contains('Agregar Evento').click();
-            // Verify the app redirected you to the homepage
             cy.location().should((loc) => {
                 expect(loc.toString()).to.eq(
                     'http://localhost:3000/add-trip'
                 )
             })  
             cy.contains('Crear Evento');
-            cy.contains('Cancelar').click();
+            cy.get('.btn-secondary').click();
+            cy.location().should((loc) => {
+                expect(loc.toString()).to.eq(
+                    'http://localhost:3000/dashboard'
+                )
+            })              
+        })   
+        
+        it('a new trip added', () => {
+            cy.contains('Agregar Evento').click();
+            cy.location().should((loc) => {
+                expect(loc.toString()).to.eq(
+                    'http://localhost:3000/add-trip'
+                )
+            })  
+            cy.contains('Crear Evento');
+            
+
+
         })        
+        
 
     })
 

@@ -17,6 +17,21 @@ cloudinary.config({
   api_secret: config.get('api_secret'),
 });
 
+router.get('/updateall', 
+    async (req, res) => {
+      console.log('ACAAAAAAAAAAAAAAA');
+      try {
+        Trip.updateMany( {}, { $set: { published: true} } );
+        res.status(200).json({msg: 'OK'});
+      }
+      catch(err) {
+        console.error(err.message);
+
+        res.status(500).send('Server Error');
+      }
+      
+    }
+);
 
 // @route    GET api/trips/:id
 // @desc     Get trip by ID
@@ -219,5 +234,6 @@ router.put('/:id',
         
     }
 );
+
 
 module.exports = router;

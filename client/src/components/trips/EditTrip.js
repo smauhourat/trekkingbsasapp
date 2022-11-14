@@ -25,6 +25,7 @@ const EditTrip = ({
     grading: 0,
     quota: 0,
     reservations: 0,
+    published: true,
     suggested_equipment: ''
   })    
 
@@ -32,12 +33,11 @@ const EditTrip = ({
       const id = useParams().id;
 
       useEffect(() => {
-        
         const trip = trips.data.find(trip  => trip._id === id);
         setEditedTrip(trip);
       }, [id, trips.data]);
       
-      const { title, subtitle, category, description, itinerary, date, duration, price, location, grading, quota, reservations, suggested_equipment } = editedTrip;
+      const { title, subtitle, category, description, itinerary, date, duration, price, location, grading, quota, reservations, published, suggested_equipment } = editedTrip;
 
       const onChange = (e) => {
         if (e.target.name === 'date') {
@@ -186,6 +186,15 @@ const EditTrip = ({
               value={reservations}
               onChange={onChange}              
             />                                    
+          </div>
+          <div className="form-group">
+            <label>Publicado</label>
+            <input
+              type="checkbox"
+              name="published"
+              checked={published}
+              onChange={onChange}              
+            />
           </div>
           <input type="submit" className="btn btn-primary" value="Aceptar" />
           <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/dashboard')} />

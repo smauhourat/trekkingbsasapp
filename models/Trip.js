@@ -51,6 +51,10 @@ const TripSchema = new mongoose.Schema({
     reservations: {
         type: Number
     },
+    published: {
+        type: Boolean,
+        default: true
+    },
     suggested_equipment: {
         type: String
     },
