@@ -1,7 +1,7 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
 
-import { 
+import {
   CLEAR_TRIPS,
   GET_TRIPS,
   TRIPS_ERROR,
@@ -22,86 +22,99 @@ import {
 
 // Get trips
 export const getTrips = (query) => async (dispatch) => {
-    dispatch({ type: CLEAR_TRIPS });
-    try {
-        const res = await api.get(`/trips/?${query}`);
-        //console.log(query);
-        dispatch({
-            type: GET_TRIPS,
-            payload: res.data
-          });
-    }catch (err) {
-        dispatch({
-            type: TRIPS_ERROR,
-            payload: { msg: err.response?.statusText, status: err.response?.status }
-          });
-    }
+  dispatch({ type: CLEAR_TRIPS });
+  try {
+    const res = await api.get(`/trips/?${query}`);
+    //console.log(query);
+    dispatch({
+      type: GET_TRIPS,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: TRIPS_ERROR,
+      payload: { msg: err.response?.statusText, status: err.response?.status }
+    });
+  }
 }
+
+// Get available trips (date greather than current day and published)
+// export const getTripsAvailable = (query) => async (dispatch) => {
+//   dispatch({ type: CLEAR_TRIPS });
+//   try {
+
+//   } catch (err) {
+//     dispatch({
+//       type: TRIPS_ERROR,
+//       payload: { msg: err.response?.statusText, status: err.response?.status }
+//     });
+//   }
+// }
 
 export const clearTrip = () => async (dispatch) => {
   dispatch({ type: CLEAR_TRIP });
 }
 
 // Add trip
-export const addTrip = ( formData, navigate ) => async (dispatch) => {
+export const addTrip = (formData, navigate) => async (dispatch) => {
   try {
-      const res = await api.post('/trips', formData);
-  
-      dispatch({
-        type: ADDTRIP_SUCCESS,
-        payload: res.data
-      });
-  
-      dispatch(setAlert('Evento agregado', 'success'));
-  
-      navigate('/dashboard');
-    } catch (err) {
-      const errors = err.response.data.errors;
-  
-      if (errors) {
-        if (Array.isArray(errors)) {
-          errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-        }
-      } else {
-        dispatch(setAlert(err.msg, 'danger'))
+    const res = await api.post('/trips', formData);
+
+    dispatch({
+      type: ADDTRIP_SUCCESS,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Evento agregado', 'success'));
+
+    navigate('/dashboard');
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      if (Array.isArray(errors)) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
       }
-  
-      dispatch({
-        type: ADDTRIP_FAIL,
-        payload: { msg: err.response.statusText, status: err.response.status }
-      });
-    }    
+    } else {
+      dispatch(setAlert(err.msg, 'danger'))
+    }
+
+    dispatch({
+      type: ADDTRIP_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
 };
 
 // Add trip
-export const updateTrip = ( id, formData, navigate ) => async (dispatch) => {
+export const updateTrip = (id, formData, navigate) => async (dispatch) => {
   try {
-      const res = await api.put(`/trips/${id}`, formData);
-  
-      dispatch({
-        type: UPDATETRIP_SUCCESS,
-        payload: res.data
-      });
-  
-      dispatch(setAlert('Evento Modificado', 'success'));
-  
-      navigate('/dashboard');
-    } catch (err) {
-      const errors = err.response.data.errors;
-  
-      if (errors) {
-        if (Array.isArray(errors)) {
-          errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-        }
-      } else {
-        dispatch(setAlert(err.msg, 'danger'))
+    const res = await api.put(`/trips/${id}`, formData);
+
+    dispatch({
+      type: UPDATETRIP_SUCCESS,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Evento Modificado', 'success'));
+
+    navigate('/dashboard');
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      if (Array.isArray(errors)) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
       }
-  
-      dispatch({
-        type: UPDATETRIP_FAIL,
-        payload: { msg: err.response.statusText, status: err.response.status }
-      });
-    }    
+    } else {
+      dispatch(setAlert(err.msg, 'danger'))
+    }
+
+    dispatch({
+      type: UPDATETRIP_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
 };
 
 
@@ -109,7 +122,7 @@ export const updateTrip = ( id, formData, navigate ) => async (dispatch) => {
 export const deleteTrip = (id) => async (dispatch) => {
   try {
     await api.delete(`/trips/${id}`);
-    
+
     dispatch({
       type: DELETETRIP_SUCCESS,
       payload: id
@@ -130,14 +143,14 @@ export const getTrip = (id) => async (dispatch) => {
     const res = await api.get(`/trips/${id}`);
 
     dispatch({
-        type: GET_TRIP,
-        payload: res.data
-      });
-  }catch (err) {
+      type: GET_TRIP,
+      payload: res.data
+    });
+  } catch (err) {
     dispatch({
-        type: TRIP_ERROR,
-        payload: { msg: err.response.statusText, status: err.response.status }
-      });
+      type: TRIP_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
   }
 }
 
@@ -163,7 +176,7 @@ export const addImage = (id, image) => async (dispatch) => {
       type: ADDIMAGE_FAIL,
       payload: { msg: err.response.statusText, status: err.response.status }
     });
-  }    
+  }
 }
 
 // Delete image
