@@ -90,13 +90,14 @@ router.post("/forgot-password", async (req, res) => {
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
       expiresIn: "5m",
     });
-    const link = `api/auth/reset-password/${oldUser._id}/${token}`;
-
-    var mail = {
+    const requestedUrl = req.protocol + '://' + req.get('Host');// + req.url;
+    const link = `${requestedUrl}/api/auth/reset-password/${oldUser._id}/${token}`;
+    const mail = {
       from: config.get('contact_user'),
       to: email,
-      subject: 'Reestablecer Contraseña',
-      text: link
+      subject: 'Reestablecer Contraseña - TrekkingBuenosAires.com',
+      text: link,
+      html: `<p>Para cambiar su contraseña por favor haga click <a href="${link}">aquí.</a></p>`
     }
 
     transporter.sendMail(mail, (err, data) => {
@@ -150,7 +151,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
   const secret = JWT_SECRET + oldUser.password;
   try {
     const verify = jwt.verify(token, secret);
-    var salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(10);
     const encryptedPassword = await bcrypt.hash(password, salt);
     await User.updateOne(
       {

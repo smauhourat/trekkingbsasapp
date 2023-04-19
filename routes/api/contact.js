@@ -31,17 +31,20 @@ router.post('/',
       text: 'De: ' + email + '\nMensaje: ' + message
     }
 
-    transporter.sendMail(mail, (err, data) => {
-      if (err) {
-        res.json({
-          status: 'fail'
-        })
-      } else {
-        res.json({
-          status: 'success'
-        })
-      }
-    });
+    //var requestedUrl = req.protocol + '://' + req.get('Host') + req.url;
+    //console.log('requestedUrl: ', requestedUrl);
+
+    // transporter.sendMail(mail, (err, data) => {
+    //   if (err) {
+    //     res.json({
+    //       status: 'fail'
+    //     })
+    //   } else {
+    //     res.json({
+    //       status: 'success'
+    //     })
+    //   }
+    // });
 
     //res.json(req.body);
 
