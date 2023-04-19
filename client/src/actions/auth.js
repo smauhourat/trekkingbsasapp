@@ -1,6 +1,6 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
-import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT, CLEAR_USERS } from './types';
+import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT, CLEAR_USERS, FORGOT_PASS_SUCCESS, FORGOT_PASS_FAIL} from './types';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -21,30 +21,44 @@ export const loadUser = () => async (dispatch) => {
   };
 
 export const login = (email, password) => async dispatch => {
-
     const body = JSON.stringify({ email, password });
-
     try {
         const res = await api.post('/auth', body);
-
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         });
-
         dispatch(loadUser());
     } catch (err) {
         const errors = err.response.data.errors;
-
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         }
-
         dispatch({
             type: LOGIN_FAIL
         });
     }
+};
 
+export const forgotPassword = (email) => async dispatch => {
+    const body = JSON.stringify({ email });
+    try {
+        const res = await api.post('/auth/forgot-password', body);
+        dispatch({
+          type: FORGOT_PASS_SUCCESS,
+          payload: res.data
+        });
+        dispatch(setAlert('Email enviado', 'success'));
+        //navigate('/dashboard');
+    } catch (err) {
+      const errors = err.response.data.errors;
+      if (errors) {
+          errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      }
+      dispatch({
+          type: FORGOT_PASS_FAIL
+      });
+    }
 };
 
 // Logout

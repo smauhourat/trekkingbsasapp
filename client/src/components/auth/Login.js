@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
@@ -30,9 +30,6 @@ const Login = ({ login, isAuthenticated }) => {
   return (
     <Fragment>
       <section className="container">
-        {/* <div className="alert alert-danger">
-          Credenciales inválidas
-        </div> */}
         <h1 className="large text-primary">Ingreso</h1>
         <p className="lead"><i className="fas fa-user"></i> Ingrese a su cuenta</p>
         <form className="form" onSubmit={e => onSubmit(e)}>
@@ -60,6 +57,7 @@ const Login = ({ login, isAuthenticated }) => {
           </div>
           <input id="form-login-submit-button" type="submit" className="btn btn-primary" value="Ingresar" />
         </form>
+        <Link to="/forgot-password">Perdio su Contraseña?</Link>
       </section>
     </Fragment>
   );

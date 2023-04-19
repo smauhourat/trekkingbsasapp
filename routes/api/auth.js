@@ -128,10 +128,8 @@ router.post("/forgot-password", async (req, res) => {
           })
         }
       });
-
-
-    console.log(link);
-    res.json(link);
+    //console.log(link);
+    //res.json(link);
   } catch (error) { }
 });
 

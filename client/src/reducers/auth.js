@@ -3,7 +3,9 @@ import {
     LOGIN_FAIL,
     AUTH_ERROR,
     USER_LOADED,
-    LOGOUT
+    LOGOUT,
+    FORGOT_PASS_SUCCESS,
+    FORGOT_PASS_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -32,14 +34,14 @@ export default function(state = initialState, action) {
                 ...payload,
                 isAuthenticated: true,
                 loading: false
-            }
+            };
         case LOGIN_FAIL:
             return {
                 ...state, 
                 token: null,
                 isAuthenticated: false,
                 loading: false
-            }           
+            };         
         case AUTH_ERROR:
         case LOGOUT:
             return {
@@ -48,7 +50,18 @@ export default function(state = initialState, action) {
                 isAuthenticated: false,
                 loading: false,
                 user: null
-            };             
+            };
+        case FORGOT_PASS_SUCCESS:
+            return {
+                ...state, 
+                ...payload,
+                loading: false
+            };
+        case FORGOT_PASS_FAIL:
+            return {
+                ...state, 
+                loading: false
+            };            
         default:
             return state;            
     }
