@@ -1,25 +1,25 @@
 import React, { Fragment, useState } from "react";
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
 import { forgotPassword } from '../../actions/auth';
 
 const ForgotPassword = ({ forgotPassword }) => {
-    const [formData, setFormData] = useState({
-        email: ''
-    });
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: ''
+  });
 
-    const { email } = formData;
+  const { email } = formData;
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onChange = e => 
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    const onSubmit = async e => {
-        e.preventDefault();
-        console.log('SUCCESS');
-        forgotPassword(email);
-    }
+  const onSubmit = async e => {
+    e.preventDefault();
+    console.log('SUCCESS');
+    forgotPassword(email, navigate);
+  }
 
   return (
     <Fragment>
@@ -38,7 +38,7 @@ const ForgotPassword = ({ forgotPassword }) => {
               autoFocus
             />
           </div>
-          <input id="form-login-submit-button" type="submit" className="btn btn-primary" value="Enviar Mail" />
+          <input id="form-login-submit-button" type="submit" className="btn btn-primary" value='Enviar Mail' />
         </form>
       </section>
     </Fragment>

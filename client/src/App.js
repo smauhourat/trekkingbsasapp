@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import ForgotPassword from './components/auth/ForgotPassword';
+import ForgotPasswordConfirm from './components/auth/ForgotPasswordConfirm';
 import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
 import Trips from './components/trips/Trips';
@@ -43,40 +44,40 @@ const App = () => {
     window.addEventListener('storage', () => {
       if (!localStorage.token) store.dispatch({ type: LOGOUT });
     });
-  }, []);  
+  }, []);
 
   const errorHandler = (error, errorInfo) => {
     console.log('Logging', error, errorInfo);
   }
 
-  return (  
-  <Provider store={store}>
-    <Router>
-      <ErrorBoundary FallbackComponent={Fallback} onError={errorHandler}>
-      <Navbar />
-      <Alert />
-      <Routes>
-        <Fragment>
-          <Route exact path="/" element={<Landing/>} />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="dashboard" element={<PrivateRoute component={Dashboard} />}/>
-            <Route path="add-user" element={<PrivateRoute component={AddUser} />} />
-            <Route path="add-trip" element={<PrivateRoute component={AddTrip} />} />
-            <Route path="edit-trip/:id" element={<PrivateRoute component={EditTrip} />} />
-            <Route path="add-images/:id" element={<PrivateRoute component={AddImages} />} />
-            <Route path="trips" element={<Trips />} />
-            <Route path="trip-details/:id" element={<TripDetails/>} />
-            <Route path="contact" element={<ContactForm />} />
-            <Route path="company" element={<Company />} />
-            <Route path="calendar" element={<Calendar />} />
-        </Fragment>
-      </Routes>
-      </ErrorBoundary>
-    </Router>
-  </Provider>
+  return (
+    <Provider store={store}>
+      <Router>
+        <ErrorBoundary FallbackComponent={Fallback} onError={errorHandler}>
+          <Navbar />
+          <Alert />
+          <Routes>
+            <Fragment>
+              <Route exact path="/" element={<Landing />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="forgot-password-confirm/:email" element={<ForgotPasswordConfirm />} />
+              <Route path="dashboard" element={<PrivateRoute component={Dashboard} />} />
+              <Route path="add-user" element={<PrivateRoute component={AddUser} />} />
+              <Route path="add-trip" element={<PrivateRoute component={AddTrip} />} />
+              <Route path="edit-trip/:id" element={<PrivateRoute component={EditTrip} />} />
+              <Route path="add-images/:id" element={<PrivateRoute component={AddImages} />} />
+              <Route path="trips" element={<Trips />} />
+              <Route path="trip-details/:id" element={<TripDetails />} />
+              <Route path="contact" element={<ContactForm />} />
+              <Route path="company" element={<Company />} />
+              <Route path="calendar" element={<Calendar />} />
+            </Fragment>
+          </Routes>
+        </ErrorBoundary>
+      </Router>
+    </Provider>
   );
 };
 
 export default App;
- 
