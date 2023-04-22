@@ -56,8 +56,10 @@ const Login = ({ login, isAuthenticated }) => {
             />
           </div>
           <input id="form-login-submit-button" type="submit" className="btn btn-primary" value="Ingresar" />
+          <div className="form-group">
+            <Link to="/forgot-password">Perdio su Contraseña?</Link>
+          </div>
         </form>
-        <Link to="/forgot-password">Perdio su Contraseña?</Link>
       </section>
     </Fragment>
   );

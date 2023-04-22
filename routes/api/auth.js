@@ -83,8 +83,11 @@ router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
   try {
     const oldUser = await User.findOne({ email });
-    if (!oldUser) {
-      return res.json({ status: "Usuario no existe!!" });
+    if (oldUser == null) {
+      return res.json({ 
+        status: 'fail',
+        message: 'Usuario no existe!!' 
+      });
     }
     const secret = JWT_SECRET + oldUser.password;
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
@@ -103,16 +106,16 @@ router.post("/forgot-password", async (req, res) => {
     transporter.sendMail(mail, (err, data) => {
       if (err) {
         res.json({
-          status: 'fail'
+          status: 'fail',
+          message: 'Error enviando el mail'
         })
       } else {
         res.json({
-          status: 'success'
+          status: 'success',
+          message: 'El mail ha sido enviado con exito'
         })
       }
     });
-    //console.log(link);
-    //res.json(link);
   } catch (error) { }
 });
 

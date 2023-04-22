@@ -17,7 +17,6 @@ const ForgotPassword = ({ forgotPassword }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    console.log('SUCCESS');
     forgotPassword(email, navigate);
   }
 
@@ -25,7 +24,7 @@ const ForgotPassword = ({ forgotPassword }) => {
     <Fragment>
       <section className="container">
         <h1 className="large text-primary">Recuperar Contraseña</h1>
-        <p className="lead"><i className="fas fa-user"></i> Email</p>
+        <p className="lead"><i className="fas fa-info-circle"></i> Un mail será enviado para la recuperación de la contraseña.</p>
         <form className="form" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
             <input

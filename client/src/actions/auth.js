@@ -44,12 +44,21 @@ export const forgotPassword = (email, navigate) => async dispatch => {
   const body = JSON.stringify({ email });
   try {
     const res = await api.post('/auth/forgot-password', body);
-    dispatch({
-      type: FORGOT_PASS_SUCCESS,
-      payload: res.data
-    });
-    dispatch(setAlert('Email enviado', 'success'));
-    navigate(`/forgot-password-confirm/${email}`);
+    if (res.data.status === 'success') {
+      dispatch({
+        type: FORGOT_PASS_SUCCESS,
+        payload: res.data
+      });
+      dispatch(setAlert(res.data.message, 'success'));
+      navigate(`/forgot-password-confirm/${email}`);
+    } else {
+      dispatch({
+        type: FORGOT_PASS_FAIL,
+        payload: res.data
+      });
+      dispatch(setAlert(res.data.message, 'danger'));
+    }
+
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
