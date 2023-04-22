@@ -9,7 +9,9 @@ import Spinner from '../layout/Spinner';
 const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
 
   function getQueryGral(arg) {
-    const params = new URLSearchParams(arg);
+    const todayDate = new Date().toISOString().slice(0, 10);
+    const query = `${arg}&df=${todayDate}`;
+    const params = new URLSearchParams(query);
     return params !== undefined || params !== null ? params : '';
   }
 
@@ -28,6 +30,8 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
   const search = useLocation().search;
 
   const query = isCalendar ? getQueryCalendar() : getQueryGral(search);
+
+  console.log('query: ', query);
 
   useEffect(() => {
     getTrips(query);

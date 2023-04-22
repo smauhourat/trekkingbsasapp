@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { addUser } from '../../actions/user';
 
-const AddUser = ({ addUser }) => {
+const AddUser = ({ setAlert, addUser }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -21,8 +21,6 @@ const AddUser = ({ addUser }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
-    console.log(password);
-    console.log(password2);
     e.preventDefault();
     if (password !== password2) {
       setAlert('La Contraseña y su confirmacion no coinciden', 'danger');
@@ -34,13 +32,6 @@ const AddUser = ({ addUser }) => {
     <section className="container">
       <h1 className="large text-primary">Usuarios</h1>
       <p className="lead"><i className="fas fa-user"></i> Crear Usuario</p>
-      {/* <form
-                className="form"
-                onSubmit={(e) => {
-                e.preventDefault();
-                addUser(formData, navigate);
-                }}
-            > */}
       <form className="form" onSubmit={e => onSubmit(e)} >
         <div className="form-group">
           <input
