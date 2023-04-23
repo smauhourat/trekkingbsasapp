@@ -2,11 +2,14 @@ import axios from 'axios';
 import store from '../store';
 import { LOGOUT } from '../actions/types';
 
+const clientHostName = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
+
 // Create an instance of axios
 const api = axios.create({
   baseURL: '/api',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Client-Base-Url': clientHostName
   }
 });
 /*

@@ -80,6 +80,7 @@ router.post(
 // @desc    Forgot Password, send restore link by mail
 // @access  Public
 router.post("/forgot-password", async (req, res) => {
+  //console.log('LEYENDO HEADER EN LA API', req.headers['client-base-url'])
   const { email } = req.body;
   try {
     const oldUser = await User.findOne({ email });
@@ -93,8 +94,9 @@ router.post("/forgot-password", async (req, res) => {
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
       expiresIn: "5m",
     });
-    const requestedUrl = req.protocol + '://' + req.get('Host');// + req.url;
-    const link = `${requestedUrl}/api/auth/reset-password/${oldUser._id}/${token}`;
+    const requestedUrl = req.headers['client-base-url']
+    //const link = `${requestedUrl}/api/auth/reset-password/${oldUser._id}/${token}`;
+    const link = `${requestedUrl}/auth/reset-password/${oldUser._id}/${token}`;
     const mail = {
       from: config.get('contact_user'),
       to: email,
@@ -133,10 +135,11 @@ router.get("/reset-password/:id/:token", async (req, res) => {
   const secret = JWT_SECRET + oldUser.password;
   try {
     const verify = jwt.verify(token, secret);
-    res.json({ email: verify.email, status: "No verificado" });
+    res.json({ email: verify.email, status: "No verificadoo" });
   } catch (error) {
     console.log(error);
-    res.send("No verificado");
+    //res.send("No verificado");
+    res.json({ status: 'fail', message: 'No verificado, el token ha expirado' })
   }
 });
 

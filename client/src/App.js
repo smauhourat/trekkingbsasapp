@@ -5,6 +5,7 @@ import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ForgotPasswordConfirm from './components/auth/ForgotPasswordConfirm';
+import ResetPassword from './components/auth/ResetPassword';
 import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
 import Trips from './components/trips/Trips';
@@ -62,6 +63,7 @@ const App = () => {
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/forgot-password" element={<ForgotPassword />} />
               <Route path="forgot-password-confirm/:email" element={<ForgotPasswordConfirm />} />
+              <Route path="reset-password/:id/:token" element={<ResetPassword />} />
               <Route path="dashboard" element={<PrivateRoute component={Dashboard} />} />
               <Route path="add-user" element={<PrivateRoute component={AddUser} />} />
               <Route path="add-trip" element={<PrivateRoute component={AddTrip} />} />

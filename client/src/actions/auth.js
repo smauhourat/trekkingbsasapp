@@ -41,6 +41,7 @@ export const login = (email, password) => async dispatch => {
 };
 
 export const forgotPassword = (email, navigate) => async dispatch => {
+
   const body = JSON.stringify({ email });
   try {
     const res = await api.post('/auth/forgot-password', body);
@@ -69,6 +70,10 @@ export const forgotPassword = (email, navigate) => async dispatch => {
     });
   }
 };
+
+export const resetPassword = (id, token) => async dispatch => {
+
+}
 
 // Logout
 export const logout = () => async (dispatch) => {
