@@ -1,6 +1,17 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
-import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT, CLEAR_USERS, FORGOT_PASS_SUCCESS, FORGOT_PASS_FAIL } from './types';
+import { 
+  LOGIN_SUCCESS, 
+  LOGIN_FAIL, 
+  USER_LOADED, 
+  AUTH_ERROR, 
+  LOGOUT, 
+  CLEAR_USERS, 
+  FORGOT_PASS_SUCCESS, 
+  FORGOT_PASS_FAIL, 
+  RESET_PASS_SUCCESS, 
+  RESET_PASS_FAIL 
+} from './types';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -71,8 +82,38 @@ export const forgotPassword = (email, navigate) => async dispatch => {
   }
 };
 
-export const resetPassword = (id, token) => async dispatch => {
+export const resetPassword = (id, token, password, navigate) => async dispatch => {
+  const body = JSON.stringify({ password });
+  try {
+    dispatch(setAlert('TODO OK', 'success'));
+    navigate('/reset-password-confirm');
 
+    // const res = await api.post(`/auth/reset-password/${id}/${token}`, body);
+    // console.log(res);
+    // if (res.data.status === 'success') {
+    //   dispatch({
+    //     type: RESET_PASS_SUCCESS,
+    //     payload: res.data
+    //   });
+    //   dispatch(setAlert(res.data.message, 'success'));
+    //   navigate('/reset-password-confirm');
+    // } else {
+    //   dispatch({
+    //     type: RESET_PASS_FAIL,
+    //     payload: res.data
+    //   });
+    //   dispatch(setAlert(res.data.message, 'danger'));
+    // }
+
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+    dispatch({
+      type: FORGOT_PASS_FAIL
+    });
+  }
 }
 
 // Logout

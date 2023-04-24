@@ -1,20 +1,18 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
-//import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
 import { resetPassword } from '../../actions/auth';
 import api from '../../utils/api';
 
-const ResetPassword = ({ resetPassword }) => {
+const ResetPassword = ({ setAlert, resetPassword }) => {
+    const navigate = useNavigate();
     const { id , token } = useParams();
     const [isTokenVerified, setIsTokenVerified] = useState(true);
 
     const validateResetPasswordToken = async () => {
         const res = await api.get(`/auth/reset-password/${id}/${token}`);
-        console.log('res.data: ', res.data);
-        console.log('res.data.status: ', res.data.status);
         if (res.data.status === 'fail') {
             setIsTokenVerified(false);
         }
@@ -36,7 +34,11 @@ const ResetPassword = ({ resetPassword }) => {
 
     const onSubmit = async e => {
         e.preventDefault();
-        //login(email, password);
+        if (password !== password2) {
+            setAlert('La Contraseña y su confirmacion no coinciden', 'danger');
+        } else {
+            resetPassword(id, token, password, navigate);
+        }
     }
 
   return (

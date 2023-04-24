@@ -80,7 +80,6 @@ router.post(
 // @desc    Forgot Password, send restore link by mail
 // @access  Public
 router.post("/forgot-password", async (req, res) => {
-  //console.log('LEYENDO HEADER EN LA API', req.headers['client-base-url'])
   const { email } = req.body;
   try {
     const oldUser = await User.findOne({ email });
@@ -92,11 +91,10 @@ router.post("/forgot-password", async (req, res) => {
     }
     const secret = JWT_SECRET + oldUser.password;
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
-      expiresIn: "5m",
+      expiresIn: "10m",
     });
     const requestedUrl = req.headers['client-base-url']
-    //const link = `${requestedUrl}/api/auth/reset-password/${oldUser._id}/${token}`;
-    const link = `${requestedUrl}/auth/reset-password/${oldUser._id}/${token}`;
+    const link = `${requestedUrl}/reset-password/${oldUser._id}/${token}`;
     const mail = {
       from: config.get('contact_user'),
       to: email,
@@ -126,16 +124,14 @@ router.post("/forgot-password", async (req, res) => {
 // @access  Public
 router.get("/reset-password/:id/:token", async (req, res) => {
   const { id, token } = req.params;
-  console.log(req.params);
   const oldUser = await User.findOne({ _id: id });
   if (!oldUser) {
     return res.json({ status: "Usuario no existe!!" });
   }
-  //console.log(oldUser);
   const secret = JWT_SECRET + oldUser.password;
   try {
     const verify = jwt.verify(token, secret);
-    res.json({ email: verify.email, status: "No verificadoo" });
+    res.json({ email: verify.email, status: "No verificado" });
   } catch (error) {
     console.log(error);
     //res.send("No verificado");
@@ -149,7 +145,6 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 router.post("/reset-password/:id/:token", async (req, res) => {
   const { id, token } = req.params;
   const { password } = req.body;
-
   const oldUser = await User.findOne({ _id: id });
   if (!oldUser) {
     return res.json({ status: "Usuario no existe!!" });
@@ -170,7 +165,11 @@ router.post("/reset-password/:id/:token", async (req, res) => {
       }
     );
 
-    res.json({ email: verify.email, status: "verificado" });
+    //res.json({ email: verify.email, status: "verificado" });
+    res.json({ 
+      status: "success", 
+      message: 'La contraseña se ha cambiado con exito' 
+    });
   } catch (error) {
     console.log(error);
     res.json({ status: "Ocurrio un error inesperado", error: error });
