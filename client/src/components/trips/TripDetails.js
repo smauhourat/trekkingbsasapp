@@ -1,6 +1,8 @@
 import React from 'react'
 import { useLocation } from "react-router-dom";
 import formatDate from '../../utils/formatDate';
+import ImageGallery from 'react-image-gallery';
+import "react-image-gallery/styles/css/image-gallery.css";
 
 const TripDetails = () => {
     const location = useLocation();
@@ -12,7 +14,13 @@ const TripDetails = () => {
         return (
             <li key={img._id}><img src={img.url} loading="lazy" /></li>
         )
-    })
+    });
+
+    const images3 = trip.images.map((img) => {
+        return ({
+            original: img.url
+        })
+    });
 
     return (
         <section className="container">
@@ -20,15 +28,12 @@ const TripDetails = () => {
                 <div className="profile-top p-2">
                     <h1 className="medium mg-top-1">{trip.title}</h1>
                     <p className="small">{trip.subtitle}</p>
-
-                    <div className="swiffy-slider slider-item-ratio slider-item-ratio-16x9 slider-nav-animation slider-nav-animation-fadein" id="swiffy-animation">
+                    {/* <div className="swiffy-slider slider-item-ratio slider-item-ratio-16x9 slider-nav-animation slider-nav-animation-fadein" id="swiffy-animation">
                         <ul className="slider-container" id="container1">
                             {images}
                         </ul>
-
                         <button type="button" className="slider-nav" aria-label="Go to previous"></button>
                         <button type="button" className="slider-nav slider-nav-next" aria-label="Go to next"></button>
-
                         <div className="slider-indicators">
                             <button aria-label="Go to slide" className=""></button>
                             <button aria-label="Go to slide" className=""></button>
@@ -37,20 +42,9 @@ const TripDetails = () => {
                             <button aria-label="Go to slide" className="active"></button>
                             <button aria-label="Go to slide"></button>
                         </div>
-                    </div>
-                    {/* <div className="slider-item-show2 swiffy-slider slider-item-ratio slider-item-ratio-16x9 slider-nav-animation slider-nav-animation-fadein 
-                slider-nav-animation-scale slider-item-first-visible" id="swiffy-animation">
-                    <ul className="slider-container" id="container1">
-                        {images}
-                    </ul>
-                    <button type="button" className="slider-nav"></button>
-                    <button type="button" className="slider-nav slider-nav-next"></button>
-                    <div className="slider-indicators">
-                        <button className="active"></button>
-                        <button></button>
-                        <button></button>
-                    </div>
-                </div> */}
+                    </div> */}
+
+                    <ImageGallery items={images3} />
 
                 </div>
                 <div className="profile-about bg-light p-2">
