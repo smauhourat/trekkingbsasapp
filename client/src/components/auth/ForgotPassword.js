@@ -10,6 +10,7 @@ const ForgotPassword = ({ forgotPassword }) => {
   const [formData, setFormData] = useState({
     email: ''
   });
+  const [disableSubmit, setDisableSubmit] = useState(false);
 
   const { email } = formData;
   const onChange = e =>
@@ -17,10 +18,8 @@ const ForgotPassword = ({ forgotPassword }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    //e.currentTarget.disabled = true;
-    console.log('call forgotPassword');
+    setDisableSubmit(true);
     forgotPassword(email, navigate);
-    console.log('end call forgotPassword');
   }
 
   return (
@@ -40,7 +39,7 @@ const ForgotPassword = ({ forgotPassword }) => {
               autoFocus
             />
           </div>
-          <input id="form-login-submit-button" type="submit" className="btn btn-primary" value='Enviar Mail' />
+          <input id="form-login-submit-button" type="submit" className="btn btn-primary" value='Enviar Mail' disabled={disableSubmit} />
         </form>
       </section>
     </Fragment>
@@ -52,8 +51,4 @@ ForgotPassword.propTypes = {
   forgotPassword: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => ({
-  //isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, { setAlert, forgotPassword })(ForgotPassword);
+export default connect(null, { setAlert, forgotPassword })(ForgotPassword);
