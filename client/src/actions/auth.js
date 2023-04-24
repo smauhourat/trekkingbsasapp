@@ -85,25 +85,22 @@ export const forgotPassword = (email, navigate) => async dispatch => {
 export const resetPassword = (id, token, password, navigate) => async dispatch => {
   const body = JSON.stringify({ password });
   try {
-    dispatch(setAlert('TODO OK', 'success'));
-    navigate('/reset-password-confirm');
-
-    // const res = await api.post(`/auth/reset-password/${id}/${token}`, body);
-    // console.log(res);
-    // if (res.data.status === 'success') {
-    //   dispatch({
-    //     type: RESET_PASS_SUCCESS,
-    //     payload: res.data
-    //   });
-    //   dispatch(setAlert(res.data.message, 'success'));
-    //   navigate('/reset-password-confirm');
-    // } else {
-    //   dispatch({
-    //     type: RESET_PASS_FAIL,
-    //     payload: res.data
-    //   });
-    //   dispatch(setAlert(res.data.message, 'danger'));
-    // }
+    const res = await api.post(`/auth/reset-password/${id}/${token}`, body);
+    console.log(res);
+    if (res.data.status === 'success') {
+      dispatch({
+        type: RESET_PASS_SUCCESS,
+        payload: res.data
+      });
+      dispatch(setAlert(res.data.message, 'success'));
+      navigate('/reset-password-confirm');
+    } else {
+      dispatch({
+        type: RESET_PASS_FAIL,
+        payload: res.data
+      });
+      dispatch(setAlert(res.data.message, 'danger'));
+    }
 
   } catch (err) {
     const errors = err.response.data.errors;

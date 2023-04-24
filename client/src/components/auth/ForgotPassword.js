@@ -17,7 +17,10 @@ const ForgotPassword = ({ forgotPassword }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
+    //e.currentTarget.disabled = true;
+    console.log('call forgotPassword');
     forgotPassword(email, navigate);
+    console.log('end call forgotPassword');
   }
 
   return (
