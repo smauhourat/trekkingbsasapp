@@ -9,7 +9,7 @@ import { addImage } from '../../actions/trip';
 
 const AddImages = ({ addImage, setAlert, loading }) => {
     const id = useParams().id;
-    const [fileInputState, setFileInputState] = useState('');
+    const [fileInput, setFileInput] = useState('');
     const [previewSource, setPreviewSource] = useState('');
     const [selectedFile, setSelectedFile] = useState();
     const [fileLoaded, setFileLoaded] = useState(false);
@@ -34,26 +34,23 @@ const AddImages = ({ addImage, setAlert, loading }) => {
 
     const validateFile = async (file) => {
         const width = await checkImageWidth(file);
-        console.log(width);
-        if (width > 1920 || file.size > 1000000)
-            return false;
-        else
-            return true;
+        return (width <= 1920 && file.size <= 1000000)
     }
 
     const handleFileInputChange = async (e) => {
         const file = e.target.files[0];
+        setFileInput(e.target.value);
+
         if (await validateFile(file)) {
-            previewFile(file);
+            showPreviewFile(file);
             setSelectedFile(file);
-            setFileInputState(e.target.value);
             setFileLoaded(true);
         } else {
             setAlert('El archivo no es valido, ha superado el ancho (1920) o tamaño (1Mb) maximo', 'danger');
         }
     };
 
-    const previewFile = (file) => {
+    const showPreviewFile = (file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
@@ -77,13 +74,17 @@ const AddImages = ({ addImage, setAlert, loading }) => {
         };
     };
 
+    const cleanLoadedFile = () => {
+        setFileInput('');
+        setPreviewSource('');
+        setSelectedFile();
+    }
+
     const uploadImage = async (base64EncodedImage) => {
         try {
             const image = JSON.stringify({ data: base64EncodedImage });
             addImage(id, image);
-            setFileInputState('');
-            setPreviewSource('');
-            setSelectedFile();
+            cleanLoadedFile();
         } catch (err) {
             console.error(err);
             setAlert('Error cargando imagen', 'danger');
@@ -104,7 +105,7 @@ const AddImages = ({ addImage, setAlert, loading }) => {
                             <i className="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
                         </label>
                         <div className="inline">
-                            <input id="fileInput" type="file" name="image" accept="image/*" onChange={handleFileInputChange} value={fileInputState} />
+                            <input id="fileInput" type="file" name="image" accept="image/*" onChange={handleFileInputChange} value={fileInput} />
                             <input className="btn btn-primary" type="submit" disabled={!fileLoaded} value="Aceptar" />
                             <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/dashboard')} />
                         </div>
