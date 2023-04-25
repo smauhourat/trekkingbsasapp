@@ -91,7 +91,7 @@ const AddImages = ({ addImage, setAlert, loading, trip: { trips } }) => {
     return (
         <section className="container">
             <h1 className="large text-primary">Imagenes del Evento</h1>
-            <p className="lead"><b>{title} - {date}</b></p>
+            <p className="lead"><b>{title} - {formatDate(date)}</b></p>
             <form onSubmit={handleSubmitFile} className="form">
 
                 {loading ? (
