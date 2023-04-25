@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types'
 import ImagesList from './ImagesList';
+import Spinner from '../layout/Spinner';
 import { addImage } from '../../actions/trip';
 
 const AddImages = ({ addImage, setAlert }) => {
@@ -11,6 +12,8 @@ const AddImages = ({ addImage, setAlert }) => {
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
     const [selectedFile, setSelectedFile] = useState();
+    const [fileLoaded, setFileLoaded] = useState(false);
+    const [loadingFile, setLoadingFile] = useState(false);
     const navigate = useNavigate();
 
     const handleFileInputChange = (e) => {
@@ -18,6 +21,7 @@ const AddImages = ({ addImage, setAlert }) => {
         previewFile(file);
         setSelectedFile(file);
         setFileInputState(e.target.value);
+        setFileLoaded(true);
     };
 
     const previewFile = (file) => {
@@ -28,14 +32,19 @@ const AddImages = ({ addImage, setAlert }) => {
         };
     };    
 
-    const handleSubmitFile = (e) => {
+    const handleSubmitFile = async (e) => {
+        setLoadingFile(true);
+        console.log('begin submit');
         e.preventDefault();
+        
         if (!selectedFile) return;
 
         const reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onloadend = () => {
             uploadImage(reader.result);
+            setLoadingFile(false);
+            console.log('archivo cargado al servidor');
         };
         reader.onerror = (err) => {
             console.error('Error leyendo el archivo: ' + err.target.error.code);
@@ -61,14 +70,21 @@ const AddImages = ({ addImage, setAlert }) => {
         <h1 className="large text-primary">Imagenes del Evento</h1>
         <p className="lead"><i className="fas fa-user"></i> Cargar Imagen</p>
         <form onSubmit={handleSubmitFile} className="form">
-            <label  htmlFor="fileInput" className="btn btn-success btn-link no-wrap">
-                <i className="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
-            </label>
-            <input id="fileInput" type="file" name="image" onChange={handleFileInputChange} value={fileInputState}/>            
-            <button className="btn btn-primary" type="submit">
-                Aceptar
-            </button>
-            <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/dashboard')} />
+
+            {loadingFile ? (
+                <Spinner />
+            ) : (
+            <>
+                <label  htmlFor="fileInput" className="btn btn-success btn-link no-wrap">
+                    <i className="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
+                </label>                
+                <div className="inline">
+                    <input id="fileInput" type="file" name="image" accept="image/*" onChange={handleFileInputChange} value={fileInputState}/>            
+                    <input className="btn btn-primary" type="submit" disabled={!fileLoaded} value="Aceptar" />
+                    <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/dashboard')} />
+                </div>
+            </>
+            )}
         </form>
         {previewSource && (
             <div>
@@ -78,7 +94,6 @@ const AddImages = ({ addImage, setAlert }) => {
                         <img
                             src={previewSource}
                             alt="seleccionada"
-                            
                         />
                     </figure>
                 </div>
