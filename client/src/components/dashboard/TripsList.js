@@ -60,7 +60,10 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
       ) : (
         <div>
           <h2 className="my-2">Eventos</h2>
-          <div><input type="checkbox" id="showActive" onChange={handleOnChangeActive} /><label htmlFor="showActive"> Mostrar solo activos</label>{showActive}</div>
+          <div className="search-panelXX">
+            <input type="checkbox" id="showActive" onChange={handleOnChangeActive} /><label htmlFor="showActive"> Mostrar solo activos</label>{showActive}
+            <input type="text" className='input-text' /><button className="btn btn-primary btn-link"><i className="fas fa-search" title="Editar"></i></button>
+          </div>
           <table className="table">
             <thead>
               <tr>
