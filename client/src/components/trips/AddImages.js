@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import ImagesList from './ImagesList';
 import Spinner from '../layout/Spinner';
 import { addImage } from '../../actions/trip';
+import imageFileIsValid from '../../utils/imageFileIsValid';
 
 const AddImages = ({ addImage, setAlert, loading }) => {
     const id = useParams().id;
@@ -16,37 +17,18 @@ const AddImages = ({ addImage, setAlert, loading }) => {
 
     const navigate = useNavigate();
 
-    const checkImageWidth = async (file) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (event) => {
-                const image = new Image();
-                image.src = event.target.result;
-                image.onload = () => {
-                    resolve(image.width);
-                    return image.width;
-                };
-            };
-            reader.onerror = (err) => reject(err);
-        });
-    };
-
-    const validateFile = async (file) => {
-        const width = await checkImageWidth(file);
-        return (width <= 1920 && file.size <= 1000000)
-    }
-
     const handleFileInputChange = async (e) => {
         const file = e.target.files[0];
         setFileInput(e.target.value);
 
-        if (await validateFile(file)) {
+        const { status, message } = await imageFileIsValid(file);
+        console.log('status: ', status);
+        if (status) {
             showPreviewFile(file);
             setSelectedFile(file);
             setFileLoaded(true);
         } else {
-            setAlert('El archivo no es valido, ha superado el ancho (1920) o tamaño (1Mb) maximo', 'danger');
+            setAlert(message, 'danger');
         }
     };
 
