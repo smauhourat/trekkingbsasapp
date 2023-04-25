@@ -15,13 +15,42 @@ const AddImages = ({ addImage, setAlert, loading }) => {
     const [fileLoaded, setFileLoaded] = useState(false);
 
     const navigate = useNavigate();
-    console.log('loading: ', loading);
-    const handleFileInputChange = (e) => {
+
+    const checkImageWidth = async (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => {
+                const image = new Image();
+                image.src = event.target.result;
+                image.onload = () => {
+                    resolve(image.width);
+                    return image.width;
+                };
+            };
+            reader.onerror = (err) => reject(err);
+        });
+    };
+
+    const validateFile = async (file) => {
+        const width = await checkImageWidth(file);
+        console.log(width);
+        if (width > 1920 || file.size > 1000000)
+            return false;
+        else
+            return true;
+    }
+
+    const handleFileInputChange = async (e) => {
         const file = e.target.files[0];
-        previewFile(file);
-        setSelectedFile(file);
-        setFileInputState(e.target.value);
-        setFileLoaded(true);
+        if (await validateFile(file)) {
+            previewFile(file);
+            setSelectedFile(file);
+            setFileInputState(e.target.value);
+            setFileLoaded(true);
+        } else {
+            setAlert('El archivo no es valido, ha superado el ancho (1920) o tamaño (1Mb) maximo', 'danger');
+        }
     };
 
     const previewFile = (file) => {
