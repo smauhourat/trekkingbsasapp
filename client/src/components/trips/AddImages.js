@@ -11,6 +11,7 @@ const AddImages = ({ addImage, setAlert }) => {
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
     const [selectedFile, setSelectedFile] = useState();
+    const [fileLoaded, setFileLoaded] = useState(false);
     const navigate = useNavigate();
 
     const handleFileInputChange = (e) => {
@@ -18,6 +19,7 @@ const AddImages = ({ addImage, setAlert }) => {
         previewFile(file);
         setSelectedFile(file);
         setFileInputState(e.target.value);
+        setFileLoaded(true);
     };
 
     const previewFile = (file) => {
@@ -64,10 +66,8 @@ const AddImages = ({ addImage, setAlert }) => {
             <label  htmlFor="fileInput" className="btn btn-success btn-link no-wrap">
                 <i className="fas fa-cloud-upload-alt"></i> Seleccione una Imagen
             </label>
-            <input id="fileInput" type="file" name="image" onChange={handleFileInputChange} value={fileInputState}/>            
-            <button className="btn btn-primary" type="submit">
-                Aceptar
-            </button>
+            <input id="fileInput" type="file" name="image" accept="image/*" onChange={handleFileInputChange} value={fileInputState}/>            
+            <input className="btn btn-primary" type="submit" disabled={!fileLoaded} value="Aceptar" />
             <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/dashboard')} />
         </form>
         {previewSource && (
@@ -78,7 +78,6 @@ const AddImages = ({ addImage, setAlert }) => {
                         <img
                             src={previewSource}
                             alt="seleccionada"
-                            
                         />
                     </figure>
                 </div>
