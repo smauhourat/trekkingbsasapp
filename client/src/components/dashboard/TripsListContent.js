@@ -6,7 +6,7 @@ import { deleteTrip, getTrip } from '../../actions/trip';
 import formatDate from '../../utils/formatDate';
 
 
-const TripsListContent = ({trip: {trips: {data}}, deleteTrip, getTrip}) => {
+const TripsListContent = ({ trip: { trips: { data } }, deleteTrip, getTrip }) => {
   const navigate = useNavigate();
 
   const editTrip = (id) => {
@@ -14,26 +14,35 @@ const TripsListContent = ({trip: {trips: {data}}, deleteTrip, getTrip}) => {
     navigate(`/edit-trip/${id}`);
   }
 
-    const tripsList =  
+  const editTripImages = (id) => {
+    getTrip(id);
+    navigate(`/add-images/${id}`);
+  }
+
+  const tripsList =
     data?.map((trip) => (
       <tr key={trip._id}>
-        <td>{formatDate(trip.date)}</td> 
+        <td>{formatDate(trip.date)}</td>
         <td>{trip.title}</td>
         <td className="text-center">{trip.quota}</td>
         <td>{trip.reservations}</td>
         <td>
-          <Link to={`/add-images/${trip._id}`} className='btn btn-primary btn-link'>
-            <i className="fas fa-file-image" title="Multimedia"></i>
-          </Link>          
+          ...
         </td>
         <td className="no-wrap">
           <div className="align-center">
+            <button
+              onClick={() => editTripImages(trip._id)}
+              className="btn btn-primary btn-link"
+            >
+              <i className="fas fa-file-image" title="Multimedia"></i>
+            </button>
             <button
               onClick={() => editTrip(trip._id)}
               className="btn btn-success"
             >
               <i className="fas fa-edit" title="Editar"></i>
-            </button>          
+            </button>
             <button
               onClick={() => deleteTrip(trip._id)}
               className="btn btn-danger"
@@ -41,25 +50,25 @@ const TripsListContent = ({trip: {trips: {data}}, deleteTrip, getTrip}) => {
               <i className="fas fa-trash-alt" title="Eliminar"></i>
             </button>
           </div>
-        </td>      
+        </td>
       </tr>
     ));
-  
-    return (
-            <>
-              {tripsList}
-            </>
-    );
+
+  return (
+    <>
+      {tripsList}
+    </>
+  );
 };
 
 TripsListContent.propTypes = {
-    deleteTrip: PropTypes.func.isRequired,
-    getTrip: PropTypes.func.isRequired
+  deleteTrip: PropTypes.func.isRequired,
+  getTrip: PropTypes.func.isRequired
 }
 
 
 const mapStateToProps = (state) => ({
-    trip: state.trip
-  });
+  trip: state.trip
+});
 
 export default connect(mapStateToProps, { deleteTrip, getTrip })(TripsListContent);

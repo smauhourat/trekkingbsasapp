@@ -62,7 +62,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
                 <TripItem key={trip._id} trip={trip} />
               ))
             ) : (
-              <h4>No se econtraron Eventos...</h4>
+              <h4>No se encontraron Eventos...</h4>
             )}
           </div>
         </Fragment>

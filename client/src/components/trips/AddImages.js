@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
@@ -7,9 +7,24 @@ import ImagesList from './ImagesList';
 import Spinner from '../layout/Spinner';
 import { addImage } from '../../actions/trip';
 import imageFileIsValid from '../../utils/imageFileIsValid';
+import formatDate from '../../utils/formatDate';
 
-const AddImages = ({ addImage, setAlert, loading }) => {
+const AddImages = ({ addImage, setAlert, loading, trip: { trips } }) => {
+
+    const [editedTrip, setEditedTrip] = useState({
+        title: '',
+        date: ''
+    });
+
     const id = useParams().id;
+
+    useEffect(() => {
+        const trip = trips.data.find(trip => trip._id === id);
+        setEditedTrip(trip);
+    }, [id, trips.data]);
+
+    const { title, date } = editedTrip;
+
     const [fileInput, setFileInput] = useState('');
     const [previewSource, setPreviewSource] = useState('');
     const [selectedFile, setSelectedFile] = useState();
@@ -76,7 +91,7 @@ const AddImages = ({ addImage, setAlert, loading }) => {
     return (
         <section className="container">
             <h1 className="large text-primary">Imagenes del Evento</h1>
-            <p className="lead"><i className="fas fa-user"></i> Cargar Imagen</p>
+            <p className="lead"><b>{title} - {date}</b></p>
             <form onSubmit={handleSubmitFile} className="form">
 
                 {loading ? (
@@ -120,7 +135,8 @@ AddImages.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    loading: state.trip.loading
+    loading: state.trip.loading,
+    trip: state.trip
 });
 
 export default connect(mapStateToProps, { addImage, setAlert })(AddImages);
