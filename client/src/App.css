@@ -66,6 +66,10 @@ img {
   margin-bottom: 3rem;
 }
 
+.inline {
+  display: inline-block;
+}
+
 /* .footer {
   display: flex;
   justify-content: space-between;
@@ -947,10 +951,6 @@ input[type="file"] {
 
 .cards>ul>li>figure {
   max-height: 220px;
-
-  /*nuevo*/
-  /* height: 100%;  */
-
   overflow: hidden;
   border-top-left-radius: .5rem;
   border-top-right-radius: .5rem;
