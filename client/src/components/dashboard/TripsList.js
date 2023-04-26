@@ -118,7 +118,6 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
       </div>
     </Fragment >
   )
-
 }
 
 TripsList.propTypes = {
