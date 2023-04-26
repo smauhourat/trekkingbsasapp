@@ -70,56 +70,53 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
 
   return (
     <Fragment>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div>
-          <h2 className="my-2">Eventos</h2>
-          <div className="search-panelXX">
-            <input type="checkbox" id="showActive" onChange={handleOnChangeActive} /><label htmlFor="showActive"> Mostrar solo activos</label>{showActive}
-            <input type="text" className='input-text' value={search} onChange={handleOnChangeSearch} onKeyDown={handleOnKeyDownSearch} /><button className="btn btn-primary btn-link" onClick={handleOnClickSearch}><i className="fas fa-search" title="Buscar"></i></button>
-          </div>
-          <table className="table">
-            <thead>
-              <tr>
-                <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('date')}>Fecha {sortOrderIcon('date')}</div></th>
-                <th width="40%"><div className="link" onClick={() => handleOnChangeOrder('title')}>Titulo {sortOrderIcon('title')}</div></th>
-                <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('quota')}>Cupo {sortOrderIcon('quota')}</div></th>
-                <th width="10%" className="no-wrap"><div className="link" onClick={() => handleOnChangeOrder('reservations')}>Reservas  {sortOrderIcon('reservations')}</div></th>
-                <th width="10%"></th>
-                <th width="10%">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <TripsListContent />
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan="6">
-                  <button
-                    onClick={() => goToPrevPage()}
-                    className="btn btn-primary btn-small"
-                    title="Anterior"
-                  >
-                    <li className="fas fa-angle-left"></li>
-                  </button>
+      <div>
+        <h2 className="my-2">Eventos</h2>
+        <div className="search-panelXX">
+          <input type="checkbox" id="showActive" onChange={handleOnChangeActive} /><label htmlFor="showActive"> Mostrar solo activos</label>{showActive}
+          <input type="text" className='input-text' value={search} onChange={handleOnChangeSearch} onKeyDown={handleOnKeyDownSearch} /><button className="btn btn-primary btn-link" onClick={handleOnClickSearch}><i className="fas fa-search" title="Buscar"></i></button>
+        </div>
+        <table className="table">
+          <thead>
+            <tr>
+              <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('date')}>Fecha {sortOrderIcon('date')}</div></th>
+              <th width="30%"><div className="link" onClick={() => handleOnChangeOrder('title')}>Titulo {sortOrderIcon('title')}</div></th>
+              <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('quota')}>Cupo {sortOrderIcon('quota')}</div></th>
+              <th width="10%" className="no-wrap"><div className="link" onClick={() => handleOnChangeOrder('reservations')}>Reservas  {sortOrderIcon('reservations')}</div></th>
+              <th width="30%">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* <tr><td colSpan="6"><Spinner /></td></tr> */}
+            {loading ? (<tr><td colSpan="6"><Spinner /></td></tr>) : (<TripsListContent />)}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan="6">
+                <button
+                  onClick={() => goToPrevPage()}
+                  className="btn btn-primary btn-small"
+                  title="Anterior"
+                >
+                  <li className="fas fa-angle-left"></li>
+                </button>
 
-                  <button
-                    onClick={() => goToNextPage()}
-                    className="btn btn-primary btn-small"
-                    title="Siguiente"
-                  >
-                    <li className="fas fa-angle-right"></li>
-                  </button>
-                  <div className="tiny inline">
-                    Página {trips?.metadata?.page} de {Math.ceil(trips?.metadata?.total / trips?.metadata?.limit)} - total de registros: {trips?.metadata?.total}
-                  </div>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>)}
-    </Fragment>
+                <button
+                  onClick={() => goToNextPage()}
+                  className="btn btn-primary btn-small"
+                  title="Siguiente"
+                >
+                  <li className="fas fa-angle-right"></li>
+                </button>
+                <div className="tiny inline">
+                  Página {trips?.metadata?.page} de {Math.ceil(trips?.metadata?.total / trips?.metadata?.limit)} - total de registros: {trips?.metadata?.total}
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </Fragment >
   )
 
 }

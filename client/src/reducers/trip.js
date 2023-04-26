@@ -87,7 +87,8 @@ export default function (state = initialState, action) {
         case CLEAR_TRIPS:
             return {
                 ...state,
-                trips: {}
+                trips: {},
+                loading: true,
             };
 
         case ADDTRIP_SUCCESS:

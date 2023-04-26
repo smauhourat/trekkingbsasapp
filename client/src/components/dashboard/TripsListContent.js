@@ -26,9 +26,6 @@ const TripsListContent = ({ trip: { trips: { data } }, deleteTrip, getTrip }) =>
         <td>{trip.title}</td>
         <td className="text-center">{trip.quota}</td>
         <td>{trip.reservations}</td>
-        <td>
-          ...
-        </td>
         <td className="no-wrap">
           <div className="align-center">
             <button
