@@ -11,6 +11,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
   const [showActive, setShowActive] = useState(false);
   const [sort, setSort] = useState("date");
   const [order, setOrder] = useState(-1);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     getTrips(`&limit=3&page=1&sort=${sort}&order=${order}`);
@@ -53,6 +54,20 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
     return e === sort ? <i className={classIcon} /> : "";
   }
 
+  const handleOnChangeSearch = (e) => {
+    setSearch(e.target.value);
+  }
+
+  const handleOnClickSearch = (e) => {
+    getTrips(`&q=${search}&limit=3&page=1&sort=${sort}&order=${order}`);
+  }
+
+  const handleOnKeyDownSearch = (e) => {
+    if (e.key === 'Enter') {
+      getTrips(`&q=${search}&limit=3&page=1&sort=${sort}&order=${order}`);
+    }
+  }
+
   return (
     <Fragment>
       {loading ? (
@@ -62,7 +77,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
           <h2 className="my-2">Eventos</h2>
           <div className="search-panelXX">
             <input type="checkbox" id="showActive" onChange={handleOnChangeActive} /><label htmlFor="showActive"> Mostrar solo activos</label>{showActive}
-            <input type="text" className='input-text' /><button className="btn btn-primary btn-link"><i className="fas fa-search" title="Editar"></i></button>
+            <input type="text" className='input-text' value={search} onChange={handleOnChangeSearch} onKeyDown={handleOnKeyDownSearch} /><button className="btn btn-primary btn-link" onClick={handleOnClickSearch}><i className="fas fa-search" title="Buscar"></i></button>
           </div>
           <table className="table">
             <thead>
