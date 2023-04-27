@@ -58,6 +58,7 @@ router.get('/',
       const sort = req.query.sort ? req.query.sort : "date";
       const order = req.query.order ? req.query.order : "-1";
       const category = req.query.category ? req.query.category : "";
+      const published = req.query.published ? (req.query.published == 1) : "";
 
       let db_query = {
         date: { $gte: new Date(dateFrom), $lt: new Date(dateTo) },
@@ -71,6 +72,8 @@ router.get('/',
 
       if (category !== "")
         db_query = { ...db_query, category: category }
+      if (published !== "")
+        db_query = { ...db_query, published: published }
 
       const totalItems = await Trip
         .find(db_query)

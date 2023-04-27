@@ -20,7 +20,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
     const currentMonth = (new Date()).getMonth() + 1;
     const selectedMonth = monthSearch !== undefined ? monthSearch : currentMonth;
 
-    var lastDay = (new Date(currentYear, selectedMonth, 0)).getDate();
+    const lastDay = (new Date(currentYear, selectedMonth, 0)).getDate();
 
     const ret = 'df=' + currentYear + '-' + selectedMonth + '-01&dt=' + currentYear + '-' + selectedMonth + '-' + lastDay;
     return ret;
@@ -29,7 +29,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
   const isCalendar = useLocation().pathname.includes('calendar');
   const search = useLocation().search;
 
-  const query = isCalendar ? getQueryCalendar() : getQueryGral(search);
+  const query = (isCalendar ? getQueryCalendar() : getQueryGral(search)) + "&published=1";
 
   console.log('query: ', query);
 

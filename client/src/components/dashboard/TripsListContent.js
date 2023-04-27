@@ -24,8 +24,9 @@ const TripsListContent = ({ trip: { trips: { data } }, deleteTrip, getTrip }) =>
       <tr key={trip._id}>
         <td>{formatDate(trip.date)}</td>
         <td>{trip.title}</td>
-        <td className="text-center">{trip.quota}</td>
-        <td>{trip.reservations}</td>
+        <td style={{ textAlign: "center" }}>{trip.quota}</td>
+        <td style={{ textAlign: "center" }}>{trip.reservations}</td>
+        <td style={{ textAlign: "center" }}>{trip.published ? 'SI' : 'NO'}</td>
         <td className="no-wrap">
           <div className="align-center">
             <button

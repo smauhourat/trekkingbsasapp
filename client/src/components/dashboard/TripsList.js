@@ -73,22 +73,22 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
       <div>
         <h2 className="my-2">Eventos</h2>
         <div className="search-panelXX">
-          <input type="checkbox" id="showActive" onChange={handleOnChangeActive} /><label htmlFor="showActive"> Mostrar solo activos</label>{showActive}
+          <input type="checkbox" id="showActive" onChange={handleOnChangeActive} /><label htmlFor="showActive" alt="asda asdads"> Mostrar solo activos</label>{showActive}
           <input type="text" className='input-text' value={search} onChange={handleOnChangeSearch} onKeyDown={handleOnKeyDownSearch} /><button className="btn btn-primary btn-link" onClick={handleOnClickSearch}><i className="fas fa-search" title="Buscar"></i></button>
         </div>
         <table className="table">
           <thead>
             <tr>
-              <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('date')}>Fecha {sortOrderIcon('date')}</div></th>
-              <th width="30%"><div className="link" onClick={() => handleOnChangeOrder('title')}>Titulo {sortOrderIcon('title')}</div></th>
-              <th width="15%"><div className="link" onClick={() => handleOnChangeOrder('quota')}>Cupo {sortOrderIcon('quota')}</div></th>
-              <th width="10%" className="no-wrap"><div className="link" onClick={() => handleOnChangeOrder('reservations')}>Reservas  {sortOrderIcon('reservations')}</div></th>
+              <th width="20%"><div className="link" onClick={() => handleOnChangeOrder('date')}>Fecha {sortOrderIcon('date')}</div></th>
+              <th width="35%"><div className="link" onClick={() => handleOnChangeOrder('title')}>Titulo {sortOrderIcon('title')}</div></th>
+              <th width="5%"><div className="link" onClick={() => handleOnChangeOrder('quota')}>Cupo {sortOrderIcon('quota')}</div></th>
+              <th width="5%" className="no-wrap"><div className="link" onClick={() => handleOnChangeOrder('reservations')}>Reservas  {sortOrderIcon('reservations')}</div></th>
+              <th width="5%">Publicado</th>
               <th width="30%">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {/* <tr><td colSpan="6"><Spinner /></td></tr> */}
-            {loading ? (<tr><td colSpan="6"><Spinner /></td></tr>) : (<TripsListContent />)}
+            {loading ? (<tr><td></td><td colSpan="5"><Spinner /></td></tr>) : (<TripsListContent />)}
           </tbody>
           <tfoot>
             <tr>
