@@ -2,9 +2,11 @@ const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const app = express();
 
+app.use(cors());
 // Connect DB
 connectDB();
 

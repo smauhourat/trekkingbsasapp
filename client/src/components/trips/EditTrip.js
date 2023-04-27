@@ -51,7 +51,7 @@ const EditTrip = ({
   return (
     <section className="container">
       <h1 className="large text-primary">Eventos</h1>
-      <p className="lead"><i className="fas fa-calendar"></i> Crear Evento</p>
+      <p className="lead"><i className="fas fa-calendar"></i> Actualizar Evento</p>
       <form
         className="form"
         onSubmit={(e) => {

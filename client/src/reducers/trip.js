@@ -8,7 +8,9 @@ import {
     GET_TRIP,
     TRIP_ERROR,
     CLEAR_TRIP,
+    ADDIMAGE_BEGIN,
     ADDIMAGE_SUCCESS,
+    ADDIMAGE_FAIL,
     DELETEIMAGE_SUCCESS
 } from '../actions/types';
 
@@ -17,21 +19,30 @@ const initialState = {
     trips: {},
     selectedTrip: {},
     error: {}
-  };
+};
 
-export default function(state = initialState, action) {
-    const { type, payload } = action;   
+export default function (state = initialState, action) {
+    const { type, payload } = action;
 
     switch (type) {
+        case ADDIMAGE_BEGIN:
+            return {
+                ...state,
+                loading: true
+            };
         case ADDIMAGE_SUCCESS:
-            let newAddStateAddImage = {...state};
+            let newAddStateAddImage = { ...state };
             newAddStateAddImage.selectedTrip.images = [payload, ...newAddStateAddImage.selectedTrip.images];
             newAddStateAddImage.loading = false;
 
             return newAddStateAddImage;
-
+        case ADDIMAGE_FAIL:
+            return {
+                ...state,
+                loading: false
+            };
         case DELETEIMAGE_SUCCESS:
-            let newStateDeleteImage = {...state};
+            let newStateDeleteImage = { ...state };
             newStateDeleteImage.selectedTrip.images = newStateDeleteImage.selectedTrip.images.filter((image) => image.public_id !== payload);
             newStateDeleteImage.loading = false;
 
@@ -50,7 +61,7 @@ export default function(state = initialState, action) {
                 error: payload,
                 selectedTrip: {},
                 loading: false,
-            };            
+            };
 
         case CLEAR_TRIP:
             return {
@@ -76,20 +87,21 @@ export default function(state = initialState, action) {
         case CLEAR_TRIPS:
             return {
                 ...state,
-                trips: {}
+                trips: {},
+                loading: true,
             };
 
         case ADDTRIP_SUCCESS:
-            let newAddState = {...state};
-            newAddState.trips.metadata.total = newAddState.trips.metadata.total+1;
+            let newAddState = { ...state };
+            newAddState.trips.metadata.total = newAddState.trips.metadata.total + 1;
             newAddState.trips.data = [payload, ...newAddState.trips.data];
             newAddState.loading = false;
 
             return newAddState;
 
         case DELETETRIP_SUCCESS:
-            let newState = {...state};
-            newState.trips.metadata.total = newState.trips.metadata.total-1;
+            let newState = { ...state };
+            newState.trips.metadata.total = newState.trips.metadata.total - 1;
             newState.trips.data = newState.trips.data.filter((trip) => trip._id !== payload);
             newState.loading = false;
 
@@ -102,8 +114,8 @@ export default function(state = initialState, action) {
                 loading: false,
                 trips: null
             };
-                  
+
         default:
-            return state;            
+            return state;
     }
-  }
+}

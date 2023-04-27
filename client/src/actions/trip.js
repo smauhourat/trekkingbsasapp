@@ -14,6 +14,7 @@ import {
   CLEAR_TRIP,
   GET_TRIP,
   TRIP_ERROR,
+  ADDIMAGE_BEGIN,
   ADDIMAGE_SUCCESS,
   ADDIMAGE_FAIL,
   DELETEIMAGE_SUCCESS,
@@ -157,6 +158,9 @@ export const getTrip = (id) => async (dispatch) => {
 // Add image
 export const addImage = (id, image) => async (dispatch) => {
   try {
+    dispatch({
+      type: ADDIMAGE_BEGIN
+    })
     const res = await api.post(`/trips/${id}/images`, image);
 
     dispatch({

@@ -9,7 +9,9 @@ import Spinner from '../layout/Spinner';
 const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
 
   function getQueryGral(arg) {
-    const params = new URLSearchParams(arg);
+    const todayDate = new Date().toISOString().slice(0, 10);
+    const query = `${arg}&df=${todayDate}`;
+    const params = new URLSearchParams(query);
     return params !== undefined || params !== null ? params : '';
   }
 
@@ -18,7 +20,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
     const currentMonth = (new Date()).getMonth() + 1;
     const selectedMonth = monthSearch !== undefined ? monthSearch : currentMonth;
 
-    var lastDay = (new Date(currentYear, selectedMonth, 0)).getDate();
+    const lastDay = (new Date(currentYear, selectedMonth, 0)).getDate();
 
     const ret = 'df=' + currentYear + '-' + selectedMonth + '-01&dt=' + currentYear + '-' + selectedMonth + '-' + lastDay;
     return ret;
@@ -27,7 +29,9 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
   const isCalendar = useLocation().pathname.includes('calendar');
   const search = useLocation().search;
 
-  const query = isCalendar ? getQueryCalendar() : getQueryGral(search);
+  const query = (isCalendar ? getQueryCalendar() : getQueryGral(search)) + "&published=1";
+
+  console.log('query: ', query);
 
   useEffect(() => {
     getTrips(query);
@@ -58,7 +62,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
                 <TripItem key={trip._id} trip={trip} />
               ))
             ) : (
-              <h4>No se econtraron Eventos...</h4>
+              <h4>No se encontraron Eventos...</h4>
             )}
           </div>
         </Fragment>

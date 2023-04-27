@@ -1,28 +1,10 @@
 const express = require('express');
-const nodemailer = require('nodemailer');
+const transporter = require('../../config/mailer');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { getMaxListeners } = require('../../models/User');
 
 const config = require('config');
-
-const transporter = nodemailer.createTransport({
-  host: config.get('contact_host'), //replace with your email provider
-  port: config.get('contact_port'), //replace with your
-  auth: {
-    user: config.get('contact_user'), //process.env.EMAIL,
-    pass: config.get("contact_pwd") //process.env.PASSWORD
-  }
-});
-
-// verify connection configuration
-transporter.verify(function (error, success) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log("Server is ready to take our messages");
-  }
-});
 
 // @route    GET api/contact
 // @desc     Send Contact Info
@@ -49,17 +31,20 @@ router.post('/',
       text: 'De: ' + email + '\nMensaje: ' + message
     }
 
-    transporter.sendMail(mail, (err, data) => {
-      if (err) {
-        res.json({
-          status: 'fail: ' + err
-        })
-      } else {
-        res.json({
-          status: 'success'
-        })
-      }
-    });
+    //var requestedUrl = req.protocol + '://' + req.get('Host') + req.url;
+    //console.log('requestedUrl: ', requestedUrl);
+
+    // transporter.sendMail(mail, (err, data) => {
+    //   if (err) {
+    //     res.json({
+    //       status: 'fail'
+    //     })
+    //   } else {
+    //     res.json({
+    //       status: 'success'
+    //     })
+    //   }
+    // });
 
     //res.json(req.body);
 
