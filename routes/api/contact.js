@@ -22,32 +22,26 @@ router.post('/',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { title, email, subject, message } = req.body;
+    const { email, subject, message } = req.body;
 
-    var mail = {
+    const mail = {
       from: email,
       to: config.get('contact_to'),
       subject: subject,
       text: 'De: ' + email + '\nMensaje: ' + message
     }
 
-    //var requestedUrl = req.protocol + '://' + req.get('Host') + req.url;
-    //console.log('requestedUrl: ', requestedUrl);
-
-    // transporter.sendMail(mail, (err, data) => {
-    //   if (err) {
-    //     res.json({
-    //       status: 'fail'
-    //     })
-    //   } else {
-    //     res.json({
-    //       status: 'success'
-    //     })
-    //   }
-    // });
-
-    //res.json(req.body);
-
+    transporter.sendMail(mail, (err, data) => {
+      if (err) {
+        res.json({
+          status: 'fail'
+        })
+      } else {
+        res.json({
+          status: 'success'
+        })
+      }
+    });
   }
 )
 
