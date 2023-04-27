@@ -8,13 +8,13 @@ const TripDetails = () => {
     const location = useLocation();
     const trip = location.state?.data;
 
-    console.log(trip?.images);
+    //console.log(trip?.images);
     // <li key={img._id}><img src={img.url} style={{maxWidth: '100%',height: '100%'}} loading="lazy"/></li>
-    const images = trip?.images.map((img) => {
-        return (
-            <li key={img._id}><img src={img.url} loading="lazy" /></li>
-        )
-    });
+    // const images = trip?.images.map((img) => {
+    //     return (
+    //         <li key={img._id}><img src={img.url} loading="lazy" /></li>
+    //     )
+    // });
 
     const images3 = trip.images.map((img) => {
         return ({
@@ -44,7 +44,7 @@ const TripDetails = () => {
                         </div>
                     </div> */}
 
-                    <ImageGallery items={images3} />
+                    {images3.length > 0 && <ImageGallery items={images3} />}
 
                 </div>
                 <div className="profile-about bg-light p-2">
