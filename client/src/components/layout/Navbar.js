@@ -15,7 +15,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         <i className="fas fa-sign-out-alt" />{' '}
         <span className="hide-sm">Logout</span>
       </a>
-    </li>  
+    </li>
   );
 
   return (
@@ -29,17 +29,17 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
             <Link to="/">
               Trekking Buenos Aires
             </Link>
-          </h1>          
+          </h1>
         </li>
       </ul>
       <ul>
         <li><Link to="calendar">Calendario</Link></li>
-        <li><Link to="company">La Empresa</Link></li>
+        <li><Link to="company">Nuestro Grupo</Link></li>
         <li><Link to="contact">Contacto</Link></li>
         {isAuthenticated ? <li><Link to="dashboard">Dashboard</Link></li> : ''}
         {isAuthenticated ? logoutLink : loginLink}
       </ul>
-    </nav>    
+    </nav>
   )
 }
 
