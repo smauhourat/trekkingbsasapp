@@ -8,7 +8,7 @@ const app = express();
 
 app.use(cors());
 // Connect DB
-connectDB();
+//connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false, limit: '50mb' }))
@@ -41,7 +41,8 @@ app.get("/api/test", (req, res) => {
 // Set static folder
 app.use(express.static('client/build'));
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(
+        path.resolve(__dirname, 'client', 'build', 'index.html'));
 })
 //}
 
