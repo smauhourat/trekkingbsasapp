@@ -8,11 +8,11 @@ const app = express();
 
 app.use(cors());
 // Connect DB
-connectDB();
+//connectDB();
 
 // Init Middleware
-app.use(express.json({extended: false, limit: '50mb'}))
-app.use(morgan('tiny'));
+app.use(express.json({ extended: false, limit: '50mb' }))
+//app.use(morgan('tiny'));
 
 app.use((_req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -23,6 +23,10 @@ app.use((_req, res, next) => {
 })
 
 //app.get('/', (_req, res) => res.send('API running'));
+
+app.get("/api/test", (req, res) => {
+    res.send("test");
+});
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
