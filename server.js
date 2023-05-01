@@ -8,7 +8,7 @@ const app = express();
 
 app.use(cors());
 // Connect DB
-//connectDB();
+connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false, limit: '50mb' }))

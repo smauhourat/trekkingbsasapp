@@ -5,9 +5,10 @@ const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
+//const config = require('config');
+const environment = require('../../config/environment');
 const { check, validationResult } = require('express-validator');
-const JWT_SECRET = config.get('jwtSecret');
+//const JWT_SECRET = config.get('jwtSecret');
 
 // @route   GET api/auth
 // @desc    Test route
@@ -61,7 +62,7 @@ router.post(
 
       jwt.sign(
         payload,
-        JWT_SECRET,
+        environment.jwtSecret,
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
@@ -89,7 +90,7 @@ router.post("/forgot-password", async (req, res) => {
         message: 'Usuario no existe!!' 
       });
     }
-    const secret = JWT_SECRET + oldUser.password;
+    const secret = environment.jwtSecret + oldUser.password;
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
       expiresIn: "10m",
     });
@@ -128,7 +129,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
   if (!oldUser) {
     return res.json({ status: "Usuario no existe!!" });
   }
-  const secret = JWT_SECRET + oldUser.password;
+  const secret = environment.jwtSecret + oldUser.password;
   try {
     const verify = jwt.verify(token, secret);
     res.json({ email: verify.email, status: "No verificado" });
@@ -149,7 +150,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
   if (!oldUser) {
     return res.json({ status: "Usuario no existe!!" });
   }
-  const secret = JWT_SECRET + oldUser.password;
+  const secret = environment.jwtSecret + oldUser.password;
   try {
     const verify = jwt.verify(token, secret);
     const salt = await bcrypt.genSalt(10);

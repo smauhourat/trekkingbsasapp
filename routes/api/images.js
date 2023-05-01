@@ -2,16 +2,23 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const auth = require('../../middleware/auth');
 
-const config = require('config');
+//const config = require('config');
+const environment = require('../../config/environment');
 const cloudinary = require("cloudinary").v2;
 
 const Trip = require('../../models/Trip');
 //  https://www.youtube.com/watch?v=Rw_QeJLnCK4
 // cloudinary configuration
+// cloudinary.config({
+//   cloud_name: config.get('cloud_name'),
+//   api_key: config.get('api_key'),
+//   api_secret: config.get('api_secret'),
+// });
+
 cloudinary.config({
-  cloud_name: config.get('cloud_name'),
-  api_key: config.get('api_key'),
-  api_secret: config.get('api_secret'),
+  cloud_name: environment.cloudName,
+  api_key: environment.apiKey,
+  api_secret: environment.apiSecret
 });
 
 
