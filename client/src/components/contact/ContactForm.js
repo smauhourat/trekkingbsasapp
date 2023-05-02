@@ -14,7 +14,7 @@ const ContactForm = ({ setAlert }) => {
         email: '',
         subject: '',
         message: ''
-      });    
+    });
 
     const { title, email, subject, message } = formData;
 
@@ -23,7 +23,7 @@ const ContactForm = ({ setAlert }) => {
     const reRef = useRef();
 
     const onChange = (e) =>
-      setFormData({ ...formData, [e.target.name]: e.target.value });     
+        setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const resetForm = () => {
         setFormData({
@@ -31,9 +31,9 @@ const ContactForm = ({ setAlert }) => {
             email: '',
             subject: '',
             message: ''
-          });
-          reRef.current.reset();
-          setIsVerified(false);
+        });
+        reRef.current.reset();
+        setIsVerified(false);
     }
 
     const onLoadRecaptcha = () => {
@@ -62,9 +62,9 @@ const ContactForm = ({ setAlert }) => {
                 resetForm();
                 console.log('Mensaje enviado');
             } else {
-                setAlert('Mensaje erroneo', 'danger');    
+                setAlert('Mensaje erroneo', 'danger');
             }
-        } catch(err) {
+        } catch (err) {
             setAlert('Mensaje erroneo', 'danger');
             console.error(err);
         }
@@ -75,8 +75,9 @@ const ContactForm = ({ setAlert }) => {
         <div>
             <section className="container">
                 <h1 className="large text-primary">
-                Contacto
+                    Contacto
                 </h1>
+                <p>{process.env.REACT_APP_RECAPTCHA_KEY}</p>
                 <p className="lead">
                     <i className="fas fa-hand-point-right"></i> En que podemos ayudarte?
                 </p>
@@ -94,7 +95,7 @@ const ContactForm = ({ setAlert }) => {
                         <input type="text" placeholder="Email" name="email" value={email} onChange={onChange} required />
                     </div>
                     <div className="form-group">
-                        <input type="text" placeholder="Asunto" name="subject" value={subject} onChange={onChange}/>
+                        <input type="text" placeholder="Asunto" name="subject" value={subject} onChange={onChange} />
                     </div>
                     <div className="form-group">
                         <textarea
@@ -112,15 +113,15 @@ const ContactForm = ({ setAlert }) => {
                         ref={reRef}
                         verifyCallback={verifyRecaptcha}
                         onloadCallback={onLoadRecaptcha}
-                    />                    
+                    />
                     <input type="submit" className="btn btn-primary my-1" value={isSubmitting ? 'Enviando' : 'Enviar'} disabled={!isVerified || isSubmitting} />
                     <input type="button" className="btn btn-light my-1" value="Volver" onClick={() => navigate('/')} />
                 </form>
             </section>
-            
+
             <div className="footer-basic bg-dark">
                 <footer>
-                <div className="social"><a href="http://www.instagram.com/trekkingbsas"><i className="fab fa-instagram"></i></a><a href="http://www.facebook.com/trekkingbsas"><i className="fab fa-facebook-f"></i></a><a href="http://www.twitter.com/trekkingbsas"><i className="fab fa-twitter"></i></a><a href="http://www.youtube.com/trekkingbsas"><i className="fab fa-youtube"></i></a></div>
+                    <div className="social"><a href="http://www.instagram.com/trekkingbsas"><i className="fab fa-instagram"></i></a><a href="http://www.facebook.com/trekkingbsas"><i className="fab fa-facebook-f"></i></a><a href="http://www.twitter.com/trekkingbsas"><i className="fab fa-twitter"></i></a><a href="http://www.youtube.com/trekkingbsas"><i className="fab fa-youtube"></i></a></div>
                     <ul className="list-inline">
                         <li className="list-inline-item"><Link to="/">Home</Link></li>
                         <li className="list-inline-item"><Link to="/calendar">Calendario</Link></li>
@@ -137,6 +138,6 @@ const ContactForm = ({ setAlert }) => {
 
 ContactForm.propTypes = {
     setAlert: PropTypes.func.isRequired,
-  };
+};
 
 export default connect(null, { setAlert })(ContactForm);

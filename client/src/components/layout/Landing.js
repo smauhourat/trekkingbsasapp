@@ -78,6 +78,9 @@ const Landing = () => {
 
         </div>
       </section>
+      <footer id="footer" class="bg-dark">
+        <p>Desarrollado por <a href="http://adhentux.com" target="_blank">Adhentux</a></p>
+      </footer>
     </>
   )
 }
