@@ -18,7 +18,7 @@ const TripDetails = () => {
 
     const images3 = trip.images.map((img) => {
         return ({
-            original: img.url
+            original: img.url.toString().replace('http:', 'https:')
         })
     });
 
