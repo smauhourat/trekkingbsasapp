@@ -78,6 +78,7 @@ const ContactForm = ({ setAlert }) => {
                     Contacto
                 </h1>
                 <p>{process.env.REACT_APP_RECAPTCHA_KEY}</p>
+                <p>{process.env.REACT_APP_RECAPTCHA_SECRET}</p>
                 <p className="lead">
                     <i className="fas fa-hand-point-right"></i> En que podemos ayudarte?
                 </p>
