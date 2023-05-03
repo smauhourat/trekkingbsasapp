@@ -6,6 +6,9 @@ const cors = require('cors');
 
 const app = express();
 
+console.log('process.env.NODE_ENV: ', process.env.NODE_ENV);
+console.log('MONGO_URI: ', process.env.MONGO_URI);
+
 app.use(cors());
 // Connect DB
 connectDB();

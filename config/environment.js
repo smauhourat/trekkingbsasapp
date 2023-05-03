@@ -1,4 +1,8 @@
 require('dotenv').config();
+//require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
+//require('dotenv').config('.env.test');
+
+console.log(process.env);
 
 class Environment {
   constructor() {
