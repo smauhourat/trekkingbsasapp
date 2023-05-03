@@ -1,13 +1,13 @@
 const nodemailer = require('nodemailer');
 //const config = require('config');
-const environment = require('./environment');
+//const environment = require('./environment');
 
 const transporter = nodemailer.createTransport({
-    host: environment.contact_host, // config.get('contact_host'),
-    port: environment.contact_port, // config.get('contact_port'),
+    host: global.env.contact_host,
+    port: global.env.contact_port,
     auth: {
-        user: environment.contact_user, // config.get('contact_user'),
-        pass: environment.contact_pwd // config.get("contact_pwd")
+        user: global.env.contact_user,
+        pass: global.env.contact_pwd
     }
 });
 

@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 //const config = require('config');
-const environment = require('../../config/environment');
+//const environment = require('./environment');
 const cloudinary = require("cloudinary").v2;
 
 // cloudinary configuration
@@ -16,9 +16,9 @@ const cloudinary = require("cloudinary").v2;
 //   });
 
 cloudinary.config({
-  cloud_name: environment.cloudName,
-  api_key: environment.apiKey,
-  api_secret: environment.apiSecret,
+  cloud_name: global.env.cloudName,
+  api_key: global.env.apiKey,
+  api_secret: global.env.apiSecret,
 });
 
 
@@ -42,7 +42,7 @@ router.post("/", (req, res) => {
         message: "failure",
         error,
       });
-    });  
+    });
 });
 
 module.exports = router;

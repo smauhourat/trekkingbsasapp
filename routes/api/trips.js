@@ -6,7 +6,7 @@ const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 
 //const config = require('config');
-const environment = require('../../config/environment');
+//const environment = require('./environment');
 const cloudinary = require("cloudinary").v2;
 
 const Trip = require('../../models/Trip');
@@ -19,9 +19,9 @@ const Trip = require('../../models/Trip');
 // });
 
 cloudinary.config({
-  cloud_name: environment.cloudName,
-  api_key: environment.apiKey,
-  api_secret: environment.apiSecret
+  cloud_name: global.env.cloudName,
+  api_key: global.env.apiKey,
+  api_secret: global.env.apiSecret
 });
 
 

@@ -5,7 +5,7 @@ const { check, validationResult } = require('express-validator');
 const { getMaxListeners } = require('../../models/User');
 
 //const config = require('config');
-const environment = require('../../config/environment');
+//const environment = require('./environment');
 
 // @route    GET api/contact
 // @desc     Send Contact Info
@@ -28,7 +28,7 @@ router.post('/',
     const mail = {
       from: email,
       //to: config.get('contact_to'),
-      to: environment.contact_to,
+      to: global.env.contact_to,
       subject: subject,
       text: 'De: ' + email + '\nMensaje: ' + message
     }

@@ -1,3 +1,6 @@
+const environment = require('./environment');
+global.env = environment;
+
 const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
@@ -5,9 +8,6 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 const app = express();
-
-console.log('process.env.NODE_ENV: ', process.env.NODE_ENV);
-console.log('MONGO_URI: ', process.env.MONGO_URI);
 
 app.use(cors());
 // Connect DB

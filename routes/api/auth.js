@@ -6,7 +6,7 @@ const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 //const config = require('config');
-const environment = require('../../config/environment');
+//const environment = require('./environment');
 const { check, validationResult } = require('express-validator');
 //const JWT_SECRET = config.get('jwtSecret');
 
@@ -62,7 +62,7 @@ router.post(
 
       jwt.sign(
         payload,
-        environment.jwtSecret,
+        global.env.jwtSecret,
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
@@ -85,12 +85,12 @@ router.post("/forgot-password", async (req, res) => {
   try {
     const oldUser = await User.findOne({ email });
     if (oldUser == null) {
-      return res.json({ 
+      return res.json({
         status: 'fail',
-        message: 'Usuario no existe!!' 
+        message: 'Usuario no existe!!'
       });
     }
-    const secret = environment.jwtSecret + oldUser.password;
+    const secret = global.env.jwtSecret + oldUser.password;
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
       expiresIn: "10m",
     });
@@ -129,7 +129,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
   if (!oldUser) {
     return res.json({ status: "Usuario no existe!!" });
   }
-  const secret = environment.jwtSecret + oldUser.password;
+  const secret = global.env.jwtSecret + oldUser.password;
   try {
     const verify = jwt.verify(token, secret);
     res.json({ email: verify.email, status: "No verificado" });
@@ -150,7 +150,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
   if (!oldUser) {
     return res.json({ status: "Usuario no existe!!" });
   }
-  const secret = environment.jwtSecret + oldUser.password;
+  const secret = global.env.jwtSecret + oldUser.password;
   try {
     const verify = jwt.verify(token, secret);
     const salt = await bcrypt.genSalt(10);
@@ -167,9 +167,9 @@ router.post("/reset-password/:id/:token", async (req, res) => {
     );
 
     //res.json({ email: verify.email, status: "verificado" });
-    res.json({ 
-      status: "success", 
-      message: 'La contraseña se ha cambiado con exito' 
+    res.json({
+      status: "success",
+      message: 'La contraseña se ha cambiado con exito'
     });
   } catch (error) {
     console.log(error);
