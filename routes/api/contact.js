@@ -2,10 +2,6 @@ const express = require('express');
 const transporter = require('../../config/mailer');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const { getMaxListeners } = require('../../models/User');
-
-//const config = require('config');
-//const environment = require('./environment');
 
 // @route    GET api/contact
 // @desc     Send Contact Info
@@ -27,7 +23,6 @@ router.post('/',
 
     const mail = {
       from: email,
-      //to: config.get('contact_to'),
       to: global.env.contact_to,
       subject: subject,
       text: 'De: ' + email + '\nMensaje: ' + message
