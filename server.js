@@ -23,9 +23,7 @@ app.use((_req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
     return next();
-})
-
-//app.get('/', (_req, res) => res.send('API running'));
+});
 
 app.get("/api/test", (req, res) => {
     res.send("test");
@@ -55,9 +53,7 @@ app.get('*', (req, res) => {
             }
         }
     );
-    //res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 })
-//}
 
 const PORT = process.env.PORT || 5000;
 
