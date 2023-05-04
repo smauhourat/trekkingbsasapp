@@ -17,12 +17,14 @@ import EditTrip from './components/trips/EditTrip';
 import AddImages from './components/trips/AddImages';
 import TripDetails from './components/trips/TripDetails';
 import PrivateRoute from './components/routing/PrivateRoute';
+import MaintenanceRoute from './components/routing/MaintenanceRoute';
 import ContactForm from './components/contact/ContactForm';
 import Company from './components/static/Company';
 import Calendar from './components/calendar/Calendar';
 import { LOGOUT } from './actions/types';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Fallback } from './components/Fallback';
+import Maintenance from './components/Maintenance';
 
 import './App.css';
 // Redux
@@ -60,8 +62,10 @@ const App = () => {
           <Alert />
           <Routes>
             <Fragment>
-              <Route exact path="/" element={<Landing />} />
+              {/* <Route exact path="/" element={<Landing />} /> */}
+              <Route exact path="/" element={<MaintenanceRoute component={Landing} />} />
               <Route exact path="/login" element={<Login />} />
+              <Route exact path="/maintenance" element={<Maintenance />} />
               <Route exact path="/forgot-password" element={<ForgotPassword />} />
               <Route path="forgot-password-confirm/:email" element={<ForgotPasswordConfirm />} />
               <Route path="reset-password/:id/:token" element={<ResetPassword />} />
@@ -73,9 +77,9 @@ const App = () => {
               <Route path="add-images/:id" element={<PrivateRoute component={AddImages} />} />
               <Route path="trips" element={<Trips />} />
               <Route path="trip-details/:id" element={<TripDetails />} />
-              <Route path="contact" element={<ContactForm />} />
-              <Route path="company" element={<Company />} />
-              <Route path="calendar" element={<Calendar />} />
+              <Route path="contact" element={<MaintenanceRoute component={ContactForm} />} />
+              <Route path="company" element={<MaintenanceRoute component={Company} />} />
+              <Route path="calendar" element={<MaintenanceRoute component={Calendar} />} />
             </Fragment>
           </Routes>
         </ErrorBoundary>
