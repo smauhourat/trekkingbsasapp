@@ -23,6 +23,7 @@ import Calendar from './components/calendar/Calendar';
 import { LOGOUT } from './actions/types';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Fallback } from './components/Fallback';
+import Maintenance from './components/layout/Maintenance';
 
 import './App.css';
 // Redux
@@ -56,6 +57,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <ErrorBoundary FallbackComponent={Fallback} onError={errorHandler}>
+          <Maintenance>
           <Navbar />
           <Alert />
           <Routes>
@@ -78,6 +80,7 @@ const App = () => {
               <Route path="calendar" element={<Calendar />} />
             </Fragment>
           </Routes>
+          </Maintenance>
         </ErrorBoundary>
       </Router>
     </Provider>
