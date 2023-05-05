@@ -9,6 +9,9 @@ import Recaptcha from 'react-recaptcha';
 const ContactForm = ({ setAlert }) => {
     const navigate = useNavigate();
 
+    console.log('REACT_APP_RECAPTCHA_KEY:', process.env.REACT_APP_RECAPTCHA_KEY)
+    console.log('REACT_APP_RECAPTCHA_SECRET:', process.env.REACT_APP_RECAPTCHA_SECRET)
+        
     const [formData, setFormData] = useState({
         title: '',
         email: '',
@@ -77,8 +80,6 @@ const ContactForm = ({ setAlert }) => {
                 <h1 className="large text-primary">
                     Contacto
                 </h1>
-                <p>{process.env.REACT_APP_RECAPTCHA_KEY}</p>
-                <p>{process.env.REACT_APP_RECAPTCHA_SECRET}</p>
                 <p className="lead">
                     <i className="fas fa-hand-point-right"></i> En que podemos ayudarte?
                 </p>
