@@ -11,5 +11,8 @@ config/production.json
 .env.development
 .env.development.local
 .env.test.local
+.env.production
 .env.production.local
 .vercel
+client/.env.development
+client/.env.production
