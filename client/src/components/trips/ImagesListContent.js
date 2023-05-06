@@ -9,8 +9,8 @@ const ImagesListContent = ({trip: {selectedTrip}, deleteImage}) => {
         selectedTrip?.images?.map((img) => (
             <li key={img._id}>
                 <figure>
-                    <img src={img.url} />
-                    <figcaption><h3><a href={img.url} target="_blank">{img.public_id}</a></h3></figcaption>
+                    <img src={img.url} alt={`Trip ${img._id}`}/>
+                    <figcaption><h3><a href={img.url} target="_blank" rel="noreferrer">{img.public_id}</a></h3></figcaption>
                 </figure>
                 <p>
                     <span className="tiny">

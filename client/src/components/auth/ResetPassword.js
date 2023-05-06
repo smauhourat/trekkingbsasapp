@@ -11,16 +11,15 @@ const ResetPassword = ({ setAlert, resetPassword }) => {
     const { id , token } = useParams();
     const [isTokenVerified, setIsTokenVerified] = useState(true);
 
-    const validateResetPasswordToken = async () => {
+    useEffect(() => {
+      const validateResetPasswordToken = async () => {
         const res = await api.get(`/auth/reset-password/${id}/${token}`);
         if (res.data.status === 'fail') {
             setIsTokenVerified(false);
         }
-    }
-
-    useEffect(() => {
-        validateResetPasswordToken();
-    }, [isTokenVerified]);
+      }      
+      validateResetPasswordToken();
+    }, [id, token, isTokenVerified]);
 
     const [formData, setFormData] = useState({
         password: '',

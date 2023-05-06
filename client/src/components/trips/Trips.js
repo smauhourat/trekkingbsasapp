@@ -31,11 +31,9 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
 
   const query = (isCalendar ? getQueryCalendar() : getQueryGral(search)) + "&published=1";
 
-  console.log('query: ', query);
-
   useEffect(() => {
     getTrips(query);
-  }, [getTrips, monthSearch])
+  }, [query, getTrips, monthSearch])
 
   return (
     <section className="container">

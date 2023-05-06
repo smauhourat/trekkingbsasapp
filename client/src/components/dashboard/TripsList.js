@@ -16,7 +16,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
   useEffect(() => {
     getTrips(`&limit=3&page=1&sort=${sort}&order=${order}`);
     setCurrentPage(1);
-  }, [getTrips]);
+  }, [sort, order, getTrips]);
 
   const goToNextPage = () => {
     if (((currentPage - 1) * trips?.metadata.limit) + trips?.metadata.count < trips?.metadata.total) {

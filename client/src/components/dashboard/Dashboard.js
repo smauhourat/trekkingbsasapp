@@ -16,7 +16,7 @@ const Dashboard = ({
   useEffect(() => {
     getUsers();
     clearTrip();
-  }, [getUsers]);
+  }, [getUsers, clearTrip]);
 
   return (
     <section className="container">

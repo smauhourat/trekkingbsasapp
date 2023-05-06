@@ -8,7 +8,7 @@ import Spinner from '../layout/Spinner';
 const ImagesList = ({ getTrip, tripId, loading }) => {
     useEffect(() => {
         getTrip(tripId);
-      }, [getTrip]);
+      }, [tripId, getTrip]);
     
     return (
     <Fragment>

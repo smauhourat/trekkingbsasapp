@@ -30,13 +30,6 @@ const TripForm = ({
 
     const creatingTrip = useMatch('/add-trip');
     const id = useParams().id;
-    if (creatingTrip) {
-        console.log('ADD TRIP');
-    } else {
-        
-        console.log(`EDIT TRIP: ${id}`);
-    }
-
     const navigate = useNavigate();
     
     useEffect(() => {
