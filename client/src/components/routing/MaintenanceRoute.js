@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 const MaintenanceRoute = ({
     component: Component
 }) => {
-    if (!process.env.REACT_APP_ISMAINTENANCE) return <Component />;
+    if (process.env.REACT_APP_ISMAINTENANCE === "false") return <Component />;
 
     return <Navigate to="/maintenance" />;
 };
