@@ -127,10 +127,10 @@ const ContactForm = ({ setAlert }) => {
                     <ul className="list-inline">
                         <li className="list-inline-item"><Link to="/">Home</Link></li>
                         <li className="list-inline-item"><Link to="/calendar">Calendario</Link></li>
-                        <li className="list-inline-item"><Link to="/company">La Empresa</Link></li>
+                        <li className="list-inline-item"><Link to="/company">Nuestro Grupo</Link></li>
                         <li className="list-inline-item"><Link to="/contact">Contacto</Link></li>
                     </ul>
-                    <p className="copyright">©TrekkingBsAs 2022 - Todos los Derechos Reservados</p>
+                    <p className="copyright">©TrekkingBsAs 2023 - Todos los Derechos Reservados</p>
                     <p className="copyright text-dark"><strong>Desarrollado por <a href="http://www.adhentux.com" rel="noreferrer" target="_blank">Adhentux</a></strong></p>
                 </footer>
             </div>
