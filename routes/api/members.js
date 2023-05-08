@@ -136,15 +136,41 @@ router.get('/:id',
 // @access  Private
 router.get('/',
     auth,
-    async (_req, res) => {
+    async (req, res) => {
         try {
+            const query = req.query.q ? req.query.q : "";
+            const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
+            let page = 1;
+            if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
+                page = parseInt(req.query.page);
+            const sort = req.query.sort ? req.query.sort : "date";
+            const order = req.query.order ? req.query.order : "-1";
+
+            let db_query = {
+                $or: [
+                    { first_name: { $regex: query, '$options': 'i' } },
+                    { last_name: { $regex: query, '$options': 'i' } },
+                    { email: { $regex: query, '$options': 'i' } },
+                ]
+            };
+
+            const totalItems = await Member
+                .find(db_query)
+                .countDocuments();
+
             const members = await Member
-                .find()
-                .sort({ date: 'asc' });
+                .find(db_query)
+                .limit(limit)
+                .skip(limit * (page - 1))
+                .sort({ [sort]: order });
 
             res.json({
                 "metadata": {
-                    "count": members.length
+                    "query": query,
+                    "total": totalItems,
+                    "count": members.length,
+                    "limit": limit,
+                    "page": page
                 },
                 "data": members
             });
