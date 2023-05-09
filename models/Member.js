@@ -15,18 +15,18 @@ const MemberSchema = new mongoose.Schema({
         unique: true
     },
     dni: {
-        type: Number,
+        type: String,
         required: true
     },
     phone: {
-        type: Number,
+        type: String,
         required: true
     },
     birth_date: {
         type: Date,
         required: true
     },
-    allergic: {
+    medical_status: {
         type: String
     },
     date: {
