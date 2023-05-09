@@ -28,7 +28,7 @@ router.post('/',
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { first_name, last_name, dni, phone, birth_date, email } = req.body;
+        const { first_name, last_name, email, dni, phone, birth_date, medical_status } = req.body;
 
         try {
 
@@ -39,7 +39,7 @@ router.post('/',
             }
 
             let newMember = new Member({
-                first_name, last_name, dni, phone, birth_date, email
+                first_name, last_name, email, dni, phone, birth_date, medical_status
             });
 
             const member = await newMember.save();

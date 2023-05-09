@@ -26,7 +26,7 @@ const MemberSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    allergic: {
+    medical_status: {
         type: String
     },
     date: {
