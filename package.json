@@ -13,7 +13,10 @@
     "test": "concurrently \"npm run server-test\" \"npm run client-test\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "build-client": "npm run build --prefix client",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "server-development": "SET NODE_ENV=development & nodemon server",
+    "client-development": "SET NODE_ENV=development & npm start --prefix client",
+    "development": "concurrently \"npm run server-development\" \"npm run client-development\""
   },
   "repository": {
     "type": "git",
