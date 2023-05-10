@@ -8,13 +8,7 @@ const TripDetails = () => {
     const location = useLocation();
     const trip = location.state?.data;
 
-    //console.log(trip?.images);
-    // <li key={img._id}><img src={img.url} style={{maxWidth: '100%',height: '100%'}} loading="lazy"/></li>
-    // const images = trip?.images.map((img) => {
-    //     return (
-    //         <li key={img._id}><img src={img.url} loading="lazy" /></li>
-    //     )
-    // });
+    console.log(trip?.included_services);
 
     const images3 = trip.images.map((img) => {
         return ({
@@ -49,8 +43,8 @@ const TripDetails = () => {
                         <p><strong>Salida: </strong>28/04/2023 - 23hs - Liniers</p>
                         <p><strong>Llegada: </strong>01/05/2023 - 20hs - Liniers</p>
                         <p><strong>Disponibilidad: </strong>23 lugares</p>
-                        <p><strong>Precio: </strong>$${trip?.price} (por persona)</p>
-                        <p><strong>Reserva: </strong>$5.000</p>
+                        <p><strong>Precio: </strong>${trip?.price} (por persona)</p>
+                        <p><strong>Reserva: </strong>${trip?.booking_price} (por persona)</p>
                         <p><strong>Disponibilidad: </strong>{trip?.quota} lugares</p>
                     </div>
                     <div>
@@ -60,20 +54,20 @@ const TripDetails = () => {
                 </div>
 
                 <div>
-                    <a href="search-result.html" class="btn btn-primary mg-top-1">Volver</a>
+                    <a href="search-result.html" className="btn btn-primary mg-top-1">Volver</a>
                 </div>
 
                 <div className="profile-edu bg-white p-2">
                     <h2 className="text-primary">Equipo Sugerido</h2>
                     <div>
                         <p>
-                            <strong>Detalle: </strong>{trip.suggested_equipment}
+                            <strong>Detalle: </strong>{trip?.suggested_equipment}
                         </p>
                     </div>
-                    <h2 class="text-primary">Servicios Incluidos</h2>
+                    <h2 className="text-primary">Servicios Incluidos</h2>
                     <div>
                         <p>
-                            {trip.suggested_equipment}
+                            {trip?.included_services}
                         </p>
                     </div>
                 </div>

@@ -26,7 +26,11 @@ const EditTrip = ({
     quota: 0,
     reservations: 0,
     published: true,
-    suggested_equipment: ''
+    suggested_equipment: '',
+    included_services: '',
+    departure: '',
+    arrival: '',
+    booking_price: ''
   })
 
 
@@ -37,7 +41,7 @@ const EditTrip = ({
     setEditedTrip(trip);
   }, [id, trips.data]);
 
-  const { title, subtitle, category, description, itinerary, date, duration, price, location, grading, quota, reservations, published, suggested_equipment } = editedTrip;
+  const { title, subtitle, category, description, itinerary, date, duration, price, location, grading, quota, reservations, published, suggested_equipment, included_services, departure, arrival, booking_price } = editedTrip;
 
   const onChange = (e) => {
     if (e.target.name === 'date') {
@@ -120,6 +124,16 @@ const EditTrip = ({
           />
         </div>
         <div className="form-group">
+          <label>Servicios Incluidos</label>
+          <textarea
+            placeholder="Servicios Incluidos"
+            rows="5"
+            name="included_services"
+            value={included_services}
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
           <label>Fecha</label>
           <input
             type="date"
@@ -129,6 +143,28 @@ const EditTrip = ({
             onChange={onChange}
           />
         </div>
+        <div className="form-group">
+          <label>Salida</label>
+          <input
+            type="text"
+            placeholder="Salida"
+            name="departure"
+            value={departure}
+            onChange={onChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Llegada</label>
+          <input
+            type="text"
+            placeholder="Llegada"
+            name="arrival"
+            value={arrival}
+            onChange={onChange}
+          />
+        </div>
+
         <div className="form-group">
           <label>Duración</label>
           <input
@@ -146,6 +182,16 @@ const EditTrip = ({
             placeholder="Precio"
             name="price"
             value={price}
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Precio Reserva</label>
+          <input
+            type="text"
+            placeholder="Precio Reserva"
+            name="booking_price"
+            value={booking_price}
             onChange={onChange}
           />
         </div>
