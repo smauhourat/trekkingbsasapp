@@ -1,11 +1,12 @@
 import React from 'react'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import formatDate from '../../utils/formatDate';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 
 const TripDetails = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const trip = location.state?.data;
 
     console.log(trip?.included_services);
@@ -54,7 +55,10 @@ const TripDetails = () => {
                 </div>
 
                 <div>
-                    <a href="search-result.html" className="btn btn-primary mg-top-1">Volver</a>
+                    {/* <button className="btn btn-primary" value="Volver" onClick={() => navigate('/trips')}>Volver</button> */}
+                    <Link to={'/trips'} state={{ data: trip }} className='btn btn-primary'>
+                        <i className='text-primary' /> Volver
+                    </Link>
                 </div>
 
                 <div className="profile-edu bg-white p-2">
