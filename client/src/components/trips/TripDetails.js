@@ -41,9 +41,9 @@ const TripDetails = () => {
                         <p className="highlight2">{formatDate(trip.date)}</p>
                         <p>&nbsp;</p>
                         <p><strong>Duración: </strong>{trip?.duration}</p>
-                        <p><strong>Salida: </strong>28/04/2023 - 23hs - Liniers</p>
-                        <p><strong>Llegada: </strong>01/05/2023 - 20hs - Liniers</p>
-                        <p><strong>Disponibilidad: </strong>23 lugares</p>
+                        <p><strong>Salida: </strong>{trip?.departure}</p>
+                        <p><strong>Llegada: </strong>{trip?.arrival}</p>
+                        <p><strong>Disponibilidad: </strong>{trip?.quota} lugares</p>
                         <p><strong>Precio: </strong>${trip?.price} (por persona)</p>
                         <p><strong>Reserva: </strong>${trip?.booking_price} (por persona)</p>
                         <p><strong>Disponibilidad: </strong>{trip?.quota} lugares</p>
