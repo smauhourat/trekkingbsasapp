@@ -51,14 +51,14 @@ export const deleteUser = (id) => async (dispatch) => {
     dispatch(setAlert('Usuario eliminado', 'success'));
   } catch (err) {
     const errors = err.response.data.errors;
-
+    //console.log(err.data)
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
 
     dispatch({
-      type: DELETEUSER_FAIL
-      //payload: { msg: err.response.statusText, status: err.response.status }
+      type: DELETEUSER_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
 };

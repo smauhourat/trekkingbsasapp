@@ -20,7 +20,11 @@ const UserSchema = new mongoose.Schema({
     date :{
         type: Date,
         default: Date.now
-    }
+    },
+    super_admin: {
+        type: Boolean,
+        default: false
+    }    
 });
 
 module.exports = mongoose.model('user', UserSchema);
