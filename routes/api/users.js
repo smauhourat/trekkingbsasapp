@@ -125,7 +125,7 @@ router.delete('/:id',
   checkObjectId('id'),
   async (req, res) => {
     try {
-     
+
       if (req.user.id === req.params.id) {
         return res.status(400).json({ msg: 'El usuario es el mismo al logueado' });
         //return res.status(400).json({ errors: [{ msg: 'El usuario es el mismo al logueado' }] });
