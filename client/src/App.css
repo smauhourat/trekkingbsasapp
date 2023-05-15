@@ -1162,3 +1162,19 @@ nav a:focus {
 }
 
 /* End Nav Calendar*/
+
+.highlight {
+  color: white;
+  background-color: #343a40;
+  font-weight: 900;
+  padding: 4px;
+  opacity: 0.9;
+}
+
+.highlight2 {
+  color: white;
+  background-color: #F15A2A;
+  font-weight: 900;
+  padding: 4px;
+  opacity: 0.9;
+}

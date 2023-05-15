@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import formatDate from '../../utils/formatDate';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -7,14 +7,6 @@ import "react-image-gallery/styles/css/image-gallery.css";
 const TripDetails = () => {
     const location = useLocation();
     const trip = location.state?.data;
-
-    //console.log(trip?.images);
-    // <li key={img._id}><img src={img.url} style={{maxWidth: '100%',height: '100%'}} loading="lazy"/></li>
-    // const images = trip?.images.map((img) => {
-    //     return (
-    //         <li key={img._id}><img src={img.url} loading="lazy" /></li>
-    //     )
-    // });
 
     const images3 = trip.images.map((img) => {
         return ({
@@ -28,24 +20,7 @@ const TripDetails = () => {
                 <div className="profile-top p-2">
                     <h1 className="medium mg-top-1">{trip.title}</h1>
                     <p className="small">{trip.subtitle}</p>
-                    {/* <div className="swiffy-slider slider-item-ratio slider-item-ratio-16x9 slider-nav-animation slider-nav-animation-fadein" id="swiffy-animation">
-                        <ul className="slider-container" id="container1">
-                            {images}
-                        </ul>
-                        <button type="button" className="slider-nav" aria-label="Go to previous"></button>
-                        <button type="button" className="slider-nav slider-nav-next" aria-label="Go to next"></button>
-                        <div className="slider-indicators">
-                            <button aria-label="Go to slide" className=""></button>
-                            <button aria-label="Go to slide" className=""></button>
-                            <button aria-label="Go to slide"></button>
-                            <button aria-label="Go to slide"></button>
-                            <button aria-label="Go to slide" className="active"></button>
-                            <button aria-label="Go to slide"></button>
-                        </div>
-                    </div> */}
-
                     {images3.length > 0 && <ImageGallery items={images3} />}
-
                 </div>
                 <div className="profile-about bg-light p-2">
                     <p>
@@ -57,35 +32,43 @@ const TripDetails = () => {
                 <div className="profile-exp bg-white p-2">
                     <h2 className="text-primary">Datos Importantes</h2>
                     <div>
+                        <h3 className="text-dark">Lugar</h3>
+                        <p className="highlight2">{trip?.location}</p>
                         <h3 className="text-dark">Fecha</h3>
-                        <p>{formatDate(trip.date)}</p>
-                        <p><strong>Lugar: </strong>{trip?.location}</p>
+                        <p className="highlight2">{formatDate(trip.date)}</p>
+                        <p>&nbsp;</p>
                         <p><strong>Duración: </strong>{trip?.duration}</p>
+                        <p><strong>Salida: </strong>{trip?.departure}</p>
+                        <p><strong>Llegada: </strong>{trip?.arrival}</p>
                         <p><strong>Disponibilidad: </strong>{trip?.quota} lugares</p>
                         <p><strong>Precio: </strong>${trip?.price} (por persona)</p>
+                        <p><strong>Reserva: </strong>${trip?.booking_price} (por persona)</p>
+                        <p><strong>Disponibilidad: </strong>{trip?.quota} lugares</p>
                     </div>
                     <div>
-                        <h3 className="text-dark">Itinerario</h3>
+                        <h2 className="text-primary">Itinerario</h2>
                         <p>{trip?.itinerary}</p>
-                        {/* <p><i className="fa fa-check"></i> LLevar calzado cómodo pero resistente.</p>
-                    <p><i className="fa fa-check"></i> Abrigo en capas.</p>
-                    <p><i className="fa fa-check"></i> Gorra.</p>
-                    <p><i className="fa fa-check"></i> Agua para consumo personal.</p>
-                    <p><strong>Position: </strong>Systems Admin</p>
-                    <p>
-                    <strong>Description: </strong>Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Dignissimos placeat, dolorum ullam
-                    ipsam, sapiente suscipit dicta eius velit amet aspernatur
-                    asperiores modi quidem expedita fugit.
-                    </p> */}
                     </div>
+                </div>
+
+                <div>
+                    {/* <button className="btn btn-primary" value="Volver" onClick={() => navigate('/trips')}>Volver</button> */}
+                    <Link to={'/trips'} state={{ data: trip }} className='btn btn-primary'>
+                        <i className='text-primary' /> Volver
+                    </Link>
                 </div>
 
                 <div className="profile-edu bg-white p-2">
                     <h2 className="text-primary">Equipo Sugerido</h2>
                     <div>
                         <p>
-                            <strong>Detalle: </strong>{trip.suggested_equipment}
+                            <strong>Detalle: </strong>{trip?.suggested_equipment}
+                        </p>
+                    </div>
+                    <h2 className="text-primary">Servicios Incluidos</h2>
+                    <div>
+                        <p>
+                            {trip?.included_services}
                         </p>
                     </div>
                 </div>

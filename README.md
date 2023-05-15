@@ -77,3 +77,8 @@ Result:
 5. Run `heroku create`, to create app into heroku cloud. At the end show the `<name_of_app_in_heroku>`
 6. Add heroku as a remote repository `heroku git:remote -a <name_of_app_in_heroku>`
 7. Push master to heroku `git push heroku master`
+
+
+### Update Mongo Schema
+
+db.collection.updateMany({<filter>}, {$set:{<new_field>: <defautl_value>}}, {})

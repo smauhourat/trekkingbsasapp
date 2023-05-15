@@ -24,6 +24,12 @@ const TripSchema = new mongoose.Schema({
     itinerary: {
         type: String
     },
+    suggested_equipment: {
+        type: String
+    },
+    included_services: {
+        type: String
+    },
     created: {
         type: Date,
         default: Date.now
@@ -32,10 +38,19 @@ const TripSchema = new mongoose.Schema({
         type: Date
         //required: true 
     },
+    departure: {
+        type: String
+    },
+    arrival: {
+        type: String
+    },
     duration: {
         type: String
     },
     price: {
+        type: Number
+    },
+    booking_price: {
         type: Number
     },
     location: {
@@ -54,9 +69,6 @@ const TripSchema = new mongoose.Schema({
     published: {
         type: Boolean,
         default: true
-    },
-    suggested_equipment: {
-        type: String
     },
     images: [
         {

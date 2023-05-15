@@ -9,9 +9,9 @@ import Recaptcha from 'react-recaptcha';
 const ContactForm = ({ setAlert }) => {
     const navigate = useNavigate();
 
-    console.log('REACT_APP_RECAPTCHA_KEY:', process.env.REACT_APP_RECAPTCHA_KEY)
-    console.log('REACT_APP_RECAPTCHA_SECRET:', process.env.REACT_APP_RECAPTCHA_SECRET)
-        
+    console.log('REACT_APP_RECAPTCHA_KEY', process.env.REACT_APP_RECAPTCHA_KEY)
+    console.log('REACT_APP_RECAPTCHA_SECRET', process.env.REACT_APP_RECAPTCHA_SECRET)
+
     const [formData, setFormData] = useState({
         title: '',
         email: '',
@@ -40,14 +40,14 @@ const ContactForm = ({ setAlert }) => {
     }
 
     const onLoadRecaptcha = () => {
-        console.log('onLoadRecaptcha');
-        console.log('isVerified1: ', isVerified);
+        //console.log('onLoadRecaptcha');
+        //console.log('isVerified1: ', isVerified);
     }
 
     const verifyRecaptcha = () => {
-        console.log('verifyRecaptcha');
+        //console.log('verifyRecaptcha');
         setIsVerified(true);
-        console.log('isVerified2: ', isVerified);
+        //console.log('isVerified2: ', isVerified);
     }
 
     const sendContactForm = async (formData) => {

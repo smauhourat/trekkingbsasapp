@@ -37,7 +37,7 @@ const AddImages = ({ addImage, setAlert, loading, trip: { trips } }) => {
         setFileInput(e.target.value);
 
         const { status, message } = await imageFileIsValid(file);
-        console.log('status: ', status);
+        //console.log('status: ', status);
         if (status) {
             showPreviewFile(file);
             setSelectedFile(file);
