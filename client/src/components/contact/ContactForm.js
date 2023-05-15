@@ -9,6 +9,9 @@ import Recaptcha from 'react-recaptcha';
 const ContactForm = ({ setAlert }) => {
     const navigate = useNavigate();
 
+    console.log('REACT_APP_RECAPTCHA_KEY', process.env.REACT_APP_RECAPTCHA_KEY)
+    console.log('REACT_APP_RECAPTCHA_SECRET', process.env.REACT_APP_RECAPTCHA_SECRET)
+
     const [formData, setFormData] = useState({
         title: '',
         email: '',
