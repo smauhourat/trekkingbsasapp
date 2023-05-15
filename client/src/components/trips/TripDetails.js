@@ -1,15 +1,12 @@
 import React from 'react'
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import formatDate from '../../utils/formatDate';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 
 const TripDetails = () => {
     const location = useLocation();
-    const navigate = useNavigate();
     const trip = location.state?.data;
-
-    console.log(trip?.included_services);
 
     const images3 = trip.images.map((img) => {
         return ({
