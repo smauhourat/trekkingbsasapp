@@ -1,3 +1,6 @@
+# Aplicacion para Administracion de Empresas de Turismo
+
+
 1. run **npm init** to create package.json for api.
 2. run **npm install express express-validator bcryptjs config gravatar jsonwebtoken mongoose request**
 3. run **npm install -D nodemon concurrently** (nodemon to monitoring api and concurrently for launch api and client on same time)

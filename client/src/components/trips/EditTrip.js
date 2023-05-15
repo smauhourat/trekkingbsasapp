@@ -18,7 +18,7 @@ const EditTrip = ({
     description: '',
     itinerary: '',
     created: Date.now,
-    date: null,
+    date: '',
     duration: '',
     price: 0,
     location: '',
@@ -38,8 +38,10 @@ const EditTrip = ({
 
   useEffect(() => {
     const trip = trips.data.find(trip => trip._id === id);
+    trip.date = formatDateISO(trip.date);
     setEditedTrip(trip);
-  }, [id, trips.data]);
+  }, [id, trips]);
+  //}, [id, trips.data]);
 
   const { title, subtitle, category, description, itinerary, date, duration, price, location, grading, quota, reservations, published, suggested_equipment, included_services, departure, arrival, booking_price } = editedTrip;
 
@@ -139,7 +141,7 @@ const EditTrip = ({
             type="date"
             placeholder="Fecha"
             name="date"
-            value={formatDateISO(date)}
+            value={date}
             onChange={onChange}
           />
         </div>
