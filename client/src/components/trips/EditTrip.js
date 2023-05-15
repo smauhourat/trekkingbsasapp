@@ -38,6 +38,7 @@ const EditTrip = ({
 
   useEffect(() => {
     const trip = trips.data.find(trip => trip._id === id);
+    trip.date = formatDateISO(trip.date);
     setEditedTrip(trip);
   }, [id, trips]);
   //}, [id, trips.data]);
@@ -52,10 +53,6 @@ const EditTrip = ({
 
     setEditedTrip({ ...editedTrip, [e.target.name]: newValue });
   };
-
-  const onChangeDate = (e) => {
-    //setEditedTrip({ ...editedTrip, [e.target.name]: e.target.value });
-  }
 
   return (
     <section className="container">
@@ -144,7 +141,7 @@ const EditTrip = ({
             type="date"
             placeholder="Fecha"
             name="date"
-            value={date.toString()}
+            value={date}
             onChange={onChange}
           />
         </div>
