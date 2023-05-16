@@ -13,6 +13,7 @@ const User = require('../../models/User');
 // @access  Public
 router.post(
   '/',
+  auth,
   [
     check('name', 'Nombre es requerido').not().isEmpty(),
     check('email', 'Por favor incluya el mail').isEmail(),
