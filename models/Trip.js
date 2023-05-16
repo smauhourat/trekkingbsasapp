@@ -70,6 +70,9 @@ const TripSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    training_level: {
+        type: String
+    },
     images: [
         {
             url: {

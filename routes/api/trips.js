@@ -117,6 +117,7 @@ router.post('/',
       check('subtitle', 'Subtitulo es requerido').not().isEmpty(),
       check('description', 'Descripcion es requerido').not().isEmpty(),
       check('location', 'Lugar es requerido').not().isEmpty(),
+      check('date', 'Fecha es requerido').not().isEmpty(),
     ]
   ],
   async (req, res) => {
@@ -125,7 +126,7 @@ router.post('/',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { title, subtitle, category, description, itinerary, suggested_equipment, included_services, date, departure, arrival, duration, price, booking_price, location, grading, quota, reservations } = req.body;
+    const { title, subtitle, category, description, itinerary, suggested_equipment, included_services, date, departure, arrival, duration, price, booking_price, location, grading, quota, reservations, training_level } = req.body;
 
     try {
       let newTrip = new Trip({
@@ -146,7 +147,8 @@ router.post('/',
         grading,
         quota,
         reservations,
-        user: req.user.id
+        user: req.user.id,
+        training_level
       });
 
       const trip = await newTrip.save();

@@ -3,10 +3,16 @@ import { useLocation, Link } from "react-router-dom";
 import formatDate from '../../utils/formatDate';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
+import training_levels from '../../models/TrainingLevel.json'
 
 const TripDetails = () => {
     const location = useLocation();
     const trip = location.state?.data;
+
+    console.log(training_levels.training_levels);
+    const training_level_description = training_levels.training_levels.filter(function (el) {
+        return el.name === trip.training_level;
+    });
 
     const images3 = trip.images.map((img) => {
         return ({
@@ -38,6 +44,7 @@ const TripDetails = () => {
                         <p className="highlight2">{formatDate(trip.date)}</p>
                         <p>&nbsp;</p>
                         <p><strong>Duración: </strong>{trip?.duration}</p>
+                        <p><strong>Nivel: </strong>{trip?.training_level} <span className="footnote">({training_level_description[0].description})</span></p>
                         <p><strong>Salida: </strong>{trip?.departure}</p>
                         <p><strong>Llegada: </strong>{trip?.arrival}</p>
                         <p><strong>Disponibilidad: </strong>{trip?.quota} lugares</p>
