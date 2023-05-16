@@ -34,8 +34,7 @@ const Landing = () => {
                 onChange={e => onChange(e)}
                 onKeyDown={handleKeyDown}
               /> */}
-              {/* <div className="buttons"> */}
-              <div>
+              <div className="buttons">
                 <button
                   onClick={() => navigate(`/trips/?q=${search}`)}
                   className="btn btn-primary"

@@ -5,6 +5,7 @@ import { getTrips } from '../../actions/trip';
 import TripsListContent from './TripsListContent';
 import Spinner from '../layout/Spinner';
 import formatDateISOFromDate from '../../utils/formatDateISOFromDate';
+import environment from '../../utils/environment';
 
 const TripsList = ({ getTrips, trip: { trips, loading } }) => {
   const [currentPage, setCurrentPage] = useState();
@@ -13,22 +14,24 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
   const [order, setOrder] = useState(-1);
   const [search, setSearch] = useState('');
 
+  const RECORDS_PER_PAGE = environment.recordsPerPage;
+
   useEffect(() => {
-    getTrips(`&limit=3&page=1&sort=${sort}&order=${order}`);
+    getTrips(`&limit=${RECORDS_PER_PAGE}&page=1&sort=${sort}&order=${order}`);
     setCurrentPage(1);
   }, [sort, order, getTrips]);
 
   const goToNextPage = () => {
     if (((currentPage - 1) * trips?.metadata.limit) + trips?.metadata.count < trips?.metadata.total) {
       setCurrentPage(currentPage + 1);
-      getTrips(`&limit=3&page=${currentPage + 1}&sort=${sort}&order=${order}`)
+      getTrips(`&limit=${RECORDS_PER_PAGE}&page=${currentPage + 1}&sort=${sort}&order=${order}`)
     }
   };
 
   const goToPrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      getTrips(`&limit=3&page=${currentPage - 1}&sort=${sort}&order=${order}`)
+      getTrips(`&limit=${RECORDS_PER_PAGE}&page=${currentPage - 1}&sort=${sort}&order=${order}`)
     }
   };
 
@@ -36,9 +39,9 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
     setShowActive(!showActive);
     if (!showActive) {
       const currentDate = formatDateISOFromDate(new Date());
-      getTrips(`&limit=3&page=${currentPage}&sort=${sort}&order=${order}&df=${currentDate}`);
+      getTrips(`&limit=${RECORDS_PER_PAGE}&page=${currentPage}&sort=${sort}&order=${order}&df=${currentDate}`);
     } else {
-      getTrips(`&limit=3&page=${currentPage}&sort=${sort}&order=${order}`);
+      getTrips(`&limit=${RECORDS_PER_PAGE}&page=${currentPage}&sort=${sort}&order=${order}`);
     }
   }
 
@@ -46,7 +49,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
     setSort(e);
     setOrder(order === 1 ? -1 : 1);
     const currentDate = showActive ? formatDateISOFromDate(new Date()) : "";
-    getTrips(`&limit=3&page=${currentPage}&sort=${sort}&order=${order}&df=${currentDate}`);
+    getTrips(`&limit=${RECORDS_PER_PAGE}&page=${currentPage}&sort=${sort}&order=${order}&df=${currentDate}`);
   }
 
   const sortOrderIcon = (e) => {
@@ -59,12 +62,12 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
   }
 
   const handleOnClickSearch = (e) => {
-    getTrips(`&q=${search}&limit=3&page=1&sort=${sort}&order=${order}`);
+    getTrips(`&q=${search}&limit=${RECORDS_PER_PAGE}&page=1&sort=${sort}&order=${order}`);
   }
 
   const handleOnKeyDownSearch = (e) => {
     if (e.key === 'Enter') {
-      getTrips(`&q=${search}&limit=3&page=1&sort=${sort}&order=${order}`);
+      getTrips(`&q=${search}&limit=${RECORDS_PER_PAGE}&page=1&sort=${sort}&order=${order}`);
     }
   }
 
