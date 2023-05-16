@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { addTrip } from '../../actions/trip';
+import training_levels from '../../models/TrainingLevel.json'
+
 //https://www.youtube.com/watch?v=Rw_QeJLnCK4
 //https://www.youtube.com/watch?v=Y-VgaRwWS3o
 const AddTrip = ({ addTrip }) => {
@@ -18,17 +20,19 @@ const AddTrip = ({ addTrip }) => {
     duration: '',
     price: '',
     location: '',
-    grading: '',
     quota: '',
     reservations: '',
     suggested_equipment: '',
     included_services: '',
     departure: '',
     arrival: '',
-    booking_price: ''
+    booking_price: '',
+    training_level: ''
   });
 
-  const { title, subtitle, category, description, itinerary, date, duration, price, location, grading, quota, reservations, suggested_equipment, included_services, departure, arrival, booking_price } = formData;
+  console.log(training_levels.training_levels)
+
+  const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, suggested_equipment, included_services, departure, arrival, booking_price, training_level } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -62,7 +66,7 @@ const AddTrip = ({ addTrip }) => {
             name="subtitle"
             value={subtitle}
             onChange={onChange}
-          />
+            required />
         </div>
         <div>
           <label>Categoria</label>
@@ -82,7 +86,7 @@ const AddTrip = ({ addTrip }) => {
             name="description"
             value={description}
             onChange={onChange}
-          />
+            required />
         </div>
         <div className="form-group">
           <label>Itinerario</label>
@@ -122,7 +126,7 @@ const AddTrip = ({ addTrip }) => {
             name="date"
             value={date}
             onChange={onChange}
-          />
+            required />
         </div>
 
         <div className="form-group">
@@ -185,17 +189,16 @@ const AddTrip = ({ addTrip }) => {
             name="location"
             value={location}
             onChange={onChange}
-          />
+            required />
         </div>
-        <div className="form-group">
-          <label>Grado Dificultad</label><small> (Valor numerico del 1 al 5)</small>
-          <input
-            type="text"
-            placeholder="Grado dificultad"
-            name="grading"
-            value={grading}
-            onChange={onChange}
-          />
+        <div>
+          <label>Nivel Entrenamiento</label>
+          <select name="training_level" value={training_level} onChange={onChange}>
+            <option>* Selecione un Nivel</option>
+            {training_levels.training_levels.map((item) => {
+              return <option key={item.order} value={item.name}>{item.name}</option>
+            })}
+          </select>
         </div>
         <div className="form-group">
           <label>Cupo</label>

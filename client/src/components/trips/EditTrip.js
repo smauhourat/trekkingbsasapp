@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { updateTrip } from '../../actions/trip';
 import formatDateISO from '../../utils/formatDateISO';
+import training_levels from '../../models/TrainingLevel.json'
 
 const EditTrip = ({
   trip: { trips },
@@ -22,7 +23,6 @@ const EditTrip = ({
     duration: '',
     price: 0,
     location: '',
-    grading: 0,
     quota: 0,
     reservations: 0,
     published: true,
@@ -30,7 +30,8 @@ const EditTrip = ({
     included_services: '',
     departure: '',
     arrival: '',
-    booking_price: ''
+    booking_price: '',
+    training_level: ''
   })
 
 
@@ -43,7 +44,7 @@ const EditTrip = ({
   }, [id, trips]);
   //}, [id, trips.data]);
 
-  const { title, subtitle, category, description, itinerary, date, duration, price, location, grading, quota, reservations, published, suggested_equipment, included_services, departure, arrival, booking_price } = editedTrip;
+  const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, published, suggested_equipment, included_services, departure, arrival, booking_price, training_level } = editedTrip;
 
   const onChange = (e) => {
     if (e.target.name === 'date') {
@@ -207,15 +208,14 @@ const EditTrip = ({
             onChange={onChange}
           />
         </div>
-        <div className="form-group">
-          <label>Grado Dificultad</label><small> (Valor numerico del 1 al 5)</small>
-          <input
-            type="text"
-            placeholder="Grado dificultad"
-            name="grading"
-            value={grading}
-            onChange={onChange}
-          />
+        <div>
+          <label>Nivel Entrenamiento</label>
+          <select name="training_level" value={training_level} onChange={onChange}>
+            <option>* Selecione un Nivel</option>
+            {training_levels.training_levels.map((item) => {
+              return <option key={item.order} value={item.name}>{item.name}</option>
+            })}
+          </select>
         </div>
         <div className="form-group">
           <label>Cupo</label>

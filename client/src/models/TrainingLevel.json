@@ -1,0 +1,19 @@
+{
+    "training_levels": [
+        {
+            "order": 1,
+            "name": "Principiantes",
+            "description": "Son personas que recién se inician, que pueden caminar continuadamente hasta 12 kilómetros"
+        },
+        {
+            "order": 2,
+            "name": "Intermedios",
+            "description": "Son personas que hacen alguna actividad física, y pueden caminar hasta 25 kms"
+        },
+        {
+            "order": 3,
+            "name": "Avanzados",
+            "description": "Son personas con entrenamiento, corredores, grandes caminadores, montañistas, y/o con alguna preparación física de intensidad"
+        }
+    ]
+}

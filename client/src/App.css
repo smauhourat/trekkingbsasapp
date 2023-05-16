@@ -1178,3 +1178,7 @@ nav a:focus {
   padding: 4px;
   opacity: 0.9;
 }
+
+.footnote {
+  font-size: 13px;
+}
