@@ -25,7 +25,7 @@ const Landing = () => {
               Somos un grupo de amigos, y amigos de amigos haciendo trekking.
             </p>
             <div className="search">
-              <input
+              {/* <input
                 type="text"
                 className="textinput"
                 placeholder="Que actividad estas buscando realizar?"
@@ -33,13 +33,13 @@ const Landing = () => {
                 value={search}
                 onChange={e => onChange(e)}
                 onKeyDown={handleKeyDown}
-              />
+              /> */}
               <div className="buttons">
                 <button
                   onClick={() => navigate(`/trips/?q=${search}`)}
                   className="btn btn-primary"
                 >
-                  Buscar
+                  Proximas Salidas
                 </button>
               </div>
             </div>
