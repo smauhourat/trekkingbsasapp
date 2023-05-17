@@ -63,6 +63,11 @@ const TripDetails = () => {
                     <Link to={'/trips'} state={{ data: trip }} className='btn btn-primary'>
                         <i className='text-primary' /> Volver
                     </Link>
+                    {trip?.payment_link && (
+                        <a href={trip.payment_link} target="_blank" className='btn btn-success'>
+                            <i className='text-primary' /> Reservar
+                        </a>
+                    )}
                 </div>
 
                 <div className="profile-edu bg-white p-2">
@@ -72,15 +77,17 @@ const TripDetails = () => {
                             <strong>Detalle: </strong>{trip?.suggested_equipment}
                         </p>
                     </div>
-                    <h2 className="text-primary">Servicios Incluidos</h2>
-                    <div>
-                        <p>
-                            {trip?.included_services}
-                        </p>
-                    </div>
+                    {trip?.included_services && (
+                        <>
+                            <h2 className="text-primary">Servicios Incluidos</h2>
+                            <div>
+                                <p>
+                                    {trip?.included_services}
+                                </p>
+                            </div>
+                        </>
+                    )}
                 </div>
-
-
             </div>
         </section>
     )

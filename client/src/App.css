@@ -726,6 +726,29 @@ button {
   text-align: center;
 } */
 
+/* Conditions */
+.conditions {
+  position: relative;
+  min-height: 100vh;
+}
+
+.conditions-inner {
+  min-height: 100vh;
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center;
+  justify-content: center;
+  text-align: center; */
+}
+
+.conditions-container {
+  margin-top: 4.0rem;
+  /* margin-left: 10rem;
+  margin-right: 10rem; */
+}
+
 /* Profiles Page */
 .profile {
   display: grid;
@@ -1181,4 +1204,9 @@ nav a:focus {
 
 .footnote {
   font-size: 13px;
+}
+
+.text-link {
+  font-size: 0.75rem;
+  color: #fff;
 }

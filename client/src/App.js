@@ -20,6 +20,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import MaintenanceRoute from './components/routing/MaintenanceRoute';
 import ContactForm from './components/contact/ContactForm';
 import Company from './components/static/Company';
+import Conditions from './components/static/Conditions';
 import Calendar from './components/calendar/Calendar';
 import { LOGOUT } from './actions/types';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -79,6 +80,7 @@ const App = () => {
               <Route path="trip-details/:id" element={<TripDetails />} />
               <Route path="contact" element={<MaintenanceRoute component={ContactForm} />} />
               <Route path="company" element={<MaintenanceRoute component={Company} />} />
+              <Route path="conditions" element={<MaintenanceRoute component={Conditions} />} />
               <Route path="calendar" element={<MaintenanceRoute component={Calendar} />} />
             </Fragment>
           </Routes>

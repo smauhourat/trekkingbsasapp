@@ -71,6 +71,9 @@ const Landing = () => {
                 Mountain Bike
               </Link>
             </div>
+            <div className="my-1 bg-dark">
+              <Link to={`/conditions`} className="text-link">Condiciones del Grupo</Link>
+            </div>
           </div>
         </div>
       </section>
