@@ -31,7 +31,8 @@ const EditTrip = ({
     departure: '',
     arrival: '',
     booking_price: '',
-    training_level: ''
+    training_level: '',
+    payment_link: ''
   })
 
 
@@ -44,7 +45,7 @@ const EditTrip = ({
   }, [id, trips]);
   //}, [id, trips.data]);
 
-  const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, published, suggested_equipment, included_services, departure, arrival, booking_price, training_level } = editedTrip;
+  const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, published, suggested_equipment, included_services, departure, arrival, booking_price, training_level, payment_link } = editedTrip;
 
   const onChange = (e) => {
     if (e.target.name === 'date') {
@@ -84,7 +85,7 @@ const EditTrip = ({
             name="subtitle"
             value={subtitle}
             onChange={onChange}
-            required/>
+            required />
         </div>
         <div className="form-group">
           <label>Lugar</label>
@@ -94,7 +95,7 @@ const EditTrip = ({
             name="location"
             value={location}
             onChange={onChange}
-            required/>
+            required />
         </div>
         <div>
           <label>Categoria</label>
@@ -114,7 +115,7 @@ const EditTrip = ({
             name="description"
             value={description}
             onChange={onChange}
-            required/>
+            required />
         </div>
         <div className="form-group">
           <label>Itinerario</label>
@@ -154,7 +155,7 @@ const EditTrip = ({
             name="date"
             value={date}
             onChange={onChange}
-            required/>
+            required />
         </div>
         <div className="form-group">
           <label>Salida</label>
@@ -234,6 +235,16 @@ const EditTrip = ({
             placeholder="Reservas"
             name="reservations"
             value={reservations}
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Link de Pago</label>
+          <input
+            type="text"
+            placeholder="Link"
+            name="payment_link"
+            value={payment_link}
             onChange={onChange}
           />
         </div>

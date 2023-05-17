@@ -126,7 +126,7 @@ router.post('/',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { title, subtitle, category, description, itinerary, suggested_equipment, included_services, date, departure, arrival, duration, price, booking_price, location, grading, quota, reservations, training_level } = req.body;
+    const { title, subtitle, category, description, itinerary, suggested_equipment, included_services, date, departure, arrival, duration, price, booking_price, location, grading, quota, reservations, training_level, payment_link } = req.body;
 
     try {
       let newTrip = new Trip({
@@ -148,7 +148,8 @@ router.post('/',
         quota,
         reservations,
         user: req.user.id,
-        training_level
+        training_level,
+        payment_link
       });
 
       const trip = await newTrip.save();

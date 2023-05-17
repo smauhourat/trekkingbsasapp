@@ -27,12 +27,13 @@ const AddTrip = ({ addTrip }) => {
     departure: '',
     arrival: '',
     booking_price: '',
-    training_level: ''
+    training_level: '',
+    payment_link: ''
   });
 
   console.log(training_levels.training_levels)
 
-  const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, suggested_equipment, included_services, departure, arrival, booking_price, training_level } = formData;
+  const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, suggested_equipment, included_services, departure, arrival, booking_price, training_level, payment_link } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -217,6 +218,16 @@ const AddTrip = ({ addTrip }) => {
             placeholder="Reservas"
             name="reservations"
             value={reservations}
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Link de Pago</label>
+          <input
+            type="text"
+            placeholder="Link"
+            name="payment_link"
+            value={payment_link}
             onChange={onChange}
           />
         </div>

@@ -73,6 +73,9 @@ const TripSchema = new mongoose.Schema({
     training_level: {
         type: String
     },
+    payment_link: {
+        type: String
+    },
     images: [
         {
             url: {
