@@ -209,6 +209,7 @@ router.put('/:id',
       check('subtitle', 'Subtitulo es requerido').not().isEmpty(),
       check('description', 'Descripcion es requerido').not().isEmpty(),
       check('location', 'Lugar es requerido').not().isEmpty(),
+      check('date', 'Fecha es requerido').not().isEmpty(),
     ]
   ],
   async (req, res) => {
@@ -223,7 +224,6 @@ router.put('/:id',
       console.error(err);
       res.status(500).send(err);
     }
-
   }
 );
 

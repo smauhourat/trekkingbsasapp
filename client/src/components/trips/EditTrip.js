@@ -84,12 +84,22 @@ const EditTrip = ({
             name="subtitle"
             value={subtitle}
             onChange={onChange}
-          />
+            required/>
+        </div>
+        <div className="form-group">
+          <label>Lugar</label>
+          <input
+            type="text"
+            placeholder="Lugar"
+            name="location"
+            value={location}
+            onChange={onChange}
+            required/>
         </div>
         <div>
           <label>Categoria</label>
-          <select name="category" value={category} onChange={onChange}>
-            <option>* Selecione una Categoria</option>
+          <select name="category" value={category} onChange={onChange} required>
+            <option value="">* Selecione una Categoria</option>
             <option value="Trekking">Trekking</option>
             <option value="Caminatas">Caminatas</option>
             <option value="Mountain Bike">Mountain Bike</option>
@@ -104,7 +114,7 @@ const EditTrip = ({
             name="description"
             value={description}
             onChange={onChange}
-          />
+            required/>
         </div>
         <div className="form-group">
           <label>Itinerario</label>
@@ -144,7 +154,7 @@ const EditTrip = ({
             name="date"
             value={date}
             onChange={onChange}
-          />
+            required/>
         </div>
         <div className="form-group">
           <label>Salida</label>
@@ -198,20 +208,10 @@ const EditTrip = ({
             onChange={onChange}
           />
         </div>
-        <div className="form-group">
-          <label>Lugar</label>
-          <input
-            type="text"
-            placeholder="Lugar"
-            name="location"
-            value={location}
-            onChange={onChange}
-          />
-        </div>
         <div>
           <label>Nivel Entrenamiento</label>
-          <select name="training_level" value={training_level} onChange={onChange}>
-            <option>* Selecione un Nivel</option>
+          <select name="training_level" value={training_level} onChange={onChange} required>
+            <option value="">* Selecione un Nivel</option>
             {training_levels.training_levels.map((item) => {
               return <option key={item.order} value={item.name}>{item.name}</option>
             })}
