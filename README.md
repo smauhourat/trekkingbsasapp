@@ -42,9 +42,13 @@ CONTACT_PORT** with a valid stmp account
          `set body`
          `{ "name": "<name_of_user", "email": "<valid_email_user>", "password": "<strong_password>"}`
 
+
 ## Deploy to Vercel
 
-         // TODO
+1. run **npm run build-client**
+2. run **git push origin master**
+
+// TODO
 
 
 
