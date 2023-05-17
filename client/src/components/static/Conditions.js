@@ -293,6 +293,8 @@ const Conditions = props => {
                         <p className="small">
 
                             <strong>DECLARACION JURADA DE SALUD.</strong>
+                        </p>
+                        <p className="small">
                             Por intermedio de la presente declaro bajo juramento -y en forma libre y espontánea- que tengo
                             pleno conocimiento de la
                             actividad a desarrollar porque he sido informado antes de ahora en forma minuciosa y detallada.
@@ -308,6 +310,9 @@ const Conditions = props => {
                             congénitas, ni lesiones que pudieran ocasionar trastornos en mi salud o condiciones de vida,
                             como consecuencia de
                             participar en la presente actividad.
+                        </p>
+                        <p className="small">
+
                             <strong>ASUMO, ATENTO LAS CARACTERISTICAS DE LA ACTIVIDAD EN LA QUE VOLUNTARIAMENTE PARTICIPARE,
                                 QUE
                                 INCLUYE MAS DE UNA
@@ -387,10 +392,16 @@ const Conditions = props => {
                             comunicación certero.
                             Me comprometo a ayudar a otros participantes en caso de inconvenientes y en caso de quedar
                             rezagado, con falta de agua o
-                            la situación que sea, avisaré por handie o personalmente la urgencia <strong>PARA ASISTENCIA
+                            la situación que sea, avisaré por handie o personalmente la urgencia
+                        </p>
+                        <p className="small">
+                            <strong>PARA ASISTENCIA
                                 INMEDIATA Y
                                 DESPLIEGUE DE
                                 EMERGENCIA.</strong>
+                        </p>
+                        <p className="small">
+
                             Asumo que colaboraré en el espíritu de este evento por tratarse de una caminata recreativa sin
                             espíritu competitivo ni
                             de velocidad.
