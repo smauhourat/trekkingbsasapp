@@ -749,6 +749,11 @@ button {
   margin-right: 10rem; */
 }
 
+.conditions-container p {
+  margin-top: 1.2rem;
+  line-height: 1.6;
+}
+
 /* Profiles Page */
 .profile {
   display: grid;
