@@ -32,7 +32,7 @@ const Landing = () => {
                 Proximas Salidas
               </button>
             </div>
-            <div class="search"></div>
+            <div className="search"></div>
             {/*
             <div className="search">
               <input

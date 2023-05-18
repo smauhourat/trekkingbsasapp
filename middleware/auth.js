@@ -3,12 +3,8 @@ const jwt = require('jsonwebtoken');
 module.exports = function (req, res, next) {
     // Get token from header
     const token = req.header('x-auth-token');
-    console.log('token', token)
-    console.log('process.env.TOKEN_API', process.env.TOKEN_API)
-
      if (token === process.env.TOKEN_API && token !== "" & token !== undefined)
      {
-        console.log('entrooooo')
         req.user = {id: '646358101568fc5f4116a1aa'}
         next();
         return;

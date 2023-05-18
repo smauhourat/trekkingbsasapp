@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
@@ -86,6 +87,12 @@ const App = () => {
           </Routes>
         </ErrorBoundary>
       </Router>
+      <Analytics beforeSend={(e) => {
+        if(localStorage.getItem('va-disabled')) {
+          return null
+        }
+        return e
+      }}/>
     </Provider>
   );
 };

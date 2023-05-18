@@ -6,7 +6,7 @@ const Conditions = props => {
         <>
             <section className="conditions">
                 <div className="conditions-inner">
-                    <div class="conditions-container">
+                    <div className="conditions-container">
                         <h1 className="large">Condiciones del Grupo</h1>
                         <div className="m-1"></div>
                         <p className="small">

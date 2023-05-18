@@ -8,7 +8,7 @@ const Company = props => {
         <section className="company">
             <div className="darklight-overlay">
                 <div className="company-inner">
-                    <div class="company-container">
+                    <div className="company-container">
                         <h1 className="large">Trekking Buenos Aires</h1>
                         <div className="m-1"></div>
                         <p className="small2">
