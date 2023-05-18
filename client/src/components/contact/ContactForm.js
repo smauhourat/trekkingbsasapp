@@ -9,8 +9,8 @@ import Recaptcha from 'react-recaptcha';
 const ContactForm = ({ setAlert }) => {
     const navigate = useNavigate();
 
-    console.log('REACT_APP_RECAPTCHA_KEY', process.env.REACT_APP_RECAPTCHA_KEY)
-    console.log('REACT_APP_RECAPTCHA_SECRET', process.env.REACT_APP_RECAPTCHA_SECRET)
+    //console.log('REACT_APP_RECAPTCHA_KEY', process.env.REACT_APP_RECAPTCHA_KEY)
+    //console.log('REACT_APP_RECAPTCHA_SECRET', process.env.REACT_APP_RECAPTCHA_SECRET)
 
     const [formData, setFormData] = useState({
         title: '',
@@ -115,6 +115,7 @@ const ContactForm = ({ setAlert }) => {
                         ref={reRef}
                         verifyCallback={verifyRecaptcha}
                         onloadCallback={onLoadRecaptcha}
+                        hl="es"
                     />
                     <input type="submit" className="btn btn-primary my-1" value={isSubmitting ? 'Enviando' : 'Enviar'} disabled={!isVerified || isSubmitting} />
                     <input type="button" className="btn btn-light my-1" value="Volver" onClick={() => navigate('/')} />
