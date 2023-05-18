@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
 import { addTrip } from '../../actions/trip';
 import training_levels from '../../models/TrainingLevel.json'
 
-//https://www.youtube.com/watch?v=Rw_QeJLnCK4
-//https://www.youtube.com/watch?v=Y-VgaRwWS3o
-const AddTrip = ({ addTrip }) => {
+const AddTrip = ({ setAlert, addTrip }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -35,8 +34,25 @@ const AddTrip = ({ addTrip }) => {
 
   const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, suggested_equipment, included_services, departure, arrival, booking_price, training_level, payment_link } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  const validateForm = () => {
+    if (reservations > quota) {
+      setAlert('Las Reservas no pueden ser mayores al Cupo', 'danger');
+      return false;
+    }
+    return true;
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      addTrip(formData, navigate)
+    }
+  }
+
 
   return (
     <section className="container">
@@ -44,10 +60,7 @@ const AddTrip = ({ addTrip }) => {
       <p className="lead"><i className="fas fa-calendar"></i> Crear Evento</p>
       <form
         className="form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          addTrip(formData, navigate);
-        }}
+        onSubmit={e => onSubmit(e)}
       >
         <div className="form-group">
           <label>Titulo</label>
@@ -207,6 +220,7 @@ const AddTrip = ({ addTrip }) => {
             type="text"
             placeholder="Cupo"
             name="quota"
+            pattern="[0-9]*"
             value={quota}
             onChange={onChange}
           />
@@ -217,6 +231,7 @@ const AddTrip = ({ addTrip }) => {
             type="text"
             placeholder="Reservas"
             name="reservations"
+            pattern="[0-9]*"
             value={reservations}
             onChange={onChange}
           />
@@ -240,7 +255,8 @@ const AddTrip = ({ addTrip }) => {
 
 
 AddTrip.propTypes = {
+  setAlert: PropTypes.func.isRequired,
   addTrip: PropTypes.func.isRequired
 };
 
-export default connect(null, { addTrip })(AddTrip);
+export default connect(null, { setAlert, addTrip })(AddTrip);

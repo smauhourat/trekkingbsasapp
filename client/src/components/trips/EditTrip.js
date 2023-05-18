@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
 import { updateTrip } from '../../actions/trip';
 import formatDateISO from '../../utils/formatDateISO';
 import training_levels from '../../models/TrainingLevel.json'
 
 const EditTrip = ({
+  setAlert,
   trip: { trips },
   updateTrip
 }) => {
@@ -56,16 +58,28 @@ const EditTrip = ({
     setEditedTrip({ ...editedTrip, [e.target.name]: newValue });
   };
 
+  const validateForm = () => {
+    if (reservations > quota) {
+      setAlert('Las Reservas no pueden ser mayores al Cupo', 'danger');
+      return false;
+    }
+    return true;
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      updateTrip(id, editedTrip, navigate);
+    }
+  }
+
   return (
     <section className="container">
       <h1 className="large text-primary">Eventos</h1>
       <p className="lead"><i className="fas fa-calendar"></i> Actualizar Evento</p>
       <form
         className="form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          updateTrip(id, editedTrip, navigate);
-        }}
+        onSubmit={e => onSubmit(e)}
       >
         <div className="form-group">
           <label>Titulo</label>
@@ -224,6 +238,7 @@ const EditTrip = ({
             type="text"
             placeholder="Cupo"
             name="quota"
+            pattern="[0-9]*"
             value={quota}
             onChange={onChange}
           />
@@ -234,6 +249,7 @@ const EditTrip = ({
             type="text"
             placeholder="Reservas"
             name="reservations"
+            pattern="[0-9]*"
             value={reservations}
             onChange={onChange}
           />
@@ -266,6 +282,7 @@ const EditTrip = ({
 
 
 EditTrip.propTypes = {
+  setAlert: PropTypes.func.isRequired,
   updateTrip: PropTypes.func.isRequired
 };
 
@@ -274,4 +291,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, { updateTrip })(EditTrip);
+export default connect(mapStateToProps, { setAlert, updateTrip })(EditTrip);
