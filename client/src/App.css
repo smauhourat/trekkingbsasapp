@@ -290,6 +290,12 @@ img {
   justify-items: center;
 }
 
+.mini {
+  font-size: 0.80rem;
+  line-height: 1;
+  justify-items: center;
+}
+
 .lead {
   font-size: 1.5rem;
   margin-bottom: 1rem;

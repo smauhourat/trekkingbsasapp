@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { addUser } from '../../actions/user';
+import validatePassword from '../../utils/validatePassword';
 
 const AddUser = ({ setAlert, addUser }) => {
   const navigate = useNavigate();
@@ -22,6 +23,12 @@ const AddUser = ({ setAlert, addUser }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validatePassword(password)) {
+      setAlert('La Contraseña no es valida', 'danger');
+      return;
+    }
+
     if (password !== password2) {
       setAlert('La Contraseña y su confirmacion no coinciden', 'danger');
     } else {
@@ -56,17 +63,18 @@ const AddUser = ({ setAlert, addUser }) => {
             type="password"
             placeholder="Contraseña"
             name="password"
-            minLength="6"
+            minLength="8"
             value={password}
             onChange={onChange}
           />
+          <label className="mini">Debe contener al menos una letra mayuscula, una minuscula, y un simbolo (@$!%*_?&), y un largo minimo de 8 caracteres </label>
         </div>
         <div className="form-group">
           <input
             type="password"
             placeholder="Repita Contraseña"
             name="password2"
-            minLength="6"
+            minLength="8"
             value={password2}
             onChange={onChange}
           />
