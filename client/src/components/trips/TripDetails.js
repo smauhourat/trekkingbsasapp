@@ -48,9 +48,10 @@ const TripDetails = () => {
                         <p><strong>Salida: </strong>{trip?.departure}</p>
                         <p><strong>Llegada: </strong>{trip?.arrival}</p>
                         <p><strong>Disponibilidad: </strong>{trip?.quota} lugares</p>
+                        <p><strong>Reservas: </strong>{trip?.reservations} lugares</p>
                         <p><strong>Precio: </strong>${trip?.price} (por persona)</p>
-                        <p><strong>Reserva: </strong>${trip?.booking_price} (por persona)</p>
-                        <p><strong>Disponibilidad: </strong>{trip?.quota} lugares</p>
+                        <p><strong>Precio Reserva: </strong>${trip?.booking_price} (por persona)</p>
+
                     </div>
                     <div>
                         <h2 className="text-primary">Itinerario</h2>
