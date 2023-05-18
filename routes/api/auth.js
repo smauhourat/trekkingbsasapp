@@ -94,7 +94,7 @@ router.post("/forgot-password", async (req, res) => {
     const requestedUrl = req.headers['client-base-url']
     const link = `${requestedUrl}/reset-password/${oldUser._id}/${token}`;
     const mail = {
-      from: config.get('contact_user'),
+      from: global.env.contact_user,
       to: email,
       subject: 'Reestablecer Contraseña - TrekkingBuenosAires.com',
       text: link,
