@@ -5,16 +5,6 @@ import formatDate from '../../utils/formatDate';
 
 const TripItem = ({
   trip
-  // trip: {
-  //     _id,
-  //     title,
-  //     subtitle,
-  //     location,
-  //     duration,
-  //     date,
-  //     quota,
-  //     images
-  // }
 }) => {
   return (
     <div className="profile bg-white">

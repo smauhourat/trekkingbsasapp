@@ -36,7 +36,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
   }, [query, getTrips, monthSearch])
 
   return (
-    <section className="container">
+    <section className={isCalendar ? "container-bottom" : "container"}>
       {loading ? (
         <Spinner />
       ) : (
@@ -44,14 +44,14 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
           {!isCalendar ? (
             <>
               <h1 className="large text-primary">Eventos</h1>
-              <p className="lead">
+              {/* <p className="lead">
                 <i className="fa-solid fa-arrow-down-wide-short"></i> Resultado de la busqueda...
-              </p>
+              </p> */}
             </>
           ) : (
             <>
-              <div className="my-1">&nbsp;</div>
-              <h1 className="lead">Actividades</h1>
+              <div className="my">&nbsp;</div>
+              <h1 className="title-search-result">Actividades</h1>
             </>
           )}
           <div className="profiles">
