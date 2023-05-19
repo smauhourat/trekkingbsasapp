@@ -65,7 +65,7 @@ const TripDetails = () => {
                     <Link to={'/trips'} state={{ data: trip }} className='btn btn-primary'>
                         <i className='text-primary' /> Volver
                     </Link>
-                    {trip?.payment_link && (
+                    {trip?.payment_link && ((trip?.quota - trip?.reservations) > 0) && (
                         <a href={trip.payment_link} target="_blank" className='btn btn-success'>
                             <i className='text-primary' /> Reservar
                         </a>
