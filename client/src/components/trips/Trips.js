@@ -44,9 +44,6 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
           {!isCalendar ? (
             <>
               <h1 className="large text-primary">Eventos</h1>
-              {/* <p className="lead">
-                <i className="fa-solid fa-arrow-down-wide-short"></i> Resultado de la busqueda...
-              </p> */}
             </>
           ) : (
             <>
