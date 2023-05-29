@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { Analytics } from '@vercel/analytics/react';
+// import { Analytics } from '@vercel/analytics/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
@@ -14,7 +14,6 @@ import Trips from './components/trips/Trips';
 import AddUser from './components/user/AddUser';
 import AddTrip from './components/trips/AddTrip';
 import EditTrip from './components/trips/EditTrip';
-//import TripForm from './components/trips/TripForm';
 import AddImages from './components/trips/AddImages';
 import TripDetails from './components/trips/TripDetails';
 import PrivateRoute from './components/routing/PrivateRoute';
@@ -87,12 +86,12 @@ const App = () => {
           </Routes>
         </ErrorBoundary>
       </Router>
-      <Analytics beforeSend={(e) => {
+      {/* <Analytics beforeSend={(e) => {
         if(localStorage.getItem('va-disabled')) {
           return null
         }
         return e
-      }}/>
+      }}/> */}
     </Provider>
   );
 };
