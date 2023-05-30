@@ -22,6 +22,7 @@ cloudinary.config({
 router.get('/:id',
   checkObjectId('id'),
   async (req, res) => {
+    //console.log('call gettrip endpoint')
     try {
       const trip = await Trip.findById(req.params.id);
 
