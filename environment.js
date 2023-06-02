@@ -15,7 +15,10 @@ const environment = {
   contact_port: env.CONTACT_PORT,
   cloudName: env.CLOUD_NAME,
   apiKey: env.API_KEY,
-  apiSecret: env.API_SECRET
+  apiSecret: env.API_SECRET,
+  mp_api_key: env.MP_API_KEY,
+  mp_client_id: env.MP_CLIENT_ID,
+  mp_client_secret: env.MP_CLIENT_SECRET
 }
 
 module.exports = environment;
