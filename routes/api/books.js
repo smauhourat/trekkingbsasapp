@@ -120,9 +120,16 @@ router.patch('/:id',
   [auth],
   checkObjectId('id'),
   async(req, res) => {
-
+	
+	const { status } = req.body;
+  
   try {
-    const book = await Book.updateOne({ _id: req.params.id } , { $set : { status : req.body.status} } );
+    const currentBook = await Book.findById(req.params.id);
+
+		if (currentBook.status === "approved" && req.body.status === "pending")
+			return res.status(404).json({ msg: 'La Reserva no puede pasar a estado de pendiente' });
+
+    const book = await Book.updateOne({ _id: req.params.id } , { $set : { status : status} } );
 
     res.json(book);
   } catch(err) {
