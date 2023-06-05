@@ -1,5 +1,5 @@
 const moment = require('moment');
-const mongoose = require('mongoose'); 
+const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
@@ -97,46 +97,76 @@ router.get('/:id',
   [auth],
   checkObjectId('id'),
   async (req, res) => {
-    
-  try {
-    const book = await Book.findById(req.params.id);
 
-    if (!book) {
-      return res.status(404).json({ msg: 'Reserva no encontrada' });
+    try {
+      const book = await Book.findById(req.params.id);
+
+      if (!book) {
+        return res.status(404).json({ msg: 'Reserva no encontrada' });
+      }
+
+      res.json(book);
+    } catch (err) {
+      console.error(err.message);
+
+      res.status(500).send('Server Error');
     }
-
-    res.json(book);
-  } catch (err) {
-    console.error(err.message);
-
-    res.status(500).send('Server Error');
-  }
-});
+  });
 
 // @route    PATCH api/books/:id
 // @desc     Update st atus book
 // @access   Private
-router.patch('/:id', 
+router.patch('/:id',
   [auth],
   checkObjectId('id'),
-  async(req, res) => {
-	
-	const { status } = req.body;
-  
-  try {
-    const currentBook = await Book.findById(req.params.id);
+  async (req, res) => {
 
-		if (currentBook.status === "approved" && req.body.status === "pending")
-			return res.status(404).json({ msg: 'La Reserva no puede pasar a estado pendiente' });
+    const { status } = req.body;
 
-    const book = await Book.updateOne({ _id: req.params.id } , { $set : { status : status} } );
+    try {
+      const currentBook = await Book.findById(req.params.id);
 
-    res.json(book);
-  } catch(err) {
-    console.error(err.message);
+      if (currentBook.status === "approved" && req.body.status === "pending")
+        return res.status(404).json({ msg: 'La Reserva no puede pasar a estado pendiente' });
 
-    res.status(500).send('Server Error');
-  }
-});  
+      const book = await Book.updateOne({ _id: req.params.id }, { $set: { status: status } });
+
+      res.json(book);
+    } catch (err) {
+      console.error(err.message);
+
+      res.status(500).send('Server Error');
+    }
+  });
+
+// @route    DELETE api/books/:id
+// @desc     Delete a book
+// @access   Private
+router.delete('/:id',
+  auth,
+  checkObjectId('id'),
+  async (req, res) => {
+    try {
+
+      const book = await Book.findById(req.params.id);
+
+      if (!book) {
+        return res.status(404).json({ msg: 'Reserva no encontrada' });
+      }
+
+      if (book.status !== "pending") {
+        return res.status(400).json({ msg: 'La Reserva no puede ser eliminada' });
+      }
+
+      await book.remove();
+
+      res.json({ msg: 'Reserva eliminado' });
+    } catch (err) {
+      console.error(err.message);
+
+      res.status(500).send('Server Error');
+    }
+  });
+
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const mercadopage = require("mercadopago");
+const { validationResult } = require('express-validator');
 
 // Creamos el link de pago de MP
 const createOrder = async (req, res) => {
@@ -8,7 +9,12 @@ const createOrder = async (req, res) => {
         client_id: global.env.mp_client_secret
     });
 
-    const { userId, item_id, title, description, unit_price, currency_id, quantity } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { item_id, title, description, unit_price, currency_id, quantity, bookId } = req.body;
 
     try {
         const result = await mercadopage.preferences.create({
@@ -26,20 +32,20 @@ const createOrder = async (req, res) => {
             payment_methods: {
                 installments: 1
             },
-            external_reference: `${userId}-${item_id}`,
+            external_reference: bookId,
             auto_return: "approved",
-            notification_url: `https://3035-201-213-113-23.ngrok-free.app/api/payments/webhook?userId=${userId}&productId=${item_id}`,
+            notification_url: `https://a4fb-190-104-238-200.ngrok-free.app/api/payments/webhook`,
             back_urls: {
-                success: `https://3035-201-213-113-23.ngrok-free.app/api/payments/success/?productId=${item_id}`,
-                failure: `https://3035-201-213-113-23.ngrok-free.app/api/payments/failure/?productId=${item_id}`,
-                pending: `https://3035-201-213-113-23.ngrok-free.app/api/payments/pending/?productId=${item_id}`,
+                success: `https://a4fb-190-104-238-200.ngrok-free.app/booking-success`,
+                failure: `https://a4fb-190-104-238-200.ngrok-free.app/booking-failure`
             },
         });
 
-        console.log(JSON.stringify(result));
-        console.log(result);
-        // res.json({ message: "Payment creted" });
-        res.json(result.body);
+        //console.log(JSON.stringify(result));
+        //console.log(result);
+        //res.json(result.body);
+        res.status(200).send({ url_redirect: result.body.init_point });
+        //res.json({ message: "Payment created" });
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: "Something goes wrong" });
@@ -51,19 +57,36 @@ const receiveWebhook = async (req, res) => {
     // Si el pago fue exitoso, guardamos la orden de compra con el pago correspondiente asociado al usuario.
     // Decrementamos en 1 la disponibilidad del Evento
 
-    try {
-        const payment = req.query;
-        console.log('PAYMENT IN QUERY HOOK', JSON.stringify(payment));
-        if (payment.type === "payment") {
-            const data = await mercadopage.payment.findById(payment["data.id"]);
-            console.log('PAYMENT IN MP', JSON.stringify(data));
-        }
+    const { query } = req;
 
-        res.sendStatus(204);
+    const topic = query.topic || query.type;
+
+    try {
+        if (topic === "payment") {
+            const paymentId = query.id || query["data.id"];
+            let payment = await mercadopage.payment.findById(Number(paymentId));
+            let paymentStatus = payment.body.status;
+
+            console.log([payment, paymentStatus]);
+        }
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Something goes wrong" });
     }
+
+    // try {
+    //     const payment = req.query;
+    //     console.log('PAYMENT IN QUERY HOOK', JSON.stringify(payment));
+    //     if (payment.type === "payment") {
+    //         const data = await mercadopage.payment.findById(payment["data.id"]);
+    //         console.log('PAYMENT IN MP', JSON.stringify(data));
+    //     }
+
+    //     res.sendStatus(204);
+    // } catch (error) {
+    //     console.log(error);
+    //     return res.status(500).json({ message: "Something goes wrong" });
+    // }
 };
 
 const successWebhook = async (req, res) => {

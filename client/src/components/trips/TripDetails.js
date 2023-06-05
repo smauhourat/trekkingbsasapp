@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import Spinner from '../layout/Spinner';
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import formatDate from '../../utils/formatDate';
 import formatDateISOFromDate from '../../utils/formatDateISOFromDate';
 import ImageGallery from 'react-image-gallery';
@@ -10,10 +10,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { getTrip } from '../../actions/trip';
 import convertToSlug from '../../utils/convertToSlug';
-import api from '../../utils/api';
+import { createBookOrder } from '../../services';
+import { setAlert } from '../../actions/alert';
 
-const TripDetails = ({ getTrip, trip: { selectedTrip } }) => {
-    const navigate = useNavigate();
+const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
+
     const currentDate = new Date();
 
     const id = useParams().id;
@@ -31,28 +32,37 @@ const TripDetails = ({ getTrip, trip: { selectedTrip } }) => {
 
     const handleBook = async (e) => {
         try {
-            const body = JSON.stringify({ 
+            const bookData = {
+                user: '64592b656408448e6b0487b0', // Jose Marmol
+                trip: id,
+                price: selectedTrip.booking_price
+            };
+
+            const orderData = {
                 userId: '64592b656408448e6b0487b0', // Jose Marmol
                 item_id: id,
                 title: selectedTrip.title,
-                description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0,10)}`,
-                unit_price: selectedTrip.booking_price, 
-                currency_id: 'ARS', 
-                quantity: 1 
-                            
-            });
+                description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`,
+                unit_price: selectedTrip.booking_price,
+                currency_id: 'ARS',
+                quantity: 1
+            };
 
-            //console.log(JSON.parse(body));
-            const res = await api.post(`/payments/create-order/`, body);
-            console.log(res);
-
-            //navigate(res.data.init_point);
-            window.location.href = res.data.init_point
-            
-
+            const res = await createBookOrder(bookData, orderData);
+            console.log(res.data.url_redirect)
+            if (res)
+                window.location.href = res.data.url_redirect;
+            else
+                setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
         } catch (err) {
             console.log(err);
-        }        
+            const errors = err.response.data.errors;
+
+            if (errors) {
+                setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+            }
+
+        }
     }
 
     return (
@@ -103,16 +113,16 @@ const TripDetails = ({ getTrip, trip: { selectedTrip } }) => {
                                     <i className='text-primary' /> Volver
                                 </Link>
                                 {//selectedTrip?.payment_link && 
-                                ((selectedTrip?.quota - selectedTrip?.reservations) > 0) && 
-                                (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate)) && (
-                                    // <a href={selectedTrip.payment_link} target="_blank" rel="noreferrer" className='btn btn-success'>
-                                    //     <i className='text-primary' /> Reservar
-                                    // </a>
-                                    <input type="button" className="btn btn-secondary" value="Reservar" onClick={handleBook} />
-                                    // <a href={selectedTrip.payment_link} target="_blank" rel="noreferrer" className='btn btn-success'>
-                                    //     <i className='text-primary' /> Reservar
-                                    // </a>
-                                )}
+                                    ((selectedTrip?.quota - selectedTrip?.reservations) > 0) &&
+                                    (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate)) && (
+                                        // <a href={selectedTrip.payment_link} target="_blank" rel="noreferrer" className='btn btn-success'>
+                                        //     <i className='text-primary' /> Reservar
+                                        // </a>
+                                        <input type="button" className="btn btn-secondary" value="Reservar" onClick={handleBook} />
+                                        // <a href={selectedTrip.payment_link} target="_blank" rel="noreferrer" className='btn btn-success'>
+                                        //     <i className='text-primary' /> Reservar
+                                        // </a>
+                                    )}
                             </div>
 
                             <div className="profile-edu bg-white p-2">
@@ -143,12 +153,12 @@ const TripDetails = ({ getTrip, trip: { selectedTrip } }) => {
 }
 
 TripDetails.propTypes = {
-    getTrip: PropTypes.func.isRequired
-    //trip: PropTypes.object.isRequired
+    getTrip: PropTypes.func.isRequired,
+    setAlert: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
     trip: state.trip
 });
 
-export default connect(mapStateToProps, { getTrip })(TripDetails);
+export default connect(mapStateToProps, { getTrip, setAlert })(TripDetails);

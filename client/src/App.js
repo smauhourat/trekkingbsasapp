@@ -26,6 +26,8 @@ import { LOGOUT } from './actions/types';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Fallback } from './components/Fallback';
 import Maintenance from './components/Maintenance';
+import BookingSuccess from './components/trips/BookingSuccess';
+import BookingFailure from './components/trips/BookingFailure';
 
 import './App.css';
 // Redux
@@ -82,6 +84,8 @@ const App = () => {
               <Route path="company" element={<MaintenanceRoute component={Company} />} />
               <Route path="conditions" element={<MaintenanceRoute component={Conditions} />} />
               <Route path="calendar" element={<MaintenanceRoute component={Calendar} />} />
+              <Route path="booking-success" element={<BookingSuccess />} />
+              <Route path="booking-failure/*" element={<BookingFailure />} />
             </Fragment>
           </Routes>
         </ErrorBoundary>
