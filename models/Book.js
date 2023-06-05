@@ -8,7 +8,7 @@ const BookSchema = new mongoose.Schema({
         ref: 'trips'
     },
 
-    member: {
+    user: {
         type: Schema.Types.ObjectId,
         ref: 'trips'
     },
