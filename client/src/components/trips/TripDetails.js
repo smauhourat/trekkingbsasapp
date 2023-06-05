@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import Spinner from '../layout/Spinner';
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import formatDate from '../../utils/formatDate';
 import formatDateISOFromDate from '../../utils/formatDateISOFromDate';
 import ImageGallery from 'react-image-gallery';
@@ -9,8 +9,11 @@ import training_levels from '../../models/TrainingLevel.json';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { getTrip } from '../../actions/trip';
+import convertToSlug from '../../utils/convertToSlug';
+import api from '../../utils/api';
 
 const TripDetails = ({ getTrip, trip: { selectedTrip } }) => {
+    const navigate = useNavigate();
     const currentDate = new Date();
 
     const id = useParams().id;
@@ -24,6 +27,32 @@ const TripDetails = ({ getTrip, trip: { selectedTrip } }) => {
             return el.name === training_level;
         });
         return training_level_description;
+    }
+
+    const handleBook = async (e) => {
+        try {
+            const body = JSON.stringify({ 
+                userId: '64592b656408448e6b0487b0', // Jose Marmol
+                item_id: id,
+                title: selectedTrip.title,
+                description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0,10)}`,
+                unit_price: selectedTrip.booking_price, 
+                currency_id: 'ARS', 
+                quantity: 1 
+                            
+            });
+
+            //console.log(JSON.parse(body));
+            const res = await api.post(`/payments/create-order/`, body);
+            console.log(res);
+
+            //navigate(res.data.init_point);
+            window.location.href = res.data.init_point
+            
+
+        } catch (err) {
+            console.log(err);
+        }        
     }
 
     return (
@@ -55,7 +84,6 @@ const TripDetails = ({ getTrip, trip: { selectedTrip } }) => {
                                     <p className="highlight2">{formatDate(selectedTrip?.date)}</p>
                                     <p>&nbsp;</p>
                                     <p><strong>Duración: </strong>{selectedTrip?.duration}</p>
-                                    {/* <p><strong>Nivel: </strong>{selectedTrip?.training_level} <span className="footnote">({training_level_description[0]?.description})</span></p> */}
                                     <p><strong>Nivel: </strong>{selectedTrip?.training_level} <span className="footnote">({getTrainingLevel(selectedTrip?.training_level)[0]?.description})</span></p>
                                     <p><strong>Salida: </strong>{selectedTrip?.departure}</p>
                                     <p><strong>Llegada: </strong>{selectedTrip?.arrival}</p>
@@ -74,10 +102,16 @@ const TripDetails = ({ getTrip, trip: { selectedTrip } }) => {
                                 <Link to={'/trips'} state={{ data: selectedTrip }} className='btn btn-primary'>
                                     <i className='text-primary' /> Volver
                                 </Link>
-                                {selectedTrip?.payment_link && ((selectedTrip?.quota - selectedTrip?.reservations) > 0) && (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate)) && (
-                                    <a href={selectedTrip.payment_link} target="_blank" rel="noreferrer" className='btn btn-success'>
-                                        <i className='text-primary' /> Reservar
-                                    </a>
+                                {//selectedTrip?.payment_link && 
+                                ((selectedTrip?.quota - selectedTrip?.reservations) > 0) && 
+                                (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate)) && (
+                                    // <a href={selectedTrip.payment_link} target="_blank" rel="noreferrer" className='btn btn-success'>
+                                    //     <i className='text-primary' /> Reservar
+                                    // </a>
+                                    <input type="button" className="btn btn-secondary" value="Reservar" onClick={handleBook} />
+                                    // <a href={selectedTrip.payment_link} target="_blank" rel="noreferrer" className='btn btn-success'>
+                                    //     <i className='text-primary' /> Reservar
+                                    // </a>
                                 )}
                             </div>
 

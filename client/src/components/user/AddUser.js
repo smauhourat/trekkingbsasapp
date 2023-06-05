@@ -80,7 +80,7 @@ const AddUser = ({ setAlert, addUser }) => {
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Aceptar" />
-        <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/dashboard')} />
+          
       </form>
     </section >
   );

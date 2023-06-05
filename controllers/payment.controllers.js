@@ -8,7 +8,7 @@ const createOrder = async (req, res) => {
         client_id: global.env.mp_client_secret
     });
 
-    const { userId, item_id, title, unit_price, currency_id, quantity } = req.body;
+    const { userId, item_id, title, description, unit_price, currency_id, quantity } = req.body;
 
     try {
         const result = await mercadopage.preferences.create({
@@ -16,6 +16,7 @@ const createOrder = async (req, res) => {
                 {
                     id: item_id,
                     title: title,
+                    description: description,
                     unit_price: unit_price,
                     currency_id: currency_id,
                     quantity: quantity,
@@ -25,12 +26,13 @@ const createOrder = async (req, res) => {
             payment_methods: {
                 installments: 1
             },
+            external_reference: `${userId}-${item_id}`,
             auto_return: "approved",
-            notification_url: `https://846c-190-104-238-200.ngrok-free.app/api/payments/webhook?userId=${userId}&productId=${item_id}`,
+            notification_url: `https://3035-201-213-113-23.ngrok-free.app/api/payments/webhook?userId=${userId}&productId=${item_id}`,
             back_urls: {
-                success: `https://846c-190-104-238-200.ngrok-free.app/api/payments/success/?productId=${item_id}`,
-                failure: `https://846c-190-104-238-200.ngrok-free.app/api/payments/failure/?productId=${item_id}`,
-                pending: `https://846c-190-104-238-200.ngrok-free.app/api/payments/pending/?productId=${item_id}`,
+                success: `https://3035-201-213-113-23.ngrok-free.app/api/payments/success/?productId=${item_id}`,
+                failure: `https://3035-201-213-113-23.ngrok-free.app/api/payments/failure/?productId=${item_id}`,
+                pending: `https://3035-201-213-113-23.ngrok-free.app/api/payments/pending/?productId=${item_id}`,
             },
         });
 

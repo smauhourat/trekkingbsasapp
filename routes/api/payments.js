@@ -17,4 +17,4 @@ router.post("/failure", failureWebhook);
 router.get("/success", successWebhook);
 router.get("/pending", (req, res) => res.send("Pending"));
 
-module.exports = router;    
+module.exports = router;
