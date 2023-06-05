@@ -127,7 +127,7 @@ router.patch('/:id',
     const currentBook = await Book.findById(req.params.id);
 
 		if (currentBook.status === "approved" && req.body.status === "pending")
-			return res.status(404).json({ msg: 'La Reserva no puede pasar a estado de pendiente' });
+			return res.status(404).json({ msg: 'La Reserva no puede pasar a estado pendiente' });
 
     const book = await Book.updateOne({ _id: req.params.id } , { $set : { status : status} } );
 
