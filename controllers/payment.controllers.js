@@ -35,10 +35,10 @@ const createOrder = async (req, res) => {
             },
             external_reference: bookId,
             auto_return: "approved",
-            notification_url: `https://3247-201-213-113-23.ngrok-free.app/api/payments/webhook`,
+            notification_url: `https://trekkingbsastest.adhentux.com/api/payments/webhook`,
             back_urls: {
-                success: `https://3247-201-213-113-23.ngrok-free.app/booking-success`,
-                failure: `https://3247-201-213-113-23.ngrok-free.app/booking-failure`
+                success: `https://trekkingbsastest.adhentux.com/booking-success`,
+                failure: `https://trekkingbsastest.adhentux.com/booking-failure`
             },
         });
 
@@ -82,7 +82,7 @@ const receiveWebhook = async (req, res) => {
 
             console.log('---------------- COMIENZO RECEPCION ORDER ----------------');
             console.log([merchantOrder, merchantOrderStatus]);
-            console.log('---------------- FIN RECEPCION ORDER ----------------');            
+            console.log('---------------- FIN RECEPCION ORDER ----------------');
         }
     } catch (error) {
         console.log(error);
