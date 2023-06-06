@@ -67,12 +67,22 @@ const receiveWebhook = async (req, res) => {
     try {
         if (topic === "payment") {
             const paymentId = query.id || query["data.id"];
-            let payment = await mercadopage.payment.findById(Number(paymentId));
-            let paymentStatus = payment.body.status;
+            const payment = await mercadopage.payment.findById(Number(paymentId));
+            const paymentStatus = payment.body.status;
+            const bookId = payment.body.external_reference;
 
-            console.log('---------------- COMIENZO RECEPCION ----------------');
+            console.log('---------------- COMIENZO RECEPCION PAYMENT ----------------');
             console.log([payment, paymentStatus]);
-            console.log('---------------- FIN RECEPCION ----------------');
+            console.log('---------------- FIN RECEPCION PAYMENT ----------------');
+        }
+        if (topic === "merchant_order") {
+            const merchantOrderId = query.id;
+            const merchantOrder = await mercadopage.merchant_orders.findById(Number(merchantOrderId));
+            const merchantOrderStatus = merchantOrder.order_status;
+
+            console.log('---------------- COMIENZO RECEPCION ORDER ----------------');
+            console.log([merchantOrder, merchantOrderStatus]);
+            console.log('---------------- FIN RECEPCION ORDER ----------------');            
         }
     } catch (error) {
         console.log(error);

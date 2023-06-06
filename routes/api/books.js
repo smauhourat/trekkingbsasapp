@@ -113,7 +113,7 @@ router.get('/:id',
   });
 
 // @route    PATCH api/books/:id
-// @desc     Update st atus book
+// @desc     Update status book
 // @access   Private
 router.patch('/:id',
   [auth],
