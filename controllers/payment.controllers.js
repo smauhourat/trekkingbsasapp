@@ -84,6 +84,7 @@ const receiveWebhook = async (req, res) => {
             console.log([merchantOrder, merchantOrderStatus]);
             console.log('---------------- FIN RECEPCION ORDER ----------------');
         }
+        res.status(204).json({ message: "callback succefully processed" });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Something goes wrong" });
