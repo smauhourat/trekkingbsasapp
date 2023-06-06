@@ -1,4 +1,3 @@
-const moment = require('moment');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
@@ -14,12 +13,12 @@ router.post('/',
   [auth],
   async (req, res) => {
 
-    const { userId, tripId, price } = req.body;
+    const { user, trip, price } = req.body;
 
     try {
       let newBook = new Book({
-        trip: mongoose.Types.ObjectId(tripId),
-        user: mongoose.Types.ObjectId(userId),
+        trip: trip,
+        user: user,
         price,
       });
 
@@ -160,13 +159,12 @@ router.delete('/:id',
 
       await book.remove();
 
-      res.json({ msg: 'Reserva eliminado' });
+      res.json({ msg: 'Reserva eliminada' });
     } catch (err) {
       console.error(err.message);
 
       res.status(500).send('Server Error');
     }
   });
-
 
 module.exports = router;

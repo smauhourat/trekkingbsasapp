@@ -21,11 +21,12 @@ const createOrder = async (req, res) => {
             items: [
                 {
                     id: item_id,
-                    title: title,
+                    title: description,
                     description: description,
                     unit_price: unit_price,
                     currency_id: currency_id,
                     quantity: quantity,
+                    picture_url: 'http://www.trekkingbuenosaires.com/static/media/logo.dea47b25aa3249587ec6.svg'
                 },
             ],
             statement_descriptor: "TrekkingBuenosAires.com",
@@ -34,18 +35,14 @@ const createOrder = async (req, res) => {
             },
             external_reference: bookId,
             auto_return: "approved",
-            notification_url: `https://a4fb-190-104-238-200.ngrok-free.app/api/payments/webhook`,
+            notification_url: `https://3247-201-213-113-23.ngrok-free.app/api/payments/webhook`,
             back_urls: {
-                success: `https://a4fb-190-104-238-200.ngrok-free.app/booking-success`,
-                failure: `https://a4fb-190-104-238-200.ngrok-free.app/booking-failure`
+                success: `https://3247-201-213-113-23.ngrok-free.app/booking-success`,
+                failure: `https://3247-201-213-113-23.ngrok-free.app/booking-failure`
             },
         });
 
-        //console.log(JSON.stringify(result));
-        //console.log(result);
-        //res.json(result.body);
         res.status(200).send({ url_redirect: result.body.init_point });
-        //res.json({ message: "Payment created" });
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: "Something goes wrong" });
@@ -56,8 +53,14 @@ const createOrder = async (req, res) => {
 const receiveWebhook = async (req, res) => {
     // Si el pago fue exitoso, guardamos la orden de compra con el pago correspondiente asociado al usuario.
     // Decrementamos en 1 la disponibilidad del Evento
+    mercadopage.configure({
+        access_token: global.env.mp_api_key,
+        client_secret: global.env.mp_client_id,
+        client_id: global.env.mp_client_secret
+    });
 
     const { query } = req;
+    console.log(query)
 
     const topic = query.topic || query.type;
 
@@ -67,7 +70,9 @@ const receiveWebhook = async (req, res) => {
             let payment = await mercadopage.payment.findById(Number(paymentId));
             let paymentStatus = payment.body.status;
 
+            console.log('---------------- COMIENZO RECEPCION ----------------');
             console.log([payment, paymentStatus]);
+            console.log('---------------- FIN RECEPCION ----------------');
         }
     } catch (error) {
         console.log(error);

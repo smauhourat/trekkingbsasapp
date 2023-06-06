@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 const BookingFailure = () => {
 
     const [searchParams] = useSearchParams();
+    console.log(searchParams);
     const external_reference = searchParams.get('external_reference');
 
     return (

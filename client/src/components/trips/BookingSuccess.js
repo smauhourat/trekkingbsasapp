@@ -9,6 +9,7 @@ import { useSearchParams } from 'react-router-dom';
 const BookingSuccess = () => {
 
     const [searchParams] = useSearchParams();
+    console.log(searchParams);
     const bookId = searchParams.get('external_reference');
 
     return (

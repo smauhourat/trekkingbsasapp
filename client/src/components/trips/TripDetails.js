@@ -32,21 +32,23 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
 
     const handleBook = async (e) => {
         try {
+            const tripId = id;
             const bookData = {
                 user: '64592b656408448e6b0487b0', // Jose Marmol
-                trip: id,
+                trip: tripId,
                 price: selectedTrip.booking_price
             };
 
             const orderData = {
                 userId: '64592b656408448e6b0487b0', // Jose Marmol
-                item_id: id,
+                item_id: tripId,
                 title: selectedTrip.title,
                 description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`,
                 unit_price: selectedTrip.booking_price,
                 currency_id: 'ARS',
                 quantity: 1
             };
+            console.log(bookData);
 
             const res = await createBookOrder(bookData, orderData);
             console.log(res.data.url_redirect)
@@ -61,7 +63,6 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
             if (errors) {
                 setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
             }
-
         }
     }
 
