@@ -14,13 +14,14 @@ router.post('/',
   [auth],
   async (req, res) => {
 
-    const { user, trip, price } = req.body;
+    const { user, trip, price, description } = req.body;
 
     try {
       let newBook = new Book({
         trip: trip,
         user: user,
         price,
+        description,
       });
 
       const book = await newBook.save();
@@ -172,65 +173,102 @@ router.delete('/:id',
 // @desc     Create Payment Order for Book
 // @access   Private  
 router.post('/create-order', [
-    check('title', 'title es requerido').not().isEmpty(),
-    check('item_id', 'item_id es requerido').not().isEmpty(),
-    check('description', 'description es requerido').not().isEmpty(),
-    check('unit_price', 'unit_price es requerido').not().isEmpty(),
-    check('currency_id', 'currency_id es requerido').not().isEmpty(),
-    check('quantity', 'quantity es requerido').not().isEmpty(),
-    check('bookId', 'bookId es requerido').not().isEmpty(),
+  check('title', 'title es requerido').not().isEmpty(),
+  check('item_id', 'item_id es requerido').not().isEmpty(),
+  check('description', 'description es requerido').not().isEmpty(),
+  check('unit_price', 'unit_price es requerido').not().isEmpty(),
+  check('currency_id', 'currency_id es requerido').not().isEmpty(),
+  check('quantity', 'quantity es requerido').not().isEmpty(),
+  check('bookId', 'bookId es requerido').not().isEmpty(),
 ], async (req, res) => {
-    mercadopage.configure({
-        access_token: global.env.mp_api_key,
-        client_secret: global.env.mp_client_id,
-        client_id: global.env.mp_client_secret
+  mercadopage.configure({
+    access_token: global.env.mp_api_key,
+    client_secret: global.env.mp_client_id,
+    client_id: global.env.mp_client_secret
+  });
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { item_id, title, description, unit_price, currency_id, quantity, bookId } = req.body;
+
+  try {
+    const result = await mercadopage.preferences.create({
+      items: [
+        {
+          id: item_id,
+          title: description,
+          description: description,
+          unit_price: unit_price,
+          currency_id: currency_id,
+          quantity: quantity,
+          picture_url: 'http://www.trekkingbuenosaires.com/static/media/logo.dea47b25aa3249587ec6.svg'
+        },
+      ],
+      statement_descriptor: "TrekkingBuenosAires.com",
+      payment_methods: {
+        installments: 1
+      },
+      external_reference: bookId,
+      auto_return: "approved",
+      //notification_url: `https://trekkingbsastest.adhentux.com/api/webhook/webhook`,
+      notification_url: `https://a46c-201-213-113-23.ngrok-free.app/api/books/process-order`,
+      back_urls: {
+        success: `https://a46c-201-213-113-23.ngrok-free.app/booking-success`,
+        failure: `https://a46c-201-213-113-23.ngrok-free.app/booking-failure`
+        // success: `https://trekkingbsastest.adhentux.com/booking-success`,
+        // failure: `https://trekkingbsastest.adhentux.com/booking-failure`
+      },
     });
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { item_id, title, description, unit_price, currency_id, quantity, bookId } = req.body;
-
-    try {
-        const result = await mercadopage.preferences.create({
-            items: [
-                {
-                    id: item_id,
-                    title: description,
-                    description: description,
-                    unit_price: unit_price,
-                    currency_id: currency_id,
-                    quantity: quantity,
-                    picture_url: 'http://www.trekkingbuenosaires.com/static/media/logo.dea47b25aa3249587ec6.svg'
-                },
-            ],
-            statement_descriptor: "TrekkingBuenosAires.com",
-            payment_methods: {
-                installments: 1
-            },
-            external_reference: bookId,
-            auto_return: "approved",
-            //notification_url: `https://trekkingbsastest.adhentux.com/api/webhook/webhook`,
-            notification_url: `https://a46c-201-213-113-23.ngrok-free.app/api/books/process-order`,
-            back_urls: {
-                success: `https://a46c-201-213-113-23.ngrok-free.app/booking-success`,
-                failure: `https://a46c-201-213-113-23.ngrok-free.app/booking-failure`
-                // success: `https://trekkingbsastest.adhentux.com/booking-success`,
-                // failure: `https://trekkingbsastest.adhentux.com/booking-failure`
-            },
-        });
-
-        res.status(200).send({ url_redirect: result.body.init_point });
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({ message: "Something goes wrong" });
-    }
+    res.status(200).send({ url_redirect: result.body.init_point });
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ message: "Something goes wrong" });
+  }
 });
 
 const updateOrder = async (data) => {
+  //console.log(data);
+  const {
+    external_reference: bookId,
+    id: _merchant_order_id,
+    order_status: merchant_order_status,
+    total_amount: merchant_order_total_amount,
+    payer,
+    payments,
+  } = data;
+  console.log('merchant_order_id:', _merchant_order_id);
+  console.log('merchant_order_status:', merchant_order_status);
+  console.log('merchant_order_total_amount:', merchant_order_total_amount);
+  console.log('payer.id:', payer.id);
+  const payment = payments[0];
+  console.log('payment.id:', payment.id); //_payment_id
+  console.log('payment.date_approved:', payment.date_approved); //payment_date_approved
+  console.log('payment.status:', payment.status); //payment_status
+  console.log('payment.status_detail:', payment.status_detail); //payment_status_detail
+  console.log('payment.operation_type:', payment.operation_type); //payment_operation_type
+  console.log('payment.transaction_amount:', payment.transaction_amount); //payment_transaction_amount
 
+  const updatedBook = {
+    bookId,
+    _merchant_order_id,
+    merchant_order_status,
+    merchant_order_total_amount,
+    _payer_id: payer.id,
+    _payment_id: payment.id,
+    payment_date_approved: payment.date_approved,
+    payment_status: payment.status,
+    payment_status_detail: payment.status_detail,
+    payment_operation_type: payment.operation_type,
+    payment_transaction_amount: payment.transaction_amount
+  };
+
+  console.log('updatedBook: ', updatedBook);
+
+  //const book = await Book.findByIdAndUpdate(bookId, updatedBook, { new: true });
 }
 
 const updatePayment = async (data) => {
@@ -244,9 +282,9 @@ router.post("/process-order", async (req, res) => {
   // Si el pago fue exitoso, guardamos la orden de compra con el pago correspondiente asociado al usuario.
   // Decrementamos en 1 la disponibilidad del Evento
   mercadopage.configure({
-      access_token: global.env.mp_api_key,
-      client_secret: global.env.mp_client_id,
-      client_id: global.env.mp_client_secret
+    access_token: global.env.mp_api_key,
+    client_secret: global.env.mp_client_id,
+    client_id: global.env.mp_client_secret
   });
 
   const { query } = req;
@@ -255,31 +293,32 @@ router.post("/process-order", async (req, res) => {
   const topic = query.topic || query.type;
 
   try {
-      if (topic === "payment") {
-          const paymentId = query.id || query["data.id"];
-          const payment = await mercadopage.payment.findById(Number(paymentId));
-          const paymentStatus = payment.body.status;
-          const bookId = payment.body.external_reference;
+    if (topic === "payment") {
+      const paymentId = query.id || query["data.id"];
+      const payment = await mercadopage.payment.findById(Number(paymentId));
+      const paymentStatus = payment.body.status;
+      const bookId = payment.body.external_reference;
 
-          console.log('---------------- COMIENZO RECEPCION PAYMENT ----------------');
-          console.log([payment, paymentStatus]);
-          console.log('---------------- FIN RECEPCION PAYMENT ----------------');
+      // console.log('---------------- COMIENZO RECEPCION PAYMENT ----------------');
+      // console.log([payment, paymentStatus]);
+      // console.log('---------------- FIN RECEPCION PAYMENT ----------------');
 
-          const { description } = req.body;
-      }
-      if (topic === "merchant_order") {
-          const merchantOrderId = query.id;
-          const merchantOrder = await mercadopage.merchant_orders.findById(Number(merchantOrderId));
-          const merchantOrderStatus = merchantOrder.body.order_status;
+      // const { description } = req.body;
+    }
+    if (topic === "merchant_order") {
+      const merchantOrderId = query.id;
+      const merchantOrder = await mercadopage.merchant_orders.findById(Number(merchantOrderId));
+      //const merchantOrderStatus = merchantOrder.body.order_status;
 
-          console.log('---------------- COMIENZO RECEPCION ORDER ----------------');
-          console.log([merchantOrder, merchantOrderStatus]);
-          console.log('---------------- FIN RECEPCION ORDER ----------------');
-      }
-      res.status(204).json({ message: "callback succefully processed" });
+      // console.log('---------------- COMIENZO RECEPCION ORDER ----------------');
+      // console.log([merchantOrder, merchantOrderStatus]);
+      // console.log('---------------- FIN RECEPCION ORDER ----------------');
+      await updateOrder(merchantOrder.body);
+    }
+    res.status(204).json({ message: "callback succefully processed" });
   } catch (error) {
-      console.log(error);
-      return res.status(500).json({ message: "Something goes wrong" });
+    console.log(error);
+    return res.status(500).json({ message: "Something goes wrong" });
   }
 });
 

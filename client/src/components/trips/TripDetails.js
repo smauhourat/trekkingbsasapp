@@ -36,7 +36,8 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
             const bookData = {
                 user: '64592b656408448e6b0487b0', // Jose Marmol
                 trip: tripId,
-                price: selectedTrip.booking_price
+                price: selectedTrip.booking_price,
+                description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`
             };
 
             const orderData = {

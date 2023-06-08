@@ -38,7 +38,6 @@ app.use('/api/image-upload', require('./routes/api/image-upload'));
 app.use('/api/trips/:id/images', require('./routes/api/images'));
 app.use('/api/contact', require('./routes/api/contact'));
 app.use('/api/appconf', require('./routes/api/appconf'));
-app.use('/api/payments', require('./routes/api/payments'));
 app.use('/api/books', require('./routes/api/books'));
 
 // Serve static assets in production

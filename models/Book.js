@@ -1,4 +1,5 @@
 //https://www.mercadopago.com.ar/developers/es/reference/payments/_payments_id/get
+//https://www.mercadopago.com.ar/developers/es/reference/merchant_orders/_merchant_orders_id/get
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -33,18 +34,19 @@ const BookSchema = new mongoose.Schema({
         default: 'pending'
     },
 
-    date_approved: {
-        type: Date
-    },
-
     _payment_id: {
         type: Number
+    },
+
+    payment_date_approved: {
+        type: Date
     },
 
     payment_type: {
         type: String
     },
     /*
+    SOLO VIENE EN EL OBJETO PAYMENT, NO VIENE COMO PARTE DE LA ORDER
     Es el tipo de método de pago (tarjeta, transferencia bancaria, ticket, ATM, etc.). Puede ser de los siguientes tipos.
     account_money: Money in the Mercado Pago account.
     ticket: Boletos, Caixa Electronica Payment, PayCash and Oxxo, etc.
@@ -97,7 +99,7 @@ const BookSchema = new mongoose.Schema({
     cc_rejected_other_reason: generic error.    
     */
 
-    operation_type: {
+    payment_operation_type: {
         type: String
     },
     /*
@@ -114,7 +116,7 @@ const BookSchema = new mongoose.Schema({
     */
 
     //es igual a price
-    transaction_amount: {
+    payment_transaction_amount: {
         type: Number
     },
 
@@ -135,7 +137,7 @@ const BookSchema = new mongoose.Schema({
         type: Number
     },
 
-    payer_id: {
+    _payer_id: {
         type: String
     }
 
