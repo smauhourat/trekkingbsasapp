@@ -229,6 +229,13 @@ router.post('/create-order', [
     }
 });
 
+const updateOrder = async (data) => {
+
+}
+
+const updatePayment = async (data) => {
+
+}
 
 // @route    POST api/books/process-order
 // @desc     Process Payment Order for Book
@@ -257,6 +264,8 @@ router.post("/process-order", async (req, res) => {
           console.log('---------------- COMIENZO RECEPCION PAYMENT ----------------');
           console.log([payment, paymentStatus]);
           console.log('---------------- FIN RECEPCION PAYMENT ----------------');
+
+          const { description } = req.body;
       }
       if (topic === "merchant_order") {
           const merchantOrderId = query.id;
