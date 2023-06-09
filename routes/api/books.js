@@ -92,7 +92,7 @@ router.get('/',
   });
 
 // @route    GET api/books/:id
-// @desc     Get book by ID
+// @desc     Get book by Id
 // @access   Private
 router.get('/:id',
   [auth],
@@ -115,7 +115,7 @@ router.get('/:id',
   });
 
 // @route    PATCH api/books/:id
-// @desc     Update status book
+// @desc     Update status Book
 // @access   Private
 router.patch('/:id',
   [auth],
@@ -141,7 +141,7 @@ router.patch('/:id',
   });
 
 // @route    DELETE api/books/:id
-// @desc     Delete a book
+// @desc     Delete a Book
 // @access   Private
 router.delete('/:id',
   auth,
@@ -231,7 +231,6 @@ router.post('/create-order', [
 });
 
 const updateOrder = async (data) => {
-  //console.log(data);
   const {
     external_reference: bookId,
     id: _merchant_order_id,
@@ -240,18 +239,7 @@ const updateOrder = async (data) => {
     payer,
     payments,
   } = data;
-  console.log('merchant_order_id:', _merchant_order_id);
-  console.log('merchant_order_status:', merchant_order_status);
-  console.log('merchant_order_total_amount:', merchant_order_total_amount);
-  console.log('payer.id:', payer.id);
   const payment = payments[0];
-  console.log('payment.id:', payment.id); //_payment_id
-  console.log('payment.date_approved:', payment.date_approved); //payment_date_approved
-  console.log('payment.status:', payment.status); //payment_status
-  console.log('payment.status_detail:', payment.status_detail); //payment_status_detail
-  console.log('payment.operation_type:', payment.operation_type); //payment_operation_type
-  console.log('payment.transaction_amount:', payment.transaction_amount); //payment_transaction_amount
-
   const updatedBook = {
     bookId,
     _merchant_order_id,
@@ -266,19 +254,42 @@ const updateOrder = async (data) => {
     payment_transaction_amount: payment.transaction_amount
   };
 
-  console.log('updatedBook: ', updatedBook);
+  if ((updatedBook.merchant_order_total_amount === updatedBook.payment_transaction_amount) && 
+      (updatedBook.merchant_order_status === 'paid') &&
+      (updatedBook.payment_status === 'approved')
+  ) {
+    updatedBook['status'] = 'paid';
+  }
 
-  //const book = await Book.findByIdAndUpdate(bookId, updatedBook, { new: true });
+  console.log('updateOrder: ', updatedBook);
+  const book = await Book.findByIdAndUpdate(bookId, updatedBook, { new: true });
+  return book;
 }
 
 const updatePayment = async (data) => {
+  const {
+    external_reference: bookId,
+    money_release_date: payment_money_release_date,
+    payment_type,
+    transaction_details: {net_received_amount}
+  } = data;
+  console.log(net_received_amount)
+  const updatedBook = {
+    bookId,
+    payment_money_release_date,
+    payment_type,
+    payment_net_received_amount: net_received_amount
+  }
 
+  console.log('updatePayment: ', updatedBook);
+  const book = await Book.findByIdAndUpdate(bookId, updatedBook, { new: true });
+  return book;
 }
 
 // @route    POST api/books/process-order
 // @desc     Process Payment Order for Book
 // @access   Private  
-router.post("/process-order", async (req, res) => {
+router.post('/process-order', async (req, res) => {
   // Si el pago fue exitoso, guardamos la orden de compra con el pago correspondiente asociado al usuario.
   // Decrementamos en 1 la disponibilidad del Evento
   mercadopage.configure({
@@ -288,33 +299,34 @@ router.post("/process-order", async (req, res) => {
   });
 
   const { query } = req;
-  console.log(query)
+  console.log('query:', query);
 
   const topic = query.topic || query.type;
 
   try {
-    if (topic === "payment") {
-      const paymentId = query.id || query["data.id"];
-      const payment = await mercadopage.payment.findById(Number(paymentId));
-      const paymentStatus = payment.body.status;
-      const bookId = payment.body.external_reference;
-
-      // console.log('---------------- COMIENZO RECEPCION PAYMENT ----------------');
-      // console.log([payment, paymentStatus]);
-      // console.log('---------------- FIN RECEPCION PAYMENT ----------------');
-
-      // const { description } = req.body;
-    }
     if (topic === "merchant_order") {
       const merchantOrderId = query.id;
       const merchantOrder = await mercadopage.merchant_orders.findById(Number(merchantOrderId));
-      //const merchantOrderStatus = merchantOrder.body.order_status;
 
-      // console.log('---------------- COMIENZO RECEPCION ORDER ----------------');
-      // console.log([merchantOrder, merchantOrderStatus]);
-      // console.log('---------------- FIN RECEPCION ORDER ----------------');
-      await updateOrder(merchantOrder.body);
+      console.log('---------------- COMIENZO RECEPCION ORDER ----------------');
+      console.log(merchantOrder);
+      console.log('---------------- FIN RECEPCION ORDER ----------------');
+      const book = await updateOrder(merchantOrder.body);
+      if (book.status === 'paid') {
+        //send mail to user with booking data
+        
+      }
+    }    
+    if (topic === "payment") {
+      const paymentId = query.id || query["data.id"];
+      const payment = await mercadopage.payment.findById(Number(paymentId));
+
+      console.log('---------------- COMIENZO RECEPCION PAYMENT ----------------');
+      console.log(payment);
+      console.log('---------------- FIN RECEPCION PAYMENT ----------------');
+      await updatePayment(payment.body);
     }
+
     res.status(204).json({ message: "callback succefully processed" });
   } catch (error) {
     console.log(error);
@@ -322,5 +334,16 @@ router.post("/process-order", async (req, res) => {
   }
 });
 
+// @route    GET api/books/by-customer
+// @desc     Get Book by Customer
+// @access   Private  
+router.get('/by-customer/:id', (req, res) => {return res.json({message: 'Bookings by Customer'})
+});
+
+// @route    GET api/books/by-trip
+// @desc     Get Book by Trip
+// @access   Private  
+router.get('/by-trip/:id', (req, res) => {return res.json({message: 'Bookings by Trip'})
+});
 
 module.exports = router;

@@ -33,3 +33,7 @@ export const FORGOT_PASS_SUCCESS = 'FORGOT_PASS_SUCCESS';
 export const FORGOT_PASS_FAIL = 'FORGOT_PASS_FAIL';
 export const RESET_PASS_SUCCESS = 'RESET_PASS_SUCCESS';
 export const RESET_PASS_FAIL = 'RESET_PASS_FAIL';
+
+export const BOOK_CLEAR = 'BOOK_CLEAR';
+export const BOOK_GETALL = 'BOOK_GETALL';
+export const BOOK_GET = 'BOOK_GET';

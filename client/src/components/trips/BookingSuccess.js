@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, Fragment } from 'react'
 import { useSearchParams } from 'react-router-dom';
 
 /**
@@ -12,6 +12,10 @@ const BookingSuccess = () => {
     console.log(searchParams);
     const bookId = searchParams.get('external_reference');
 
+    // useEffect(() => {
+    //     getBookings();
+    //   }, [getBookings]);
+    
     return (
         <div>
             <section className="container">

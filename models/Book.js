@@ -42,11 +42,21 @@ const BookSchema = new mongoose.Schema({
         type: Date
     },
 
+    // SOLO VIENE EN EL OBJETO PAYMENT
+    payment_net_received_amount: {
+        type: Number
+    },
+
+    // SOLO VIENE EN EL OBJETO PAYMENT
+    payment_money_release_date: {
+        type: Date
+    },
+
+    // SOLO VIENE EN EL OBJETO PAYMENT
     payment_type: {
         type: String
     },
     /*
-    SOLO VIENE EN EL OBJETO PAYMENT, NO VIENE COMO PARTE DE LA ORDER
     Es el tipo de método de pago (tarjeta, transferencia bancaria, ticket, ATM, etc.). Puede ser de los siguientes tipos.
     account_money: Money in the Mercado Pago account.
     ticket: Boletos, Caixa Electronica Payment, PayCash and Oxxo, etc.
