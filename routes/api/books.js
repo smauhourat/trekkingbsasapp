@@ -337,13 +337,102 @@ router.post('/process-order', async (req, res) => {
 // @route    GET api/books/by-customer
 // @desc     Get Book by Customer
 // @access   Private  
-router.get('/by-customer/:id', (req, res) => {return res.json({message: 'Bookings by Customer'})
+router.get('/by-customer/:id', 
+  checkObjectId('id'),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;    
+      let page = 1;
+      if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
+        page = parseInt(req.query.page);
+
+      const sort = req.query.sort ? req.query.sort : "date";
+      const order = req.query.order ? req.query.order : "-1";
+
+      let db_query = {};
+      db_query = { ...db_query, user: mongoose.Types.ObjectId(id) }
+
+      const totalItems = await Book
+      .find(db_query)
+      .countDocuments();
+
+      const books = await Book
+        .find(db_query)
+        .limit(limit)
+        .skip(limit * (page - 1))
+        .sort({ [sort]: order });
+
+      res.json({
+        "metadata": {
+          "query": id,
+          "total": totalItems,
+          "count": books.length,
+          "limit": limit,
+          "page": page
+        },
+        "data": books
+      });
+
+      if (!books) {
+        return res.status(404).json({ msg: 'Reservas no encontrado' });
+      }
+      } catch (err) {
+      console.error(err.message);
+
+      res.status(500).send('Server Error');
+    }
 });
 
 // @route    GET api/books/by-trip
 // @desc     Get Book by Trip
 // @access   Private  
-router.get('/by-trip/:id', (req, res) => {return res.json({message: 'Bookings by Trip'})
+router.get('/by-trip/:id', 
+  checkObjectId('id'),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;    
+      let page = 1;
+      if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
+        page = parseInt(req.query.page);
+
+      const sort = req.query.sort ? req.query.sort : "date";
+      const order = req.query.order ? req.query.order : "-1";
+
+      let db_query = {};
+      db_query = { ...db_query, trip: mongoose.Types.ObjectId(id) }
+
+      const totalItems = await Book
+      .find(db_query)
+      .countDocuments();
+
+      const books = await Book
+        .find(db_query)
+        .limit(limit)
+        .skip(limit * (page - 1))
+        .sort({ [sort]: order });
+
+      res.json({
+        "metadata": {
+          "query": id,
+          "total": totalItems,
+          "count": books.length,
+          "limit": limit,
+          "page": page
+        },
+        "data": books
+      });
+
+      if (!books) {
+        return res.status(404).json({ msg: 'Reservas no encontrado' });
+      }
+      } catch (err) {
+      console.error(err.message);
+
+      res.status(500).send('Server Error');
+    }
 });
+
 
 module.exports = router;
