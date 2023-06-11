@@ -6,7 +6,12 @@ import { connect } from 'react-redux';
 import { getBook } from '../../actions/book';
 import { setAlert } from '../../actions/alert';
 
-const BookDetails = ({ getBook, setAlert, book: {selectedBook} }) => {
+const BookDetails = ({ 
+  getBook, 
+  setAlert, 
+  auth: { isAuthenticated },
+  book: {selectedBook} 
+}) => {
 
   const id = useParams().id;
 
@@ -23,11 +28,13 @@ const BookDetails = ({ getBook, setAlert, book: {selectedBook} }) => {
 }
 
 BookDetails.propTypes = {
+  auth: PropTypes.object.isRequired,
   getBook: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
+  auth: state.auth,
   book: state.book
 });
 

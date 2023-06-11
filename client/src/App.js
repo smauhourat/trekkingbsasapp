@@ -17,6 +17,7 @@ import EditTrip from './components/trips/EditTrip';
 import AddImages from './components/trips/AddImages';
 import TripDetails from './components/trips/TripDetails';
 import PrivateRoute from './components/routing/PrivateRoute';
+import PrivateRoutes from './components/routing/PrivateRoutes';
 import MaintenanceRoute from './components/routing/MaintenanceRoute';
 import ContactForm from './components/contact/ContactForm';
 import Company from './components/static/Company';
@@ -29,6 +30,7 @@ import Maintenance from './components/Maintenance';
 import BookingSuccess from './components/trips/BookingSuccess';
 import BookingFailure from './components/trips/BookingFailure';
 import BookDetails from './components/customer/BookDetails';
+
 
 import './App.css';
 // Redux
@@ -74,7 +76,7 @@ const App = () => {
               <Route path="forgot-password-confirm/:email" element={<ForgotPasswordConfirm />} />
               <Route path="reset-password/:id/:token" element={<ResetPassword />} />
               <Route path="reset-password-confirm" element={<ResetPasswordConfirm />} />
-              <Route path="dashboard" element={<PrivateRoute component={Dashboard} />} />
+              {/* <Route path="dashboard" element={<PrivateRoute component={Dashboard} />} /> */}
               <Route path="add-user" element={<PrivateRoute component={AddUser} />} />
               <Route path="add-trip" element={<PrivateRoute component={AddTrip} />} />
               <Route path="edit-trip/:id" element={<PrivateRoute component={EditTrip} />} />
@@ -87,7 +89,11 @@ const App = () => {
               <Route path="calendar" element={<MaintenanceRoute component={Calendar} />} />
               <Route path="booking-success" element={<BookingSuccess />} />
               <Route path="booking-failure/*" element={<BookingFailure />} />
-              <Route path="book-details/:id" element={<PrivateRoute component={BookDetails} />} />
+              <Route element={<PrivateRoutes />}>
+                <Route element={<Dashboard/>} path="dashboard"/>
+                <Route element={<BookDetails/>} path="book-details/:id"/>
+              </Route>              
+              {/* <Route path="book-details/:id" element={<PrivateRoute component={BookDetails} />} /> */}
               {/* <Route path="book-details/:id" element={<BookDetails />} /> */}
             </Fragment>
           </Routes>

@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Link, Navigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
@@ -10,6 +11,9 @@ const Login = ({ login, isAuthenticated }) => {
         email: '',
         password: ''
     });
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const { email, password } = formData;
 
@@ -23,7 +27,11 @@ const Login = ({ login, isAuthenticated }) => {
 
     // Redirect if is logged in
     if (isAuthenticated) {
-       return <Navigate to="/dashboard" />
+      if (location.state?.from) {
+       navigate(location.state.from);
+      }else {
+        //navigate('dashboard');
+      }
     }
 
   return (
@@ -69,7 +77,6 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 }
-
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated

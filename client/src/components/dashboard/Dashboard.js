@@ -6,6 +6,7 @@ import UsersList from './UsersList';
 import TripsList from './TripsList';
 import { getUsers } from '../../actions/user';
 import { clearTrip } from '../../actions/trip';
+import { Link } from 'react-router-dom';
 
 const Dashboard = ({
     getUsers,
