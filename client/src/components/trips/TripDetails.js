@@ -34,14 +34,14 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
         try {
             const tripId = id;
             const bookData = {
-                user: '64592b656408448e6b0487b0', // Jose Marmol
+                user: '64511f7a16d0e06681281c28', // Santiago GMail
                 trip: tripId,
                 price: selectedTrip.booking_price,
                 description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`
             };
 
             const orderData = {
-                userId: '64592b656408448e6b0487b0', // Jose Marmol
+                userId: '64511f7a16d0e06681281c28', // Santiago GMail
                 item_id: tripId,
                 title: selectedTrip.title,
                 description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`,

@@ -6,6 +6,9 @@ const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 const mercadopage = require("mercadopago");
 const Book = require('../../models/Book');
+const Trip = require('../../models/Trip');
+const User = require('../../models/User');
+const transporter = require('../../config/mailer');
 
 // @route   POST api/books
 // @desc    Add Book
@@ -155,9 +158,9 @@ router.delete('/:id',
         return res.status(404).json({ msg: 'Reserva no encontrada' });
       }
 
-      if (book.status !== "pending") {
-        return res.status(400).json({ msg: 'La Reserva no puede ser eliminada' });
-      }
+      // if (book.status !== "pending") {
+      //   return res.status(400).json({ msg: 'La Reserva no puede ser eliminada' });
+      // }
 
       await book.remove();
 
@@ -286,6 +289,41 @@ const updatePayment = async (data) => {
   return book;
 }
 
+const incrementReservationTrip = async (id) => {
+  const trip = await Trip.findByIdAndUpdate(id, {$inc: {reservations: 1}}, { new: true });
+  return trip;
+}
+
+const sendMailBookingCustomer = async (data) => {
+
+  // esto tiene q ir contra la tabla de Customer
+  const user = await User.findById(data.user);
+
+  const link = "http://localhost:3000";
+  const mail = {
+    from: global.env.contact_user,
+    to: 'santiagomauhourat@hotmail.com',//user.email,
+    subject: `Reserva - ${data.description}`,
+    text: link,
+    html: `<p>Hola ${user.name} gracias por elegirnos!!</p><br><p>Recibimos tu RESERVA correctamente, COD: ${data._id} <a href="${link}">aquí.</a></p>`
+  }
+
+  transporter.sendMail(mail, (err, data) => {
+    if (err) {
+      res.json({
+        status: 'fail',
+        message: 'Error enviando el mail'
+      })
+    } else {
+      res.json({
+        status: 'success',
+        message: 'El mail ha sido enviado con exito'
+      })
+    }
+  });
+
+}
+
 // @route    POST api/books/process-order
 // @desc     Process Payment Order for Book
 // @access   Private  
@@ -313,8 +351,10 @@ router.post('/process-order', async (req, res) => {
       console.log('---------------- FIN RECEPCION ORDER ----------------');
       const book = await updateOrder(merchantOrder.body);
       if (book.status === 'paid') {
+        //increment reservations
+        incrementReservationTrip(book.trip);
         //send mail to user with booking data
-        
+        sendMailBookingCustomer(book);
       }
     }    
     if (topic === "payment") {
