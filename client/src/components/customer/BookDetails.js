@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getBook } from '../../actions/book';
 import { setAlert } from '../../actions/alert';
 
-const BookDetails = ({ getBook, setAlert, book: { selectedBook } }) => {
+const BookDetails = ({ getBook, setAlert, book: {selectedBook} }) => {
 
   const id = useParams().id;
 
@@ -16,18 +16,19 @@ const BookDetails = ({ getBook, setAlert, book: { selectedBook } }) => {
 
   return (
     <section className="container">
-      
+      <h1>Anduvo todo bien</h1>
+      {selectedBook?.description}
     </section>
   );
 }
 
 BookDetails.propTypes = {
-  getTrip: PropTypes.func.isRequired,
+  getBook: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  trip: state.trip
+  book: state.book
 });
 
 export default connect(mapStateToProps, { getBook, setAlert })(BookDetails);

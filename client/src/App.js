@@ -28,6 +28,7 @@ import { Fallback } from './components/Fallback';
 import Maintenance from './components/Maintenance';
 import BookingSuccess from './components/trips/BookingSuccess';
 import BookingFailure from './components/trips/BookingFailure';
+import BookDetails from './components/customer/BookDetails';
 
 import './App.css';
 // Redux
@@ -86,6 +87,8 @@ const App = () => {
               <Route path="calendar" element={<MaintenanceRoute component={Calendar} />} />
               <Route path="booking-success" element={<BookingSuccess />} />
               <Route path="booking-failure/*" element={<BookingFailure />} />
+              <Route path="book-details/:id" element={<PrivateRoute component={BookDetails} />} />
+              {/* <Route path="book-details/:id" element={<BookDetails />} /> */}
             </Fragment>
           </Routes>
         </ErrorBoundary>

@@ -98,7 +98,7 @@ router.get('/',
 // @desc     Get book by Id
 // @access   Private
 router.get('/:id',
-  [auth],
+  // [auth],
   checkObjectId('id'),
   async (req, res) => {
 
@@ -299,13 +299,13 @@ const sendMailBookingCustomer = async (data) => {
   // esto tiene q ir contra la tabla de Customer
   const user = await User.findById(data.user);
 
-  const link = "http://localhost:3000";
+  const link = `http://localhost:3000/customer/book-detail/${data._id}`;
   const mail = {
     from: global.env.contact_user,
     to: 'santiagomauhourat@hotmail.com',//user.email,
     subject: `Reserva - ${data.description}`,
     text: link,
-    html: `<p>Hola ${user.name} gracias por elegirnos!!</p><br><p>Recibimos tu RESERVA correctamente, COD: ${data._id} <a href="${link}">aquí.</a></p>`
+    html: `<p>Hola ${user.name} gracias por elegirnos!!</p><br><p>Recibimos tu RESERVA correctamente, COD: ${data._id}</p><p><a href="${link}">Ver Detalle</a></p>`
   }
 
   transporter.sendMail(mail, (err, data) => {

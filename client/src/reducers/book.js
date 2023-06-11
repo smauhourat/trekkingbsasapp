@@ -1,7 +1,8 @@
 import {
   BOOK_CLEAR,
   BOOK_GETALL,
-  BOOK_GET
+  BOOK_GET,
+  BOOK_ERROR
 } from '../actions/types';
 
 const initialState = {
@@ -18,13 +19,13 @@ export default function book(state = initialState, action) {
     case BOOK_GETALL:
       return {
           ...state,
-          bokkings: payload,
+          bookings: payload,
           loading: false
       };
     case BOOK_CLEAR:
       return {
           ...state,
-          bokkings: [],
+          bookings: [],
           loading: true,
       };
     case BOOK_GET:
@@ -33,7 +34,14 @@ export default function book(state = initialState, action) {
           selectedBook: payload,
           loading: false
       };      
-      default:
-        return state;  
+    case BOOK_ERROR:
+      return {
+          ...state,
+          error: payload,
+          selectedBook: {},
+          loading: false,
+      };      
+    default:
+      return state;  
     }
 }

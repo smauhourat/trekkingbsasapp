@@ -3,6 +3,22 @@ import { setAlert } from './alert';
 
 import {
   BOOK_CLEAR,
-  BOOK_GETALL,
-  BOOK_GET
+  BOOK_GET,
+  BOOK_ERROR,
 } from './types';
+
+export const getBook = (id) => async (dispatch) => {
+  dispatch({ type: BOOK_CLEAR });
+  try {
+    const res = await api.get(`/books/${id}`);
+    dispatch({
+      type: BOOK_GET,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: BOOK_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}

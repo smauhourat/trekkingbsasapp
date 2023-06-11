@@ -3,10 +3,12 @@ import alert from './alert';
 import auth from './auth';
 import user from './user';
 import trip from './trip';
+import book from './book';
 
 export default combineReducers({
     alert,
     auth,
     user,
-    trip
+    trip,
+    book,
 });
