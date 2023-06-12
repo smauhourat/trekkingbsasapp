@@ -162,8 +162,7 @@ router.post('/',
       res.status(500).send(err);
     }
 
-  }
-);
+  });
 
 // @route    DELETE api/trips/:id
 // @desc     Delete a Trip
@@ -232,8 +231,7 @@ router.put('/:id',
       console.error(err);
       res.status(500).send(err);
     }
-  }
-);
+  });
 
 
 module.exports = router;

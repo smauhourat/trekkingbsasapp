@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import Spinner from '../layout/Spinner';
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getBook } from '../../actions/book';
@@ -10,7 +10,7 @@ const BookDetails = ({
   getBook, 
   setAlert, 
   auth: { isAuthenticated },
-  book: {selectedBook} 
+  book: { selectedBook, loading } 
 }) => {
 
   const id = useParams().id;
@@ -21,8 +21,22 @@ const BookDetails = ({
 
   return (
     <section className="container">
-      <h1>Anduvo todo bien</h1>
-      {selectedBook?.description}
+      {loading || selectedBook === undefined ? (<Spinner/>) : (
+        <>
+          <hr />
+          <h1>Nro Reserva: {selectedBook?.description}</h1>
+          <hr />
+          <h2>Fecha: {selectedBook?.description}</h2>
+          <h2>Estado: {selectedBook?.status}</h2>
+          <h2>Precio: ${selectedBook?.price}</h2>
+          <h2>Forma de Pago: {selectedBook.payment_operation_type}</h2>
+          <hr />
+          <br />
+          <Link to='/books' className="btn btn-success">
+            Ver Reservas
+          </Link>
+        </>
+      )}
     </section>
   );
 }
