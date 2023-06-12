@@ -29,14 +29,16 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
   const isCalendar = useLocation().pathname.includes('calendar');
   const search = useLocation().search;
 
-  const query = (isCalendar ? getQueryCalendar() : getQueryGral(search)) + "&published=1";
+  const query = (isCalendar ? getQueryCalendar() : getQueryGral(search)) + "&published=1&sort=date&order=1";
+
+  console.log('query', query)
 
   useEffect(() => {
     getTrips(query);
   }, [query, getTrips, monthSearch])
 
   return (
-    <section className="container">
+    <section className={isCalendar ? "container-bottom" : "container"}>
       {loading ? (
         <Spinner />
       ) : (
@@ -44,14 +46,11 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
           {!isCalendar ? (
             <>
               <h1 className="large text-primary">Eventos</h1>
-              <p className="lead">
-                <i className="fa-solid fa-arrow-down-wide-short"></i> Resultado de la busqueda...
-              </p>
             </>
           ) : (
             <>
-              <div className="my-1">&nbsp;</div>
-              <h1 className="lead">Actividades</h1>
+              <div className="my">&nbsp;</div>
+              <h1 className="title-search-result">Actividades</h1>
             </>
           )}
           <div className="profiles">

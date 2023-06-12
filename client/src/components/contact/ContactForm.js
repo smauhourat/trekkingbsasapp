@@ -9,8 +9,8 @@ import Recaptcha from 'react-recaptcha';
 const ContactForm = ({ setAlert }) => {
     const navigate = useNavigate();
 
-    console.log('REACT_APP_RECAPTCHA_KEY', process.env.REACT_APP_RECAPTCHA_KEY)
-    console.log('REACT_APP_RECAPTCHA_SECRET', process.env.REACT_APP_RECAPTCHA_SECRET)
+    //console.log('REACT_APP_RECAPTCHA_KEY', process.env.REACT_APP_RECAPTCHA_KEY)
+    //console.log('REACT_APP_RECAPTCHA_SECRET', process.env.REACT_APP_RECAPTCHA_SECRET)
 
     const [formData, setFormData] = useState({
         title: '',
@@ -115,6 +115,7 @@ const ContactForm = ({ setAlert }) => {
                         ref={reRef}
                         verifyCallback={verifyRecaptcha}
                         onloadCallback={onLoadRecaptcha}
+                        hl="es"
                     />
                     <input type="submit" className="btn btn-primary my-1" value={isSubmitting ? 'Enviando' : 'Enviar'} disabled={!isVerified || isSubmitting} />
                     <input type="button" className="btn btn-light my-1" value="Volver" onClick={() => navigate('/')} />
@@ -123,7 +124,7 @@ const ContactForm = ({ setAlert }) => {
 
             <div className="footer-basic bg-dark">
                 <footer>
-                    <div className="social"><a href="https://www.instagram.com/trekking.buenosaires/"><i className="fab fa-instagram"></i></a><a href="https://www.facebook.com/groups/495684924569365"><i className="fab fa-facebook-f"></i></a><a href="https://twitter.com/trekkingbsas"><i className="fab fa-twitter"></i></a><a href="http://www.youtube.com/trekkingbsas"><i className="fab fa-youtube"></i></a></div>
+                    <div className="social"><a href="https://www.instagram.com/trekking.buenosaires/" target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a><a href="https://www.facebook.com/groups/495684924569365" target="_blank" rel="noreferrer"><i className="fab fa-facebook-f"></i></a><a href="https://twitter.com/trekkingbsas" target="_blank" rel="noreferrer"><i className="fab fa-twitter"></i></a><a href="http://www.youtube.com/trekkingbsas" target="_blank" rel="noreferrer"><i className="fab fa-youtube"></i></a></div>
                     <ul className="list-inline">
                         <li className="list-inline-item"><Link to="/">Home</Link></li>
                         <li className="list-inline-item"><Link to="/calendar">Calendario</Link></li>

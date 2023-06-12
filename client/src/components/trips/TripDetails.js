@@ -1,15 +1,16 @@
 import React from 'react'
 import { useLocation, Link } from "react-router-dom";
 import formatDate from '../../utils/formatDate';
+import formatDateISOFromDate from '../../utils/formatDateISOFromDate';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
-import training_levels from '../../models/TrainingLevel.json'
+import training_levels from '../../models/TrainingLevel.json';
 
 const TripDetails = () => {
     const location = useLocation();
     const trip = location.state?.data;
+    const currentDate = new Date();
 
-    console.log(training_levels.training_levels);
     const training_level_description = training_levels.training_levels.filter(function (el) {
         return el.name === trip.training_level;
     });
@@ -44,13 +45,13 @@ const TripDetails = () => {
                         <p className="highlight2">{formatDate(trip.date)}</p>
                         <p>&nbsp;</p>
                         <p><strong>Duración: </strong>{trip?.duration}</p>
-                        <p><strong>Nivel: </strong>{trip?.training_level} <span className="footnote">({training_level_description[0].description})</span></p>
+                        <p><strong>Nivel: </strong>{trip?.training_level} <span className="footnote">({training_level_description[0]?.description})</span></p>
                         <p><strong>Salida: </strong>{trip?.departure}</p>
                         <p><strong>Llegada: </strong>{trip?.arrival}</p>
-                        <p><strong>Disponibilidad: </strong>{trip?.quota} lugares</p>
+                        <p><strong>Disponibilidad: </strong>{trip?.quota - trip?.reservations} lugares</p>
                         <p><strong>Precio: </strong>${trip?.price} (por persona)</p>
-                        <p><strong>Reserva: </strong>${trip?.booking_price} (por persona)</p>
-                        <p><strong>Disponibilidad: </strong>{trip?.quota} lugares</p>
+                        <p><strong>Precio Reserva: </strong>${trip?.booking_price} (por persona)</p>
+
                     </div>
                     <div>
                         <h2 className="text-primary">Itinerario</h2>
@@ -59,12 +60,11 @@ const TripDetails = () => {
                 </div>
 
                 <div>
-                    {/* <button className="btn btn-primary" value="Volver" onClick={() => navigate('/trips')}>Volver</button> */}
                     <Link to={'/trips'} state={{ data: trip }} className='btn btn-primary'>
                         <i className='text-primary' /> Volver
                     </Link>
-                    {trip?.payment_link && (
-                        <a href={trip.payment_link} target="_blank" className='btn btn-success'>
+                    {trip?.payment_link && ((trip?.quota - trip?.reservations) > 0) && (formatDateISOFromDate(trip.date) >= formatDateISOFromDate(currentDate)) && (
+                        <a href={trip.payment_link} target="_blank" rel="noreferrer" className='btn btn-success'>
                             <i className='text-primary' /> Reservar
                         </a>
                     )}

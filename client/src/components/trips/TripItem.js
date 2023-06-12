@@ -4,17 +4,7 @@ import PropTypes from 'prop-types'
 import formatDate from '../../utils/formatDate';
 
 const TripItem = ({
-    trip
-    // trip: {
-    //     _id,
-    //     title,
-    //     subtitle,
-    //     location,
-    //     duration,
-    //     date,
-    //     quota,
-    //     images
-    // }
+  trip
 }) => {
   return (
     <div className="profile bg-white">
@@ -27,9 +17,9 @@ const TripItem = ({
         <h2>{trip.title}</h2>
         <p>{trip.subtitle}</p>
         <p>{trip.location}</p>
-        <Link to={'/trip-details/'+trip._id} state={{data: trip}} className='btn btn-primary'>
+        <Link to={'/trip-details/' + trip._id} state={{ data: trip }} className='btn btn-primary'>
           <i className='text-primary' /> Ver Detalle
-        </Link>      
+        </Link>
       </div>
       <div>
         {trip.category
@@ -38,14 +28,14 @@ const TripItem = ({
         }
         <h3>Fecha:</h3>{formatDate(trip.date)}
         <h3>Duración:</h3>{trip.duration}
-        <h3>Disponibilidad:</h3>{trip.quota} lugares
+        <h3>Disponibilidad:</h3>{trip?.quota - trip?.reservations} lugares
       </div>
     </div>
   )
 }
 
 TripItem.propTypes = {
-    trip: PropTypes.object.isRequired
+  trip: PropTypes.object.isRequired
 }
 
 export default TripItem
