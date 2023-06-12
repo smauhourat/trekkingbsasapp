@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 import { getBook } from '../../actions/book';
 import { setAlert } from '../../actions/alert';
 
-const BookDetails = ({ 
-  getBook, 
-  setAlert, 
+const BookDetails = ({
+  getBook,
+  setAlert,
   auth: { isAuthenticated },
-  book: { selectedBook, loading } 
+  book: { selectedBook, loading }
 }) => {
 
   const id = useParams().id;
@@ -21,12 +21,13 @@ const BookDetails = ({
 
   return (
     <section className="container">
-      {loading || selectedBook === undefined ? (<Spinner/>) : (
+      {loading || selectedBook === undefined ? (<Spinner />) : (
         <>
           <hr />
           <h1>Nro Reserva: {selectedBook?.description}</h1>
           <hr />
-          <h2>Fecha: {selectedBook?.description}</h2>
+          <h2>Descripcion: {selectedBook?.description}</h2>
+          <h2>Fecha: {selectedBook?.date}</h2>
           <h2>Estado: {selectedBook?.status}</h2>
           <h2>Precio: ${selectedBook?.price}</h2>
           <h2>Forma de Pago: {selectedBook.payment_operation_type}</h2>

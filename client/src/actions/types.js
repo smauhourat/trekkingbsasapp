@@ -38,4 +38,5 @@ export const BOOK_CLEAR = 'BOOK_CLEAR';
 export const BOOK_GETALL = 'BOOK_GETALL';
 export const BOOK_GET = 'BOOK_GET';
 export const BOOK_ERROR = 'BOOK_ERROR';
+export const BOOK_GETLIST = 'BOOK_GETLIST';
 

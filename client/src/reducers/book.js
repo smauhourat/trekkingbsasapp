@@ -2,12 +2,13 @@ import {
   BOOK_CLEAR,
   BOOK_GETALL,
   BOOK_GET,
-  BOOK_ERROR
+  BOOK_ERROR,
+  BOOK_GETLIST,
 } from '../actions/types';
 
 const initialState = {
   loading: true,
-  bookings: [],
+  books: [],
   selectedBook: {},
   error: {}
 };
@@ -18,30 +19,37 @@ export default function book(state = initialState, action) {
   switch (type) {
     case BOOK_GETALL:
       return {
-          ...state,
-          bookings: payload,
-          loading: false
+        ...state,
+        books: payload,
+        loading: false
       };
     case BOOK_CLEAR:
       return {
-          ...state,
-          bookings: [],
-          loading: true,
+        ...state,
+        books: [],
+        loading: true,
       };
     case BOOK_GET:
       return {
-          ...state,
-          selectedBook: payload,
-          loading: false
-      };      
+        ...state,
+        selectedBook: payload,
+        loading: false
+      };
+    case BOOK_GETLIST:
+      return {
+        ...state,
+        books: payload,
+        selectedBook: {},
+        loading: false
+      }
     case BOOK_ERROR:
       return {
-          ...state,
-          error: payload,
-          selectedBook: {},
-          loading: false,
-      };      
+        ...state,
+        error: payload,
+        selectedBook: {},
+        loading: false,
+      };
     default:
-      return state;  
-    }
+      return state;
+  }
 }

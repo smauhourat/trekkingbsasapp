@@ -29,7 +29,7 @@ import Maintenance from './components/Maintenance';
 import BookingSuccess from './components/trips/BookingSuccess';
 import BookingFailure from './components/trips/BookingFailure';
 import BookDetails from './components/customer/BookDetails';
-
+import BookList from './components/customer/BookList';
 
 import './App.css';
 // Redux
@@ -90,6 +90,7 @@ const App = () => {
                 <Route path="add-trip" element={<AddTrip />} />
                 <Route path="edit-trip/:id" element={<EditTrip />} />
                 <Route path="add-images/:id" element={<AddImages />} />
+                <Route path="books" element={<BookList />} />
               </Route>
             </Fragment>
           </Routes>
