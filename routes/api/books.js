@@ -70,7 +70,7 @@ router.get('/',
       const books = await Book
         .find(db_query)
         .populate('trip')
-        .populate('user')
+        .populate({ path: 'user', select: '-password' })
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order });
@@ -107,7 +107,7 @@ router.get('/:id',
     try {
       const book = await Book.findById(req.params.id)
         .populate('trip')
-        .populate('user');
+        .populate({ path: 'user', select: '-password' });
 
       if (!book) {
         return res.status(404).json({ msg: 'Reserva no encontrada' });
@@ -404,7 +404,7 @@ router.get('/by-customer/:id',
       const books = await Book
         .find(db_query)
         .populate('trip')
-        .populate('user')
+        .populate({ path: 'user', select: '-password' })
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order });
@@ -456,7 +456,7 @@ router.get('/by-trip/:id',
       const books = await Book
         .find(db_query)
         .populate('trip')
-        .populate('user')
+        .populate({ path: 'user', select: '-password' })
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order });
