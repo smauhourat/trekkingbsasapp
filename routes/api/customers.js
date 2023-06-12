@@ -3,9 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
-
 const Customer = require('../../models/Customer');
-
 
 // @route   POST api/customers
 // @desc    Add Customer

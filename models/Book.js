@@ -7,12 +7,12 @@ const BookSchema = new mongoose.Schema({
 
     trip: {
         type: Schema.Types.ObjectId,
-        ref: 'trips'
+        ref: 'trip'
     },
 
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'trips'
+        ref: 'user'
     },
 
     price: {

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const CustomerSchema = new mongoose.Schema({
     first_name: {
@@ -32,7 +33,11 @@ const CustomerSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+    },
 });
 
 module.exports = mongoose.model('customer', CustomerSchema);

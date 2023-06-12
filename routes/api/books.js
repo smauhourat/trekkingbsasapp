@@ -69,6 +69,8 @@ router.get('/',
 
       const books = await Book
         .find(db_query)
+        .populate('trip')
+        .populate('user')
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order });
@@ -103,7 +105,9 @@ router.get('/:id',
   async (req, res) => {
 
     try {
-      const book = await Book.findById(req.params.id);
+      const book = await Book.findById(req.params.id)
+        .populate('trip')
+        .populate('user');
 
       if (!book) {
         return res.status(404).json({ msg: 'Reserva no encontrada' });
@@ -257,9 +261,9 @@ const updateOrder = async (data) => {
     payment_transaction_amount: payment.transaction_amount
   };
 
-  if ((updatedBook.merchant_order_total_amount === updatedBook.payment_transaction_amount) && 
-      (updatedBook.merchant_order_status === 'paid') &&
-      (updatedBook.payment_status === 'approved')
+  if ((updatedBook.merchant_order_total_amount === updatedBook.payment_transaction_amount) &&
+    (updatedBook.merchant_order_status === 'paid') &&
+    (updatedBook.payment_status === 'approved')
   ) {
     updatedBook['status'] = 'paid';
   }
@@ -274,7 +278,7 @@ const updatePayment = async (data) => {
     external_reference: bookId,
     money_release_date: payment_money_release_date,
     payment_type,
-    transaction_details: {net_received_amount}
+    transaction_details: { net_received_amount }
   } = data;
   console.log(net_received_amount)
   const updatedBook = {
@@ -290,7 +294,7 @@ const updatePayment = async (data) => {
 }
 
 const incrementReservationTrip = async (id) => {
-  const trip = await Trip.findByIdAndUpdate(id, {$inc: {reservations: 1}}, { new: true });
+  const trip = await Trip.findByIdAndUpdate(id, { $inc: { reservations: 1 } }, { new: true });
   return trip;
 }
 
@@ -356,7 +360,7 @@ router.post('/process-order', async (req, res) => {
         //send mail to user with booking data
         sendMailBookingCustomer(book);
       }
-    }    
+    }
     if (topic === "payment") {
       const paymentId = query.id || query["data.id"];
       const payment = await mercadopage.payment.findById(Number(paymentId));
@@ -377,12 +381,12 @@ router.post('/process-order', async (req, res) => {
 // @route    GET api/books/by-customer
 // @desc     Get Book by Customer
 // @access   Private  
-router.get('/by-customer/:id', 
+router.get('/by-customer/:id',
   checkObjectId('id'),
   async (req, res) => {
     try {
       const id = req.params.id;
-      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;    
+      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
       let page = 1;
       if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
         page = parseInt(req.query.page);
@@ -394,11 +398,13 @@ router.get('/by-customer/:id',
       db_query = { ...db_query, user: mongoose.Types.ObjectId(id) }
 
       const totalItems = await Book
-      .find(db_query)
-      .countDocuments();
+        .find(db_query)
+        .countDocuments();
 
       const books = await Book
         .find(db_query)
+        .populate('trip')
+        .populate('user')
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order });
@@ -417,22 +423,22 @@ router.get('/by-customer/:id',
       if (!books) {
         return res.status(404).json({ msg: 'Reservas no encontrado' });
       }
-      } catch (err) {
+    } catch (err) {
       console.error(err.message);
 
       res.status(500).send('Server Error');
     }
-});
+  });
 
 // @route    GET api/books/by-trip
 // @desc     Get Book by Trip
 // @access   Private  
-router.get('/by-trip/:id', 
+router.get('/by-trip/:id',
   checkObjectId('id'),
   async (req, res) => {
     try {
       const id = req.params.id;
-      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;    
+      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
       let page = 1;
       if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
         page = parseInt(req.query.page);
@@ -444,11 +450,13 @@ router.get('/by-trip/:id',
       db_query = { ...db_query, trip: mongoose.Types.ObjectId(id) }
 
       const totalItems = await Book
-      .find(db_query)
-      .countDocuments();
+        .find(db_query)
+        .countDocuments();
 
       const books = await Book
         .find(db_query)
+        .populate('trip')
+        .populate('user')
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order });
@@ -467,12 +475,12 @@ router.get('/by-trip/:id',
       if (!books) {
         return res.status(404).json({ msg: 'Reservas no encontrado' });
       }
-      } catch (err) {
+    } catch (err) {
       console.error(err.message);
 
       res.status(500).send('Server Error');
     }
-});
+  });
 
 
 module.exports = router;
