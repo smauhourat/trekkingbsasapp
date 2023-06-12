@@ -4,11 +4,11 @@ const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 
-const Member = require('../../models/Member');
+const Customer = require('../../models/Customer');
 
 
-// @route   POST api/members
-// @desc    Add Member
+// @route   POST api/customers
+// @desc    Add Customer
 // @access  Private
 router.post('/',
     [
@@ -32,18 +32,18 @@ router.post('/',
 
         try {
 
-            let memberByEmail = await Member.findOne({ email: email });
+            let customerByEmail = await Customer.findOne({ email: email });
 
-            if (memberByEmail) {
+            if (customerByEmail) {
                 return res.status(400).json({ errors: [{ msg: 'El email ya existe' }] })
             }
 
-            let newMember = new Member({
+            let newCustomer = new Customer({
                 first_name, last_name, email, dni, phone, birth_date, medical_status
             });
 
-            const member = await newMember.save();
-            res.json(member);
+            const customer = await newCustomer.save();
+            res.json(customer);
         } catch (err) {
             console.error(err);
             res.status(500).send(err);
@@ -52,21 +52,21 @@ router.post('/',
     }
 );
 
-// @route    DELETE api/members/:id
-// @desc     Delete a Member
+// @route    DELETE api/customers/:id
+// @desc     Delete a Customer
 // @access   Private
 router.delete('/:id',
     auth,
     checkObjectId('id'),
     async (req, res) => {
         try {
-            const member = await Member.findById(req.params.id);
+            const customer = await Customer.findById(req.params.id);
 
-            if (!member) {
+            if (!customer) {
                 return res.status(404).json({ msg: 'Miembro no encontrado' });
             }
 
-            await member.remove();
+            await customer.remove();
 
             res.json({ msg: 'Miembro eliminado' });
         } catch (err) {
@@ -77,8 +77,8 @@ router.delete('/:id',
     }
 );
 
-// @route   PUT api/members/:id
-// @desc    Update Member
+// @route   PUT api/customers/:id
+// @desc    Update Customer
 // @access  Private
 router.put('/:id',
     checkObjectId('id'),
@@ -99,8 +99,8 @@ router.put('/:id',
             return res.status(400).json({ errors: errors.array() });
         }
         try {
-            const member = await Member.findByIdAndUpdate(req.params.id, req.body, { new: true });
-            res.json(member);
+            const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            res.json(customer);
         } catch (err) {
             console.error(err);
             res.status(500).send(err);
@@ -109,20 +109,20 @@ router.put('/:id',
     }
 );
 
-// @route    GET api/members/:id
-// @desc     Get member by id
+// @route    GET api/customers/:id
+// @desc     Get customer by id
 // @access   Public
 router.get('/:id',
     checkObjectId('id'),
     async (req, res) => {
         try {
-            const member = await Member.findById(req.params.id);
+            const customer = await Customer.findById(req.params.id);
 
-            if (!member) {
+            if (!customer) {
                 return res.status(404).json({ msg: 'Miembro no encontrado' });
             }
 
-            res.json(member);
+            res.json(customer);
         } catch (err) {
             console.error(err.message);
 
@@ -131,8 +131,8 @@ router.get('/:id',
     }
 );
 
-// @route   GET api/members
-// @desc    Get all members
+// @route   GET api/customers
+// @desc    Get all customers
 // @access  Private
 router.get('/',
     auth,
@@ -157,11 +157,11 @@ router.get('/',
                 ]
             };
 
-            const totalItems = await Member
+            const totalItems = await Customer
                 .find(db_query)
                 .countDocuments();
 
-            const members = await Member
+            const customers = await Customer
                 .find(db_query)
                 .limit(limit)
                 .skip(limit * (page - 1))
@@ -171,14 +171,14 @@ router.get('/',
                 "metadata": {
                     "query": query,
                     "total": totalItems,
-                    "count": members.length,
+                    "count": customers.length,
                     "limit": limit,
                     "page": page
                 },
-                "data": members
+                "data": customers
             });
 
-            if (!members) {
+            if (!customers) {
                 return res.status(404).json({ msg: 'Miembros no encontrados' });
             }
         } catch (err) {
