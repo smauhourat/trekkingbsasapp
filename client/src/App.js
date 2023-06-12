@@ -16,7 +16,6 @@ import AddTrip from './components/trips/AddTrip';
 import EditTrip from './components/trips/EditTrip';
 import AddImages from './components/trips/AddImages';
 import TripDetails from './components/trips/TripDetails';
-import PrivateRoute from './components/routing/PrivateRoute';
 import PrivateRoutes from './components/routing/PrivateRoutes';
 import MaintenanceRoute from './components/routing/MaintenanceRoute';
 import ContactForm from './components/contact/ContactForm';
@@ -76,11 +75,6 @@ const App = () => {
               <Route path="forgot-password-confirm/:email" element={<ForgotPasswordConfirm />} />
               <Route path="reset-password/:id/:token" element={<ResetPassword />} />
               <Route path="reset-password-confirm" element={<ResetPasswordConfirm />} />
-              {/* <Route path="dashboard" element={<PrivateRoute component={Dashboard} />} /> */}
-              <Route path="add-user" element={<PrivateRoute component={AddUser} />} />
-              <Route path="add-trip" element={<PrivateRoute component={AddTrip} />} />
-              <Route path="edit-trip/:id" element={<PrivateRoute component={EditTrip} />} />
-              <Route path="add-images/:id" element={<PrivateRoute component={AddImages} />} />
               <Route path="trips" element={<Trips />} />
               <Route path="trip-details/:id" element={<TripDetails />} />
               <Route path="contact" element={<MaintenanceRoute component={ContactForm} />} />
@@ -90,11 +84,13 @@ const App = () => {
               <Route path="booking-success" element={<BookingSuccess />} />
               <Route path="booking-failure/*" element={<BookingFailure />} />
               <Route element={<PrivateRoutes />}>
-                <Route element={<Dashboard/>} path="dashboard"/>
-                <Route element={<BookDetails/>} path="book-details/:id"/>
-              </Route>              
-              {/* <Route path="book-details/:id" element={<PrivateRoute component={BookDetails} />} /> */}
-              {/* <Route path="book-details/:id" element={<BookDetails />} /> */}
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="book-details/:id" element={<BookDetails />} />
+                <Route path="add-user" element={<AddUser />} />
+                <Route path="add-trip" element={<AddTrip />} />
+                <Route path="edit-trip/:id" element={<EditTrip />} />
+                <Route path="add-images/:id" element={<AddImages />} />
+              </Route>
             </Fragment>
           </Routes>
         </ErrorBoundary>
