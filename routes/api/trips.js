@@ -4,10 +4,12 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
+const mongoose = require('mongoose');
 
 const cloudinary = require("cloudinary").v2;
 
 const Trip = require('../../models/Trip');
+const Book = require('../../models/Book');
 
 cloudinary.config({
   cloud_name: global.env.cloudName,
@@ -172,9 +174,13 @@ router.delete('/:id',
   async (req, res) => {
     try {
       const trip = await Trip.findById(req.params.id);
-
       if (!trip) {
         return res.status(404).json({ msg: 'Evento no encontrado' });
+      }
+
+      const book = await Book.find({ trip: mongoose.Types.ObjectId(trip.id) });
+      if (book && book.length > 0) {
+        return res.status(404).json({ msg: 'El Evento tiene reservas' });
       }
 
       if (trip.images.length > 0) {
