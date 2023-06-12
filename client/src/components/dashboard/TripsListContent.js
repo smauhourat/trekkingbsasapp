@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import { deleteTrip, getTrip } from '../../actions/trip';
 import formatDate from '../../utils/formatDate';
-
+import ConfirmationModal from '../layout/ConfirmationModal';
 
 const TripsListContent = ({ trip: { trips: { data } }, deleteTrip, getTrip }) => {
   const navigate = useNavigate();
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const editTrip = (id) => {
     getTrip(id);
@@ -19,11 +20,20 @@ const TripsListContent = ({ trip: { trips: { data } }, deleteTrip, getTrip }) =>
     navigate(`/add-images/${id}`);
   }
 
+  const handleCancelDelete = () => {
+    setShowConfirmationModal(false);
+  }
+
+  const handleOkDelete = (id) => {
+    alert(`delete element: ${id}`)
+    setShowConfirmationModal(false);
+  }  
+
   const tripsList =
     data?.map((trip) => (
       <tr key={trip._id}>
         <td>{formatDate(trip.date)}</td>
-        <td>{trip.title}</td>
+        <td>{trip.title}-{trip._id}</td>
         <td style={{ textAlign: "center" }}>{trip.quota}</td>
         <td style={{ textAlign: "center" }}>{trip.reservations}</td>
         <td style={{ textAlign: "center" }}>{trip.published ? 'SI' : 'NO'}</td>
@@ -47,8 +57,10 @@ const TripsListContent = ({ trip: { trips: { data } }, deleteTrip, getTrip }) =>
             >
               <i className="fas fa-trash-alt" title="Eliminar"></i>
             </button>
+            {/* <button onClick={(e) => setShowConfirmationModal(true)}>modal</button> */}
           </div>
         </td>
+        <ConfirmationModal show={showConfirmationModal} message="Está seguro que desea eliminar el Evento?" params={trip._id} onCancel={handleCancelDelete} onOk={handleOkDelete}/>
       </tr>
     ));
 

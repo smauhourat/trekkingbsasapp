@@ -6,6 +6,7 @@ import TripsListContent from './TripsListContent';
 import Spinner from '../layout/Spinner';
 import formatDateISOFromDate from '../../utils/formatDateISOFromDate';
 import environment from '../../utils/environment';
+// import ConfirmationModal from '../layout/ConfirmationModal';
 
 const TripsList = ({ getTrips, trip: { trips, loading } }) => {
   const [currentPage, setCurrentPage] = useState();
@@ -13,6 +14,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
   const [sort, setSort] = useState("date");
   const [order, setOrder] = useState(-1);
   const [search, setSearch] = useState('');
+  // const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const RECORDS_PER_PAGE = environment.recordsPerPage;
 
@@ -71,6 +73,15 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
     }
   }
 
+  // const handleCancelDelete = () => {
+  //   setShowConfirmationModal(false);
+  // }
+
+  // const handleOkDelete = () => {
+  //   alert('dalete element')
+  //   setShowConfirmationModal(false);
+  // }
+
   return (
     <Fragment>
       <div>
@@ -78,6 +89,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
         <div className="search-panelXX">
           <input type="checkbox" id="showActive" onChange={handleOnChangeActive} /><label htmlFor="showActive" alt="asda asdads"> Mostrar solo activos</label>{showActive}
           <input type="text" className='input-text' value={search} onChange={handleOnChangeSearch} onKeyDown={handleOnKeyDownSearch} /><button className="btn btn-primary btn-link" onClick={handleOnClickSearch}><i className="fas fa-search" title="Buscar"></i></button>
+          {/* <button onClick={(e) => setShowConfirmationModal(true)}>modal</button> */}
         </div>
         <table className="table">
           <thead>
@@ -119,6 +131,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
           </tfoot>
         </table>
       </div>
+      {/* <ConfirmationModal show={showConfirmationModal} message="Está seguro que desea eliminar el Evento?" onCancel={handleCancelDelete} onOk={handleOkDelete}/> */}
     </Fragment >
   )
 }
