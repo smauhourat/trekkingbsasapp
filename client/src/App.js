@@ -30,6 +30,7 @@ import BookingSuccess from './components/trips/BookingSuccess';
 import BookingFailure from './components/trips/BookingFailure';
 import BookDetails from './components/customer/BookDetails';
 import BookList from './components/customer/BookList';
+import CustomerRegister from './components/customer/CustomerRegister';
 
 import './App.css';
 // Redux
@@ -83,6 +84,7 @@ const App = () => {
               <Route path="calendar" element={<MaintenanceRoute component={Calendar} />} />
               <Route path="booking-success" element={<BookingSuccess />} />
               <Route path="booking-failure/*" element={<BookingFailure />} />
+              <Route path="register" element={<CustomerRegister />} />
               <Route element={<PrivateRoutes />}>
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="book-details/:id" element={<BookDetails />} />

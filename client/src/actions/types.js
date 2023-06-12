@@ -40,3 +40,6 @@ export const BOOK_GET = 'BOOK_GET';
 export const BOOK_ERROR = 'BOOK_ERROR';
 export const BOOK_GETLIST = 'BOOK_GETLIST';
 
+export const CUSTOMER_ADD_SUCCESS = 'CUSTOMER_ADD_SUCCESS'
+export const CUSTOMER_ADD_FAIL = 'CUSTOMER_ADD_FAIL'
+
