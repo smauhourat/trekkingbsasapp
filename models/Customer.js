@@ -34,6 +34,10 @@ const CustomerSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    email_verified: {
+        type: Boolean,
+        default: false
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'user'

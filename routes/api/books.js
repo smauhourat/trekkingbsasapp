@@ -7,7 +7,7 @@ const checkObjectId = require('../../middleware/checkObjectId');
 const mercadopage = require("mercadopago");
 const Book = require('../../models/Book');
 const Trip = require('../../models/Trip');
-const User = require('../../models/User');
+const Customer = require('../../models/Customer');
 const transporter = require('../../config/mailer');
 
 // @route   POST api/books
@@ -17,12 +17,12 @@ router.post('/',
   [auth],
   async (req, res) => {
 
-    const { user, trip, price, description } = req.body;
+    const { customer, trip, price, description } = req.body;
 
     try {
       let newBook = new Book({
         trip: trip,
-        user: user,
+        customer: customer,
         price,
         description,
       });
@@ -54,14 +54,14 @@ router.get('/',
       const order = req.query.order ? req.query.order : "-1";
 
       const trip = req.query.trip ? req.query.trip : "";
-      const user = req.query.user ? req.query.user : "";
+      const customer = req.query.customer ? req.query.customer : "";
 
 
       let db_query = {};
       if (trip !== "")
         db_query = { ...db_query, trip: mongoose.Types.ObjectId(trip) }
-      if (user !== "")
-        db_query = { ...db_query, user: mongoose.Types.ObjectId(user) }
+      if (customer !== "")
+        db_query = { ...db_query, customer: mongoose.Types.ObjectId(customer) }
 
       const totalItems = await Book
         .find(db_query)
@@ -70,7 +70,7 @@ router.get('/',
       const books = await Book
         .find(db_query)
         .populate('trip')
-        .populate({ path: 'user', select: '-password' })
+        .populate({ path: 'customer', select: '-password' })
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order });
@@ -107,7 +107,7 @@ router.get('/:id',
     try {
       const book = await Book.findById(req.params.id)
         .populate('trip')
-        .populate({ path: 'user', select: '-password' });
+        .populate({ path: 'customer', select: '-password' });
 
       if (!book) {
         return res.status(404).json({ msg: 'Reserva no encontrada' });
@@ -301,15 +301,15 @@ const incrementReservationTrip = async (id) => {
 const sendMailBookingCustomer = async (data) => {
 
   // esto tiene q ir contra la tabla de Customer
-  const user = await User.findById(data.user);
+  const customer = await Customer.findById(data.customer);
 
   const link = `http://localhost:3000/customer/book-detail/${data._id}`;
   const mail = {
     from: global.env.contact_user,
-    to: 'santiagomauhourat@hotmail.com',//user.email,
+    to: 'santiagomauhourat@hotmail.com',//customer.email,
     subject: `Reserva - ${data.description}`,
     text: link,
-    html: `<p>Hola ${user.name} gracias por elegirnos!!</p><br><p>Recibimos tu RESERVA correctamente, COD: ${data._id}</p><p><a href="${link}">Ver Detalle</a></p>`
+    html: `<p>Hola ${customer.first_name} gracias por elegirnos!!</p><br><p>Recibimos tu RESERVA correctamente, COD: ${data._id}</p><p><a href="${link}">Ver Detalle</a></p>`
   }
 
   transporter.sendMail(mail, (err, data) => {
@@ -357,7 +357,7 @@ router.post('/process-order', async (req, res) => {
       if (book.status === 'paid') {
         //increment reservations
         incrementReservationTrip(book.trip);
-        //send mail to user with booking data
+        //send mail to customer with booking data
         sendMailBookingCustomer(book);
       }
     }
@@ -395,7 +395,7 @@ router.get('/by-customer/:id',
       const order = req.query.order ? req.query.order : "-1";
 
       let db_query = {};
-      db_query = { ...db_query, user: mongoose.Types.ObjectId(id) }
+      db_query = { ...db_query, customer: mongoose.Types.ObjectId(id) }
 
       const totalItems = await Book
         .find(db_query)
@@ -404,7 +404,7 @@ router.get('/by-customer/:id',
       const books = await Book
         .find(db_query)
         .populate('trip')
-        .populate({ path: 'user', select: '-password' })
+        .populate({ path: 'customer', select: '-password' })
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order });
@@ -456,7 +456,7 @@ router.get('/by-trip/:id',
       const books = await Book
         .find(db_query)
         .populate('trip')
-        .populate({ path: 'user', select: '-password' })
+        .populate({ path: 'customer', select: '-password' })
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order });

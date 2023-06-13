@@ -10,9 +10,9 @@ const BookSchema = new mongoose.Schema({
         ref: 'trip'
     },
 
-    user: {
+    customer: {
         type: Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'customer'
     },
 
     price: {
