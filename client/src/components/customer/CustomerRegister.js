@@ -25,9 +25,7 @@ const CustomerRegister = ({ setAlert, addCustomer }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
         addCustomer(formData);
-
     }
 
     return (
@@ -51,7 +49,7 @@ const CustomerRegister = ({ setAlert, addCustomer }) => {
                         name="first_name"
                         value={first_name}
                         onChange={onChange}
-                    />
+                        required />
                 </div>
                 <div className="form-group">
                     <input

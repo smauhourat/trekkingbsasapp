@@ -10,9 +10,8 @@ const Customer = require('../../models/Customer');
 // @access  Private
 router.post('/',
     [
-        auth,
         [
-            // check('first_name', 'Nombre es requerido').not().isEmpty(),
+            check('first_name', 'Nombre es requerido').not().isEmpty(),
             check('last_name', 'Apellido es requerido').not().isEmpty(),
             check('dni', 'DNI es requerido').not().isEmpty(),
             check('phone', 'Celular es requerido').not().isEmpty(),

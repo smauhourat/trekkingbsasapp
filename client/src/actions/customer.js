@@ -20,7 +20,6 @@ export const addCustomer = (formData) => async (dispatch) => {
         dispatch(setAlert('Registracion completa', 'success'));
     } catch (err) {
         const errors = err.response.data.errors;
-
         if (errors) {
             errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
         }
@@ -28,8 +27,7 @@ export const addCustomer = (formData) => async (dispatch) => {
             type: CUSTOMER_ADD_FAIL,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
-
-        dispatch(setAlert('Registracion erronea, vuelva a intentarlo mas tarde', 'danger'));
-        //dispatch(setAlert({ msg: err }, 'danger'));
+        if (errors === undefined)
+            dispatch(setAlert('Registracion erronea, vuelva a intentarlo mas tarde', 'danger'));
     }
 }
