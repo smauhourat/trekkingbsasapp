@@ -4,6 +4,18 @@ const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 const Customer = require('../../models/Customer');
+const crypto = require('crypto');
+
+const createEmailVerificationCode = () => {
+    const verificationCode = crypto.randomBytes(32).toString('hex');
+
+    const hashedVerificationCode = crypto
+      .createHash('sha256')
+      .update(verificationCode)
+      .digest('hex');
+
+    return { verificationCode, hashedVerificationCode };
+}
 
 // @route   POST api/customers
 // @desc    Add Customer
@@ -34,12 +46,15 @@ router.post('/',
             if (customerByEmail) {
                 return res.status(400).json({ errors: [{ msg: 'El email ya existe' }] })
             }
-
+            const { verificationCode, hashedVerificationCode } = createEmailVerificationCode();
             let newCustomer = new Customer({
-                first_name, last_name, email, dni, phone, birth_date, medical_status
+                first_name, last_name, email, dni, phone, birth_date, medical_status, email_verification_code: hashedVerificationCode
             });
 
             const customer = await newCustomer.save();
+
+            // TODO : enviar por mail el link con el codigo para validar el email, el codigo es verificationCode
+            res.json({code: verificationCode});
             res.json(customer);
         } catch (err) {
             console.error(err);

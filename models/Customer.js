@@ -38,6 +38,9 @@ const CustomerSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    email_verification_code: {
+        type: String
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'user'

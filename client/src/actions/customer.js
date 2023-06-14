@@ -8,16 +8,18 @@ import {
 } from './types';
 
 
-export const addCustomer = (formData) => async (dispatch) => {
+export const addCustomer = (formData, navigate) => async (dispatch) => {
     try {
-        const res = await api.post('/customers', formData);
+        // OJO
+        // const res = await api.post('/customers', formData);
 
-        dispatch({
-            type: CUSTOMER_ADD_SUCCESS,
-            payload: res.data
-        });
+        // dispatch({
+        //     type: CUSTOMER_ADD_SUCCESS,
+        //     payload: res.data
+        // });
 
-        dispatch(setAlert('Registracion completa', 'success'));
+        ////dispatch(setAlert('Registracion completa', 'success'));
+        navigate(`/validate-email`);
     } catch (err) {
         const errors = err.response.data.errors;
         if (errors) {

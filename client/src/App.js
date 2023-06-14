@@ -31,6 +31,7 @@ import BookingFailure from './components/trips/BookingFailure';
 import BookDetails from './components/customer/BookDetails';
 import BookList from './components/customer/BookList';
 import CustomerRegister from './components/customer/CustomerRegister';
+import CustomerValidateEmail from './components/customer/CustomerValidateEmail';
 
 import './App.css';
 // Redux
@@ -76,6 +77,7 @@ const App = () => {
               <Route path="forgot-password-confirm/:email" element={<ForgotPasswordConfirm />} />
               <Route path="reset-password/:id/:token" element={<ResetPassword />} />
               <Route path="reset-password-confirm" element={<ResetPasswordConfirm />} />
+              <Route path="validate-email" element={<CustomerValidateEmail />} />
               <Route path="trips" element={<Trips />} />
               <Route path="trip-details/:id" element={<TripDetails />} />
               <Route path="contact" element={<MaintenanceRoute component={ContactForm} />} />

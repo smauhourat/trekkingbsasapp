@@ -25,7 +25,7 @@ const CustomerRegister = ({ setAlert, addCustomer }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        addCustomer(formData);
+        addCustomer(formData, navigate);
     }
 
     return (
