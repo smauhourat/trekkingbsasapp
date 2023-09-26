@@ -55,3 +55,7 @@ CONTACT_PORT** with a valid stmp account
 ### Miscellaneous - Update Mongo Schema
 
 db.collection.updateMany({<filter>}, {$set:{<new_field>: <defautl_value>}}, {})
+
+
+26-09-2023
+ojo no perder la confirmacion de borrado de Trips de la rama DEVELOP
