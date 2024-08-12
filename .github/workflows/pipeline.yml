@@ -1,8 +1,8 @@
 name: Deploy to Donweb Cloud
 on:
   push:
-  branches:
-		- master
+  	branches:
+			- master
 jobs:
   deploy:
     runs-on: ubuntu-22.04
