@@ -47,6 +47,7 @@ CONTACT_PORT** with a valid stmp account
 
 1. run **npm run build-client**
 2. run **git push origin master**
+2. run **git push vercel master**
 
 // TODO
 

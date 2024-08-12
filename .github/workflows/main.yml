@@ -1,0 +1,13 @@
+name: Deploy in Donweb Cloud
+
+  on:
+    push:
+      branches:
+        - master
+  jobs:
+    hello_world:
+      runs-on: ubuntu-22.04
+      steps:
+        - name: Echo the messsage
+        run: |
+          echo "Hola Santiago!"
