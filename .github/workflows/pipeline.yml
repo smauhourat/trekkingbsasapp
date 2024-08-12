@@ -9,4 +9,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             - name: Echo the message
-              run: echo "Hola Santiago"			
+              run: echo "Hola Santiago"
+            - uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
