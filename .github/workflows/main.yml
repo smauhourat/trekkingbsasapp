@@ -2,7 +2,7 @@ name: Deploy in Donweb Cloud
 on:
   push:
     branches:
-      - testci
+      - master
 jobs:
   hello_world:
     runs-on: ubuntu-22.04
