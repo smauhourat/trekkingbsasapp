@@ -16,3 +16,5 @@ config/production.json
 .vercel
 client/.env.development
 client/.env.production
+cypress/videos
+cypress/downloads

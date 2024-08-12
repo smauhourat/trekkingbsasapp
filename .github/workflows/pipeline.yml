@@ -1,0 +1,12 @@
+name: Deploy to Donweb Cloud
+on:
+  push:
+  branches:
+  	- master
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+				with:
+    			fetch-depth: 0
