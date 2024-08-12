@@ -1,12 +1,11 @@
 name: Deploy to Donweb Cloud
 on:
 	push:
-  	branches:
+		branches:
 			- master
 jobs:
 	deploy:
 		runs-on: ubuntu-22.04
 		steps:
-			- uses: actions/checkout@v4
-				with:
-				fetch-depth: 0
+			- name: Echo the message
+			run: echo "Hola Santiago"			
