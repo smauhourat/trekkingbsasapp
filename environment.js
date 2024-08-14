@@ -1,8 +1,8 @@
-const path = require('path');
-const dotenv = require('dotenv');
-const env_file = process.env.NODE_ENV !== undefined ? `.env.${process.env.NODE_ENV.trim()}` : '.env';
-dotenv.config({ path: path.resolve(__dirname, env_file) })
-const env = process.env;
+const path = require('path')
+const dotenv = require('dotenv')
+const envFile = process.env.NODE_ENV !== undefined ? `.env.${process.env.NODE_ENV.trim()}` : '.env'
+dotenv.config({ path: path.resolve(__dirname, envFile) })
+const env = process.env
 
 const environment = {
   port: env.PORT,
@@ -18,4 +18,4 @@ const environment = {
   apiSecret: env.API_SECRET
 }
 
-module.exports = environment;
+module.exports = environment

@@ -1,7 +1,7 @@
-const express = require('express');
-const transporter = require('../../config/mailer');
-const router = express.Router();
-const { check, validationResult } = require('express-validator');
+const express = require('express')
+const transporter = require('../../config/mailer')
+const router = express.Router()
+const { check, validationResult } = require('express-validator')
 
 // @route    GET api/contact
 // @desc     Send Contact Info
@@ -11,20 +11,20 @@ router.post('/',
     check('title', 'Titulo es requerido').not().isEmpty(),
     check('email', 'Email es requerido').not().isEmpty(),
     check('subject', 'Asunto es requerido').not().isEmpty(),
-    check('message', 'Mensaje es requerido').not().isEmpty(),
+    check('message', 'Mensaje es requerido').not().isEmpty()
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() })
     }
 
-    const { email, subject, message } = req.body;
+    const { email, subject, message } = req.body
 
     const mail = {
       from: email,
       to: global.env.contact_to,
-      subject: subject,
+      subject,
       text: 'De: ' + email + '\nMensaje: ' + message
     }
 
@@ -38,8 +38,8 @@ router.post('/',
           status: 'success'
         })
       }
-    });
+    })
   }
 )
 
-module.exports = router;
+module.exports = router

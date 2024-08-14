@@ -1,13 +1,12 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import React from 'react'
+import { Navigate } from 'react-router-dom'
 
 const MaintenanceRoute = ({
-    component: Component
+  component: Component
 }) => {
-    if (process.env.REACT_APP_ISMAINTENANCE === "false") return <Component />;
+  if (process.env.REACT_APP_ISMAINTENANCE === 'false') return <Component />
 
-    return <Navigate to="/maintenance" />;
-};
+  return <Navigate to='/maintenance' />
+}
 
-
-export default MaintenanceRoute;
+export default MaintenanceRoute

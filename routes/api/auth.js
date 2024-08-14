@@ -1,24 +1,24 @@
-const express = require('express');
-const transporter = require('../../config/mailer');
-const router = express.Router();
-const auth = require('../../middleware/auth');
-const User = require('../../models/User');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { check, validationResult } = require('express-validator');
+const express = require('express')
+const transporter = require('../../config/mailer')
+const router = express.Router()
+const auth = require('../../middleware/auth')
+const User = require('../../models/User')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const { check, validationResult } = require('express-validator')
 
 // @route   GET api/auth
 // @desc    Test route
 // @access  Public
 router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
-    res.json(user);
+    const user = await User.findById(req.user.id).select('-password')
+    res.json(user)
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
+    console.error(err.message)
+    res.status(500).send('Server error')
   }
-});
+})
 
 // @route   POST api/auth
 // @desc    Authenticate user & get token
@@ -30,21 +30,21 @@ router.post(
     check('password', 'Password es requerido').exists()
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() })
     }
 
-    const { email, password } = req.body;
+    const { email, password } = req.body
 
     try {
-      let user = await User.findOne({ email: email });
+      const user = await User.findOne({ email })
 
       if (!user) {
         return res.status(400).json({ errors: [{ msg: 'Credenciales Invalidas' }] })
       }
 
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password)
 
       if (!isMatch) {
         return res.status(400).json({ errors: [{ msg: 'Credenciales Invalidas' }] })
@@ -55,44 +55,43 @@ router.post(
         user: {
           id: user.id
         }
-      };
+      }
 
       jwt.sign(
         payload,
         global.env.jwtSecret,
-        { expiresIn: "2h" }, //360000
+        { expiresIn: '2h' }, // 360000
         (err, token) => {
-          if (err) throw err;
-          res.json({ token });
+          if (err) throw err
+          res.json({ token })
         }
-      );
-
+      )
     } catch (err) {
-      console.error(err);
-      res.status(500).send(err);
+      console.error(err)
+      res.status(500).send(err)
     }
   }
-);
+)
 
 // @route   POST api/auth/forgot-password
 // @desc    Forgot Password, send restore link by mail
 // @access  Public
-router.post("/forgot-password", async (req, res) => {
-  const { email } = req.body;
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body
   try {
-    const oldUser = await User.findOne({ email });
+    const oldUser = await User.findOne({ email })
     if (oldUser == null) {
       return res.json({
         status: 'fail',
         message: 'Usuario no existe!!'
-      });
+      })
     }
-    const secret = global.env.jwtSecret + oldUser.password;
+    const secret = global.env.jwtSecret + oldUser.password
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
-      expiresIn: "10m",
-    });
+      expiresIn: '10m'
+    })
     const requestedUrl = req.headers['client-base-url']
-    const link = `${requestedUrl}/reset-password/${oldUser._id}/${token}`;
+    const link = `${requestedUrl}/reset-password/${oldUser._id}/${token}`
     const mail = {
       from: global.env.contact_user,
       to: email,
@@ -113,65 +112,63 @@ router.post("/forgot-password", async (req, res) => {
           message: 'El mail ha sido enviado con exito'
         })
       }
-    });
+    })
   } catch (error) { }
-});
+})
 
 // @route   GET api/auth/reset-password/:id/:token
 // @desc    Forgot Password, send restore link by mail
 // @access  Public
-router.get("/reset-password/:id/:token", async (req, res) => {
-  const { id, token } = req.params;
-  const oldUser = await User.findOne({ _id: id });
+router.get('/reset-password/:id/:token', async (req, res) => {
+  const { id, token } = req.params
+  const oldUser = await User.findOne({ _id: id })
   if (!oldUser) {
-    return res.json({ status: "Usuario no existe!!" });
+    return res.json({ status: 'Usuario no existe!!' })
   }
-  const secret = global.env.jwtSecret + oldUser.password;
+  const secret = global.env.jwtSecret + oldUser.password
   try {
-    const verify = jwt.verify(token, secret);
-    res.json({ email: verify.email, status: "No verificado" });
+    const verify = jwt.verify(token, secret)
+    res.json({ email: verify.email, status: 'No verificado' })
   } catch (error) {
-    console.log(error);
-    //res.send("No verificado");
+    console.log(error)
+    // res.send("No verificado");
     res.json({ status: 'fail', message: 'No verificado, el token ha expirado' })
   }
-});
+})
 
 // @route   POST api/auth/reset-password/:id/:token
 // @desc    Reset Password, send new password
 // @access  Public
-router.post("/reset-password/:id/:token", async (req, res) => {
-  const { id, token } = req.params;
-  const { password } = req.body;
-  const oldUser = await User.findOne({ _id: id });
+router.post('/reset-password/:id/:token', async (req, res) => {
+  const { id } = req.params
+  const { password } = req.body
+  const oldUser = await User.findOne({ _id: id })
   if (!oldUser) {
-    return res.json({ status: "Usuario no existe!!" });
+    return res.json({ status: 'Usuario no existe!!' })
   }
-  const secret = global.env.jwtSecret + oldUser.password;
   try {
-    const verify = jwt.verify(token, secret);
-    const salt = await bcrypt.genSalt(10);
-    const encryptedPassword = await bcrypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10)
+    const encryptedPassword = await bcrypt.hash(password, salt)
     await User.updateOne(
       {
-        _id: id,
+        _id: id
       },
       {
         $set: {
-          password: encryptedPassword,
-        },
+          password: encryptedPassword
+        }
       }
-    );
+    )
 
-    //res.json({ email: verify.email, status: "verificado" });
+    // res.json({ email: verify.email, status: "verificado" });
     res.json({
-      status: "success",
+      status: 'success',
       message: 'La contraseña se ha cambiado con exito'
-    });
+    })
   } catch (error) {
-    console.log(error);
-    res.json({ status: "Ocurrio un error inesperado", error: error });
+    console.log(error)
+    res.json({ status: 'Ocurrio un error inesperado', error })
   }
-});
+})
 
-module.exports = router;
+module.exports = router

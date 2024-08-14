@@ -44,9 +44,15 @@
     "nodemailer": "^6.7.5",
     "request": "^2.88.2"
   },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/standard/eslintrc.json"
+    ]
+  },
   "devDependencies": {
     "concurrently": "^7.0.0",
     "cypress": "^10.3.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "standard": "^17.1.0"
   }
 }

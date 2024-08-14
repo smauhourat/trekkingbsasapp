@@ -1,15 +1,15 @@
-import React, { Fragment } from "react";
-import { connect } from 'react-redux';
+import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 
 const ResetPasswordConfirm = () => {
-    return (
-        <Fragment>
-            <section className="container">
-                <h1 className="large text-primary">Fin Proceso</h1>
-                <p className="lead">La contraseña se ha cambiado con exito.</p>
-            </section>
-        </Fragment >
-    );
-};
+  return (
+    <>
+      <section className='container'>
+        <h1 className='large text-primary'>Fin Proceso</h1>
+        <p className='lead'>La contraseña se ha cambiado con exito.</p>
+      </section>
+    </>
+  )
+}
 
-export default connect()(ResetPasswordConfirm);
+export default connect()(ResetPasswordConfirm)

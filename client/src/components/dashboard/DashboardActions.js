@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const DashboardActions = () => {
   return (
@@ -11,7 +11,7 @@ const DashboardActions = () => {
         <i className='fas fa-user text-primary' /> Agregar Usuario
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default DashboardActions;
+export default DashboardActions
