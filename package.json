@@ -16,7 +16,9 @@
     "cypress:open": "cypress open",
     "server-development": "SET NODE_ENV=development & nodemon server",
     "client-development": "SET NODE_ENV=development & npm start --prefix client",
-    "development": "concurrently \"npm run server-development\" \"npm run client-development\""
+    "development": "concurrently \"npm run server-development\" \"npm run client-development\"",
+    "eslint": "eslint './**/*.{js}'",
+    "standard": "standard"
   },
   "repository": {
     "type": "git",
