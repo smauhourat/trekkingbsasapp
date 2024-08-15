@@ -30,11 +30,18 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
+    "env": {
+      "cypress/globals": true
+    },
     "extends": [
       "./node_modules/standard/eslintrc.json"
+    ],
+    "plugins": [
+      "cypress"
     ]
   },
   "browserslist": {
@@ -51,6 +58,8 @@
   },
   "proxy": "http://localhost:5000/",
   "devDependencies": {
+    "cypress": "^10.3.0",
+    "eslint-plugin-cypress": "^3.5.0",
     "standard": "^17.1.0"
   }
 }
