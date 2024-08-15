@@ -10,18 +10,21 @@ describe('Trekk App', () => {
   })
 
   it('user cannot login', () => {
-    cy.visit(Cypress.env('baseUrl') + '/login')
-    cy.get('[placeholder="Email"]').type('caca@caca.com')
-    cy.get('[placeholder="Contraseña"]').type('caca')
-    cy.get('#form-login-submit-button').click()
+    // cy.visit(Cypress.env('baseUrl') + '/login')
+    // cy.get('[placeholder="Email"]').type('caca@caca.com')
+    // cy.get('[placeholder="Contraseña"]').type('caca')
+    // cy.get('#form-login-submit-button').click()
+    cy.login({ email: 'caca@caca.com', password: 'caca' })
+
     cy.contains('Ingrese a su cuenta')
   })
 
   it('user can login', () => {
-    cy.visit(Cypress.env('baseUrl') + '/login')
-    cy.get('[placeholder="Email"]').type('santiago.mauhourat@gmail.com')
-    cy.get('input[placeholder="Contraseña"]').type('123123')
-    cy.get('#form-login-submit-button').click()
+    // cy.visit(Cypress.env('baseUrl') + '/login')
+    // cy.get('[placeholder="Email"]').type('santiago.mauhourat@gmail.com')
+    // cy.get('input[placeholder="Contraseña"]').type('123123')
+    // cy.get('#form-login-submit-button').click()
+    cy.login({ email: 'santiagomauhourat@hotmail.com', password: '123123' })
 
     // Verify the app redirected you to the homepage
     cy.location().should((loc) => {
@@ -34,10 +37,11 @@ describe('Trekk App', () => {
 
   describe('when user is logged', () => {
     beforeEach(() => {
-      cy.visit(Cypress.env('baseUrl') + '/login')
-      cy.get('[placeholder="Email"]').type('santiagomauhourat@hotmail.com')
-      cy.get('[placeholder="Contraseña"]').type('123123')
-      cy.get('#form-login-submit-button').click()
+      // cy.visit(Cypress.env('baseUrl') + '/login')
+      // cy.get('[placeholder="Email"]').type('santiagomauhourat@hotmail.com')
+      // cy.get('[placeholder="Contraseña"]').type('123123')
+      // cy.get('#form-login-submit-button').click()
+      cy.login({ email: 'santiagomauhourat@hotmail.com', password: '123123' })
 
       // Verify the app redirected you to the homepage
       cy.location().should((loc) => {
