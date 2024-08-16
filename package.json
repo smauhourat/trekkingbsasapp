@@ -17,8 +17,7 @@
     "server-development": "SET NODE_ENV=development & nodemon server",
     "client-development": "SET NODE_ENV=development & npm start --prefix client",
     "development": "concurrently \"npm run server-development\" \"npm run client-development\"",
-    "eslint": "eslint './**/*.{js}'",
-    "standard": "standard"
+    "eslint": "eslint './**/*.{js}'"
   },
   "repository": {
     "type": "git",
@@ -48,13 +47,12 @@
   },
   "eslintConfig": {
     "extends": [
-      "./node_modules/standard/eslintrc.json"
+      ""
     ]
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
     "cypress": "^10.3.0",
-    "nodemon": "^2.0.15",
-    "standard": "^17.1.0"
+    "nodemon": "^2.0.15"
   }
 }

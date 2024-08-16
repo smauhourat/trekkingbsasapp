@@ -4,14 +4,14 @@
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
-    "@testing-library/react": "^12.1.4",
+    "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^13.5.0",
     "@vercel/analytics": "^1.0.1",
     "axios": "^0.26.1",
     "moment": "^2.29.1",
-    "react": "^17.0.2",
+    "react": "^18.3.1",
     "react-countup": "^6.3.0",
-    "react-dom": "^17.0.2",
+    "react-dom": "^18.3.1",
     "react-error-boundary": "^3.1.4",
     "react-image-gallery": "^1.2.11",
     "react-moment": "^1.1.1",
@@ -39,7 +39,8 @@
       "cypress/globals": true
     },
     "extends": [
-      "./node_modules/standard/eslintrc.json"
+      "react-app",
+      "react-app/jest"
     ],
     "plugins": [
       "cypress"
@@ -59,8 +60,9 @@
   },
   "proxy": "http://localhost:5000/",
   "devDependencies": {
+    "@babel/plugin-transform-private-property-in-object": "^7.24.7",
     "cypress": "^10.3.0",
     "eslint-plugin-cypress": "^3.5.0",
-    "standard": "^17.1.0"
+    "eslint-plugin-react": "^7.35.0"
   }
 }
