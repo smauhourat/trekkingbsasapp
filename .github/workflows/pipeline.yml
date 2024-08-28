@@ -24,18 +24,15 @@ jobs:
               run: npm i --prefix client
             - name: Build client
               run: npm run build --prefix client
-            - name: Create .tar deploy file
-              run: | 
-                mkdir ../build
-                cp -TR . ../build
-                tar -cvf deploy.tar ../build/
             - name: Copy ssh
-              uses: appleboy/scp-action@v0.1.7
+              uses: appleboy/ssh-action@master
               with:
                 host: ${{ secrets.DESTINATION_HOST }}
                 username: ${{ secrets.SSH_USERNAME }}
-                password: ${{ secrets.SSH_PASSWORD }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
                 port: ${{ secrets.DESTINATION_SSH_PORT }}
-                source: "deploy.tar"
-                target: ${{ secrets.DESTINATION_FOLDER }}
+                script: |
+                  cd /var/www/temp2
+                  rm -rf *
+                  scp -r . santi@66.97.47.170:/var/www/temp2
                 
