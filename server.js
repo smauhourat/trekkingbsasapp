@@ -29,14 +29,15 @@ app.get('/api/test', (req, res) => {
 })
 
 // Define Routes
-app.use('/api/users', require('./routes/api/users'))
-app.use('/api/members', require('./routes/api/members'))
-app.use('/api/trips', require('./routes/api/trips'))
-app.use('/api/auth', require('./routes/api/auth'))
-app.use('/api/image-upload', require('./routes/api/image-upload'))
-app.use('/api/trips/:id/images', require('./routes/api/images'))
-app.use('/api/contact', require('./routes/api/contact'))
-app.use('/api/appconf', require('./routes/api/appconf'))
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/customers', require('./routes/api/customers'));
+app.use('/api/trips', require('./routes/api/trips'));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/image-upload', require('./routes/api/image-upload'));
+app.use('/api/trips/:id/images', require('./routes/api/images'));
+app.use('/api/contact', require('./routes/api/contact'));
+app.use('/api/appconf', require('./routes/api/appconf'));
+app.use('/api/books', require('./routes/api/books'));
 
 // Serve static assets in production
 // if (process.env.NODE_ENV === 'production') {

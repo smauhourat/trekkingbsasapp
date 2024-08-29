@@ -3,6 +3,8 @@ local
 config/default.json
 config/production.json
 
+ngrok.exe
+
 # misc
 .DS_Store
 .env

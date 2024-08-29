@@ -1,29 +1,37 @@
-import React, { Fragment, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { setAlert } from '../../actions/alert'
-import PropTypes from 'prop-types'
-import { login } from '../../actions/auth'
+import React, { Fragment, useState } from "react";
+import { Link, Navigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import PropTypes from 'prop-types';
+import { login } from '../../actions/auth';
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
-  })
+  });
 
-  const { email, password } = formData
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { email, password } = formData;
 
   const onChange = e =>
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async e => {
-    e.preventDefault()
-    login(email, password)
+    e.preventDefault();
+    login(email, password);
   }
 
   // Redirect if is logged in
   if (isAuthenticated) {
-    return <Navigate to='/dashboard' />
+    if (location.state?.from) {
+      navigate(location.state.from);
+    } else {
+      navigate('/dashboard');
+    }
   }
 
   return (
