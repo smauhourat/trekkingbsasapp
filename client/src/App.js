@@ -96,7 +96,7 @@ const App = () => {
                 <Route path="add-images/:id" element={<AddImages />} />
                 <Route path="books" element={<BookList />} />
               </Route>
-            </Fragment>
+            </>
           </Routes>
         </ErrorBoundary>
       </Router>

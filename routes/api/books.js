@@ -63,6 +63,7 @@ router.get('/',
       if (customer !== "")
         db_query = { ...db_query, customer: mongoose.Types.ObjectId(customer) }
 
+      console.log(db_query)
       const totalItems = await Book
         .find(db_query)
         .countDocuments();
@@ -303,7 +304,7 @@ const sendMailBookingCustomer = async (data) => {
   // esto tiene q ir contra la tabla de Customer
   const customer = await Customer.findById(data.customer);
 
-  const link = `http://localhost:3000/customer/book-detail/${data._id}`;
+  const link = `http://localhost:4000/customer/book-detail/${data._id}`;
   const mail = {
     from: global.env.contact_user,
     to: 'santiagomauhourat@hotmail.com',//customer.email,
@@ -396,6 +397,8 @@ router.get('/by-customer/:id',
 
       let db_query = {};
       db_query = { ...db_query, customer: mongoose.Types.ObjectId(id) }
+
+      console.log(db_query)
 
       const totalItems = await Book
         .find(db_query)
