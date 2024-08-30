@@ -153,14 +153,14 @@ router.delete('/:id',
   })
 
 // @route   GET api/users
-// @desc    Get all users
+// @desc    Get all users (por defecto solo devuelve los usuarios administradores)
 // @access  Private
 router.get('/',
   auth,
   async (_req, res) => {
     try {
       const users = await User
-        .find()
+        .find({ super_admin: true })
         .sort({ date: 'asc' })
 
       res.json({
