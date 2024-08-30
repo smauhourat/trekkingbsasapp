@@ -24,7 +24,12 @@ const UserSchema = new mongoose.Schema({
   super_admin: {
     type: Boolean,
     default: false
-  }
+  },
+  email_verified: {
+    type: Boolean,
+    default: false
+  },
+
 })
 
 module.exports = mongoose.model('user', UserSchema)

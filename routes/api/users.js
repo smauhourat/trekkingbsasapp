@@ -5,9 +5,10 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator')
 const checkObjectId = require('../../middleware/checkObjectId')
-
+const Token = require('../../models/Token')
 const User = require('../../models/User')
 
+// TODO: Ojo, no deberia ser publico
 // @route   POST api/users
 // @desc    Add user
 // @access  Public
@@ -37,7 +38,8 @@ router.post(
       user = new User({
         name,
         email,
-        password
+        password,
+        super_admin: true
       })
 
       const salt = await bcrypt.genSalt(10)
@@ -177,5 +179,34 @@ router.get('/',
       res.status(500).send('Server Error')
     }
   })
+
+
+// @route   POST api/users/verify-email/:id/:token
+// @dest    Verify email es valid
+// @access  Public
+router.post('/verify-email/:id/:token',
+  async (req, res) => {
+    try {
+      const { id, token } = req.params
+      const user = await User.findOne({ _id: id });
+      if (!user) return res.status(400).send({ message: "Invalid link" });
+
+      const tokendb = await Token.findOne({
+        userId: user._id,
+        token: token,
+      });
+
+      if (!tokendb) return res.status(400).send({ message: "Invalid link" });
+
+      await User.updateOne({ _id: id }, { $set: { email_verified: true } })
+      await tokendb.remove();
+
+      res.status(200).send({ message: "Email verified successfully" });
+    } catch (error) {
+      res.status(500).send({ message: "Internal Server Error", error: error });
+    }
+
+  })
+
 
 module.exports = router

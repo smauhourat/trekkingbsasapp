@@ -28,14 +28,14 @@ const CustomerSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
-  },
-  email_verified: {
-    type: Boolean,
-    default: false
-  },
-  email_verification_code: {
-    type: String
   }
+  // email_verified: {
+  //   type: Boolean,
+  //   default: false
+  // },
+  // email_verification_code: {
+  //   type: String
+  // }
   // user: {
   //   type: Schema.Types.ObjectId,
   //   ref: 'user'

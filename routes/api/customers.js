@@ -1,25 +1,16 @@
 const mongoose = require('mongoose')
-const express = require('express');
-const router = express.Router();
-const auth = require('../../middleware/auth');
-const { check, validationResult } = require('express-validator');
-const checkObjectId = require('../../middleware/checkObjectId');
-const Customer = require('../../models/Customer');
-const User = require('../../models/User');
-const Token = require('../../models/Token');
-const crypto = require('crypto');
+const express = require('express')
+const router = express.Router()
+const auth = require('../../middleware/auth')
+const { check, validationResult } = require('express-validator')
+const checkObjectId = require('../../middleware/checkObjectId')
+const Customer = require('../../models/Customer')
+const User = require('../../models/User')
+const Token = require('../../models/Token')
+const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
-
-const createEmailVerificationCode = () => {
-  const verificationCode = crypto.randomBytes(32).toString('hex');
-
-  const hashedVerificationCode = crypto
-    .createHash('sha256')
-    .update(verificationCode)
-    .digest('hex');
-
-  return { verificationCode, hashedVerificationCode };
-}
+const sendEmail = require("../../utils/sendEmail")
+const { linkSync } = require('fs')
 
 // @route   POST api/customers
 // @desc    Add Customer
@@ -42,6 +33,12 @@ router.post('/',
       return res.status(400).json({ errors: errors.array() });
     }
 
+    //console.log(`${req.protocol}://${req.get('host')}/users/verify-email/`)
+    // const requestedUrl = req.headers['client-base-url']
+    // const link = `${requestedUrl}/users/verify-email/`
+    // console.log('link', link)
+    //return
+
     const { first_name, last_name, email, password, dni, phone, birth_date, medical_status } = req.body;
 
     try {
@@ -62,43 +59,26 @@ router.post('/',
       const hashedPassword = await bcrypt.hash(password, salt)
 
       const user = await new User({
-        name: first_name + ' ' + last_name, email, password: hashedPassword
+        name: first_name + ' ' + last_name, email, password: hashedPassword, super_admin: false
       }).save()
 
-      console.log(user)
-      console.log(user._id)
-      // Enviamos el mail con el link para la verficacion de mail del customer
+      // Generamos el token para la verificacion del mail del usuario
       const token = await new Token({
         userId: user._id,
         token: crypto.randomBytes(32).toString('hex')
       }).save()
 
-      console.log(token)
+      // Enviamos el mail con el link para la verficacion de mail del customer
+      const subject = `Verificacion Email - TrekkingBsAs`
+      //const link = `${req.protocol}://${req.get('host')}/users/verify-email/${user._id}/${token.token}`;
+      const link = `${req.protocol}://${req.get('host')}/verify-email/${user._id}/${token.token}`
+      const text = link
+      const html = `<p>Hola ${customer.first_name} gracias por elegirnos!!</p><br><p>Recibimos tu datos de registro correctamente, por favor confirma el email hacieindo click en el siguiente </p><p><a href="${link}">LINK</a></p>`
+
+      await sendEmail(user.email, subject, text, html)
 
       res.json({ customer, user, token });
 
-      // let customerByEmail = await Customer.findOne({ email: email });
-
-      // if (customerByEmail) {
-      //   return res.status(400).json({ errors: [{ msg: 'El email ya existe' }] })
-      // }
-
-      //const { verificationCode, hashedVerificationCode } = createEmailVerificationCode();
-      // let newCustomer = new Customer({
-      //   first_name, last_name, email, dni, phone, birth_date, medical_status, email_verification_code: hashedVerificationCode
-      // });
-
-      // const customer = await newCustomer.save();
-
-      // enviamos el mail con el link para la verficacion de mail del customer
-      // const token = await new Token({
-      //   customerId: customer._id,
-      //   token: crypto.randomBytes(32).toString('hex')
-      // }).save()
-
-      // TODO : enviar por mail el link con el codigo para validar el email, el codigo es verificationCode
-      //res.json({ code: verificationCode, customer: customer });
-      //res.json(customer);
     } catch (err) {
       console.error(err);
       res.status(500).send(err);
