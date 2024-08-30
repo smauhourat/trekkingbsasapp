@@ -33,12 +33,6 @@ router.post('/',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    //console.log(`${req.protocol}://${req.get('host')}/users/verify-email/`)
-    // const requestedUrl = req.headers['client-base-url']
-    // const link = `${requestedUrl}/users/verify-email/`
-    // console.log('link', link)
-    //return
-
     const { first_name, last_name, email, password, dni, phone, birth_date, medical_status } = req.body;
 
     try {
@@ -69,8 +63,7 @@ router.post('/',
       }).save()
 
       // Enviamos el mail con el link para la verficacion de mail del customer
-      const subject = `Verificacion Email - TrekkingBsAs`
-      //const link = `${req.protocol}://${req.get('host')}/users/verify-email/${user._id}/${token.token}`;
+      const subject = global.env.verifyEmailSubject
       const link = `${req.protocol}://${req.get('host')}/verify-email/${user._id}/${token.token}`
       const text = link
       const html = `<p>Hola ${customer.first_name} gracias por elegirnos!!</p><br><p>Recibimos tu datos de registro correctamente, por favor confirma el email hacieindo click en el siguiente </p><p><a href="${link}">LINK</a></p>`

@@ -18,7 +18,8 @@ const environment = {
   apiSecret: env.API_SECRET,
   mp_api_key: env.MP_API_KEY,
   mp_client_id: env.MP_CLIENT_ID,
-  mp_client_secret: env.MP_CLIENT_SECRET
+  mp_client_secret: env.MP_CLIENT_SECRET,
+  verifyEmailSubject: env.VERIFY_EMAIL_SUBJECT,
 }
 
 module.exports = environment
