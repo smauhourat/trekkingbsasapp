@@ -53,7 +53,8 @@ router.post(
       // Return jsonwebtoken
       const payload = {
         user: {
-          id: user.id
+          id: user.id,
+          admin: user.super_admin
         }
       }
 

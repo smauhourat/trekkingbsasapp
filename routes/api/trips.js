@@ -46,7 +46,7 @@ router.get('/',
   async (req, res) => {
     try {
       const currentDate = new Date()
-      console.log(req.query)
+      //console.log(req.query)
       const query = req.query.q ? req.query.q : ''
       const dateFrom = req.query.df ? req.query.df : '1900-01-01'
       const dateTo = req.query.dt ? req.query.dt : moment(currentDate).add(5, 'year').format('YYYY-MM-DD')
