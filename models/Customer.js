@@ -10,11 +10,6 @@ const CustomerSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
   dni: {
     type: String,
     required: true
@@ -40,11 +35,11 @@ const CustomerSchema = new mongoose.Schema({
   },
   email_verification_code: {
     type: String
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'user'
-  },
+  }
+  // user: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'user'
+  // },
 });
 
 module.exports = mongoose.model('customer', CustomerSchema);

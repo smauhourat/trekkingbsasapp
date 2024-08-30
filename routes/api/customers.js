@@ -1,10 +1,14 @@
+const mongoose = require('mongoose')
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 const Customer = require('../../models/Customer');
+const User = require('../../models/User');
+const Token = require('../../models/Token');
 const crypto = require('crypto');
+const bcrypt = require('bcryptjs')
 
 const createEmailVerificationCode = () => {
   const verificationCode = crypto.randomBytes(32).toString('hex');
@@ -25,10 +29,11 @@ router.post('/',
     [
       check('first_name', 'Nombre es requerido').not().isEmpty(),
       check('last_name', 'Apellido es requerido').not().isEmpty(),
+      check('email', 'Email es requerido').not().isEmpty(),
+      check('password', 'Por favor ingrese la contraseña con 6 o mas caracteres').isLength({ min: 8 }),
       check('dni', 'DNI es requerido').not().isEmpty(),
       check('phone', 'Celular es requerido').not().isEmpty(),
       check('birth_date', 'Fecha Nac. es requerido').not().isEmpty(),
-      check('email', 'Email es requerido').not().isEmpty(),
     ]
   ],
   async (req, res) => {
@@ -37,25 +42,63 @@ router.post('/',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { first_name, last_name, email, dni, phone, birth_date, medical_status } = req.body;
+    const { first_name, last_name, email, password, dni, phone, birth_date, medical_status } = req.body;
 
     try {
+      // Verificamos que no exista el mail
+      const userByEmail = await User.findOne({ email });
 
-      let customerByEmail = await Customer.findOne({ email: email });
-
-      if (customerByEmail) {
+      if (userByEmail) {
         return res.status(400).json({ errors: [{ msg: 'El email ya existe' }] })
       }
-      const { verificationCode, hashedVerificationCode } = createEmailVerificationCode();
-      let newCustomer = new Customer({
-        first_name, last_name, email, dni, phone, birth_date, medical_status, email_verification_code: hashedVerificationCode
-      });
 
-      const customer = await newCustomer.save();
+      // Creamos el Customer
+      const customer = await new Customer({
+        first_name, last_name, dni, phone, birth_date, medical_status
+      }).save()
+
+      // Creamos el Usuario
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(password, salt)
+
+      const user = await new User({
+        name: first_name + ' ' + last_name, email, password: hashedPassword
+      }).save()
+
+      console.log(user)
+      console.log(user._id)
+      // Enviamos el mail con el link para la verficacion de mail del customer
+      const token = await new Token({
+        userId: user._id,
+        token: crypto.randomBytes(32).toString('hex')
+      }).save()
+
+      console.log(token)
+
+      res.json({ customer, user, token });
+
+      // let customerByEmail = await Customer.findOne({ email: email });
+
+      // if (customerByEmail) {
+      //   return res.status(400).json({ errors: [{ msg: 'El email ya existe' }] })
+      // }
+
+      //const { verificationCode, hashedVerificationCode } = createEmailVerificationCode();
+      // let newCustomer = new Customer({
+      //   first_name, last_name, email, dni, phone, birth_date, medical_status, email_verification_code: hashedVerificationCode
+      // });
+
+      // const customer = await newCustomer.save();
+
+      // enviamos el mail con el link para la verficacion de mail del customer
+      // const token = await new Token({
+      //   customerId: customer._id,
+      //   token: crypto.randomBytes(32).toString('hex')
+      // }).save()
 
       // TODO : enviar por mail el link con el codigo para validar el email, el codigo es verificationCode
-      res.json({ code: verificationCode });
-      res.json(customer);
+      //res.json({ code: verificationCode, customer: customer });
+      //res.json(customer);
     } catch (err) {
       console.error(err);
       res.status(500).send(err);
