@@ -1,6 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+console.log('CLIENT ENVIRONMENT: ', process.env.NODE_ENV)
+
+//if (process.env.NODE_ENV === 'production') {
+//  disableReactDevTools();
+//}
 
 ReactDOM.render(
   <React.StrictMode>

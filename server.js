@@ -40,6 +40,8 @@ app.use('/api/contact', require('./routes/api/contact'));
 app.use('/api/appconf', require('./routes/api/appconf'));
 app.use('/api/books', require('./routes/api/books'));
 
+console.log('SERVER ENVIRONMENT: ', process.env.NODE_ENV)
+
 // Serve static assets in production
 // if (process.env.NODE_ENV === 'production') {
 // Set static folder
