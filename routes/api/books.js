@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
+const authAdmin = require('../../middleware/authAdmin');
 const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 const mercadopage = require("mercadopago");
@@ -41,7 +42,7 @@ router.post('/',
 // @desc     Get Books by query
 // @access   Private
 router.get('/',
-  [auth],
+  [authAdmin],
   async (req, res) => {
     try {
       const query = req.query.q ? req.query.q : "";
