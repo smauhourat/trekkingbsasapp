@@ -223,10 +223,10 @@ router.post('/create-order', [
       external_reference: bookId,
       auto_return: "approved",
       //notification_url: `https://trekkingbsastest.adhentux.com/api/webhook/webhook`,
-      notification_url: `https://a46c-201-213-113-23.ngrok-free.app/api/books/process-order`,
+      notification_url: `https://95a7-200-127-254-34.ngrok-free.app/api/books/process-order`,
       back_urls: {
-        success: `https://a46c-201-213-113-23.ngrok-free.app/booking-success`,
-        failure: `https://a46c-201-213-113-23.ngrok-free.app/booking-failure`
+        success: `https://95a7-200-127-254-34.ngrok-free.app/booking-success`,
+        failure: `https://95a7-200-127-254-34.ngrok-free.app/booking-failure`
         // success: `https://trekkingbsastest.adhentux.com/booking-success`,
         // failure: `https://trekkingbsastest.adhentux.com/booking-failure`
       },
@@ -254,13 +254,13 @@ const updateOrder = async (data) => {
     _merchant_order_id,
     merchant_order_status,
     merchant_order_total_amount,
-    _payer_id: payer.id,
-    _payment_id: payment.id,
-    payment_date_approved: payment.date_approved,
-    payment_status: payment.status,
-    payment_status_detail: payment.status_detail,
-    payment_operation_type: payment.operation_type,
-    payment_transaction_amount: payment.transaction_amount
+    _payer_id: payer?.id,
+    _payment_id: payment?.id,
+    payment_date_approved: payment?.date_approved,
+    payment_status: payment?.status,
+    payment_status_detail: payment?.status_detail,
+    payment_operation_type: payment?.operation_type,
+    payment_transaction_amount: payment?.transaction_amount
   };
 
   if ((updatedBook.merchant_order_total_amount === updatedBook.payment_transaction_amount) &&

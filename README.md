@@ -65,3 +65,7 @@ ojo no perder la confirmacion de borrado de Trips de la rama DEVELOP
 28-08-2024
 creacion nueva rama  **etapa2**
 merge test con etapa2 (tiene lo de books y customers a medias) la base es test de Atlas
+
+04-09-2024
+usar ngrok para publicar localhost
+  `ngrok http 4000`
