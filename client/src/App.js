@@ -17,6 +17,7 @@ import EditTrip from './components/trips/EditTrip';
 import AddImages from './components/trips/AddImages';
 import TripDetails from './components/trips/TripDetails';
 import PrivateRoutes from './components/routing/PrivateRoutes';
+import PrivateRoutesAdmin from './components/routing/PrivateRoutesAdmin';
 import MaintenanceRoute from './components/routing/MaintenanceRoute';
 import ContactForm from './components/contact/ContactForm';
 import Company from './components/static/Company';
@@ -90,11 +91,13 @@ const App = () => {
               <Route element={<PrivateRoutes />}>
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="book-details/:id" element={<BookDetails />} />
-                <Route path="add-user" element={<AddUser />} />
                 <Route path="add-trip" element={<AddTrip />} />
                 <Route path="edit-trip/:id" element={<EditTrip />} />
                 <Route path="add-images/:id" element={<AddImages />} />
                 <Route path="books" element={<BookList />} />
+              </Route>
+              <Route element={< PrivateRoutesAdmin />}>
+                <Route path="add-user" element={<AddUser />} />
               </Route>
             </>
           </Routes>

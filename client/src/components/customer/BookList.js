@@ -4,17 +4,18 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getBooks } from '../../actions/book'
 
-const BookList = ({ getBooks, book: { books: { data }, loading } }) => {
+const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
 
     useEffect(() => {
         // OJOOO
-        getBooks('64592b656408448e6b0487b0');
+        console.log(auth.user)
+        getBooks(auth.user?._id);
     }, [getBooks]);
 
     return (
         <Fragment>
             <section className="container">
-                <h1 className="large text-primary">Mis Reservas</h1>
+                <h1 className="large text-primary">Mis Reservass</h1>
                 {loading ? (<Spinner />) : (
                     <table className="table">
                         <thead>
@@ -28,7 +29,7 @@ const BookList = ({ getBooks, book: { books: { data }, loading } }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((book) => {
+                            {data?.map((book) => {
                                 return (
                                     <tr key={book._id}>
                                         <td>RES{book._id.substring(19, 25)}</td>
@@ -48,11 +49,13 @@ const BookList = ({ getBooks, book: { books: { data }, loading } }) => {
 }
 
 BookList.propTypes = {
-    getBooks: PropTypes.func.isRequired
+    getBooks: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    book: state.book
+    book: state.book,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, { getBooks })(BookList);

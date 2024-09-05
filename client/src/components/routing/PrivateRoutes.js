@@ -7,6 +7,7 @@ const PrivateRoutes = ({
   auth: { isAuthenticated, loading }
 }) => {
     const location = useLocation();
+
     if(loading){
       return null;
     }  

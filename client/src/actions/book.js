@@ -29,7 +29,7 @@ export const getBooks = (customerId) => async (dispatch) => {
   dispatch({ type: BOOK_CLEAR });
   try {
     const res = await api.get(`/books/by-customer/${customerId}`);
-    console.log(res.data);
+    // console.log(res.data);
     dispatch({
       type: BOOK_GETLIST,
       payload: res.data

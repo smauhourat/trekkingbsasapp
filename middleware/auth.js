@@ -17,10 +17,11 @@ module.exports = function (req, res, next) {
   // Verify token from header
   try {
     const decodedToken = jwt.verify(token, global.env.jwtSecret)
-   
+
     req.user = decodedToken.user
     next()
   } catch (err) {
+    console.log(err)
     return res.status(401).json({ msg: 'Token not valid' })
   }
 }
