@@ -43,17 +43,18 @@ router.post('/',
         return res.status(400).json({ errors: [{ msg: 'El email ya existe' }] })
       }
 
-      // Creamos el Customer
-      const customer = await new Customer({
-        first_name, last_name, dni, phone, birth_date, medical_status
-      }).save()
-
       // Creamos el Usuario
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(password, salt)
 
       const user = await new User({
         name: first_name + ' ' + last_name, email, password: hashedPassword, super_admin: false
+      }).save()
+
+
+      // Creamos el Customer
+      const customer = await new Customer({
+        first_name, last_name, dni, phone, birth_date, medical_status
       }).save()
 
       // Generamos el token para la verificacion del mail del usuario

@@ -6,7 +6,7 @@ import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 console.log('CLIENT ENVIRONMENT: ', process.env.NODE_ENV)
 
 //if (process.env.NODE_ENV === 'production') {
-  disableReactDevTools();
+//  disableReactDevTools();
 //}
 
 ReactDOM.render(

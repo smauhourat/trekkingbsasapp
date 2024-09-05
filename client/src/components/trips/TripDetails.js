@@ -114,16 +114,13 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
                 <Link to={'/trips'} state={{ data: selectedTrip }} className='btn btn-primary'>
                   <i className='text-primary' /> Volver
                 </Link>
+                  <Link to={'/trip-book/' + selectedTrip._id} state={{ data: selectedTrip }} className='btn btn-primary'>
+                    <i className='text-primary' /> Reservar
+                  </Link>                
                 {//selectedTrip?.payment_link && 
                   ((selectedTrip?.quota - selectedTrip?.reservations) > 0) &&
                   (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate)) && (
-                    // <a href={selectedTrip.payment_link} target="_blank" rel="noreferrer" className='btn btn-success'>
-                    //     <i className='text-primary' /> Reservar
-                    // </a>
-                    <input type="button" className="btn btn-secondary" value="Reservar" onClick={handleBook} />
-                    // <a href={selectedTrip.payment_link} target="_blank" rel="noreferrer" className='btn btn-success'>
-                    //     <i className='text-primary' /> Reservar
-                    // </a>
+                    <input type="button" className="btn btn-secondary" value="Reservar (Pago)" onClick={handleBook} />
                   )}
               </div>
 

@@ -31,6 +31,7 @@ import BookingSuccess from './components/trips/BookingSuccess';
 import BookingFailure from './components/trips/BookingFailure';
 import BookDetails from './components/customer/BookDetails';
 import BookList from './components/customer/BookList';
+import Book from './components/customer/Book';
 import CustomerRegister from './components/customer/CustomerRegister';
 import CustomerValidateEmail from './components/customer/CustomerValidateEmail';
 
@@ -91,12 +92,13 @@ const App = () => {
               <Route element={<PrivateRoutes />}>
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="book-details/:id" element={<BookDetails />} />
+                <Route path="books" element={<BookList />} />
+                <Route path="trip-book/:id" element={<Book />} />
+              </Route>
+              <Route element={< PrivateRoutesAdmin />}>
                 <Route path="add-trip" element={<AddTrip />} />
                 <Route path="edit-trip/:id" element={<EditTrip />} />
                 <Route path="add-images/:id" element={<AddImages />} />
-                <Route path="books" element={<BookList />} />
-              </Route>
-              <Route element={< PrivateRoutesAdmin />}>
                 <Route path="add-user" element={<AddUser />} />
               </Route>
             </>
