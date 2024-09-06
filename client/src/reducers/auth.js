@@ -5,7 +5,9 @@ import {
   USER_LOADED,
   LOGOUT,
   FORGOT_PASS_SUCCESS,
-  FORGOT_PASS_FAIL
+  FORGOT_PASS_FAIL,
+  CUSTOMER_LOADED,
+  CUSTOMER_LOADED_FAIL
 } from '../actions/types'
 
 const initialState = {
@@ -13,6 +15,7 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
+  customer: null,
   error: {}
 }
 
@@ -48,7 +51,8 @@ export default function auth (state = initialState, action) {
         token: null,
         isAuthenticated: false,
         loading: false,
-        user: null
+        user: null,
+        customer: null
       }
     case FORGOT_PASS_SUCCESS:
       return {
@@ -61,6 +65,14 @@ export default function auth (state = initialState, action) {
         ...state,
         loading: false
       }
+    case CUSTOMER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        customer: payload
+      }
+
     default:
       return state
   }

@@ -10,7 +10,9 @@ import {
   FORGOT_PASS_SUCCESS,
   FORGOT_PASS_FAIL,
   RESET_PASS_SUCCESS,
-  RESET_PASS_FAIL
+  RESET_PASS_FAIL,
+  CUSTOMER_LOADED,
+  CUSTOMER_LOADED_FAIL
 } from './types'
 
 // Load User
@@ -31,6 +33,25 @@ export const loadUser = () => async (dispatch) => {
   }
 }
 
+// Load Customer
+export const loadCustomer = () => async (dispatch) => {
+  try {
+    const res = await api.get('/customers/auth')
+
+    dispatch({
+      type: CUSTOMER_LOADED,
+      payload: res.data
+    })
+
+  } catch (err) {
+    console.log(err.message)
+    dispatch({
+      type: AUTH_ERROR,
+      payload: err.message
+    })
+  }
+}
+
 export const login = (email, password) => async dispatch => {
   const body = JSON.stringify({ email, password })
   try {
@@ -40,6 +61,7 @@ export const login = (email, password) => async dispatch => {
       payload: res.data
     })
     dispatch(loadUser())
+    dispatch(loadCustomer())
   } catch (err) {
     const errors = err.response.data.errors
     if (errors) {

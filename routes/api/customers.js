@@ -53,7 +53,7 @@ router.post('/',
 
       // Creamos el Customer
       const customer = await new Customer({
-        //_id: user._id, 
+        _id: user._id,
         first_name, last_name, dni, phone, birth_date, medical_status
       }).save()
 
@@ -63,6 +63,7 @@ router.post('/',
         token: crypto.randomBytes(32).toString('hex')
       }).save()
 
+      //TODO: Comentado porq no anda en AADI
       // Enviamos el mail con el link para la verficacion de mail del customer
       // const subject = global.env.verifyEmailSubject
       // const link = `${req.protocol}://${req.get('host')}/verify-email/${user._id}/${token.token}`
@@ -72,7 +73,6 @@ router.post('/',
       //await sendEmail(user.email, subject, text, html)
 
       res.json({ customer, user, token });
-      //res.json({ user, token });
 
     } catch (err) {
       console.error(err);
@@ -139,6 +139,29 @@ router.put('/:id',
   }
 );
 
+// @route    GET api/customers/auth
+// @desc     Get customer user logged
+// @access   Public
+router.get('/auth/',
+  auth,
+  async (req, res) => {
+    try {
+      //console.log(req?.user)
+      const customer = await Customer.findById(req.user.id);
+
+      if (!customer) {
+        return res.status(404).json({ msg: 'Miembro no encontrado' });
+      }
+
+      res.json(customer);
+    } catch (err) {
+      console.error(err.message);
+
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 // @route    GET api/customers/:id
 // @desc     Get customer by id
 // @access   Public
@@ -160,6 +183,7 @@ router.get('/:id',
     }
   }
 );
+
 
 // @route   GET api/customers
 // @desc    Get all customers

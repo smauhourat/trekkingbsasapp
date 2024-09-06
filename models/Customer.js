@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CustomerSchema = new mongoose.Schema({
-  // _id: {
-  //   type: Schema.Types.ObjectId
-  // },
+  _id: {
+    type: Schema.Types.ObjectId
+  },
   first_name: {
     type: String,
     required: true
@@ -32,17 +32,6 @@ const CustomerSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-  // email_verified: {
-  //   type: Boolean,
-  //   default: false
-  // },
-  // email_verification_code: {
-  //   type: String
-  // }
-  // user: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'user'
-  // },
 });
 
 module.exports = mongoose.model('customer', CustomerSchema);
