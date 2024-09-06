@@ -72,7 +72,12 @@ export default function auth (state = initialState, action) {
         loading: false,
         customer: payload
       }
-
+    case CUSTOMER_LOADED_FAIL:
+      return {
+        ...state,
+        loading: false,
+        customer: null
+      }
     default:
       return state
   }

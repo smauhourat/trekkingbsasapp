@@ -46,7 +46,7 @@ export const loadCustomer = () => async (dispatch) => {
   } catch (err) {
     console.log(err.message)
     dispatch({
-      type: AUTH_ERROR,
+      type: CUSTOMER_LOADED_FAIL,
       payload: err.message
     })
   }

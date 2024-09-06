@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, Navigate } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router';
 import { connect } from 'react-redux';
@@ -25,14 +25,18 @@ const Login = ({ login, isAuthenticated }) => {
     login(email, password);
   }
 
-  // Redirect if is logged in
-  if (isAuthenticated) {
-    if (location.state?.from) {
-      navigate(location.state.from);
-    } else {
-      navigate('/dashboard');
+  //useEffect(() => {
+    // Redirect if is logged in
+    if (isAuthenticated) {
+      if (location.state?.from) {
+        navigate(location.state.from);
+      } else {
+        navigate('/dashboard');
+      }
     }
-  }
+  //}, [])
+
+
 
   return (
     <>
