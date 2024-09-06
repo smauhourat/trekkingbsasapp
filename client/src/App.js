@@ -39,7 +39,7 @@ import './App.css'
 // Redux
 import { Provider } from 'react-redux'
 import store from './store'
-import { loadUser } from './actions/auth'
+import { loadUser, loadCustomer } from './actions/auth'
 import setAuthToken from './utils/setAuthToken'
 
 const App = () => {
@@ -52,7 +52,7 @@ const App = () => {
     // try to fetch a user, if no token or invalid token we
     // will get a 401 response from our API
     store.dispatch(loadUser())
-
+    store.dispatch(loadCustomer())
     // log user out from all tabs if they log out in one tab
     window.addEventListener('storage', () => {
       if (!localStorage.token) store.dispatch({ type: LOGOUT })

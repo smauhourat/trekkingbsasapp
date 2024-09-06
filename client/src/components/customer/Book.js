@@ -6,9 +6,12 @@ import { setAlert } from '../../actions/alert'
 import formatDate from '../../utils/formatDate'
 
 const Book = ({ 
-    trip: { selectedTrip }
+    trip: { selectedTrip },
+    auth: { user, customer }
 }) => {
     console.log(selectedTrip)
+    console.log(user)
+    console.log(customer)
 
     return (
         <>
@@ -31,8 +34,9 @@ const Book = ({
                 <div className='profile-edu bg-white p-1'>
                     <h2 className='text-primary'>Tus Datos</h2>
                     <div>
-                        <p><strong>Nombre: </strong>Juan Pelotas</p>
-
+                        <p><strong>Nombre: </strong>{customer?.last_name}, {customer?.first_name}</p>
+                        <p><strong>Email: </strong>{user?.email}</p>
+                        <p><strong>Telefono: </strong>{customer?.phone}</p>
                     </div>
                 </div>                
                 <div>
@@ -43,8 +47,9 @@ const Book = ({
     )
 }
 
-const mapStateToProps = (state) => ({
-    trip: state.trip
+const mapStateToProps = (state) => ({   
+    trip: state.trip,
+    auth: state.auth
 })
 
 export default connect(mapStateToProps, null)(Book);
