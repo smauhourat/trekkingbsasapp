@@ -3,15 +3,16 @@ import { useLocation } from 'react-router'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const PrivateRoutesAdmin = ({
+const PrivateRoutesAdmin = ({allowedRoles,
   auth: { isAuthenticated, loading, user }
 }) => {
+  console.log('allowedRoles: ', allowedRoles)
   const location = useLocation();
   if (loading) {
     return null;
   }
   return (
-    isAuthenticated && user?.super_admin ? <Outlet /> : <Navigate to="/login" replace state={{ from: location }} />
+    isAuthenticated && ((allowedRoles === "admin" && user?.super_admin) || (allowedRoles !== "admin")) ? <Outlet /> : <Navigate to="/login" replace state={{ from: location }} />
   )
 }
 

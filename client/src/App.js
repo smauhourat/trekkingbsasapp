@@ -10,6 +10,8 @@ import ResetPassword from './components/auth/ResetPassword';
 import ResetPasswordConfirm from './components/auth/ResetPasswordConfirm';
 import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
+import DashRouter from './components/dashboard/DashRouter';
+import DashboardCustomer from './components/customer/DashboardCustomer';
 import Trips from './components/trips/Trips';
 import AddUser from './components/user/AddUser';
 import AddTrip from './components/trips/AddTrip';
@@ -73,7 +75,6 @@ const App = () => {
             <>
               {/* <Route exact path="/" element={<Landing />} /> */}
               <Route exact path="/" element={<MaintenanceRoute component={Landing} />} />
-              <Route exact path="/login" element={<Login />} />
               <Route exact path="/maintenance" element={<Maintenance />} />
               <Route exact path="/forgot-password" element={<ForgotPassword />} />
               <Route path="forgot-password-confirm/:email" element={<ForgotPasswordConfirm />} />
@@ -89,19 +90,22 @@ const App = () => {
               <Route path="booking-success" element={<BookingSuccess />} />
               <Route path="booking-failure/*" element={<BookingFailure />} />
               <Route path="register" element={<CustomerRegister />} />
-              <Route element={<PrivateRoutes />}>
-                <Route path="dashboard" element={<Dashboard />} />
+              <Route path="dashrouter" element={<DashRouter />} />
+              <Route element={< PrivateRoutesAdmin allowedRoles="" />}>
+                <Route path="dashboardcustomer" element={<DashboardCustomer />} />
                 <Route path="book-details/:id" element={<BookDetails />} />
                 <Route path="books" element={<BookList />} />
                 <Route path="trip-book/:id" element={<Book />} />
               </Route>
-              <Route element={< PrivateRoutesAdmin />}>
+              <Route element={< PrivateRoutesAdmin allowedRoles="admin" />}>
+                <Route path="dashboard" element={<Dashboard />} />
                 <Route path="add-trip" element={<AddTrip />} />
                 <Route path="edit-trip/:id" element={<EditTrip />} />
                 <Route path="add-images/:id" element={<AddImages />} />
                 <Route path="add-user" element={<AddUser />} />
               </Route>
             </>
+            <Route exact path="/login" element={<Login />} />
           </Routes>
         </ErrorBoundary>
       </Router>

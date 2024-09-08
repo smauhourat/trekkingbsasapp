@@ -22,21 +22,24 @@ const Login = ({ login, isAuthenticated }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    login(email, password);
+    login(email, password)
   }
 
-  //useEffect(() => {
+  useEffect(() => {
+    //console.log('USE EFECT')
     // Redirect if is logged in
-    if (isAuthenticated) {
-      if (location.state?.from) {
-        navigate(location.state.from);
-      } else {
-        navigate('/dashboard');
-      }
-    }
-  //}, [])
+     if (isAuthenticated) {
+       if (location.state?.from) {
+         navigate(location.state.from)
+       } else {
+         //console.log('AUTENTICADO EN USE EFECTTTTTTTTTTTTTTT')
+         navigate('/dashrouter');
+       }
+     }
+  }, [])
 
-
+  // console.log(`isAuthenticated: ${isAuthenticated}`)
+  // console.log(`location.state?.from: ${JSON.stringify(location.state?.from)}`)
 
   return (
     <>

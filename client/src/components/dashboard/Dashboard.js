@@ -19,11 +19,14 @@ const Dashboard = ({
     clearTrip()
   }, [getUsers, clearTrip])
 
+  console.log(JSON.stringify(user))
+
   return (
-    <section className='container'>
+      <section className='container'>
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
-        <i className='fas fa-user' /> Bienvenido {user && user.name}
+        <i className='fas fa-user' /> Bienvenido {user && user.name }
+        {user?.super_admin ? " ISADMIN": ""}
       </p>
       <>
         <DashboardActions />

@@ -6,14 +6,14 @@ import { connect } from 'react-redux';
 const PrivateRoutes = ({
   auth: { isAuthenticated, loading }
 }) => {
-    const location = useLocation();
-
-    if(loading){
-      return null;
-    }  
-    return(
-      isAuthenticated ? <Outlet/> : <Navigate to="/login" replace state={{ from: location }}/>
-    )
+  
+  const location = useLocation();
+  if(loading){
+    return null;
+  }  
+  return(
+    isAuthenticated ? <Outlet/> : <Navigate to="/login" replace state={{ from: location }}/>
+  )
 }
 
 PrivateRoutes.propTypes = {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { logout } from '../../actions/auth'
 
-const Navbar = ({ auth: { isAuthenticated }, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, user }, logout }) => {
   const loginLink = (
     <li><Link to='/login'>Login</Link></li>
   )
@@ -36,7 +36,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         <li><Link to='calendar'>Calendario</Link></li>
         <li><Link to='company'>Nuestro Grupo</Link></li>
         <li><Link to='contact'>Contacto</Link></li>
-        {isAuthenticated ? <li><Link to='dashboard'>Dashboard</Link></li> : ''}
+        {isAuthenticated ? <li><Link to='dashrouter'>Dashboard</Link></li> : ''}
         {isAuthenticated ? logoutLink : loginLink}
       </ul>
     </nav>
