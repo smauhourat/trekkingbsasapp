@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { addCustomer } from '../../actions/customer';
 
-const CustomerRegister = ({ customer, setAlert, addCustomer }) => {
+const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -22,6 +22,7 @@ const CustomerRegister = ({ customer, setAlert, addCustomer }) => {
 
     const { first_name, last_name, email, dni, phone, birth_date, medical_status, password, password2 } = formData;
 
+    console.log('customer: ', JSON.stringify(customer))
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -136,6 +137,5 @@ CustomerRegister.propTypes = {
 const mapStateToProps = (state) => ({
     customer: state.customer
 })
-
 
 export default connect(mapStateToProps, { setAlert, addCustomer })(CustomerRegister);
