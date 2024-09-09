@@ -89,7 +89,7 @@ const App = () => {
               <Route path="calendar" element={<MaintenanceRoute component={Calendar} />} />
               <Route path="booking-success" element={<BookingSuccess />} />
               <Route path="booking-failure/*" element={<BookingFailure />} />
-              <Route path="register" element={<CustomerRegister />} />
+              <Route path="customer-register" element={<CustomerRegister />} />
               <Route path="dashrouter" element={<DashRouter />} />
               <Route element={< PrivateRoutesAdmin allowedRoles="" />}>
                 <Route path="dashboardcustomer" element={<DashboardCustomer />} />
