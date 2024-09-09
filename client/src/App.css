@@ -1269,6 +1269,32 @@ nav a:focus {
   }  
 
 } */
+
+
+.login-form {
+  max-width: 400px;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.form-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 1px var(--primary-color);
+  opacity: 0.9;
+}
+
 /********************************************************************/
 /* Notebooks Styles */
 /********************************************************************/
@@ -1277,21 +1303,25 @@ nav a:focus {
     width: 200px;
     margin-top: 60px;
   }
+
   .x-large {
     font-size: 2.6rem;
     line-height: 1.2;
     margin-bottom: 1rem;
   }
+
   .large {
     font-size: 2.2rem;
     line-height: 1.2;
     margin-bottom: 1rem;
   }
+
   .medium {
     font-size: 1.4rem;
     line-height: 1.2;
     margin-bottom: 0.5rem;
-  }  
+  }
+
   .lead {
     font-size: 1.8rem;
   }
@@ -1407,6 +1437,7 @@ nav a:focus {
   }
 
 }
+
 /********************************************************************/
 /* End Mobile Styles */
 /********************************************************************/
