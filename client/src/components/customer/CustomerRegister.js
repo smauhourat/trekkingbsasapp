@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { addCustomer } from '../../actions/customer';
 
-const CustomerRegister = ({ setAlert, addCustomer }) => {
+const CustomerRegister = ({ customer, setAlert, addCustomer }) => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -131,6 +131,11 @@ const CustomerRegister = ({ setAlert, addCustomer }) => {
 CustomerRegister.propTypes = {
     setAlert: PropTypes.func.isRequired,
     addCustomer: PropTypes.func.isRequired
-};
+}
 
-export default connect(null, { setAlert, addCustomer })(CustomerRegister);
+const mapStateToProps = (state) => ({
+    customer: state.customer
+})
+
+
+export default connect(mapStateToProps, { setAlert, addCustomer })(CustomerRegister);
