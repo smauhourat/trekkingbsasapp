@@ -64,7 +64,7 @@ router.get('/',
       if (customer !== "")
         db_query = { ...db_query, customer: mongoose.Types.ObjectId(customer) }
 
-      console.log(db_query)
+      // console.log(db_query)
       const totalItems = await Book
         .find(db_query)
         .countDocuments();

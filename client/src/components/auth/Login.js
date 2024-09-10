@@ -22,20 +22,21 @@ const Login = ({ login, isAuthenticated }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    login(email, password)
-    navigate('/dashrouter');
+    login(email, password, navigate)
+    //navigate('/dashrouter');
   }
 
-  // useEffect(() => {
-  //    if (isAuthenticated) {
-  //      if (location.state?.from) {
-  //        navigate(location.state.from)
-  //      } else {
-  //        console.log('NAVIGATEEEEEE')
-  //        navigate('/dashrouter');
-  //      }
-  //    }
-  // }, [])
+  useEffect(() => {
+    console.log('isAuthenticated =>', isAuthenticated)
+     if (isAuthenticated) {
+       if (location.state?.from) {
+         navigate(location.state.from)
+       } else {
+         console.log('NAVIGATEEEEEE')
+         navigate('/');
+       }
+     }
+  }, [])
 
 
   return (

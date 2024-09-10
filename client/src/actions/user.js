@@ -14,7 +14,7 @@ import {
 export const addUser = (formData, navigate) => async (dispatch) => {
   try {
     const res = await api.post('/users', formData)
-    console.log(res)
+    // console.log(res)
 
     dispatch({
       type: ADDUSER_SUCCESS,

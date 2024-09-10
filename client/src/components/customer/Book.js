@@ -9,9 +9,9 @@ const Book = ({
     trip: { selectedTrip },
     auth: { user, customer }
 }) => {
-    console.log(selectedTrip)
-    console.log(user)
-    console.log(customer)
+    // console.log(selectedTrip)
+    // console.log(user)
+    // console.log(customer)
 
     return (
         <>

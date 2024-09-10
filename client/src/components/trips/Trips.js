@@ -30,7 +30,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
 
   const query = (isCalendar ? getQueryCalendar() : getQueryGral(search)) + '&published=1&sort=date&order=1'
 
-  console.log('query', query)
+  // console.log('query', query)
 
   useEffect(() => {
     getTrips(query)

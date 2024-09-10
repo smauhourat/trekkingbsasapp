@@ -49,7 +49,7 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
         currency_id: 'ARS',
         quantity: 1
       };
-      console.log(bookData);
+      // console.log(bookData);
 
       const res = await createBookOrder(bookData, orderData);
       console.log(res.data.url_redirect)

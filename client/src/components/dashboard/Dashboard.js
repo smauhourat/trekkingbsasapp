@@ -19,7 +19,7 @@ const Dashboard = ({
     clearTrip()
   }, [getUsers, clearTrip])
 
-  console.log(JSON.stringify(user))
+  // console.log(JSON.stringify(user))
 
   return (
       <section className='container'>

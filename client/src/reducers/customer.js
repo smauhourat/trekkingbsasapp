@@ -15,7 +15,7 @@ export default function customer(state = initialState, action) {
 
     switch (type) {
         case CUSTOMER_ADD_SUCCESS:
-            console.log('payload:', payload)
+            // console.log('payload:', payload)
             return {
                 ...state,
                 customer: payload,

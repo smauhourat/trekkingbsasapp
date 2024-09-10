@@ -26,7 +26,7 @@ export const getTrips = (query) => async (dispatch) => {
   dispatch({ type: CLEAR_TRIPS })
   try {
     const res = await api.get(`/trips/?${query}`)
-    console.log(query)
+    // console.log(query)
     dispatch({
       type: GET_TRIPS,
       payload: res.data

@@ -52,7 +52,7 @@ export const loadCustomer = () => async (dispatch) => {
   }
 }
 
-export const login = (email, password) => async dispatch => {
+export const login = (email, password, navigate) => async dispatch => {
   const body = JSON.stringify({ email, password })
   try {
     const res = await api.post('/auth', body)
@@ -62,6 +62,7 @@ export const login = (email, password) => async dispatch => {
     })
     dispatch(loadUser())
     dispatch(loadCustomer())
+    // navigate('/')
   } catch (err) {
     const errors = err.response?.data?.errors
     console.log(err)

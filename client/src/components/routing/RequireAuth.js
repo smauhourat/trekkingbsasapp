@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 const RequireAuth = ({allowedRoles,
   auth: { isAuthenticated, loading, user }
 }) => {
-  console.log('allowedRoles: ', allowedRoles)
+  // console.log('allowedRoles: ', allowedRoles)
   const location = useLocation();
   if (loading) {
     return null;

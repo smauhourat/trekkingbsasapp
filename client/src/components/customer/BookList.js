@@ -8,7 +8,7 @@ const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
 
     useEffect(() => {
         // OJOOO
-        console.log(auth.user)
+        // console.log(auth.user)
         getBooks(auth.user?._id);
     }, [getBooks]);
 

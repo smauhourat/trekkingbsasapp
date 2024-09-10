@@ -10,7 +10,7 @@ import {
 
 export const addCustomer = (formData, navigate) => async (dispatch) => {
     try {
-        console.log(formData)
+        // console.log(formData)
         
         const res = await api.post('/customers', formData);
 
