@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { addCustomer } from '../../actions/customer';
 
-const CustomerRegister = ({ setAlert, addCustomer }) => {
+const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -15,17 +15,24 @@ const CustomerRegister = ({ setAlert, addCustomer }) => {
         dni: '',
         phone: '',
         birth_date: '',
-        medical_status: ''
+        medical_status: '',
+        password: '',
+        password2: ''
     });
 
-    const { first_name, last_name, email, dni, phone, birth_date, medical_status } = formData;
+    const { first_name, last_name, email, dni, phone, birth_date, medical_status, password, password2 } = formData;
 
+    console.log('customer: ', JSON.stringify(customer))
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        addCustomer(formData, navigate);
+        if (password !== password2) {
+            setAlert('La Constraseña y la confirmacion no coinciden', 'danger')
+            return
+        }
+        addCustomer({ first_name, last_name, email, dni, phone, birth_date, medical_status, password }, navigate);
     }
 
     return (
@@ -96,6 +103,25 @@ const CustomerRegister = ({ setAlert, addCustomer }) => {
                         value={medical_status}
                         onChange={onChange} />
                 </div>
+                <div className='form-group'>
+                    <input
+                        type='password'
+                        placeholder='Contraseña'
+                        name='password'
+                        value={password}
+                        onChange={e => onChange(e)}
+                        minLength='6'
+                        autoComplete='on' />
+                </div>
+                <div className="form-group">
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        name="password2"
+                        value={password2}
+                        onChange={onChange} />
+                </div>
+                
                 <input type="submit" className="btn btn-primary" value="Aceptar" />
                 <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/')} />
             </form>
@@ -106,6 +132,10 @@ const CustomerRegister = ({ setAlert, addCustomer }) => {
 CustomerRegister.propTypes = {
     setAlert: PropTypes.func.isRequired,
     addCustomer: PropTypes.func.isRequired
-};
+}
 
-export default connect(null, { setAlert, addCustomer })(CustomerRegister);
+const mapStateToProps = (state) => ({
+    customer: state.customer
+})
+
+export default connect(mapStateToProps, { setAlert, addCustomer })(CustomerRegister);

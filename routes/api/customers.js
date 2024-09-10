@@ -63,7 +63,7 @@ router.post('/',
         token: crypto.randomBytes(32).toString('hex')
       }).save()
 
-      //TODO: Comentado porq no anda en AADI
+      //TODO: OJOOO Comentado porq no anda en AADI
       // Enviamos el mail con el link para la verficacion de mail del customer
       // const subject = global.env.verifyEmailSubject
       // const link = `${req.protocol}://${req.get('host')}/verify-email/${user._id}/${token.token}`
@@ -119,8 +119,7 @@ router.put('/:id',
       check('last_name', 'Apellido es requerido').not().isEmpty(),
       check('dni', 'DNI es requerido').not().isEmpty(),
       check('phone', 'Celular es requerido').not().isEmpty(),
-      check('birth_date', 'Fecha Nac. es requerido').not().isEmpty(),
-      check('email', 'Email es requerido').not().isEmpty(),
+      check('birth_date', 'Fecha Nac. es requerido').not().isEmpty()
     ]
   ],
   async (req, res) => {
@@ -128,8 +127,11 @@ router.put('/:id',
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
+    const { first_name, last_name, dni, phone, birth_date, medical_status } = req.body;
+
     try {
-      const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const customer = await Customer.findByIdAndUpdate(req.params.id, { first_name, last_name, dni, phone, birth_date, medical_status }, { new: true });
       res.json(customer);
     } catch (err) {
       console.error(err);

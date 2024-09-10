@@ -10,15 +10,16 @@ import {
 
 export const addCustomer = (formData, navigate) => async (dispatch) => {
     try {
-        // OJO
-        // const res = await api.post('/customers', formData);
+        console.log(formData)
+        
+        const res = await api.post('/customers', formData);
 
-        // dispatch({
-        //     type: CUSTOMER_ADD_SUCCESS,
-        //     payload: res.data
-        // });
+        dispatch({
+            type: CUSTOMER_ADD_SUCCESS,
+            payload: res.data.customer
+        });
 
-        ////dispatch(setAlert('Registracion completa', 'success'));
+        //dispatch(setAlert('Registracion completa', 'success'));
         navigate(`/validate-email`);
     } catch (err) {
         const errors = err.response.data.errors;

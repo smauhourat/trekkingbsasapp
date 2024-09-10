@@ -40,37 +40,42 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <>
-      <section className='container'>
-        <h1 className='large text-primary'>Ingreso</h1>
-        <p className='lead'><i className='fas fa-user' /> Ingrese a su cuenta</p>
-        <form className='form' onSubmit={e => onSubmit(e)}>
-          <div className='form-group'>
-            <input
-              type='email'
-              placeholder='Email'
-              name='email'
-              value={email}
-              onChange={e => onChange(e)}
-              required
-              autoFocus
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              placeholder='Contraseña'
-              name='password'
-              value={password}
-              onChange={e => onChange(e)}
-              minLength='6'
-              autoComplete='on'
-            />
-          </div>
-          <input id='form-login-submit-button' type='submit' className='btn btn-primary' value='Ingresar' />
-          <div className='form-group'>
-            <Link to='/forgot-password'>Perdio su Contraseña?</Link>
-          </div>
-        </form>
+      <section className='container align-center'>
+        <div className="login-form">
+          <h1 className='large text-primary'>Ingreso</h1>
+          <p className='lead'><i className='fas fa-user' /> Ingrese a su cuenta</p>
+          <form className='form' onSubmit={e => onSubmit(e)}>
+            <div className='form-group'>
+              <input
+                type='email'
+                placeholder='Email'
+                name='email'
+                value={email}
+                onChange={e => onChange(e)}
+                required
+                autoFocus
+              />
+            </div>
+            <div className='form-group'>
+              <input
+                type='password'
+                placeholder='Contraseña'
+                name='password'
+                value={password}
+                onChange={e => onChange(e)}
+                minLength='6'
+                autoComplete='on'
+              />
+            </div>
+            <div className='form-group'>
+              <input id='form-login-submit-button' type='submit' className='btn btn-primary' value='Ingresar' />
+            </div>
+            <div className='form-group form-button'>
+                <Link to='/forgot-password' className="align-left">Perdio su Contraseña?</Link>
+                <Link to='/customer-register'>Registrarse</Link>
+            </div>
+          </form>
+        </div>
       </section>
     </>
   )
