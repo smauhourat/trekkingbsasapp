@@ -16,7 +16,7 @@ export const addCustomer = (formData, navigate) => async (dispatch) => {
 
         dispatch({
             type: CUSTOMER_ADD_SUCCESS,
-            payload: res.data.customer
+            payload: {...res.data.customer, email: res.data.user.email }
         });
 
         //dispatch(setAlert('Registracion completa', 'success'));

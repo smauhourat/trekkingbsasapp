@@ -8,7 +8,7 @@ const CustomerValidateEmail = ({ customer: { customer } }) => {
         <Fragment>
             <section className="container">
                 <h1 className="large text-primary">Registro</h1>
-                <p className="small2 mt-30">Se envió un link a <strong>{customer.last_name}</strong> para verificar tu dirección de correo electrónico y así completar el proceso de registración.</p>
+                <p className="small2 mt-30">Se envió un link a <strong>{customer.email}</strong> para verificar tu dirección de correo electrónico y así completar el proceso de registración.</p>
                 <p className="small2 mb-50">Si el mail no te llega, por favor revisá tu bandeja de 'correo no deseado' o bien hace click en el botón Reenviar</p>
                 <Link to={'/trips'} className='btn btn-primary'>
                   <i className='text-primary' /> Volver
