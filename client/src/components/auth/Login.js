@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Link, Navigate } from 'react-router-dom';
-import { useNavigate, useLocation } from 'react-router';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+//import { useNavigate, useLocation } from 'react-router';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
@@ -23,23 +23,20 @@ const Login = ({ login, isAuthenticated }) => {
   const onSubmit = async e => {
     e.preventDefault();
     login(email, password)
+    navigate('/dashrouter');
   }
 
-  useEffect(() => {
-    //console.log('USE EFECT')
-    // Redirect if is logged in
-     if (isAuthenticated) {
-       if (location.state?.from) {
-         navigate(location.state.from)
-       } else {
-         //console.log('AUTENTICADO EN USE EFECTTTTTTTTTTTTTTT')
-         navigate('/dashrouter');
-       }
-     }
-  }, [])
+  // useEffect(() => {
+  //    if (isAuthenticated) {
+  //      if (location.state?.from) {
+  //        navigate(location.state.from)
+  //      } else {
+  //        console.log('NAVIGATEEEEEE')
+  //        navigate('/dashrouter');
+  //      }
+  //    }
+  // }, [])
 
-  // console.log(`isAuthenticated: ${isAuthenticated}`)
-  // console.log(`location.state?.from: ${JSON.stringify(location.state?.from)}`)
 
   return (
     <>
