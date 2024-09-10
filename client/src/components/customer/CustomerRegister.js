@@ -22,7 +22,7 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
 
     const { first_name, last_name, email, dni, phone, birth_date, medical_status, password, password2 } = formData;
 
-    console.log('customer: ', JSON.stringify(customer))
+    // console.log('customer: ', JSON.stringify(customer))
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
