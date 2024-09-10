@@ -19,7 +19,7 @@ export const addCustomer = (formData, navigate) => async (dispatch) => {
             payload: {...res.data.customer, email: res.data.user.email }
         });
 
-        //dispatch(setAlert('Registracion completa', 'success'));
+        dispatch(setAlert('Registracion completa', 'success'));
         navigate(`/validate-email`);
     } catch (err) {
         const errors = err.response.data.errors;
