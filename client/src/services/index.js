@@ -14,3 +14,14 @@ export const createBookOrder = async (bookData, orderData) => {
         throw err;
     }
 }
+
+export const createBook = async (customer, trip, price, description) => {
+    try {
+        const book = await api.post(`/books/`, { customer, trip, price, description })
+        
+        return book
+    } catch (err) {
+        console.log(err.response.data);
+        throw err;
+    }    
+}

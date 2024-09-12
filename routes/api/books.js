@@ -137,8 +137,8 @@ router.get('/:id',
 
     try {
       const book = await Book.findById(req.params.id)
-        .populate('tripId')
-        .populate({ path: 'customerId', select: '-password' });
+        .populate('trip')
+        .populate({ path: 'customer', select: '-password' });
 
       if (!book) {
         return res.status(404).json({ msg: 'Reserva no encontrada' });
