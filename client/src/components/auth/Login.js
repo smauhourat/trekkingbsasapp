@@ -27,25 +27,15 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
 
   useEffect(() => {
     console.log('isAuthenticated =>', isAuthenticated)
-    console.log('isAdmin =>', isAdmin)
-    if (isAuthenticated) {
-      if (location.state?.from) {
-        navigate(location.state.from)
-      } else {
-        if (isAdmin) {
-          console.log('ADMIN')
-          navigate('/dashboard')
-        }
-        if (!isAdmin) {
-          console.log('USER')
-          //navigate('dashboardcustomer')
-        }
-      }
-      // else {
-      //   navigate('/');
-      // }
-    }
-  }, [isAdmin, isAuthenticated])
+    // console.log('isAdmin =>', isAdmin)
+     if (isAuthenticated) {
+       if (location.state?.from) {
+         navigate(location.state.from)
+       } else {
+         navigate('/');
+       }
+     }
+  }, [isAuthenticated])
 
 
   return (
@@ -100,7 +90,7 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isAdmin: state.auth.isAdmin,
+  isAdmin: state.auth.isAdmin
 })
 
 export default connect(mapStateToProps, { setAlert, login })(Login)

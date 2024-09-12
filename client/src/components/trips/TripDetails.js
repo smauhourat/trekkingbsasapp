@@ -30,7 +30,7 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
     return training_level_description;
   }
 
-  const handleBook = async (e) => {
+  const handleBookMP = async (e) => {
     try {
       const tripId = id;
       const bookData = {
@@ -114,14 +114,19 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
                 <Link to={'/trips'} state={{ data: selectedTrip }} className='btn btn-primary'>
                   <i className='text-primary' /> Volver
                 </Link>
-                  <Link to={'/trip-book/' + selectedTrip._id} state={{ data: selectedTrip }} className='btn btn-primary'>
-                    <i className='text-primary' /> Reservar
-                  </Link>                
-                {//selectedTrip?.payment_link && 
-                  ((selectedTrip?.quota - selectedTrip?.reservations) > 0) &&
-                  (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate)) && (
-                    <input type="button" className="btn btn-secondary" value="Reservar (Pago)" onClick={handleBook} />
+                {((selectedTrip?.quota - selectedTrip?.reservations) > 0) &&
+                  (selectedTrip.price) &&
+                  (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate)) && 
+                  (
+                    <Link to={'/trip-book/' + selectedTrip._id} state={{ data: selectedTrip }} className='btn btn-primary'>
+                      <i className='text-primary' /> Reservar
+                    </Link>                
                   )}
+
+                {/* {((selectedTrip?.quota - selectedTrip?.reservations) > 0) &&
+                (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate)) && (
+                  <input type="button" className="btn btn-secondary" value="Reservar (Pago)" onClick={handleBookMP} />
+                )} */}
               </div>
 
               <div className='profile-edu bg-white p-2'>
