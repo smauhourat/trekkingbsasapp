@@ -26,7 +26,7 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
   }
 
   useEffect(() => {
-    // console.log('isAuthenticated =>', isAuthenticated)
+    console.log('isAuthenticated =>', isAuthenticated)
     // console.log('isAdmin =>', isAdmin)
      if (isAuthenticated) {
        if (location.state?.from) {
@@ -35,7 +35,7 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
          navigate('/');
        }
      }
-  }, [isAdmin, isAuthenticated])
+  }, [isAuthenticated])
 
 
   return (
