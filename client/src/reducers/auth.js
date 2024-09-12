@@ -13,6 +13,7 @@ import {
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
+  isAdmin: null,
   loading: true,
   user: null,
   customer: null,
@@ -27,6 +28,7 @@ export default function auth (state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
+        isAdmin: payload.super_admin,
         loading: false,
         user: payload
       }
@@ -42,6 +44,7 @@ export default function auth (state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
+        isAdmin: false,
         loading: false
       }
     case AUTH_ERROR:
@@ -50,6 +53,7 @@ export default function auth (state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
+        isAdmin: null,
         loading: false,
         user: null,
         customer: null
@@ -69,6 +73,7 @@ export default function auth (state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
+        isAdmin: false,
         loading: false,
         customer: payload
       }

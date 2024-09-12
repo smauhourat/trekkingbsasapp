@@ -6,7 +6,7 @@ import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, isAdmin }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -23,20 +23,29 @@ const Login = ({ login, isAuthenticated }) => {
   const onSubmit = async e => {
     e.preventDefault();
     login(email, password, navigate)
-    //navigate('/dashrouter');
   }
 
   useEffect(() => {
     console.log('isAuthenticated =>', isAuthenticated)
-     if (isAuthenticated) {
-       if (location.state?.from) {
-         navigate(location.state.from)
-       } else {
-         console.log('NAVIGATEEEEEE')
-         navigate('/');
-       }
-     }
-  }, [])
+    console.log('isAdmin =>', isAdmin)
+    if (isAuthenticated) {
+      if (location.state?.from) {
+        navigate(location.state.from)
+      } else {
+        if (isAdmin) {
+          console.log('ADMIN')
+          navigate('/dashboard')
+        }
+        if (!isAdmin) {
+          console.log('USER')
+          //navigate('dashboardcustomer')
+        }
+      }
+      // else {
+      //   navigate('/');
+      // }
+    }
+  }, [isAdmin, isAuthenticated])
 
 
   return (
@@ -85,11 +94,13 @@ const Login = ({ login, isAuthenticated }) => {
 Login.propTypes = {
   setAlert: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
+  isAdmin: PropTypes.bool
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  isAdmin: state.auth.isAdmin,
 })
 
 export default connect(mapStateToProps, { setAlert, login })(Login)
