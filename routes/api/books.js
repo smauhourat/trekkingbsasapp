@@ -17,8 +17,8 @@ const transporter = require('../../config/mailer');
 router.post('/',
   [auth],
   [
-    checkObjectId('tripId', true),
-    checkObjectId('customerId', true),
+    checkObjectId('trip', true),
+    checkObjectId('customer', true),
     check('price', 'Debe ingresar el precio').not().isEmpty(),
     check('price', 'El precio debe ser numerico positivo').isCurrency({ require_symbol: false, allow_negatives: false }),
     check('description', 'Debe ingresar la descripcion').not().isEmpty(),
@@ -31,27 +31,27 @@ router.post('/',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { customerId, tripId, price, description } = req.body;
+    const { customer, trip, price, description } = req.body;
 
     const book = await Book.findOne({
-      tripId: tripId,
-      customerId: customerId
+      trip: trip,
+      customer: customer
     })
 
     if (book) return res.status(400).send({ message: "Ya tiene una reserva", data: { "bookId": book._id } })
 
     const currentDate = new Date()
-    const trip = await Trip.findOne({
-      _id: tripId,
+    const tripDb = await Trip.findOne({
+      _id: trip,
       date: { $gte: currentDate }
     })
 
-    if (!trip) return res.status(400).send({ message: "El evento expiro" })
+    if (!tripDb) return res.status(400).send({ message: "El evento expiro" })
 
     try {
       let newBook = new Book({
-        tripId: tripId,
-        customerId: customerId,
+        trip: trip,
+        customer: customer,
         price,
         description,
       });
@@ -131,14 +131,14 @@ router.get('/',
 // @desc     Get book by Id
 // @access   Private
 router.get('/:id',
-  // [auth],
+  [auth],
   checkObjectId('id'),
   async (req, res) => {
 
     try {
       const book = await Book.findById(req.params.id)
-        .populate('trip')
-        .populate({ path: 'customer', select: '-password' });
+        .populate('tripId')
+        .populate({ path: 'customerId', select: '-password' });
 
       if (!book) {
         return res.status(404).json({ msg: 'Reserva no encontrada' });

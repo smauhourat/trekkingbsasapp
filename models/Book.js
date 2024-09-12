@@ -5,12 +5,12 @@ const Schema = mongoose.Schema;
 
 const BookSchema = new mongoose.Schema({
 
-    tripId: {
+    trip: {
         type: Schema.Types.ObjectId,
         ref: 'trip'
     },
 
-    customerId: {
+    customer: {
         type: Schema.Types.ObjectId,
         ref: 'customer'
     },
