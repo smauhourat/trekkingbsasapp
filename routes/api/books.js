@@ -207,6 +207,139 @@ router.delete('/:id',
     }
   });
 
+// @route    GET api/books/by-customer
+// @desc     Get Book by Customer (for Administrators)
+// @access   Private  
+router.get('/by-customer/:id',
+  [checkObjectId('id'), auth],
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+
+      console.log(req.user)
+      if (!req.user.admin && req.user.id !== id)
+        return res.status(404).json({ msg: 'Usted no tiene permisos para ver las Reservas' });
+
+      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
+      let page = 1;
+      if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
+        page = parseInt(req.query.page);
+
+      const sort = req.query.sort ? req.query.sort : "date";
+      const order = req.query.order ? req.query.order : "-1";
+
+      let db_query = {};
+      db_query = { ...db_query, customer: mongoose.Types.ObjectId(id) }
+
+      // console.log(db_query)
+
+      const totalItems = await Book
+        .find(db_query)
+        .countDocuments();
+
+      const books = await Book
+        .find(db_query)
+        .populate('trip')
+        .populate({ path: 'customer', select: '-password' })
+        .limit(limit)
+        .skip(limit * (page - 1))
+        .sort({ [sort]: order });
+
+      res.json({
+        "metadata": {
+          "query": id,
+          "total": totalItems,
+          "count": books.length,
+          "limit": limit,
+          "page": page
+        },
+        "data": books
+      });
+
+      if (!books) {
+        return res.status(404).json({ msg: 'Reservas no encontrado' });
+      }
+    } catch (err) {
+      console.error(err.message);
+
+      res.status(500).send('Server Error');
+    }
+  });
+
+// @route    GET api/books/by-trip
+// @desc     Get Book by Trip (for Administrators)
+// @access   Private  
+router.get('/by-trip/:id',
+  [checkObjectId('id'), authAdmin],
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
+      let page = 1;
+      if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
+        page = parseInt(req.query.page);
+
+      const sort = req.query.sort ? req.query.sort : "date";
+      const order = req.query.order ? req.query.order : "-1";
+
+      let db_query = {};
+      db_query = { ...db_query, trip: mongoose.Types.ObjectId(id) }
+
+      const totalItems = await Book
+        .find(db_query)
+        .countDocuments();
+
+      const books = await Book
+        .find(db_query)
+        .populate('trip')
+        .populate({ path: 'customer', select: '-password' })
+        .limit(limit)
+        .skip(limit * (page - 1))
+        .sort({ [sort]: order });
+
+      res.json({
+        "metadata": {
+          "query": id,
+          "total": totalItems,
+          "count": books.length,
+          "limit": limit,
+          "page": page
+        },
+        "data": books
+      });
+
+      if (!books) {
+        return res.status(404).json({ msg: 'Reservas no encontrado' });
+      }
+    } catch (err) {
+      console.error(err.message);
+
+      res.status(500).send('Server Error');
+    }
+  });
+
+//router.post()  
+router.post('/:id/payment',
+  auth,
+  checkObjectId('id'),
+  async (req, res) => {
+    try {
+      const { transaction_number } = req.body;
+
+      const bookBefore = await Book.findById(req.params.id)
+
+      if (bookBefore.status !== "pending")
+        return res.status(404).json({ message: 'La Reserva no puede modificarse' });
+
+      const book = await Book.findByIdAndUpdate({ _id: req.params.id }, { $set: { transaction_number, status: 'paid' } }, { new: true });
+
+      res.json(book);
+
+    } catch (error) {
+      res.status(500).send({ message: "Internal Server Error", error: error });
+    }
+  })
+
 // @route    POST api/books/create-order
 // @desc     Create Payment Order for Book
 // @access   Private  
@@ -409,116 +542,6 @@ router.post('/process-order', async (req, res) => {
   }
 });
 
-// @route    GET api/books/by-customer
-// @desc     Get Book by Customer (for Administrators)
-// @access   Private  
-router.get('/by-customer/:id',
-  [checkObjectId('id'), auth],
-  async (req, res) => {
-    try {
-      const id = req.params.id;
-
-      console.log(req.user)
-      if (!req.user.admin && req.user.id !== id)
-        return res.status(404).json({ msg: 'Usted no tiene permisos para ver las Reservas' });
-
-      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
-      let page = 1;
-      if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
-        page = parseInt(req.query.page);
-
-      const sort = req.query.sort ? req.query.sort : "date";
-      const order = req.query.order ? req.query.order : "-1";
-
-      let db_query = {};
-      db_query = { ...db_query, customer: mongoose.Types.ObjectId(id) }
-
-      // console.log(db_query)
-
-      const totalItems = await Book
-        .find(db_query)
-        .countDocuments();
-
-      const books = await Book
-        .find(db_query)
-        .populate('trip')
-        .populate({ path: 'customer', select: '-password' })
-        .limit(limit)
-        .skip(limit * (page - 1))
-        .sort({ [sort]: order });
-
-      res.json({
-        "metadata": {
-          "query": id,
-          "total": totalItems,
-          "count": books.length,
-          "limit": limit,
-          "page": page
-        },
-        "data": books
-      });
-
-      if (!books) {
-        return res.status(404).json({ msg: 'Reservas no encontrado' });
-      }
-    } catch (err) {
-      console.error(err.message);
-
-      res.status(500).send('Server Error');
-    }
-  });
-
-// @route    GET api/books/by-trip
-// @desc     Get Book by Trip (for Administrators)
-// @access   Private  
-router.get('/by-trip/:id',
-  [checkObjectId('id'), authAdmin],
-  async (req, res) => {
-    try {
-      const id = req.params.id;
-      const limit = req.query.limit && !isNaN(req.query.limit) ? parseInt(req.query.limit) : 100;
-      let page = 1;
-      if (req.query.page && !isNaN(req.query.page) && parseInt(req.query.page) > 0)
-        page = parseInt(req.query.page);
-
-      const sort = req.query.sort ? req.query.sort : "date";
-      const order = req.query.order ? req.query.order : "-1";
-
-      let db_query = {};
-      db_query = { ...db_query, trip: mongoose.Types.ObjectId(id) }
-
-      const totalItems = await Book
-        .find(db_query)
-        .countDocuments();
-
-      const books = await Book
-        .find(db_query)
-        .populate('trip')
-        .populate({ path: 'customer', select: '-password' })
-        .limit(limit)
-        .skip(limit * (page - 1))
-        .sort({ [sort]: order });
-
-      res.json({
-        "metadata": {
-          "query": id,
-          "total": totalItems,
-          "count": books.length,
-          "limit": limit,
-          "page": page
-        },
-        "data": books
-      });
-
-      if (!books) {
-        return res.status(404).json({ msg: 'Reservas no encontrado' });
-      }
-    } catch (err) {
-      console.error(err.message);
-
-      res.status(500).send('Server Error');
-    }
-  });
 
 
 module.exports = router;

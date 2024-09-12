@@ -29,6 +29,10 @@ const BookSchema = new mongoose.Schema({
         default: 'pending'
     },
 
+    transaction_number: {
+        type: Number
+    }
+
 }, { timestamps: true });
 
 module.exports = mongoose.model('book', BookSchema);
