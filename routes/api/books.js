@@ -17,25 +17,41 @@ const transporter = require('../../config/mailer');
 router.post('/',
   [auth],
   [
-    checkObjectId('trip', true),
-    checkObjectId('customer', true)
+    checkObjectId('tripId', true),
+    checkObjectId('customerId', true),
+    check('price', 'Debe ingresar el precio').not().isEmpty(),
+    check('price', 'El precio debe ser numerico positivo').isCurrency({ require_symbol: false, allow_negatives: false }),
+    check('description', 'Debe ingresar la descripcion').not().isEmpty(),
   ]
   ,
   async (req, res) => {
 
-    const { customer, trip, price, description } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { customerId, tripId, price, description } = req.body;
 
     const book = await Book.findOne({
-      trip: trip,
-      customer: customer
-    });
+      tripId: tripId,
+      customerId: customerId
+    })
 
-    if (book) return res.status(400).send({ message: "Ya tiene una reserva", data: { "bookId": book._id } });
+    if (book) return res.status(400).send({ message: "Ya tiene una reserva", data: { "bookId": book._id } })
+
+    const currentDate = new Date()
+    const trip = await Trip.findOne({
+      _id: tripId,
+      date: { $gte: currentDate }
+    })
+
+    if (!trip) return res.status(400).send({ message: "El evento expiro" })
 
     try {
       let newBook = new Book({
-        trip: trip,
-        customer: customer,
+        tripId: tripId,
+        customerId: customerId,
         price,
         description,
       });
