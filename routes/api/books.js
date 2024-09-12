@@ -16,9 +16,21 @@ const transporter = require('../../config/mailer');
 // @access  Private
 router.post('/',
   [auth],
+  [
+    checkObjectId('trip', true),
+    checkObjectId('customer', true)
+  ]
+  ,
   async (req, res) => {
 
     const { customer, trip, price, description } = req.body;
+
+    const book = await Book.findOne({
+      trip: trip,
+      customer: customer
+    });
+
+    if (book) return res.status(400).send({ message: "Ya tiene una reserva", data: { "bookId": book._id } });
 
     try {
       let newBook = new Book({
@@ -30,7 +42,8 @@ router.post('/',
 
       const book = await newBook.save();
       res.json(book);
-    } catch (err) {
+    }
+    catch (err) {
       console.error(err);
       res.status(500).send(err);
     }
