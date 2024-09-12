@@ -318,7 +318,9 @@ router.get('/by-trip/:id',
     }
   });
 
-//router.post()  
+// @route    POST api/:id/payment
+// @desc     Update payment and change status (for Customer)
+// @access   Public
 router.post('/:id/payment',
   auth,
   checkObjectId('id'),
