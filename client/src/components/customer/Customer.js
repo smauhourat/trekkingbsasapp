@@ -114,7 +114,7 @@ const Customer = ({
                         value={phone}
                         onChange={onChange}
                         required />
-                    <small class="form-text">
+                    <small className="form-text">
                       <strong>AR (+54) </strong> 11 1234 5678
                     </small>
                 </div>
