@@ -36,6 +36,7 @@ import BookDetails from './components/customer/BookDetails';
 import BookList from './components/customer/BookList';
 import Book from './components/customer/Book';
 import CustomerRegister from './components/customer/CustomerRegister';
+import Customer from './components/customer/Customer';
 import CustomerValidateEmail from './components/customer/CustomerValidateEmail';
 
 import './App.css'
@@ -93,6 +94,7 @@ const App = () => {
               <Route path="booking-failure/*" element={<BookingFailure />} />
               <Route path="customer-register" element={<CustomerRegister />} />
               <Route path="dashrouter" element={<DashRouter />} />
+              <Route path="customer" element={<Customer />} />
               <Route element={< PrivateRoutesAdmin allowedRoles="" />}>
                 <Route path="dashboardcustomer" element={<DashboardCustomer />} />
                 <Route path="book-details/:id" element={<BookDetails />} />
