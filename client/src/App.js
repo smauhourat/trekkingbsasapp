@@ -94,8 +94,8 @@ const App = () => {
               <Route path="booking-failure/*" element={<BookingFailure />} />
               <Route path="customer-register" element={<CustomerRegister />} />
               <Route path="dashrouter" element={<DashRouter />} />
-              <Route path="customer" element={<Customer />} />
               <Route element={< PrivateRoutesAdmin allowedRoles="" />}>
+                <Route path="customer" element={<Customer />} />
                 <Route path="dashboardcustomer" element={<DashboardCustomer />} />
                 <Route path="book-details/:id" element={<BookDetails />} />
                 <Route path="books" element={<BookList />} />

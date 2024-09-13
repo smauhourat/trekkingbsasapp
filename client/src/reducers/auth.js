@@ -15,6 +15,7 @@ const initialState = {
   isAuthenticated: null,
   isAdmin: false,
   loading: true,
+  loadingCustomer: true,
   user: null,
   customer: null,
   error: {}
