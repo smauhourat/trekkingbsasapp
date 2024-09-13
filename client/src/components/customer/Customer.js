@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import formatDateISO from '../../utils/formatDateISO'
 
-const Customer = ({ customer: { customer } }) => {
+const Customer = ({ 
+  auth: { user, customer },
+}) => {
 
   const navigate = useNavigate();
 
@@ -18,7 +21,18 @@ const Customer = ({ customer: { customer } }) => {
   });
 
   useEffect(() => {
-    setFormData({first_name: customer.first_name})
+    console.log('useEffect()')
+    console.log('customer =>', customer)
+    console.log('user =>', user)
+    setFormData({ 
+      email: user.email, 
+      first_name: customer.first_name, 
+      last_name: customer.last_name,
+      dni: customer.dni,
+      phone: customer.phone,
+      birth_date: formatDateISO(customer.birth_date),
+      medical_status: customer.medical_status
+    })
   }, [])  
 
   const { first_name, last_name, email, dni, phone, birth_date, medical_status } = formData;
@@ -103,7 +117,7 @@ const Customer = ({ customer: { customer } }) => {
 }
 
 const mapStateToProps = (state) => ({
-  customer: state.customer
+  auth: state.auth
 })
 
 export default connect(mapStateToProps, null)(Customer)
