@@ -11,3 +11,18 @@ export const setAlert = (msg, alertType, timeout = 5000) => dispatch => {
 
   setTimeout(() => dispatch({ type: REMOVE_ALERT, payload: id }), timeout)
 }
+
+export const setAlertNavigate = (msg, alertType, navigate, timeout = 5000) => dispatch => {
+  const id = uuidv4()
+
+  dispatch({
+    type: SET_ALERT,
+    payload: { msg, alertType, id }
+  })
+
+  setTimeout(() => { 
+    dispatch({ type: REMOVE_ALERT, payload: id }) 
+    navigate('/')
+  }, timeout)
+
+}

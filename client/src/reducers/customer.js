@@ -1,6 +1,8 @@
 import {
     CUSTOMER_ADD_SUCCESS,
-    CUSTOMER_ADD_FAIL
+    CUSTOMER_ADD_FAIL,
+    CUSTOMER_UPDATE_SUCCESS,
+    CUSTOMER_UPDATE_FAIL
 
 } from '../actions/types';
 
@@ -27,6 +29,18 @@ export default function customer(state = initialState, action) {
                 error: payload,
                 loading: false
             };
+        case CUSTOMER_UPDATE_SUCCESS:
+            return {
+                ...state,
+                customer: payload,
+                loading: false
+            }
+        case CUSTOMER_UPDATE_FAIL:
+            return {
+                ...state,
+                error: payload,
+                loading: false
+            }
         default:
             return state;
     }

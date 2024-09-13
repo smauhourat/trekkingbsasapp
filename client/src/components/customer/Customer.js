@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { setAlert } from '../../actions/alert'
+import { updateCustomer } from '../../actions/customer'
 import formatDateISO from '../../utils/formatDateISO'
 
 const Customer = ({ 
   auth: { user, customer },
+  setAlert,
+  updateCustomer
 }) => {
 
   const navigate = useNavigate();
@@ -24,6 +28,7 @@ const Customer = ({
     console.log('useEffect()')
     console.log('customer =>', customer)
     console.log('user =>', user)
+
     setFormData({ 
       email: user.email, 
       first_name: customer.first_name, 
@@ -39,6 +44,13 @@ const Customer = ({
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    //if (validateForm()) {
+    updateCustomer(customer._id, formData, navigate)
+    //}
+  }  
 
   return (
     <section className='container'>
@@ -116,8 +128,13 @@ const Customer = ({
   )
 }
 
+Customer.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  updateCustomer: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, null)(Customer)
+export default connect(mapStateToProps, { setAlert, updateCustomer })(Customer)
