@@ -658,6 +658,32 @@ button {
   background: var(--light-color);
 }
 
+/* Menubar */
+.menubar {
+  display: flex;
+  justify-content: right;
+  align-items: flex-start;
+  margin-top: 3.7rem;
+  padding-right: 2.5rem;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  top: 0;
+  border-bottom: solid 1px var(--dark-color);
+  opacity: 0.9;
+}
+
+.menubar ul {
+  display: flex;
+  white-space: nowrap;
+}
+
+.menubar a {
+  color: #fff;
+  padding: 0.45rem;
+  margin: 0 0.25rem;
+}
+
 /* Navbar */
 .navbar {
   display: flex;

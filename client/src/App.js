@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 // import { Analytics } from '@vercel/analytics/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
+import Menubar from './components/layout/Menubar';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import ForgotPassword from './components/auth/ForgotPassword';
@@ -70,6 +71,7 @@ const App = () => {
       <Router>
         <ErrorBoundary FallbackComponent={Fallback} onError={errorHandler}>
           <Navbar />
+          <Menubar />
           <Alert />
           <Routes>
             <>
