@@ -45,11 +45,19 @@ const Customer = ({
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const validateForm = () => {
+    // if (phone) {
+    //   setAlert('Las Reservas no pueden ser mayores al Cupo', 'danger')
+    //   return false
+    // }
+    return true
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault()
-    //if (validateForm()) {
-    updateCustomer(customer._id, formData, navigate)
-    //}
+    if (validateForm()) {
+      updateCustomer(customer._id, formData, navigate)
+    }
   }  
 
   return (
@@ -58,6 +66,7 @@ const Customer = ({
       <p className='lead'><i className='fas fa-calendar' /> Actualizar datos</p>
       <form className="form" onSubmit={e => onSubmit(e)} >
                 <div className="form-group">
+                    <label>Email</label>
                     <input
                         type="email"
                         placeholder="Email"
@@ -67,6 +76,7 @@ const Customer = ({
                         disabled />
                 </div>
                 <div className="form-group">
+                    <label>Nombre</label>
                     <input
                         type="text"
                         placeholder="Nombre"
@@ -76,6 +86,7 @@ const Customer = ({
                         required />
                 </div>
                 <div className="form-group">
+                    <label>Apellido</label>
                     <input
                         type="text"
                         placeholder="Apellido"
@@ -85,8 +96,9 @@ const Customer = ({
                         required />
                 </div>
                 <div className="form-group">
+                  <label>DNI</label>
                     <input
-                        type="text"
+                        type="number"
                         placeholder="DNI"
                         name="dni"
                         value={dni}
@@ -94,13 +106,17 @@ const Customer = ({
                         required />
                 </div>
                 <div className="form-group">
+                    <label>Teléfono</label>
                     <input
-                        type="text"
+                        type="number"
                         placeholder="Telefono"
                         name="phone"
                         value={phone}
                         onChange={onChange}
                         required />
+                    <small class="form-text">
+                      <strong>AR (+54) </strong> 11 1234 5678
+                    </small>
                 </div>
                 <div className="form-group">
                     <label>Fecha Nacimiento</label>
@@ -113,6 +129,7 @@ const Customer = ({
                         required />
                 </div>
                 <div className="form-group">
+                    <label>Estado de Salud</label>
                     <input
                         type="text"
                         placeholder="Estado de Salud"

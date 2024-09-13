@@ -84,6 +84,9 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
                         value={phone}
                         onChange={onChange}
                         required />
+                    <small class="form-text">
+                        <strong>AR (+54) </strong> 11 1234 5678
+                    </small>
                 </div>
                 <div className="form-group">
                     <label>Fecha</label>
