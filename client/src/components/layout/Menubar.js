@@ -4,16 +4,23 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { logout } from '../../actions/auth'
 
-const Menubar = ({ auth: { isAuthenticated, user }, logout }) => {
+const Menubar = ({ auth: { isAuthenticated, isAdmin, user }, logout }) => {
 
-  return (
-    <nav className='menubar bg-dark'>
-      <ul>
-        <li><Link to='/customer'>Mis Datos</Link></li>
-        <li><Link to='/books'>Mis Reservas</Link></li>
-      </ul>
-    </nav>
-  )
+  if (isAuthenticated) {
+    return (
+      <nav className='menubar bg-dark'>
+        <ul>
+          {!isAdmin && (<>
+            <li><Link to='/books'>Mis Reservas</Link></li>
+            <li><Link to='/customer'>Mis Datos</Link></li>
+            </>
+          )
+          }
+          <li>{user?.name}</li>
+        </ul>
+      </nav>
+    ) 
+  }
 }
 
 Menubar.propTypes = {

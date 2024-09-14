@@ -13,7 +13,9 @@ const PrivateRoutesAdmin = ({allowedRoles,
     return null;
   }
   
-    if (isAuthenticated && ((allowedRoles === "admin" && user?.super_admin) || (allowedRoles !== "admin"))) {
+    if (isAuthenticated && 
+      ((allowedRoles === "admin" && user?.super_admin) || (allowedRoles === "customer" && !user?.super_admin))
+    ) {
       return (<Outlet />) 
     } else {
       //logout()

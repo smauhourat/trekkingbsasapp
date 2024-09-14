@@ -38,6 +38,7 @@ import Book from './components/customer/Book';
 import CustomerRegister from './components/customer/CustomerRegister';
 import Customer from './components/customer/Customer';
 import CustomerValidateEmail from './components/customer/CustomerValidateEmail';
+import Unauthorized from './components/auth/Unauthorized'
 
 import './App.css'
 // Redux
@@ -45,6 +46,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 import { loadUser, loadCustomer } from './actions/auth'
 import setAuthToken from './utils/setAuthToken'
+import RequireAuth from './components/routing/RequireAuth';
 
 const App = () => {
   useEffect(() => {
@@ -94,7 +96,8 @@ const App = () => {
               <Route path="booking-failure/*" element={<BookingFailure />} />
               <Route path="customer-register" element={<CustomerRegister />} />
               <Route path="dashrouter" element={<DashRouter />} />
-              <Route element={< PrivateRoutesAdmin allowedRoles="" />}>
+              <Route path="unauthorized" element={<Unauthorized />} />
+              <Route element={<RequireAuth allowedRoles="customer" />}>
                 <Route path="customer" element={<Customer />} />
                 <Route path="dashboardcustomer" element={<DashboardCustomer />} />
                 <Route path="book-details/:id" element={<BookDetails />} />
@@ -102,7 +105,7 @@ const App = () => {
                 <Route path="trip-book/:id" element={<Book />} />
               </Route>
               
-              <Route element={< PrivateRoutesAdmin allowedRoles="admin" />}>
+              <Route element={< RequireAuth allowedRoles="admin" />}>
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="add-trip" element={<AddTrip />} />
                 <Route path="edit-trip/:id" element={<EditTrip />} />

@@ -14,6 +14,8 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  console.log('from =>', from)
 
   const { email, password } = formData;
 
@@ -23,10 +25,11 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
   const onSubmit = async e => {
     e.preventDefault();
     login(email, password, navigate)
+    navigate(from, { replace: true });
   }
 
   useEffect(() => {
-    console.log('isAuthenticated =>', isAuthenticated)
+    // console.log('isAuthenticated =>', isAuthenticated)
     // console.log('isAdmin =>', isAdmin)
      if (isAuthenticated) {
        if (location.state?.from) {
