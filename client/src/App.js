@@ -92,12 +92,12 @@ const App = () => {
               <Route path="company" element={<MaintenanceRoute component={Company} />} />
               <Route path="conditions" element={<MaintenanceRoute component={Conditions} />} />
               <Route path="calendar" element={<MaintenanceRoute component={Calendar} />} />
-              <Route path="booking-success" element={<BookingSuccess />} />
               <Route path="booking-failure/*" element={<BookingFailure />} />
               <Route path="customer-register" element={<CustomerRegister />} />
               <Route path="dashrouter" element={<DashRouter />} />
               <Route path="unauthorized" element={<Unauthorized />} />
               <Route element={<RequireAuth allowedRoles="customer" />}>
+              <Route path="booking-success/:id" element={<BookingSuccess />} />
                 <Route path="customer" element={<Customer />} />
                 <Route path="dashboardcustomer" element={<DashboardCustomer />} />
                 <Route path="book-details/:id" element={<BookDetails />} />

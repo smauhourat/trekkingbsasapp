@@ -1,29 +1,42 @@
 import React, { useEffect, useState, Fragment } from 'react'
-import { useSearchParams } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
+import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getBook } from '../../actions/book';
 
-/**
- *  con el bookId, buscamos la reserva
- * 
- */
+const BookingSuccess = ({
+    getBook,
+    book: { selectedBook, loading }
+}) => {
 
-const BookingSuccess = () => {
+    const id = useParams().id
 
-    const [searchParams] = useSearchParams();
-    console.log(searchParams);
-    const bookId = searchParams.get('external_reference');
-
-    // useEffect(() => {
-    //     getBookings();
-    //   }, [getBookings]);
+    useEffect(() => {
+        getBook(id);
+      }, [getBook, id]);
     
-    return (
-        <div>
-            <section className="container">
-                <h1>Anduvo todo bien</h1>
-                <h2>bookId: {bookId}</h2>
-            </section>
-        </div>
-    )
+      return (
+        <section className="container">
+          {loading || selectedBook === undefined ? (<Spinner />) : (
+            <>
+                <h1>Gracias, su reserva fue procesada de forma exitosa!!!</h1>
+                <h3>Para completar el proceso, realice la Transferencia o Deposito informando el nro. de transaccion al mail ventas@trekkingbuenosaires.com.ar</h3>
+                <div className="mt-25"></div>
+                <h2>COD RESERVA: {selectedBook.description}</h2>
+            </>
+          )}
+        </section>
+      );    
 }
 
-export default BookingSuccess;
+BookingSuccess.propTypes = {
+    getBook: PropTypes.func.isRequiredd,
+  }
+  
+  const mapStateToProps = (state) => ({
+    book: state.book
+  });
+ 
+
+export default connect(mapStateToProps, { getBook })(BookingSuccess);

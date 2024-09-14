@@ -15,12 +15,13 @@ const Book = ({
     console.log("selectedTrip =>", selectedTrip)
     console.log("user =>", user)
     console.log("customer =>", customer)
+    const navigate = useNavigate()
 
     const handleBook = async (e) => {
         try {
             const res = await createBook(customer._id, selectedTrip._id, selectedTrip.price, `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`)
             if (res)
-                window.location.href = "http://www.google.com" //"enviar a la pagina d confirm"
+                navigate(`/booking-success/${res._id}`)
         } catch (err) {
             if (err.response.status === 400)
                 setAlert(err.response.data.message, "danger")
@@ -59,7 +60,7 @@ const Book = ({
                         <p><strong>Telefono: </strong>{customer?.phone}</p>
                     </div>
                 </div>                
-                <div>
+                <div className='mt-15'>
                     <input type='button' className='btn btn-primary' value='Continuar' onClick={handleBook} />
                 </div>
             </section>
