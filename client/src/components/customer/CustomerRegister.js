@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { addCustomer } from '../../actions/customer';
+import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
+import dateGetDiffYears from '../../utils/dateGetDiffYears'
 
 const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => {
     const navigate = useNavigate();
@@ -22,17 +24,39 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
 
     const { first_name, last_name, email, dni, phone, birth_date, medical_status, password, password2 } = formData;
 
-    // console.log('customer: ', JSON.stringify(customer))
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
+    const validateForm = () => {
+
+        if (dni.length > 8) {
+          setAlert('El campo DNI debe ser de 8 digitos numericos como maximo', 'danger')
+          return false
+        }
+    
+        if (phone.length != 10) {
+          setAlert('El campo Telefono debe ser de 10 digitos numericos', 'danger')
+          return false
+        }
+    
+        if (dateGetDiffYears(birth_date, formatDateISOFromDate(new Date())) < 18) {
+          setAlert('Debe ser mayor de 18 años para poder registrarse', 'danger')
+          return false
+        }
+
         if (password !== password2) {
             setAlert('La Constraseña y la confirmacion no coinciden', 'danger')
             return
         }
-        addCustomer({ first_name, last_name, email, dni, phone, birth_date, medical_status, password }, navigate);
+    
+        return true
+      }
+          
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        if (validateForm()) {
+            addCustomer({ first_name, last_name, email, dni, phone, birth_date, medical_status, password }, navigate)
+        }
     }
 
     return (
@@ -69,7 +93,7 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
                 </div>
                 <div className="form-group">
                     <input
-                        type="text"
+                        type="number"
                         placeholder="DNI"
                         name="dni"
                         value={dni}
@@ -78,14 +102,14 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
                 </div>
                 <div className="form-group">
                     <input
-                        type="text"
+                        type="number"
                         placeholder="Telefono"
                         name="phone"
                         value={phone}
                         onChange={onChange}
                         required />
-                    <small class="form-text">
-                        <strong>AR (+54) </strong> 11 1234 5678
+                    <small className="form-text">
+                      <strong>AR (+54) </strong> 11 1234 5678 (diez digitos numericos)
                     </small>
                 </div>
                 <div className="form-group">
@@ -119,7 +143,7 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
                 <div className="form-group">
                     <input
                         type="password"
-                        placeholder="Confirm Password"
+                        placeholder="Repita Contraseña"
                         name="password2"
                         value={password2}
                         onChange={onChange} />

@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import { setAlert } from '../../actions/alert'
 import { updateCustomer } from '../../actions/customer'
 import formatDateISO from '../../utils/formatDateISO'
+import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
+import dateGetDiffYears from '../../utils/dateGetDiffYears'
 
 const Customer = ({ 
   auth: { user, customer },
@@ -25,9 +27,9 @@ const Customer = ({
   });
 
   useEffect(() => {
-    console.log('useEffect()')
-    console.log('customer =>', customer)
-    console.log('user =>', user)
+    // console.log('useEffect()')
+    // console.log('customer =>', customer)
+    // console.log('user =>', user)
 
     setFormData({ 
       email: user.email, 
@@ -46,10 +48,22 @@ const Customer = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const validateForm = () => {
-    // if (phone) {
-    //   setAlert('Las Reservas no pueden ser mayores al Cupo', 'danger')
-    //   return false
-    // }
+
+    if (dni.length > 8) {
+      setAlert('El campo DNI debe ser de 8 digitos numericos como maximo', 'danger')
+      return false
+    }
+
+    if (phone.length != 10) {
+      setAlert('El campo Telefono debe ser de 10 digitos numericos', 'danger')
+      return false
+    }
+
+    if (dateGetDiffYears(birth_date, formatDateISOFromDate(new Date())) < 18) {
+      setAlert('Debe ser mayor de 18 años para poder registrarse', 'danger')
+      return false
+    }
+
     return true
   }
 
@@ -115,7 +129,7 @@ const Customer = ({
                         onChange={onChange}
                         required />
                     <small className="form-text">
-                      <strong>AR (+54) </strong> 11 1234 5678
+                      <strong>AR (+54) </strong> 11 1234 5678 (diez digitos numericos)
                     </small>
                 </div>
                 <div className="form-group">

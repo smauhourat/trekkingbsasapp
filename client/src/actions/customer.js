@@ -4,7 +4,8 @@ import { loadCustomer } from './auth'
 
 import {
     CUSTOMER_UPDATE_SUCCESS,
-    CUSTOMER_UPDATE_FAIL
+    CUSTOMER_UPDATE_FAIL,
+    CUSTOMER_ADD_FAIL 
 
 } from './types';
 
