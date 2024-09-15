@@ -7,15 +7,13 @@ import { getBooks } from '../../actions/book'
 const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
 
     useEffect(() => {
-        // OJOOO
-        // console.log(auth.user)
         getBooks(auth.user?._id);
     }, [getBooks]);
 
     return (
         <Fragment>
             <section className="container">
-                <h1 className="large text-primary">Mis Reservass</h1>
+                <h1 className="large text-primary">Mis Reservas</h1>
                 {loading ? (<Spinner />) : (
                     <table className="table">
                         <thead>

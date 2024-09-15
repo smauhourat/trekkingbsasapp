@@ -24,6 +24,7 @@ import PrivateRoutesAdmin from './components/routing/PrivateRoutesAdmin';
 import MaintenanceRoute from './components/routing/MaintenanceRoute';
 import ContactForm from './components/contact/ContactForm';
 import Company from './components/static/Company';
+import Test from './components/static/Test';
 import Conditions from './components/static/Conditions';
 import Calendar from './components/calendar/Calendar';
 import { LOGOUT } from './actions/types';
@@ -90,6 +91,7 @@ const App = () => {
               <Route path="trip-details/:id" element={<TripDetails />} />
               <Route path="contact" element={<MaintenanceRoute component={ContactForm} />} />
               <Route path="company" element={<MaintenanceRoute component={Company} />} />
+              <Route path="test" element={<MaintenanceRoute component={Test} />} />
               <Route path="conditions" element={<MaintenanceRoute component={Conditions} />} />
               <Route path="calendar" element={<MaintenanceRoute component={Calendar} />} />
               <Route path="booking-failure/*" element={<BookingFailure />} />

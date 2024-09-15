@@ -52,6 +52,7 @@ const Book = ({
 
                     </div>
                 </div>
+                <div className="mt-15"></div>
                 <div className='profile-edu bg-white p-1'>
                     <h2 className='text-primary'>Tus Datos</h2>
                     <div>
