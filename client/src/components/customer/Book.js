@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createBook } from '../../services';
@@ -12,10 +12,13 @@ const Book = ({
     auth: { user, customer },
     setAlert
 }) => {
-    console.log("selectedTrip =>", selectedTrip)
-    console.log("user =>", user)
-    console.log("customer =>", customer)
+    // console.log("selectedTrip =>", selectedTrip)
+    // console.log("user =>", user)
+    // console.log("customer =>", customer)
+
     const navigate = useNavigate()
+
+    const goBack = () => navigate(-1);
 
     const handleBook = async (e) => {
         try {
@@ -62,6 +65,7 @@ const Book = ({
                     </div>
                 </div>                
                 <div className='mt-15'>
+                    <input type='button' className='btn btn-primary' value='Volver' onClick={goBack} />
                     <input type='button' className='btn btn-primary' value='Continuar' onClick={handleBook} />
                 </div>
             </section>
