@@ -30,6 +30,16 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
     return training_level_description;
   }
 
+  const showBookButton = () => {
+    if (
+      ((selectedTrip?.quota - selectedTrip?.reservations) > 0) && (selectedTrip.price > 0) && (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate))
+    ) {
+      return true
+    }
+
+    return false
+  }
+
   const handleBookMP = async (e) => {
     try {
       const tripId = id;
@@ -114,19 +124,15 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
                 <Link to={'/trips'} state={{ data: selectedTrip }} className='btn btn-primary'>
                   <i className='text-primary' /> Volver
                 </Link>
-                {((selectedTrip?.quota - selectedTrip?.reservations) > 0) &&
-                  (selectedTrip.price) &&
-                  (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate)) && 
+                {
+                  showBookButton() && 
                   (
                     <Link to={'/trip-book/' + selectedTrip._id} state={{ data: selectedTrip }} className='btn btn-primary'>
                       <i className='text-primary' /> Reservar
                     </Link>                
-                  )}
+                  )
+                }
 
-                {/* {((selectedTrip?.quota - selectedTrip?.reservations) > 0) &&
-                (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate)) && (
-                  <input type="button" className="btn btn-secondary" value="Reservar (Pago)" onClick={handleBookMP} />
-                )} */}
               </div>
 
               <div className='profile-edu bg-white p-2'>
