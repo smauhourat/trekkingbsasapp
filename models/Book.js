@@ -29,6 +29,28 @@ const BookSchema = new mongoose.Schema({
         default: 'pending'
     },
 
+    accounts: [
+        {
+            bank: {
+                type: String
+            },
+            currency: {
+                type: String
+            },
+            account_type: {
+                type: String
+            },
+            account_number: {
+                type: String
+            },
+            account_cbu: {
+                type: String
+            },
+            account_alias: {
+                type: String
+            },
+        }
+    ],
     transaction_number: {
         type: Number
     }

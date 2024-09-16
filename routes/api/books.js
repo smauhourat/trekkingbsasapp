@@ -10,8 +10,15 @@ const Book = require('../../models/Book');
 const Trip = require('../../models/Trip');
 const Customer = require('../../models/Customer');
 const User = require('../../models/User');
+const Account = require('../../models/Account');
 const transporter = require('../../config/mailer');
 const { getBaseUrl } = require('../../config/config')
+
+// const getActiveAccounts = async () => {
+//   const res = await Account.find({ active: true })
+
+//   return res
+// }
 
 // @route   POST api/books
 // @desc    Add Book
@@ -50,18 +57,19 @@ router.post('/',
 
     if (!tripDb) return res.status(400).send({ message: "El evento expiro" })
 
+    const accounts = await Account.find({ active: true }).select(['-_id', '-createdAt', '-updatedAt', '-__v', '-active'])
+    // console.log('accounts =>', accounts)
+
     try {
       let newBook = new Book({
         trip: trip,
         customer: customer,
         price,
         description,
+        accounts
       })
 
       const book = await newBook.save()
-      // console.log(book)
-      // console.log(book.customer)
-      // console.log('baseUrl', await getBaseUrl(req))
       await sendBookingCustomerMail(await getBaseUrl(req), book)
       res.json(book)
     }

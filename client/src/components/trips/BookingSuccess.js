@@ -24,6 +24,20 @@ const BookingSuccess = ({
                     <p className="mt-10">Para completar el proceso, realice la <strong>Transferencia o Deposito</strong> informando el nro. de transaccion al mail ventas@trekkingbuenosaires.com.ar</p>
                     <div className="mt-25"></div>
                     <h2>COD RESERVA: {selectedBook.description}</h2>
+                    <div className="mt-25"></div>
+                    <div className="fit-content bg-body-gray-500 rounded p-5">
+                    {selectedBook.accounts.map((account) => {
+                      return (
+                          <>
+                            <h3>{account.bank}</h3>
+                            <p>{account.account_type} - {account.currency} Nro {account.account_number}</p>
+                            <p>CBU: <strong>{account.account_cbu}</strong></p>
+                            <p>Aias: <strong>{account.account_alias}</strong></p>
+                            <div className="mt-15"></div>
+                          </>
+                      )
+                    })}
+                    </div>
                     <Link to='/books' className="btn btn-success mt-15">
                         Ver Reservas
                     </Link>
