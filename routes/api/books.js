@@ -13,6 +13,9 @@ const User = require('../../models/User');
 const Account = require('../../models/Account');
 const transporter = require('../../config/mailer');
 const { getBaseUrl } = require('../../config/config')
+// const sequenceNumber = require('../../utils/sequenceNumber')
+// const fillWithZeros = require('../../utils/fillWithZeros')
+const getBookCode = require('../../utils/getBookCode')
 
 // @route   POST api/books
 // @desc    Add Book
@@ -53,8 +56,10 @@ router.post('/',
 
     const accounts = await Account.find({ active: true }).select(['-_id', '-createdAt', '-updatedAt', '-__v', '-active'])
 
+    const code = await getBookCode()
     try {
       const book = await new Book({
+        code: code,
         trip: trip,
         customer: customer,
         price,
@@ -374,11 +379,11 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
   const mail = {
     from: global.env.contact_user,
     to: user.email,
-    subject: `Reserva - ${book.description}`,
+    subject: `Reserva - ${book.code}  - ${book.description}`,
     text: boolDetailslink,
     html: `<p>Hola ${customer.first_name} gracias por elegirnos!!</p>
     <br>
-    <p>Recibimos tu RESERVA correctamente, COD: ${book._id}</p>
+    <p>Recibimos tu RESERVA correctamente, <strong>${book.code}</strong></p>
     <p><a href="${boolDetailslink}">Ver Detalle</a></p>
     <br>
     <p>Para completar el proceso, realice la Transferencia o Deposito en alguna de las siguientes cuentas</p>

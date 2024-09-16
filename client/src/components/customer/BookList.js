@@ -30,7 +30,7 @@ const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
                             {data?.map((book) => {
                                 return (
                                     <tr key={book._id}>
-                                        <td>RES-{book._id.substring(19, 25)}</td>
+                                        <td>{book.code}</td>
                                         <td className="no-wrap">{book.description}</td>
                                         <td>{book.date}</td>
                                         <td>{book.status}</td>

@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const BookSchema = new mongoose.Schema({
+    code: {
+        type: String,
+        required: true
+    },
 
     trip: {
         type: Schema.Types.ObjectId,
