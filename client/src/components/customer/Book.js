@@ -12,9 +12,6 @@ const Book = ({
     auth: { user, customer },
     setAlert
 }) => {
-    // console.log("selectedTrip =>", selectedTrip)
-    // console.log("user =>", user)
-    // console.log("customer =>", customer)
 
     const navigate = useNavigate()
 

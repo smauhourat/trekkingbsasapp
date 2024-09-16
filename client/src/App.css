@@ -7,7 +7,8 @@
   --danger-color: #dc3545;
   --success-color: #28a745;
   --disabled-color: #c4bbbb;
-  --bg-color-gray-400:#f2f6f9;
+  --bg-color-gray-400: #f2f6f9;
+  --bg-color-gray-500: #bacede;
 }
 
 * {
@@ -1473,7 +1474,7 @@ nav a:focus {
 /* Deafult Margin & Padding */
 
 .p-5 {
-  padding: 3rem!important
+  padding: 3rem !important
 }
 
 /*-- Margin Top --*/
@@ -1826,4 +1827,13 @@ nav a:focus {
 .bg-body-gray {
   background-color: var(--bg-color-gray-400);
   opacity: 0.8;
+}
+
+.bg-body-gray-500 {
+  background-color: var(--bg-color-gray-500);
+  /* opacity: 0.8; */
+}
+
+.fit-content {
+  width: max-content;
 }
