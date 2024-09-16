@@ -10,8 +10,7 @@ const Book = require('../../models/Book');
 const Trip = require('../../models/Trip');
 const Customer = require('../../models/Customer');
 const User = require('../../models/User');
-//const transporter = require('../../config/mailer');
-const { sendEmail } = require('../../utils/emailService')
+const transporter = require('../../config/mailer');
 const { getBaseUrl } = require('../../config/config')
 
 // @route   POST api/books
@@ -357,31 +356,30 @@ const incrementReservationTrip = async (id) => {
 // TODO: reemplazar el mail destino por el del usuario
 const sendBookingCustomerMail = async (baseUrl, book) => {
   const customer = await Customer.findById(book.customer)
-  // const user = await User.findById(book.customer)
+  const user = await User.findById(book.customer)
 
-  const boolDetailslink = `${baseUrl}/book-details/${book._id}`
+  //const boolDetailslink = `${baseUrl}/book-details/${book._id}`
+  const boolDetailslink = `${baseUrl}/booking-success/${book._id}`
 
-  
   const mail = {
     from: global.env.contact_user,
-    to: 'santiagomauhourat@hotmail.com', //user.email,
+    to: user.email,
     subject: `Reserva - ${book.description}`,
     text: boolDetailslink,
     html: `<p>Hola ${customer.first_name} gracias por elegirnos!!</p><br><p>Recibimos tu RESERVA correctamente, COD: ${book._id}</p><p><a href="${boolDetailslink}">Ver Detalle</a></p>`
   }
-  try {
-    await sendEmail(mail)
-    return ({
-      status: 'success',
-      message: 'El mail ha sido enviado con exito'
-    })
-  } catch (err) {
-    return ({
-      status: 'fail',
-      message: 'Error enviando el mail'
-    })
-  }
-  
+
+  transporter.sendMail(mail, (err, data) => {
+    if (err) {
+      res.json({
+        status: 'fail'
+      })
+    } else {
+      res.json({
+        status: 'success'
+      })
+    }
+  })
 }
 
 // @route    POST api/books/process-order

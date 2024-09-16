@@ -17,7 +17,8 @@ export const createBookOrder = async (bookData, orderData) => {
 
 export const createBook = async (customer, trip, price, description) => {
     try {
-        const book = await api.post(`/books/`, { customer, trip, price, description })
+        const res = await api.post(`/books/`, { customer, trip, price, description })
+        const book = res.data
         
         return book
     } catch (err) {
