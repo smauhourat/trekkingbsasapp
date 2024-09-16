@@ -61,15 +61,14 @@ router.post('/',
     // console.log('accounts =>', accounts)
 
     try {
-      let newBook = new Book({
+      const book = await new Book({
         trip: trip,
         customer: customer,
         price,
         description,
         accounts
-      })
+      }).save()
 
-      const book = await newBook.save()
       await sendBookingCustomerMail(await getBaseUrl(req), book)
       res.json(book)
     }
@@ -361,20 +360,42 @@ const incrementReservationTrip = async (id) => {
   return trip;
 }
 
-// TODO: reemplazar el mail destino por el del usuario
 const sendBookingCustomerMail = async (baseUrl, book) => {
   const customer = await Customer.findById(book.customer)
   const user = await User.findById(book.customer)
 
   //const boolDetailslink = `${baseUrl}/book-details/${book._id}`
   const boolDetailslink = `${baseUrl}/booking-success/${book._id}`
+  const accountsHtml = book.accounts.map((account) => {
+    console.log('account.account_alias', account.account_alias === undefined)
+    return (
+      "<p><strong>" + account.bank + "</strong></p>" +
+      "<p>" + account.account_type + " - " + account.currency + " Nro " + account.account_number + "</p>" +
+      "<p>CBU: <strong>" + account.account_cbu + "</strong></p>" +
+      "<p>Alias: <strong>" + (account.account_alias !== undefined ? account.account_alias : "-") + "</strong></p>" +
+      "<br>"
+    )
+  })
+
 
   const mail = {
     from: global.env.contact_user,
     to: user.email,
     subject: `Reserva - ${book.description}`,
     text: boolDetailslink,
-    html: `<p>Hola ${customer.first_name} gracias por elegirnos!!</p><br><p>Recibimos tu RESERVA correctamente, COD: ${book._id}</p><p><a href="${boolDetailslink}">Ver Detalle</a></p>`
+    html: `<p>Hola ${customer.first_name} gracias por elegirnos!!</p>
+    <br>
+    <p>Recibimos tu RESERVA correctamente, COD: ${book._id}</p>
+    <p><a href="${boolDetailslink}">Ver Detalle</a></p>
+    <br>
+    <p>Para completar el proceso, realice la Transferencia o Deposito en alguna de las siguientes cuentas</p>
+    <br>
+    ${accountsHtml}
+    <br>
+    <p>Por favor adjunte el comprobante <a href="${boolDetailslink}">aqui</a> o bien envienos un mail a ventas@trekkingbuenosaires.com.ar</p>
+    <br>
+    <p>Muchas Gracias</p>
+    `
   }
 
   transporter.sendMail(mail, (err, data) => {
