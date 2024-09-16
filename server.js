@@ -39,6 +39,7 @@ app.use('/api/trips/:id/images', require('./routes/api/images'));
 app.use('/api/contact', require('./routes/api/contact'));
 app.use('/api/appconf', require('./routes/api/appconf'));
 app.use('/api/books', require('./routes/api/books'));
+app.use('/api/tests', require('./routes/api/tests'));
 
 console.log('SERVER ENVIRONMENT: ', process.env.NODE_ENV)
 

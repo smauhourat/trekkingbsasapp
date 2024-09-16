@@ -1,8 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import api from '../../utils/api';
 
-const Test = props => {
+const Test = () => {
     
+    api.get(`/tests/`).then((res) => console.log(res))
+
       return (
         <section className="container">
             <div className="bg-body-gray rounded p-5">

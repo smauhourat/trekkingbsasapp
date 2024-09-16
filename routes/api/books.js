@@ -5,11 +5,14 @@ const auth = require('../../middleware/auth');
 const authAdmin = require('../../middleware/authAdmin');
 const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
-const mercadopage = require("mercadopago");
+// const mercadopage = require("mercadopago");
 const Book = require('../../models/Book');
 const Trip = require('../../models/Trip');
 const Customer = require('../../models/Customer');
-const transporter = require('../../config/mailer');
+const User = require('../../models/User');
+//const transporter = require('../../config/mailer');
+const { sendEmail } = require('../../utils/emailService')
+const { getBaseUrl } = require('../../config/config')
 
 // @route   POST api/books
 // @desc    Add Book
@@ -54,14 +57,18 @@ router.post('/',
         customer: customer,
         price,
         description,
-      });
+      })
 
-      const book = await newBook.save();
-      res.json(book);
+      const book = await newBook.save()
+      // console.log(book)
+      // console.log(book.customer)
+      // console.log('baseUrl', await getBaseUrl(req))
+      await sendBookingCustomerMail(await getBaseUrl(req), book)
+      res.json(book)
     }
     catch (err) {
-      console.error(err);
-      res.status(500).send(err);
+      console.error(err)
+      res.status(500).send(err)
     }
 
   }
@@ -342,208 +349,207 @@ router.post('/:id/payment',
     }
   })
 
-// @route    POST api/books/create-order
-// @desc     Create Payment Order for Book
-// @access   Private  
-router.post('/create-order', [
-  check('title', 'title es requerido').not().isEmpty(),
-  check('item_id', 'item_id es requerido').not().isEmpty(),
-  check('description', 'description es requerido').not().isEmpty(),
-  check('unit_price', 'unit_price es requerido').not().isEmpty(),
-  check('currency_id', 'currency_id es requerido').not().isEmpty(),
-  check('quantity', 'quantity es requerido').not().isEmpty(),
-  check('bookId', 'bookId es requerido').not().isEmpty(),
-], async (req, res) => {
-  mercadopage.configure({
-    access_token: global.env.mp_api_key,
-    client_secret: global.env.mp_client_id,
-    client_id: global.env.mp_client_secret
-  });
-
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const { item_id, title, description, unit_price, currency_id, quantity, bookId } = req.body;
-
-  try {
-    const result = await mercadopage.preferences.create({
-      items: [
-        {
-          id: item_id,
-          title: description,
-          description: description,
-          unit_price: unit_price,
-          currency_id: currency_id,
-          quantity: quantity,
-          picture_url: 'http://www.trekkingbuenosaires.com/static/media/logo.dea47b25aa3249587ec6.svg'
-        },
-      ],
-      statement_descriptor: "TrekkingBuenosAires.com",
-      payment_methods: {
-        installments: 1
-      },
-      external_reference: bookId,
-      auto_return: "approved",
-      //notification_url: `https://trekkingbsastest.adhentux.com/api/webhook/webhook`,
-      notification_url: `https://95a7-200-127-254-34.ngrok-free.app/api/books/process-order`,
-      back_urls: {
-        success: `https://95a7-200-127-254-34.ngrok-free.app/booking-success`,
-        failure: `https://95a7-200-127-254-34.ngrok-free.app/booking-failure`
-        // success: `https://trekkingbsastest.adhentux.com/booking-success`,
-        // failure: `https://trekkingbsastest.adhentux.com/booking-failure`
-      },
-    });
-
-    res.status(200).send({ url_redirect: result.body.init_point });
-  } catch (error) {
-    console.log(error)
-    return res.status(500).json({ message: "Something goes wrong" });
-  }
-});
-
-const updateOrder = async (data) => {
-  const {
-    external_reference: bookId,
-    id: _merchant_order_id,
-    order_status: merchant_order_status,
-    total_amount: merchant_order_total_amount,
-    payer,
-    payments,
-  } = data;
-  const payment = payments[0];
-  const updatedBook = {
-    bookId,
-    _merchant_order_id,
-    merchant_order_status,
-    merchant_order_total_amount,
-    _payer_id: payer?.id,
-    _payment_id: payment?.id,
-    payment_date_approved: payment?.date_approved,
-    payment_status: payment?.status,
-    payment_status_detail: payment?.status_detail,
-    payment_operation_type: payment?.operation_type,
-    payment_transaction_amount: payment?.transaction_amount
-  };
-
-  if ((updatedBook.merchant_order_total_amount === updatedBook.payment_transaction_amount) &&
-    (updatedBook.merchant_order_status === 'paid') &&
-    (updatedBook.payment_status === 'approved')
-  ) {
-    updatedBook['status'] = 'paid';
-  }
-
-  console.log('updateOrder: ', updatedBook);
-  const book = await Book.findByIdAndUpdate(bookId, updatedBook, { new: true });
-  return book;
-}
-
-const updatePayment = async (data) => {
-  const {
-    external_reference: bookId,
-    money_release_date: payment_money_release_date,
-    payment_type,
-    transaction_details: { net_received_amount }
-  } = data;
-  console.log(net_received_amount)
-  const updatedBook = {
-    bookId,
-    payment_money_release_date,
-    payment_type,
-    payment_net_received_amount: net_received_amount
-  }
-
-  console.log('updatePayment: ', updatedBook);
-  const book = await Book.findByIdAndUpdate(bookId, updatedBook, { new: true });
-  return book;
-}
-
 const incrementReservationTrip = async (id) => {
   const trip = await Trip.findByIdAndUpdate(id, { $inc: { reservations: 1 } }, { new: true });
   return trip;
 }
 
-const sendMailBookingCustomer = async (data) => {
+// TODO: reemplazar el mail destino por el del usuario
+const sendBookingCustomerMail = async (baseUrl, book) => {
+  const customer = await Customer.findById(book.customer)
+  // const user = await User.findById(book.customer)
 
-  // esto tiene q ir contra la tabla de Customer
-  const customer = await Customer.findById(data.customer);
+  const boolDetailslink = `${baseUrl}/book-details/${book._id}`
 
-  const link = `http://localhost:4000/customer/book-detail/${data._id}`;
+  
   const mail = {
     from: global.env.contact_user,
-    to: 'santiagomauhourat@hotmail.com',//customer.email,
-    subject: `Reserva - ${data.description}`,
-    text: link,
-    html: `<p>Hola ${customer.first_name} gracias por elegirnos!!</p><br><p>Recibimos tu RESERVA correctamente, COD: ${data._id}</p><p><a href="${link}">Ver Detalle</a></p>`
+    to: 'santiagomauhourat@hotmail.com', //user.email,
+    subject: `Reserva - ${book.description}`,
+    text: boolDetailslink,
+    html: `<p>Hola ${customer.first_name} gracias por elegirnos!!</p><br><p>Recibimos tu RESERVA correctamente, COD: ${book._id}</p><p><a href="${boolDetailslink}">Ver Detalle</a></p>`
   }
-
-  transporter.sendMail(mail, (err, data) => {
-    if (err) {
-      res.json({
-        status: 'fail',
-        message: 'Error enviando el mail'
-      })
-    } else {
-      res.json({
-        status: 'success',
-        message: 'El mail ha sido enviado con exito'
-      })
-    }
-  });
-
+  try {
+    await sendEmail(mail)
+    return ({
+      status: 'success',
+      message: 'El mail ha sido enviado con exito'
+    })
+  } catch (err) {
+    return ({
+      status: 'fail',
+      message: 'Error enviando el mail'
+    })
+  }
+  
 }
 
 // @route    POST api/books/process-order
 // @desc     Process Payment Order for Book
 // @access   Private  
-router.post('/process-order', async (req, res) => {
-  // Si el pago fue exitoso, guardamos la orden de compra con el pago correspondiente asociado al usuario.
-  // Decrementamos en 1 la disponibilidad del Evento
-  mercadopage.configure({
-    access_token: global.env.mp_api_key,
-    client_secret: global.env.mp_client_id,
-    client_id: global.env.mp_client_secret
-  });
+// router.post('/process-order', async (req, res) => {
+//   // Si el pago fue exitoso, guardamos la orden de compra con el pago correspondiente asociado al usuario.
+//   // Decrementamos en 1 la disponibilidad del Evento
+//   mercadopage.configure({
+//     access_token: global.env.mp_api_key,
+//     client_secret: global.env.mp_client_id,
+//     client_id: global.env.mp_client_secret
+//   });
 
-  const { query } = req;
-  console.log('query:', query);
+//   const { query } = req;
+//   console.log('query:', query);
 
-  const topic = query.topic || query.type;
+//   const topic = query.topic || query.type;
 
-  try {
-    if (topic === "merchant_order") {
-      const merchantOrderId = query.id;
-      const merchantOrder = await mercadopage.merchant_orders.findById(Number(merchantOrderId));
+//   try {
+//     if (topic === "merchant_order") {
+//       const merchantOrderId = query.id;
+//       const merchantOrder = await mercadopage.merchant_orders.findById(Number(merchantOrderId));
 
-      console.log('---------------- COMIENZO RECEPCION ORDER ----------------');
-      console.log(merchantOrder);
-      console.log('---------------- FIN RECEPCION ORDER ----------------');
-      const book = await updateOrder(merchantOrder.body);
-      if (book.status === 'paid') {
-        //increment reservations
-        incrementReservationTrip(book.trip);
-        //send mail to customer with booking data
-        sendMailBookingCustomer(book);
-      }
-    }
-    if (topic === "payment") {
-      const paymentId = query.id || query["data.id"];
-      const payment = await mercadopage.payment.findById(Number(paymentId));
+//       console.log('---------------- COMIENZO RECEPCION ORDER ----------------');
+//       console.log(merchantOrder);
+//       console.log('---------------- FIN RECEPCION ORDER ----------------');
+//       const book = await updateOrder(merchantOrder.body);
+//       if (book.status === 'paid') {
+//         //increment reservations
+//         incrementReservationTrip(book.trip);
+//         //send mail to customer with booking data
+//         sendMailBookingCustomer(book);
+//       }
+//     }
+//     if (topic === "payment") {
+//       const paymentId = query.id || query["data.id"];
+//       const payment = await mercadopage.payment.findById(Number(paymentId));
 
-      console.log('---------------- COMIENZO RECEPCION PAYMENT ----------------');
-      console.log(payment);
-      console.log('---------------- FIN RECEPCION PAYMENT ----------------');
-      await updatePayment(payment.body);
-    }
+//       console.log('---------------- COMIENZO RECEPCION PAYMENT ----------------');
+//       console.log(payment);
+//       console.log('---------------- FIN RECEPCION PAYMENT ----------------');
+//       await updatePayment(payment.body);
+//     }
 
-    res.status(204).json({ message: "callback succefully processed" });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: "Something goes wrong" });
-  }
-});
+//     res.status(204).json({ message: "callback succefully processed" });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ message: "Something goes wrong" });
+//   }
+// });
 
+// @route    POST api/books/create-order
+// @desc     Create Payment Order for Book
+// @access   Private  
+// router.post('/create-order', [
+//   check('title', 'title es requerido').not().isEmpty(),
+//   check('item_id', 'item_id es requerido').not().isEmpty(),
+//   check('description', 'description es requerido').not().isEmpty(),
+//   check('unit_price', 'unit_price es requerido').not().isEmpty(),
+//   check('currency_id', 'currency_id es requerido').not().isEmpty(),
+//   check('quantity', 'quantity es requerido').not().isEmpty(),
+//   check('bookId', 'bookId es requerido').not().isEmpty(),
+// ], async (req, res) => {
+//   mercadopage.configure({
+//     access_token: global.env.mp_api_key,
+//     client_secret: global.env.mp_client_id,
+//     client_id: global.env.mp_client_secret
+//   });
+
+//   const errors = validationResult(req);
+//   if (!errors.isEmpty()) {
+//     return res.status(400).json({ errors: errors.array() });
+//   }
+
+//   const { item_id, title, description, unit_price, currency_id, quantity, bookId } = req.body;
+
+//   try {
+//     const result = await mercadopage.preferences.create({
+//       items: [
+//         {
+//           id: item_id,
+//           title: description,
+//           description: description,
+//           unit_price: unit_price,
+//           currency_id: currency_id,
+//           quantity: quantity,
+//           picture_url: 'http://www.trekkingbuenosaires.com/static/media/logo.dea47b25aa3249587ec6.svg'
+//         },
+//       ],
+//       statement_descriptor: "TrekkingBuenosAires.com",
+//       payment_methods: {
+//         installments: 1
+//       },
+//       external_reference: bookId,
+//       auto_return: "approved",
+//       //notification_url: `https://trekkingbsastest.adhentux.com/api/webhook/webhook`,
+//       notification_url: `https://95a7-200-127-254-34.ngrok-free.app/api/books/process-order`,
+//       back_urls: {
+//         success: `https://95a7-200-127-254-34.ngrok-free.app/booking-success`,
+//         failure: `https://95a7-200-127-254-34.ngrok-free.app/booking-failure`
+//         // success: `https://trekkingbsastest.adhentux.com/booking-success`,
+//         // failure: `https://trekkingbsastest.adhentux.com/booking-failure`
+//       },
+//     });
+
+//     res.status(200).send({ url_redirect: result.body.init_point });
+//   } catch (error) {
+//     console.log(error)
+//     return res.status(500).json({ message: "Something goes wrong" });
+//   }
+// });
+
+// const updateOrder = async (data) => {
+//   const {
+//     external_reference: bookId,
+//     id: _merchant_order_id,
+//     order_status: merchant_order_status,
+//     total_amount: merchant_order_total_amount,
+//     payer,
+//     payments,
+//   } = data;
+//   const payment = payments[0];
+//   const updatedBook = {
+//     bookId,
+//     _merchant_order_id,
+//     merchant_order_status,
+//     merchant_order_total_amount,
+//     _payer_id: payer?.id,
+//     _payment_id: payment?.id,
+//     payment_date_approved: payment?.date_approved,
+//     payment_status: payment?.status,
+//     payment_status_detail: payment?.status_detail,
+//     payment_operation_type: payment?.operation_type,
+//     payment_transaction_amount: payment?.transaction_amount
+//   };
+
+//   if ((updatedBook.merchant_order_total_amount === updatedBook.payment_transaction_amount) &&
+//     (updatedBook.merchant_order_status === 'paid') &&
+//     (updatedBook.payment_status === 'approved')
+//   ) {
+//     updatedBook['status'] = 'paid';
+//   }
+
+//   console.log('updateOrder: ', updatedBook);
+//   const book = await Book.findByIdAndUpdate(bookId, updatedBook, { new: true });
+//   return book;
+// }
+
+// const updatePayment = async (data) => {
+//   const {
+//     external_reference: bookId,
+//     money_release_date: payment_money_release_date,
+//     payment_type,
+//     transaction_details: { net_received_amount }
+//   } = data;
+//   console.log(net_received_amount)
+//   const updatedBook = {
+//     bookId,
+//     payment_money_release_date,
+//     payment_type,
+//     payment_net_received_amount: net_received_amount
+//   }
+
+//   console.log('updatePayment: ', updatedBook);
+//   const book = await Book.findByIdAndUpdate(bookId, updatedBook, { new: true });
+//   return book;
+// }
 
 
 module.exports = router;

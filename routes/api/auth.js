@@ -103,7 +103,7 @@ router.post('/forgot-password', async (req, res) => {
     }
 
     transporter.sendMail(mail, (err, data) => {
-      if (err) {
+      if (err) {proxy
         res.json({
           status: 'fail',
           message: 'Error enviando el mail'
