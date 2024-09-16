@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getBook } from '../../actions/book';
+import AccountsInfo from '../child/AccountsInfo'
 
 const BookingSuccess = ({
     getBook,
@@ -25,19 +26,7 @@ const BookingSuccess = ({
                     <div className="mt-25"></div>
                     <h2>COD RESERVA: {selectedBook.description}</h2>
                     <div className="mt-25"></div>
-                    <div className="fit-content bg-body-gray-500 rounded p-5">
-                    {selectedBook.accounts.map((account) => {
-                      return (
-                          <>
-                            <h3>{account.bank}</h3>
-                            <p>{account.account_type} - {account.currency} Nro {account.account_number}</p>
-                            <p>CBU: <strong>{account.account_cbu}</strong></p>
-                            <p>Aias: <strong>{account.account_alias}</strong></p>
-                            <div className="mt-15"></div>
-                          </>
-                      )
-                    })}
-                    </div>
+                    {selectedBook.accounts.length >= 0 && <AccountsInfo accounts={selectedBook.accounts} />}
                     <Link to='/books' className="btn btn-success mt-15">
                         Ver Reservas
                     </Link>
