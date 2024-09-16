@@ -19,7 +19,7 @@ const Book = ({
 
     const handleBook = async (e) => {
         try {
-            const res = await createBook(customer._id, selectedTrip._id, selectedTrip.price, `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`)
+            const res = await createBook(customer._id, selectedTrip._id, selectedTrip.booking_price, `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`)
             if (res)
                 navigate(`/booking-success/${res._id}`)
         } catch (err) {

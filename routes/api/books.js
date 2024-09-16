@@ -14,12 +14,6 @@ const Account = require('../../models/Account');
 const transporter = require('../../config/mailer');
 const { getBaseUrl } = require('../../config/config')
 
-// const getActiveAccounts = async () => {
-//   const res = await Account.find({ active: true })
-
-//   return res
-// }
-
 // @route   POST api/books
 // @desc    Add Book
 // @access  Private
@@ -58,7 +52,6 @@ router.post('/',
     if (!tripDb) return res.status(400).send({ message: "El evento expiro" })
 
     const accounts = await Account.find({ active: true }).select(['-_id', '-createdAt', '-updatedAt', '-__v', '-active'])
-    // console.log('accounts =>', accounts)
 
     try {
       const book = await new Book({
@@ -392,7 +385,7 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
     <br>
     ${accountsHtml}
     <br>
-    <p>Por favor adjunte el comprobante <a href="${boolDetailslink}">aqui</a> o bien envienos un mail a ventas@trekkingbuenosaires.com.ar</p>
+    <p>Por favor ingrese el nro de transaccion <a href="${boolDetailslink}">aqui</a> o bien envienos un mail con el comprobante a ventas@trekkingbuenosaires.com.ar</p>
     <br>
     <p>Muchas Gracias</p>
     `
