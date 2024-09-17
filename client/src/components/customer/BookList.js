@@ -24,19 +24,19 @@ const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
                                 <th className="no-wrap">Fecha</th>
                                 <th className="no-wrap">Estado</th>
                                 <th className="no-wrap">Precio</th>
-                                <th className="no-wrap">Forma de Pago</th>
+                                <th className="no-wrap">Comprobante</th>
                             </tr>
                         </thead>
                         <tbody>
                             {data?.map((book) => {
                                 return (
-                                    <tr key={book._id}>
+                                    <tr key={book._id} className="yellow">
                                         <td>{book.code}</td>
                                         <td className="no-wrap">{book.description}</td>
                                         <td>{formatDate(book.createdAt)}</td>
                                         <td>{book.status}</td>
                                         <td>${book.price}</td>
-                                        <td>{book.payment_operation_type}</td>
+                                        <td>{book.transaction_number}</td>
                                     </tr>)
                             })}
                         </tbody>

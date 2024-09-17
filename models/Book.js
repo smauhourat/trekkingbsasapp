@@ -56,7 +56,7 @@ const BookSchema = new mongoose.Schema({
         }
     ],
     transaction_number: {
-        type: Number
+        type: String
     }
 
 }, { timestamps: true });

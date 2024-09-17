@@ -9,6 +9,10 @@
   --disabled-color: #c4bbbb;
   --bg-color-gray-400: #f2f6f9;
   --bg-color-gray-500: #bacede;
+  --bg-color-light-green: #b8d3be;
+  --bg-color-light-yellow: #f3fca2;
+  --bg-color-light-red: #e6bbbf;
+
 }
 
 * {
@@ -658,6 +662,14 @@ button {
 
 .table tfoot td {
   background: var(--light-color);
+}
+
+.table tr .green {
+  background-color: var(--bg-color-light-green);
+}
+
+.table tr .yellow {
+  background-color: var(--bg-color-light-yellow);
 }
 
 /* Menubar */
