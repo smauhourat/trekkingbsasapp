@@ -55,7 +55,7 @@ export default function book(state = initialState, action) {
     case BOOK_UPDATE_SUCCESS:
       return {
         ...state,
-        books: state.books.data.map(item => item._id === payload ? payload : item),
+        books: { metadata: state.books.metadata, data: state.books.data.map(item => item._id === payload._id ? payload : item) },
         selectedBook: {},
         loading: false,
       };

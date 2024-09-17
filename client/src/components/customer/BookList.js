@@ -15,9 +15,6 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
             setItemEdited({ id: id, value: e.target.value, rowIndex: rowIndex})
         else
             setItemEdited({})
-
-        // console.log('e.target.value => ', e.target.value)
-        // console.log('grid item =>', data[rowIndex])
     };
 
     const showButton = (rowIndex) => {
@@ -27,17 +24,12 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
     }
 
     const onAddTransactionNumber = (rowIndex)  => {
-        // console.log(itemEdited)
-        // console.log('rowIndex => ', rowIndex)
         updateBook(itemEdited.id, itemEdited.value)
-        //setSubmited(true)
     }
 
     useEffect(() => {
-        console.log('entro al useEffect()')
         getBooks(auth.user?._id)
-        console.log(data)
-    }, [data]);
+    }, [getBooks, auth.user?._id]);
 
     return (
         <Fragment>
