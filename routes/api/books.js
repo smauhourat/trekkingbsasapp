@@ -344,7 +344,7 @@ router.post('/:id/payment',
       if (bookBefore.status !== "pendiente")
         return res.status(404).json({ message: 'La Reserva no puede modificarse' });
 
-      const book = await Book.findByIdAndUpdate({ _id: req.params.id }, { $set: { transaction_number, status: 'en proceso' } }, { new: true });
+      const book = await Book.findByIdAndUpdate({ _id: req.params.id }, { $set: { transaction_number, status: 'procesando' } }, { new: true });
 
       res.json(book);
 
