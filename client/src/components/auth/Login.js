@@ -15,7 +15,6 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  console.log('from =>', from)
 
   const { email, password } = formData;
 
@@ -29,8 +28,6 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
   }
 
   useEffect(() => {
-    // console.log('isAuthenticated =>', isAuthenticated)
-    // console.log('isAdmin =>', isAdmin)
      if (isAuthenticated) {
        if (location.state?.from) {
          navigate(location.state.from)
