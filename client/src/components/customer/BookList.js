@@ -2,12 +2,13 @@ import React, { Fragment, useEffect, useState } from 'react'
 import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { getBooks } from '../../actions/book'
+import { updateBook, getBooks } from '../../actions/book'
 import formatDate from '../../utils/formatDate'
 
-const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
+const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, auth }) => {
 
     const [itemEdited, setItemEdited] = useState({});
+    //const [submited, setSubmited] = useState(false)
 
     const handleInputChange = (e, rowIndex, id) => {
         if (e.target.value !== "")
@@ -15,8 +16,8 @@ const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
         else
             setItemEdited({})
 
-        console.log('e.target.value => ', e.target.value)
-        console.log('grid item =>', data[rowIndex])
+        // console.log('e.target.value => ', e.target.value)
+        // console.log('grid item =>', data[rowIndex])
     };
 
     const showButton = (rowIndex) => {
@@ -26,13 +27,17 @@ const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
     }
 
     const onAddTransactionNumber = (rowIndex)  => {
-        console.log(itemEdited)
-        console.log('rowIndex => ', rowIndex)
+        // console.log(itemEdited)
+        // console.log('rowIndex => ', rowIndex)
+        updateBook(itemEdited.id, itemEdited.value)
+        //setSubmited(true)
     }
 
     useEffect(() => {
-        getBooks(auth.user?._id);
-    }, [getBooks]);
+        console.log('entro al useEffect()')
+        getBooks(auth.user?._id)
+        console.log(data)
+    }, [data]);
 
     return (
         <Fragment>
@@ -79,6 +84,7 @@ const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
 }
 
 BookList.propTypes = {
+    updateBook: PropTypes.func.isRequired,
     getBooks: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
 }
@@ -88,4 +94,4 @@ const mapStateToProps = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getBooks })(BookList);
+export default connect(mapStateToProps, { updateBook, getBooks })(BookList);

@@ -4,6 +4,8 @@ import {
   BOOK_GET,
   BOOK_ERROR,
   BOOK_GETLIST,
+  BOOK_UPDATE_SUCCESS,
+  BOOK_UPDATE_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -15,7 +17,7 @@ const initialState = {
 
 export default function book(state = initialState, action) {
   const { type, payload } = action;
-
+  console.log('state.books =>', state.books)
   switch (type) {
     case BOOK_GETALL:
       return {
@@ -42,10 +44,18 @@ export default function book(state = initialState, action) {
         selectedBook: {},
         loading: false
       }
+    case BOOK_UPDATE_FAIL:
     case BOOK_ERROR:
       return {
         ...state,
         error: payload,
+        selectedBook: {},
+        loading: false,
+      };
+    case BOOK_UPDATE_SUCCESS:
+      return {
+        ...state,
+        books: state.books.data.map(item => item._id === payload ? payload : item),
         selectedBook: {},
         loading: false,
       };
