@@ -3,6 +3,7 @@ import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getBooks } from '../../actions/book'
+import formatDate from '../../utils/formatDate'
 
 const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
 
@@ -32,7 +33,7 @@ const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
                                     <tr key={book._id}>
                                         <td>{book.code}</td>
                                         <td className="no-wrap">{book.description}</td>
-                                        <td>{book.date}</td>
+                                        <td>{formatDate(book.createdAt)}</td>
                                         <td>{book.status}</td>
                                         <td>${book.price}</td>
                                         <td>{book.payment_operation_type}</td>

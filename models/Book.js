@@ -30,7 +30,7 @@ const BookSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        default: 'pending'
+        default: 'pendiente'
     },
 
     accounts: [

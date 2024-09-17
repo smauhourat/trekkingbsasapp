@@ -176,7 +176,7 @@ router.patch('/:id',
     try {
       const currentBook = await Book.findById(req.params.id);
 
-      if (currentBook.status === "approved" && req.body.status === "pending")
+      if (currentBook.status === "approved" && req.body.status === "pendiente")
         return res.status(404).json({ msg: 'La Reserva no puede pasar a estado pendiente' });
 
       const book = await Book.updateOne({ _id: req.params.id }, { $set: { status: status } });
@@ -341,7 +341,7 @@ router.post('/:id/payment',
 
       const bookBefore = await Book.findById(req.params.id)
 
-      if (bookBefore.status !== "pending")
+      if (bookBefore.status !== "pendiente")
         return res.status(404).json({ message: 'La Reserva no puede modificarse' });
 
       const book = await Book.findByIdAndUpdate({ _id: req.params.id }, { $set: { transaction_number, status: 'paid' } }, { new: true });
