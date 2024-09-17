@@ -62,6 +62,7 @@ export const login = (email, password, navigate) => async dispatch => {
     })
     dispatch(loadUser())
     dispatch(loadCustomer())
+    return false
     // navigate('/')
   } catch (err) {
     const errors = err.response?.data?.errors
@@ -72,6 +73,7 @@ export const login = (email, password, navigate) => async dispatch => {
     dispatch({
       type: LOGIN_FAIL
     })
+    return false
   }
 }
 

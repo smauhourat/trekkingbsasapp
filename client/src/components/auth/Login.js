@@ -25,7 +25,7 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
   const onSubmit = async e => {
     e.preventDefault();
     login(email, password, navigate)
-    navigate(from, { replace: true });
+    // navigate(from, { replace: true })
   }
 
   useEffect(() => {
