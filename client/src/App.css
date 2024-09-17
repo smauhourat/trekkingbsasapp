@@ -612,6 +612,16 @@ img {
   margin: 10px;
 }
 
+.input-text-grid {
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
 /* .form input[type='submit'],
 button {
   font: inherit;
@@ -1163,10 +1173,6 @@ p {
 label {
   font-weight: 550;
   font-size: 1.1rem;
-}
-
-.inline {
-  display: inline-block;
 }
 
 .link {
@@ -1830,6 +1836,9 @@ nav a:focus {
   padding-right: 50px;
 }
 
+.width-100 {
+  width: 100%;
+}
 
 /* Bootstrap inspired */
 .rounded {

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -6,6 +6,29 @@ import { getBooks } from '../../actions/book'
 import formatDate from '../../utils/formatDate'
 
 const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
+
+    const [itemEdited, setItemEdited] = useState({});
+
+    const handleInputChange = (e, rowIndex, id) => {
+        if (e.target.value !== "")
+            setItemEdited({ id: id, value: e.target.value, rowIndex: rowIndex})
+        else
+            setItemEdited({})
+
+        console.log('e.target.value => ', e.target.value)
+        console.log('grid item =>', data[rowIndex])
+    };
+
+    const showButton = (rowIndex) => {
+        if (itemEdited.rowIndex === rowIndex)
+            return true
+        return false
+    }
+
+    const onAddTransactionNumber = (rowIndex)  => {
+        console.log(itemEdited)
+        console.log('rowIndex => ', rowIndex)
+    }
 
     useEffect(() => {
         getBooks(auth.user?._id);
@@ -28,15 +51,23 @@ const BookList = ({ getBooks, book: { books: { data }, loading }, auth }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data?.map((book) => {
+                            {data?.map((book, rowIndex) => {
                                 return (
-                                    <tr key={book._id} className="yellow">
+                                    <tr key={rowIndex} className="yellow">
                                         <td>{book.code}</td>
                                         <td className="no-wrap">{book.description}</td>
                                         <td>{formatDate(book.createdAt)}</td>
                                         <td>{book.status}</td>
                                         <td>${book.price}</td>
-                                        <td>{book.transaction_number}</td>
+                                        <td>
+                                            {book.transaction_number !== undefined ? book.transaction_number : 
+                                            <div className="inline">
+                                                    <input type="text" id={book._id} className="input-text-grid" placeholder='comprobante' onChange={(e) => handleInputChange(e, rowIndex, book._id)}></input>
+                                                    {showButton(rowIndex) && 
+                                                    <button className='btn btn-primary mt-5 width-100' onClick={() => onAddTransactionNumber(rowIndex)}>ok</button>
+                                                    }
+                                            </div>}
+                                        </td>
                                     </tr>)
                             })}
                         </tbody>
