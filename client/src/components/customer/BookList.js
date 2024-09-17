@@ -17,14 +17,24 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
             setItemEdited({})
     };
 
-    const showButton = (rowIndex) => {
+    const showBtnAdd = (rowIndex) => {
         if (itemEdited.rowIndex === rowIndex)
             return true
         return false
     }
 
+    const showBtnEdit = (rowIndex) => {
+        if (itemEdited.rowIndex === rowIndex)
+            return true
+        return false
+    }    
+
     const onAddTransactionNumber = (rowIndex)  => {
         updateBook(itemEdited.id, itemEdited.value)
+    }
+
+    const editTransactionNumber = (rowIndex) => {
+        console.log('Edit =>', rowIndex)
     }
 
     useEffect(() => {
@@ -57,10 +67,21 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                                         <td>{book.status}</td>
                                         <td>${book.price}</td>
                                         <td>
-                                            {book.transaction_number !== undefined ? book.transaction_number : 
+                                            {book.transaction_number !== undefined ? 
+                                            <div className="inline">
+                                                {book.transaction_number}
+                                                <button
+                                                    onClick={() => editTransactionNumber(rowIndex)}
+                                                    className='btn btn-success mt-5 width-100'
+                                                >
+                                                    <i className='fas fa-edit' title='Editar' />
+                                                </button>
+                                            </div>
+                                            
+                                            : 
                                             <div className="inline">
                                                     <input type="text" id={book._id} className="input-text-grid" placeholder='comprobante' onChange={(e) => handleInputChange(e, rowIndex, book._id)}></input>
-                                                    {showButton(rowIndex) && 
+                                                    {showBtnAdd(rowIndex) && 
                                                     <button className='btn btn-primary mt-5 width-100' onClick={() => onAddTransactionNumber(rowIndex)}>ok</button>
                                                     }
                                             </div>}
