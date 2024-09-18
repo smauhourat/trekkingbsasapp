@@ -15,6 +15,7 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
             setItemEdited({ id: id, value: e.target.value, rowIndex: rowIndex})
         else
             setItemEdited({})
+        console.log(itemEdited)
     };
 
     const showBtnAdd = (rowIndex) => {
@@ -31,10 +32,11 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
 
     const onAddTransactionNumber = (rowIndex)  => {
         updateBook(itemEdited.id, itemEdited.value)
+        setItemEdited({})
     }
 
-    const editTransactionNumber = (rowIndex) => {
-        setItemEdited({ id: "id", value: "aaaaaaaaa", rowIndex: rowIndex})
+    const editTransactionNumber = (book, rowIndex) => {
+        setItemEdited({ id: book._id, value: book.transaction_number, rowIndex: rowIndex})
         console.log('Edit =>', rowIndex)
     }
 
@@ -85,8 +87,8 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                                                 <input type="text" 
                                                     id={book._id} 
                                                     className="input-text-grid" 
-                                                    readOnly={(book.transaction_number !== undefined && itemEdited.rowIndex !== rowIndex) ? "readonly" : ""}
-                                                    value={book.transaction_number}
+                                                    readOnly={(itemEdited.rowIndex === rowIndex) ? "" : (book.transaction_number !== undefined ? "" : "")}
+                                                    value={(itemEdited.rowIndex === rowIndex) ? itemEdited.value : book.transaction_number}
                                                     placeholder='comprobante' 
                                                     onChange={(e) => handleInputChange(e, rowIndex, book._id)}>
                                                 </input>
@@ -97,7 +99,7 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                                                 {
                                                     (book.transaction_number !== undefined && itemEdited.rowIndex !== rowIndex)
                                                     ?
-                                                    <button className='btn btn-primary mt-5 width-100' onClick={() => editTransactionNumber(rowIndex)}>edit</button>
+                                                    <button className='btn btn-primary mt-5 width-100' onClick={() => editTransactionNumber(book, rowIndex)}>edit</button>
                                                     :
                                                     <></>
                                                 }
