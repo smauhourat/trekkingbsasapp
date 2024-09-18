@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react'
 import Spinner from '../layout/Spinner';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { updateBook, getBooks } from '../../actions/book'
@@ -64,8 +65,14 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                             {data?.map((book, rowIndex) => {
                                 return (
                                     <tr key={rowIndex} className="yellow">
-                                        <td>{book.code}</td>
-                                        <td className="no-wrap">{book.description}</td>
+                                        <td>
+                                            <Link to={`/trip-details/${book.trip._id}`}>
+                                                {book.code}
+                                            </Link>
+                                        </td>
+                                        <td className="no-wrap">
+                                            {book.description}
+                                        </td>
                                         <td>{formatDate(book.createdAt)}</td>
                                         <td>
                                             <div className={getCssStatusColor(book.status)}>

@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react'
 import Spinner from '../layout/Spinner'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import formatDate from '../../utils/formatDate'
 import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
 import ImageGallery from 'react-image-gallery'
@@ -18,6 +18,10 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
   const currentDate = new Date();
 
   const id = useParams().id
+
+  const navigate = useNavigate()
+
+  const goBack = () => navigate(-1);
 
   useEffect(() => {
     getTrip(id)
@@ -40,42 +44,42 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
     return false
   }
 
-  const handleBookMP = async (e) => {
-    try {
-      const tripId = id;
-      const bookData = {
-        customer: '6487b403410255f5c0148ae1', // Juan Pedro (juanpedro@hotmail.com)
-        trip: tripId,
-        price: selectedTrip.booking_price,
-        description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`
-      };
+  // const handleBookMP = async (e) => {
+  //   try {
+  //     const tripId = id;
+  //     const bookData = {
+  //       customer: '6487b403410255f5c0148ae1', // Juan Pedro (juanpedro@hotmail.com)
+  //       trip: tripId,
+  //       price: selectedTrip.booking_price,
+  //       description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`
+  //     };
 
-      const orderData = {
-        userId: '6487b403410255f5c0148ae1', // Juan Pedro (juanpedro@hotmail.com)
-        item_id: tripId,
-        title: selectedTrip.title,
-        description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`,
-        unit_price: selectedTrip.booking_price,
-        currency_id: 'ARS',
-        quantity: 1
-      };
-      // console.log(bookData);
+  //     const orderData = {
+  //       userId: '6487b403410255f5c0148ae1', // Juan Pedro (juanpedro@hotmail.com)
+  //       item_id: tripId,
+  //       title: selectedTrip.title,
+  //       description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`,
+  //       unit_price: selectedTrip.booking_price,
+  //       currency_id: 'ARS',
+  //       quantity: 1
+  //     };
+  //     // console.log(bookData);
 
-      const res = await createBookOrder(bookData, orderData);
-      console.log(res.data.url_redirect)
-      if (res)
-        window.location.href = res.data.url_redirect;
-      else
-        setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
-    } catch (err) {
-      console.log(err);
-      const errors = err.response.data.errors;
+  //     const res = await createBookOrder(bookData, orderData);
+  //     console.log(res.data.url_redirect)
+  //     if (res)
+  //       window.location.href = res.data.url_redirect;
+  //     else
+  //       setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+  //   } catch (err) {
+  //     console.log(err);
+  //     const errors = err.response.data.errors;
 
-      if (errors) {
-        setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
-      }
-    }
-  }
+  //     if (errors) {
+  //       setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+  //     }
+  //   }
+  // }
 
   return (
     <section className='container'>
@@ -121,9 +125,13 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
               </div>
 
               <div>
-                <Link to={'/trips'} state={{ data: selectedTrip }} className='btn btn-primary'>
+                {/* <Link to={'/trips'} state={{ data: selectedTrip }} className='btn btn-primary'>
                   <i className='text-primary' /> Volver
-                </Link>
+                </Link> */}
+
+                  <Link onClick={(e) => goBack()} className='btn btn-primary'>
+                    <i className='text-primary' /> Volver
+                  </Link>                
                 {
                   showBookButton() && 
                   (
