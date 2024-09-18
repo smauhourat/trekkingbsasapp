@@ -76,6 +76,7 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                                         <td>
                                             {
                                             <div className="inline">
+                                                {book.status !== 'aceptada' ?
                                                 <input type="text" 
                                                     id={book._id} 
                                                     className="input-text-grid" 
@@ -83,6 +84,9 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                                                     placeholder='' 
                                                     onChange={(e) => handleInputChange(e, rowIndex, book._id)}>
                                                 </input>
+                                                :
+                                                book.transaction_number
+                                                }
                                                 {
                                                     showBtnAdd(rowIndex) && 
                                                     <button className='btn btn-success mt-5 width-100' onClick={() => onAddTransactionNumber(rowIndex)}>ok</button>
