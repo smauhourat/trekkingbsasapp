@@ -14,8 +14,8 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
         if (e.target.value !== "")
             setItemEdited({ id: id, value: e.target.value, rowIndex: rowIndex})
         else
-            setItemEdited({})
-        console.log(itemEdited)
+            setItemEdited({ id: id, value: "", rowIndex: rowIndex })
+        // console.log(itemEdited)
     };
 
     const showBtnAdd = (rowIndex) => {
@@ -24,20 +24,20 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
         return false
     }
 
-    const showBtnEdit = (rowIndex) => {
-        if (itemEdited.rowIndex === rowIndex)
-            return true
-        return false
-    }    
-
     const onAddTransactionNumber = (rowIndex)  => {
         updateBook(itemEdited.id, itemEdited.value)
         setItemEdited({})
     }
 
-    const editTransactionNumber = (book, rowIndex) => {
-        setItemEdited({ id: book._id, value: book.transaction_number, rowIndex: rowIndex})
-        console.log('Edit =>', rowIndex)
+    const getCssStatusColor = (status) => {
+        switch (status) {
+            case 'pendiente':
+                return 'bg-danger-light p-05'
+            case 'procesando':
+                return 'bg-warning-light p-05'
+            case 'aceptada':
+                return 'bg-success-light p-05'
+        }
     }
 
     useEffect(() => {
@@ -67,41 +67,25 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                                         <td>{book.code}</td>
                                         <td className="no-wrap">{book.description}</td>
                                         <td>{formatDate(book.createdAt)}</td>
-                                        <td>{book.status}</td>
+                                        <td>
+                                            <div className={getCssStatusColor(book.status)}>
+                                                {book.status}
+                                            </div>
+                                        </td>
                                         <td>${book.price}</td>
                                         <td>
                                             {
-                                            // book.transaction_number !== undefined 
-                                            // ? 
-                                            // <div className="inline">
-                                            //     {book.transaction_number}
-                                            //     <button
-                                            //         onClick={() => editTransactionNumber(rowIndex)}
-                                            //         className='btn btn-success mt-5 width-100'
-                                            //     >
-                                            //         <i className='fas fa-edit' title='Editar' />
-                                            //     </button>
-                                            // </div>
-                                            // : 
                                             <div className="inline">
                                                 <input type="text" 
                                                     id={book._id} 
                                                     className="input-text-grid" 
-                                                    readOnly={(itemEdited.rowIndex === rowIndex) ? "" : (book.transaction_number !== undefined ? "" : "")}
                                                     value={(itemEdited.rowIndex === rowIndex) ? itemEdited.value : book.transaction_number}
-                                                    placeholder='comprobante' 
+                                                    placeholder='' 
                                                     onChange={(e) => handleInputChange(e, rowIndex, book._id)}>
                                                 </input>
                                                 {
                                                     showBtnAdd(rowIndex) && 
                                                     <button className='btn btn-success mt-5 width-100' onClick={() => onAddTransactionNumber(rowIndex)}>ok</button>
-                                                }
-                                                {
-                                                    (book.transaction_number !== undefined && itemEdited.rowIndex !== rowIndex)
-                                                    ?
-                                                    <button className='btn btn-primary mt-5 width-100' onClick={() => editTransactionNumber(book, rowIndex)}>edit</button>
-                                                    :
-                                                    <></>
                                                 }
                                             </div>}
                                         </td>

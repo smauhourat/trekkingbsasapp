@@ -6,6 +6,9 @@
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
+  --success-color-light: #8cc298;
+  --warning-color-light: #d3b97f;
+  --danger-color-light: #d1929c;
   --disabled-color: #c4bbbb;
   --bg-color-gray-400: #f2f6f9;
   --bg-color-gray-500: #bacede;
@@ -355,6 +358,10 @@ img {
 
 /* Padding */
 .p {
+  padding: 0.5rem;
+}
+
+.p-05 {
   padding: 0.5rem;
 }
 
@@ -1857,4 +1864,22 @@ nav a:focus {
 
 .fit-content {
   width: max-content;
+}
+
+.bg-success-light {
+  background: var(--success-color-light);
+  color: #fff;
+  font-weight: 550;
+}
+
+.bg-warning-light {
+  background: var(--warning-color-light);
+  color: #fff;
+  font-weight: 550;
+}
+
+.bg-danger-light {
+  background: var(--danger-color-light);
+  color: #fff;
+  font-weight: 550;
 }

@@ -339,16 +339,17 @@ router.post('/:id/payment',
     try {
       const { transaction_number } = req.body;
 
-      const bookBefore = await Book.findById(req.params.id)
+      // const bookBefore = await Book.findById(req.params.id)
 
       // if (bookBefore.status !== "pendiente")
       //   return res.status(404).json({ message: 'La Reserva no puede modificarse' });
+      const status = transaction_number !== "" ? "procesando" : "pendiente"
 
-      const book = await Book.findByIdAndUpdate({ _id: req.params.id }, { $set: { transaction_number, status: 'procesando' } }, { new: true })
+      const book = await Book.findByIdAndUpdate({ _id: req.params.id }, { $set: { transaction_number, status: status } }, { new: true })
         .populate('trip')
         .populate({ path: 'customer', select: '-password' })
 
-      console.log(book)
+      // console.log(book)
 
       res.json(book);
 
