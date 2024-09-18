@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, useRef } from 'react'
 import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -7,8 +7,8 @@ import formatDate from '../../utils/formatDate'
 
 const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, auth }) => {
 
-    const [itemEdited, setItemEdited] = useState({});
-    //const [submited, setSubmited] = useState(false)
+    const [itemEdited, setItemEdited] = useState({})
+    const refs = useRef([])
 
     const handleInputChange = (e, rowIndex, id) => {
         if (e.target.value !== "")
@@ -34,6 +34,7 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
     }
 
     const editTransactionNumber = (rowIndex) => {
+        setItemEdited({ id: id, value: e.target.value, rowIndex: rowIndex})
         console.log('Edit =>', rowIndex)
     }
 
