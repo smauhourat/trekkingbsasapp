@@ -34,7 +34,7 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
     }
 
     const editTransactionNumber = (rowIndex) => {
-        setItemEdited({ id: id, value: e.target.value, rowIndex: rowIndex})
+        setItemEdited({ id: "id", value: "aaaaaaaaa", rowIndex: rowIndex})
         console.log('Edit =>', rowIndex)
     }
 
@@ -68,23 +68,39 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                                         <td>{book.status}</td>
                                         <td>${book.price}</td>
                                         <td>
-                                            {book.transaction_number !== undefined ? 
+                                            {
+                                            // book.transaction_number !== undefined 
+                                            // ? 
+                                            // <div className="inline">
+                                            //     {book.transaction_number}
+                                            //     <button
+                                            //         onClick={() => editTransactionNumber(rowIndex)}
+                                            //         className='btn btn-success mt-5 width-100'
+                                            //     >
+                                            //         <i className='fas fa-edit' title='Editar' />
+                                            //     </button>
+                                            // </div>
+                                            // : 
                                             <div className="inline">
-                                                {book.transaction_number}
-                                                <button
-                                                    onClick={() => editTransactionNumber(rowIndex)}
-                                                    className='btn btn-success mt-5 width-100'
-                                                >
-                                                    <i className='fas fa-edit' title='Editar' />
-                                                </button>
-                                            </div>
-                                            
-                                            : 
-                                            <div className="inline">
-                                                    <input type="text" id={book._id} className="input-text-grid" placeholder='comprobante' onChange={(e) => handleInputChange(e, rowIndex, book._id)}></input>
-                                                    {showBtnAdd(rowIndex) && 
-                                                    <button className='btn btn-primary mt-5 width-100' onClick={() => onAddTransactionNumber(rowIndex)}>ok</button>
-                                                    }
+                                                <input type="text" 
+                                                    id={book._id} 
+                                                    className="input-text-grid" 
+                                                    readOnly={(book.transaction_number !== undefined && itemEdited.rowIndex !== rowIndex) ? "readonly" : ""}
+                                                    value={book.transaction_number}
+                                                    placeholder='comprobante' 
+                                                    onChange={(e) => handleInputChange(e, rowIndex, book._id)}>
+                                                </input>
+                                                {
+                                                    showBtnAdd(rowIndex) && 
+                                                    <button className='btn btn-success mt-5 width-100' onClick={() => onAddTransactionNumber(rowIndex)}>ok</button>
+                                                }
+                                                {
+                                                    (book.transaction_number !== undefined && itemEdited.rowIndex !== rowIndex)
+                                                    ?
+                                                    <button className='btn btn-primary mt-5 width-100' onClick={() => editTransactionNumber(rowIndex)}>edit</button>
+                                                    :
+                                                    <></>
+                                                }
                                             </div>}
                                         </td>
                                     </tr>)
