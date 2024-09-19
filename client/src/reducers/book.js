@@ -17,7 +17,7 @@ const initialState = {
 
 export default function book(state = initialState, action) {
   const { type, payload } = action;
-  console.log('state.books =>', state.books)
+  //console.log('state.books =>', state.books)
   switch (type) {
     case BOOK_GETALL:
       return {

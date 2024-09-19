@@ -45,19 +45,19 @@ const BookListAdmin = ({ updateBook, getTrip, getBooksByTrip, trip: { selectedTr
 
     useEffect(() => {
       getTrip(id)
-      console.log('tripId XXX => ', id)
-      getBooksByTrip(selectedTrip?._id)
+      // console.log('tripId XXX => ', id)
+      getBooksByTrip(id)
     }, [getBooksByTrip, getTrip, id]);
 
     return (
         <Fragment>
             <section className="container">
                 <h1 className="large text-primary">Reservas</h1>
-                <p className='lead'>
-                  {/* <i className='fas fa-info' /> {data[0].title} */}
-                </p>
-
                 {loading ? (<Spinner />) : (
+                    <>
+                    <p className='lead p-1'>
+                            <i className='fas fa-info' /> {data[0].trip.title} - {formatDate(data[0].trip.date)}
+                    </p>                    
                     <table className="table">
                         <thead>
                             <tr>
@@ -116,6 +116,7 @@ const BookListAdmin = ({ updateBook, getTrip, getBooksByTrip, trip: { selectedTr
                             })}
                         </tbody>
                     </table>
+                    </>
                 )}
             </section>
         </Fragment>
