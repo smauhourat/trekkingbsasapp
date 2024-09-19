@@ -64,7 +64,9 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
                     ))
                   )
                 : (
-                  <h4>No se encontraron Eventos...</h4>
+                  <div className='text-center m-3'>
+                    <h4>No se encontraron Eventos...</h4>
+                  </div>
                   )}
             </div>
           </>

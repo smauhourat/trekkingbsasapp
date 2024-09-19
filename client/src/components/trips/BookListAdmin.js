@@ -1,17 +1,19 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react'
 import Spinner from '../layout/Spinner';
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { updateBook, getBooksByTrip } from '../../actions/book'
-import { getTrip } from '../../actions/trip'
 import formatDate from '../../utils/formatDate'
 
-const BookListAdmin = ({ updateBook, getTrip, getBooksByTrip, trip: { selectedTrip }, book: { books: { data }, loading }, auth }) => {
+const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, book: { books: { data }, loading }, auth }) => {
 
     const [itemEdited, setItemEdited] = useState({})
     const { id } = useParams()
-    console.log('tripId => ', id)
+    // console.log('tripId => ', id)
+
+    const navigate = useNavigate()
+    const goBack = () => navigate(-1);
 
     const handleInputChange = (e, rowIndex, id) => {
         if (e.target.value !== "")
@@ -44,10 +46,8 @@ const BookListAdmin = ({ updateBook, getTrip, getBooksByTrip, trip: { selectedTr
     }
 
     useEffect(() => {
-      //getTrip(id)
-      // console.log('tripId XXX => ', id)
       getBooksByTrip(id)
-    }, [getBooksByTrip, getTrip, id]);
+    }, [getBooksByTrip, id]);
 
     return (
         <Fragment>
@@ -56,10 +56,10 @@ const BookListAdmin = ({ updateBook, getTrip, getBooksByTrip, trip: { selectedTr
                 {loading ? (<Spinner />) : (
                     <>
                     <p className='lead p-1'>
-                            <i className='fas fa-info' /> {selectedTrip.title}
-                            {/* {data[0]?.trip.title}  */}
-                            {/* - {formatDate(data[0].trip.date)} */}
-                    </p>                    
+                        <i className='fas fa-info' /> {selectedTrip.title}
+                    </p>    
+                    {data?.length > 0 ?
+                    (
                     <table className="table">
                         <thead>
                             <tr>
@@ -118,6 +118,18 @@ const BookListAdmin = ({ updateBook, getTrip, getBooksByTrip, trip: { selectedTr
                             })}
                         </tbody>
                     </table>
+                    ) : 
+                    (
+                    <div className='text-center m-3'>
+                        <h4>No se encontraron Reservas...</h4>
+                    </div>
+                    )
+                    }
+                    <div className='text-center m-3'>
+                        <Link onClick={(e) => goBack()} className='btn btn-primary'>
+                            <i className='text-primary' /> Volver
+                        </Link>                           
+                    </div>
                     </>
                 )}
             </section>
@@ -128,7 +140,6 @@ const BookListAdmin = ({ updateBook, getTrip, getBooksByTrip, trip: { selectedTr
 BookListAdmin.propTypes = {
     updateBook: PropTypes.func.isRequired,
     getBooksByTrip: PropTypes.func.isRequired,
-    getTrip: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
 }
 
@@ -138,4 +149,4 @@ const mapStateToProps = (state) => ({
     trip: state.trip
 });
 
-export default connect(mapStateToProps, { updateBook, getTrip, getBooksByTrip })(BookListAdmin);
+export default connect(mapStateToProps, { updateBook, getBooksByTrip })(BookListAdmin);
