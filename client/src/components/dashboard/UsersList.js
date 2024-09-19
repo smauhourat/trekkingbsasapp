@@ -12,7 +12,7 @@ const UsersList = ({ users, deleteUser }) => {
       <td>
         <button
           onClick={() => deleteUser(user._id)}
-          className='btn btn-danger'
+          className='btn btn-small btn-square btn-danger'
         >
           <i className='fas fa-trash-alt' title='Eliminar' />
         </button>

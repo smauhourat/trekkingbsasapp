@@ -449,6 +449,14 @@ img {
   font-size: 0.8rem
 }
 
+.btn-link {
+  line-height: 1;
+}
+
+.btn-square {
+  padding: 0.6rem 0.6rem;
+}
+
 .btn-disabled {
   background: var(--disabled-color);
 }
@@ -510,6 +518,15 @@ img {
   background: var(--success-color);
   color: #fff;
 }
+
+.btn-warning,
+.bg-warning,
+.badge-warning,
+.alert-warning {
+  background: var(--warning-color-light);
+  color: #fff;
+}
+
 
 .btn-white,
 .bg-white,
@@ -1088,10 +1105,6 @@ input[type="file"] {
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
-}
-
-.btn-link {
-  line-height: 1;
 }
 
 /* cards styles */

@@ -44,7 +44,7 @@ const BookListAdmin = ({ updateBook, getTrip, getBooksByTrip, trip: { selectedTr
     }
 
     useEffect(() => {
-      getTrip(id)
+      //getTrip(id)
       // console.log('tripId XXX => ', id)
       getBooksByTrip(id)
     }, [getBooksByTrip, getTrip, id]);
@@ -56,7 +56,9 @@ const BookListAdmin = ({ updateBook, getTrip, getBooksByTrip, trip: { selectedTr
                 {loading ? (<Spinner />) : (
                     <>
                     <p className='lead p-1'>
-                            <i className='fas fa-info' /> {data[0].trip.title} - {formatDate(data[0].trip.date)}
+                            <i className='fas fa-info' /> {selectedTrip.title}
+                            {/* {data[0]?.trip.title}  */}
+                            {/* - {formatDate(data[0].trip.date)} */}
                     </p>                    
                     <table className="table">
                         <thead>
