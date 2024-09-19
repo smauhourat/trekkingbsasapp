@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { deleteTrip, getTrip } from '../../actions/trip'
@@ -24,7 +24,11 @@ const TripsListContent = ({ trip: { trips: { data } }, deleteTrip, getTrip }) =>
         <td>{formatDate(trip.date)}</td>
         <td>{trip.title}</td>
         <td style={{ textAlign: 'center' }}>{trip.quota}</td>
-        <td style={{ textAlign: 'center' }}>{trip.reservations}</td>
+        <td style={{ textAlign: 'center' }}>
+          <Link to={`/books-admin/${trip._id}`}>
+            {trip.reservations}
+          </Link>
+        </td>
         <td style={{ textAlign: 'center' }}>{trip.published ? 'SI' : 'NO'}</td>
         <td className='no-wrap'>
           <div className='align-center'>

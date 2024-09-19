@@ -73,3 +73,21 @@ export const getBooks = (customerId) => async (dispatch) => {
     });
   }
 }
+
+// Get books by trip
+export const getBooksByTrip = (tripId) => async (dispatch) => {
+  // dispatch({ type: BOOK_CLEAR });
+  try {
+    const res = await api.get(`/books/by-trip/${tripId}`);
+    // console.log(res.data);
+    dispatch({
+      type: BOOK_GETLIST,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: BOOK_ERROR,
+      payload: { msg: err.response?.statusText, status: err.response?.status }
+    });
+  }
+}

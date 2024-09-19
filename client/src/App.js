@@ -35,6 +35,7 @@ import BookingSuccess from './components/trips/BookingSuccess';
 import BookingFailure from './components/trips/BookingFailure';
 import BookDetails from './components/customer/BookDetails';
 import BookList from './components/customer/BookList';
+import BookListAdmin from './components/trips/BookListAdmin';
 import Book from './components/customer/Book';
 import CustomerRegister from './components/customer/CustomerRegister';
 import Customer from './components/customer/Customer';
@@ -113,6 +114,7 @@ const App = () => {
                 <Route path="edit-trip/:id" element={<EditTrip />} />
                 <Route path="add-images/:id" element={<AddImages />} />
                 <Route path="add-user" element={<AddUser />} />
+                <Route path="books-admin/:id" element={<BookListAdmin />} />
               </Route>
             </>
             <Route exact path="/login" element={<Login />} />
