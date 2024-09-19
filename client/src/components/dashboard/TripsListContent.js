@@ -57,7 +57,7 @@ const TripsListContent = ({ trip: { trips: { data } }, deleteTrip, getTrip }) =>
               <i className='fas fa-book' title='Ver Reservas' />
             </button>
             <button
-              onClick={() => deleteTrip(trip._id)}
+              onClick={() => deleteTrip(trip._id, navigate)}
               className='btn btn-small btn-square btn-danger'
             >
               <i className='fas fa-trash-alt' title='Eliminar' />

@@ -119,7 +119,7 @@ export const updateTrip = (id, formData, navigate) => async (dispatch) => {
 }
 
 // Delete trip
-export const deleteTrip = (id) => async (dispatch) => {
+export const deleteTrip = (id, navigate) => async (dispatch) => {
   try {
     await api.delete(`/trips/${id}`)
 
@@ -129,11 +129,14 @@ export const deleteTrip = (id) => async (dispatch) => {
     })
 
     dispatch(setAlert('Evento eliminado', 'success'))
+    // navigate('/dashboard')
   } catch (err) {
-    dispatch({
-      type: DELETETRIP_FAIL,
-      payload: { msg: err.response.statusText, status: err.response.status }
-    })
+    console.log('DELETETRIP_FAIL err =>', err)
+    // dispatch({
+    //   type: DELETETRIP_FAIL,
+    //   payload: { msg: err.response.statusText, status: err.response.status }
+    // })
+    navigate('/dashboard')
   }
 }
 

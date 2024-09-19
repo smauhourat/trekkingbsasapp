@@ -67,6 +67,7 @@ router.post('/',
         accounts
       }).save()
 
+      await incrementReservationTrip(trip)
       await sendBookingCustomerMail(await getBaseUrl(req), book)
       res.json(book)
     }

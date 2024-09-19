@@ -61,10 +61,12 @@ const TripSchema = new mongoose.Schema({
     type: Number
   },
   quota: {
-    type: Number
+    type: Number,
+    default: 0
   },
   reservations: {
-    type: Number
+    type: Number,
+    default: 0
   },
   published: {
     type: Boolean,
