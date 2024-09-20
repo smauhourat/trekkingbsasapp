@@ -31,8 +31,6 @@ const AddTrip = ({ setAlert, addTrip }) => {
     payment_link: ''
   })
 
-  //console.log(training_levels.training_levels)
-
   const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, published, suggested_equipment, included_services, departure, arrival, booking_price, training_level, payment_link } = formData
 
   const onChange = (e) => {

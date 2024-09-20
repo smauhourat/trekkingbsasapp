@@ -17,10 +17,6 @@ const UserSchema = new mongoose.Schema({
   avatar: {
     type: String
   },
-  date: {
-    type: Date,
-    default: Date.now
-  },
   super_admin: {
     type: Boolean,
     default: false
@@ -30,6 +26,6 @@ const UserSchema = new mongoose.Schema({
     default: false
   },
 
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('user', UserSchema)

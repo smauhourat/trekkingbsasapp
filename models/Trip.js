@@ -30,10 +30,6 @@ const TripSchema = new mongoose.Schema({
   included_services: {
     type: String
   },
-  created: {
-    type: Date,
-    default: Date.now
-  },
   date: {
     type: Date
     // required: true
@@ -106,6 +102,6 @@ const TripSchema = new mongoose.Schema({
       }
     }
   ]
-})
+}, { timestamps: true });
 
 module.exports = mongoose.model('trip', TripSchema)

@@ -161,7 +161,7 @@ router.get('/',
     try {
       const users = await User
         .find({ super_admin: true })
-        .sort({ date: 'asc' })
+        .sort({ createdAt: 'asc' })
 
       res.json({
         metadata: {

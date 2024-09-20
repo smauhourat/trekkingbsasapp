@@ -20,7 +20,6 @@ const EditTrip = ({
     category: '',
     description: '',
     itinerary: '',
-    created: Date.now,
     date: '',
     duration: '',
     price: 0,
