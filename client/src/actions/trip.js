@@ -60,7 +60,7 @@ export const clearTrip = () => async (dispatch) => {
 export const addTrip = (formData, navigate) => async (dispatch) => {
   try {
     const res = await api.post('/trips', formData)
-
+    console.log('trip =>', formData)
     dispatch({
       type: ADDTRIP_SUCCESS,
       payload: res.data

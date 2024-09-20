@@ -21,6 +21,7 @@ const AddTrip = ({ setAlert, addTrip }) => {
     location: '',
     quota: '',
     reservations: '',
+    published: true,
     suggested_equipment: '',
     included_services: '',
     departure: '',
@@ -30,12 +31,13 @@ const AddTrip = ({ setAlert, addTrip }) => {
     payment_link: ''
   })
 
-  console.log(training_levels.training_levels)
+  //console.log(training_levels.training_levels)
 
-  const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, suggested_equipment, included_services, departure, arrival, booking_price, training_level, payment_link } = formData
+  const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, published, suggested_equipment, included_services, departure, arrival, booking_price, training_level, payment_link } = formData
 
   const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    const newValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    setFormData({ ...formData, [e.target.name]: newValue })
   }
 
   const validateForm = () => {
@@ -57,12 +59,13 @@ const AddTrip = ({ setAlert, addTrip }) => {
     <section className='container'>
       <h1 className='large text-primary'>Eventos</h1>
       <p className='lead'><i className='fas fa-calendar' /> Crear Evento</p>
+      <p className='mini'>Los campos marcados con <span className='mark-danger'>*</span> son obligatorios</p>
       <form
         className='form'
         onSubmit={e => onSubmit(e)}
       >
         <div className='form-group'>
-          <label>Titulo</label>
+          <label className='mark-danger small'>*</label> <label>Titulo</label>
           <input
             type='text'
             placeholder='Titulo'
@@ -73,7 +76,7 @@ const AddTrip = ({ setAlert, addTrip }) => {
           />
         </div>
         <div className='form-group'>
-          <label>Subtitulo</label>
+          <label className='mark-danger small'>*</label> <label>Subtitulo</label>
           <input
             type='text'
             placeholder='Subtitulo'
@@ -84,7 +87,7 @@ const AddTrip = ({ setAlert, addTrip }) => {
           />
         </div>
         <div className='form-group'>
-          <label>Lugar</label>
+          <label className='mark-danger small'>*</label> <label>Lugar</label>
           <input
             type='text'
             placeholder='Lugar'
@@ -95,7 +98,7 @@ const AddTrip = ({ setAlert, addTrip }) => {
           />
         </div>
         <div>
-          <label>Categoria</label>
+          <label className='mark-danger small'>*</label> <label>Categoria</label>
           <select name='category' value={category} onChange={onChange} required>
             <option value=''>* Selecione una Categoria</option>
             <option value='Trekking'>Trekking</option>
@@ -105,7 +108,7 @@ const AddTrip = ({ setAlert, addTrip }) => {
           </select>
         </div>
         <div className='form-group'>
-          <label>Descripcion</label>
+          <label className='mark-danger small'>*</label> <label>Descripcion</label>
           <textarea
             placeholder='Descripcion'
             rows='5'
@@ -146,7 +149,7 @@ const AddTrip = ({ setAlert, addTrip }) => {
           />
         </div>
         <div className='form-group'>
-          <label>Fecha</label>
+          <label className='mark-danger small'>*</label> <label>Fecha</label>
           <input
             type='date'
             placeholder='Fecha'
@@ -210,7 +213,7 @@ const AddTrip = ({ setAlert, addTrip }) => {
           />
         </div>
         <div>
-          <label>Nivel Entrenamiento</label>
+          <label className='mark-danger small'>*</label> <label>Nivel Entrenamiento</label>
           <select name='training_level' value={training_level} onChange={onChange} required>
             <option value=''>* Selecione un Nivel</option>
             {training_levels.training_levels.map((item) => {
@@ -249,6 +252,15 @@ const AddTrip = ({ setAlert, addTrip }) => {
             value={payment_link}
             onChange={onChange}
           />
+        </div>
+        <div className='form-group'>
+          <input
+            type='checkbox'
+            name='published'
+            checked={published}
+            onChange={onChange}
+          />
+          <label>Publicado</label>
         </div>
         <input type='submit' className='btn btn-primary' value='Aceptar' />
         <input type='button' className='btn btn-secondary' value='Cancelar' onClick={() => navigate('/dashboard')} />

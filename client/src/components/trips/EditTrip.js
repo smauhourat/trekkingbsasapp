@@ -49,9 +49,9 @@ const EditTrip = ({
   const { title, subtitle, category, description, itinerary, date, duration, price, location, quota, reservations, published, suggested_equipment, included_services, departure, arrival, booking_price, training_level, payment_link } = editedTrip
 
   const onChange = (e) => {
-    if (e.target.name === 'date') {
-      console.log(e.target.value)
-    }
+    // if (e.target.name === 'date') {
+    //   console.log(e.target.value)
+    // }
     const newValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value
 
     setEditedTrip({ ...editedTrip, [e.target.name]: newValue })
@@ -76,12 +76,13 @@ const EditTrip = ({
     <section className='container'>
       <h1 className='large text-primary'>Eventos</h1>
       <p className='lead'><i className='fas fa-calendar' /> Actualizar Evento</p>
+      <p className='mini'>Los campos marcados con <span className='mark-danger'>*</span> son obligatorios</p>
       <form
         className='form'
         onSubmit={e => onSubmit(e)}
       >
         <div className='form-group'>
-          <label>Titulo</label>
+          <label className='mark-danger small'>*</label> <label>Titulo</label>
           <input
             type='text'
             placeholder='Titulo'
@@ -92,7 +93,7 @@ const EditTrip = ({
           />
         </div>
         <div className='form-group'>
-          <label>Subtitulo</label>
+          <label className='mark-danger small'>*</label> <label>Subtitulo</label>
           <input
             type='text'
             placeholder='Subtitulo'
@@ -103,7 +104,7 @@ const EditTrip = ({
           />
         </div>
         <div className='form-group'>
-          <label>Lugar</label>
+          <label className='mark-danger small'>*</label> <label>Lugar</label>
           <input
             type='text'
             placeholder='Lugar'
@@ -114,7 +115,7 @@ const EditTrip = ({
           />
         </div>
         <div>
-          <label>Categoria</label>
+          <label className='mark-danger small'>*</label> <label>Categoria</label>
           <select name='category' value={category} onChange={onChange} required>
             <option value=''>* Selecione una Categoria</option>
             <option value='Trekking'>Trekking</option>
@@ -124,7 +125,7 @@ const EditTrip = ({
           </select>
         </div>
         <div className='form-group'>
-          <label>Descripcion</label>
+          <label className='mark-danger small'>*</label> <label>Descripcion</label>
           <textarea
             placeholder='Descripcion'
             rows='5'
@@ -165,7 +166,7 @@ const EditTrip = ({
           />
         </div>
         <div className='form-group'>
-          <label>Fecha</label>
+          <label className='mark-danger small'>*</label> <label>Fecha</label>
           <input
             type='date'
             placeholder='Fecha'
@@ -228,7 +229,7 @@ const EditTrip = ({
           />
         </div>
         <div>
-          <label>Nivel Entrenamiento</label>
+          <label className='mark-danger small'>*</label> <label>Nivel Entrenamiento</label>
           <select name='training_level' value={training_level} onChange={onChange} required>
             <option value=''>* Selecione un Nivel</option>
             {training_levels.training_levels.map((item) => {

@@ -1896,3 +1896,8 @@ nav a:focus {
   color: #fff;
   font-weight: 550;
 }
+
+.mark-danger {
+  color: var(--danger-color);
+  font-weight: 600;
+}
