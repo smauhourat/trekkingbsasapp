@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 // import { Analytics } from '@vercel/analytics/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
@@ -42,6 +42,8 @@ import Customer from './components/customer/Customer';
 import CustomerView from './components/customer/CustomerView';
 import CustomerValidateEmail from './components/customer/CustomerValidateEmail';
 import Unauthorized from './components/auth/Unauthorized'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import './App.css'
 // Redux
@@ -50,6 +52,9 @@ import store from './store'
 import { loadUser, loadCustomer } from './actions/auth'
 import setAuthToken from './utils/setAuthToken'
 import RequireAuth from './components/routing/RequireAuth';
+
+// Create a client
+const queryClient = new QueryClient()
 
 const App = () => {
   useEffect(() => {
@@ -72,10 +77,13 @@ const App = () => {
     console.log('Logging', error, errorInfo)
   }
 
+  const [queryClient] = useState(() => new QueryClient())
+
   return (
     <Provider store={store}>
       <Router>
         <ErrorBoundary FallbackComponent={Fallback} onError={errorHandler}>
+          <QueryClientProvider client={queryClient}>
           <Navbar />
           <Menubar />
           <Alert />
@@ -121,6 +129,8 @@ const App = () => {
             </>
             <Route exact path="/login" element={<Login />} />
           </Routes>
+          <ReactQueryDevtools initialIsOpen={true} />
+          </QueryClientProvider>
         </ErrorBoundary>
       </Router>
       {/* <Analytics beforeSend={(e) => {
