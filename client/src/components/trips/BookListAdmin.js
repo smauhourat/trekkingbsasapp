@@ -83,7 +83,9 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                                             </Link>
                                         </td>
                                         <td className="no-wrap">
-                                          {book.customer.last_name}, {book.customer.first_name}
+                                            <Link to={`/customer-view/${book.customer._id}`}>
+                                                {book.customer.last_name}, {book.customer.first_name}
+                                            </Link>
                                         </td>
                                         <td>
                                             {book.description}

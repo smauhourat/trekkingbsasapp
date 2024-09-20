@@ -39,6 +39,7 @@ import BookListAdmin from './components/trips/BookListAdmin';
 import Book from './components/customer/Book';
 import CustomerRegister from './components/customer/CustomerRegister';
 import Customer from './components/customer/Customer';
+import CustomerView from './components/customer/CustomerView';
 import CustomerValidateEmail from './components/customer/CustomerValidateEmail';
 import Unauthorized from './components/auth/Unauthorized'
 
@@ -109,6 +110,7 @@ const App = () => {
               </Route>
               
               <Route element={< RequireAuth allowedRoles="admin" />}>
+                <Route path="customer-view/:id" element={<CustomerView />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="add-trip" element={<AddTrip />} />
                 <Route path="edit-trip/:id" element={<EditTrip />} />
