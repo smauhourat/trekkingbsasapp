@@ -129,14 +129,27 @@ export const deleteTrip = (id, navigate) => async (dispatch) => {
     })
 
     dispatch(setAlert('Evento eliminado', 'success'))
-    // navigate('/dashboard')
+    
   } catch (err) {
-    console.log('DELETETRIP_FAIL err =>', err)
-    // dispatch({
-    //   type: DELETETRIP_FAIL,
-    //   payload: { msg: err.response.statusText, status: err.response.status }
-    // })
-    navigate('/dashboard')
+
+    dispatch({
+      type: DELETETRIP_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    })
+
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      return
+    } else {
+      if (err.response.data.msg) {
+        dispatch(setAlert(err.response.data.msg, 'danger'))
+        return
+      }
+    }
+
+    dispatch(setAlert(err.response.statusText, 'danger'));
   }
 }
 

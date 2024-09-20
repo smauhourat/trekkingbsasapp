@@ -19,6 +19,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
   useEffect(() => {
     getTrips(`&limit=${RECORDS_PER_PAGE}&page=1&sort=${sort}&order=${order}`)
     setCurrentPage(1)
+    console.log('useEffect en TripList.js')
   }, [sort, order, getTrips])
 
   const goToNextPage = () => {

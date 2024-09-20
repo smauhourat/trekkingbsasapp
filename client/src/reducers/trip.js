@@ -111,8 +111,7 @@ export default function trip (state = initialState, action) {
       return {
         ...state,
         error: payload,
-        loading: false,
-        trips: null
+        loading: false
       }
 
     default:
