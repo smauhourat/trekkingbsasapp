@@ -50,6 +50,7 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
     }, [getBooksByTrip, id]);
 
     return (
+        <>
         <Fragment>
             <section className="container">
                 <h1 className="large text-primary">Reservas</h1>
@@ -134,6 +135,7 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                 )}
             </section>
         </Fragment>
+        </>
     )
 }
 

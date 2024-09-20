@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { setAlert } from '../../actions/alert'
 import { addTrip } from '../../actions/trip'
 import training_levels from '../../models/TrainingLevel.json'
+import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
 
 const AddTrip = ({ setAlert, addTrip }) => {
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ const AddTrip = ({ setAlert, addTrip }) => {
     category: '',
     description: '',
     itinerary: '',
-    date: '',
+    date: '', // formatDateISOFromDate(Date.now()),
     duration: '',
     price: '',
     location: '',

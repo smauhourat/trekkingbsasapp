@@ -16,8 +16,8 @@ const Dashboard = ({
 }) => {
   useEffect(() => {
     getUsers()
-    clearTrip()
-  }, [getUsers, clearTrip])
+    //clearTrip()
+  }, [getUsers])
 
   // console.log(JSON.stringify(user))
 

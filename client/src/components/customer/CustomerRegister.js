@@ -113,7 +113,7 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
                     </small>
                 </div>
                 <div className="form-group">
-                    <label>Fecha</label>
+                    <label>Fecha Nacimiento</label>
                     <input
                         type="date"
                         placeholder="Fecha Nacimiento"
