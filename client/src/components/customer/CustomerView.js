@@ -29,7 +29,7 @@ const CustomerView = () => {
             <h1>Customer View</h1>
             {isPending && <Spinner />}
             {!isPending && (
-                <div className='form text-center'>
+                <div className='form bg-white p-1 my-1'>
                     <div className='form-group'>
                         <label>
                             <strong>Nombre: </strong>{data?.first_name}
