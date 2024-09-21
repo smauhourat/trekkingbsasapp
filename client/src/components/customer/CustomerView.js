@@ -26,35 +26,33 @@ const CustomerView = () => {
 
     return (
         <section className='container'>
-            <h1>Customer View</h1>
+            <h1>Cliente</h1>
             {isPending && <Spinner />}
             {!isPending && data && (
-                <div className='form text-center'>
-                    <div className='form-group'>
-                        <label>
-                            <strong>Nombre: </strong>{data?.first_name}
-                        </label>
+                <div className='form bg-white p-1 my-1'>
+                    <div className='form-group label-medium'>
+                        <strong>Nombre: </strong>{data?.first_name}
                     </div>
                     <div className='form-group'>
-                        <label>
+                        <div className='form-group label-medium'>
                             <strong>Apellido: </strong>{data?.last_name}
-                        </label>
+                        </div>
                     </div>
                     <div className='form-group'>
-                        <label>
+                        <div className='form-group label-medium'>
                             <strong>Email: </strong>{data.user.email}
-                        </label>
+                        </div>
                     </div>
 
                     <div className='form-group'>
-                        <label>
+                        <div className='form-group label-medium'>
                             <strong>DNI: </strong>{data?.dni}
-                        </label>
+                        </div>
                     </div>                    
                     <div className='form-group'>
-                        <label>
+                        <div className='form-group label-medium'>
                             <strong>Telefono: </strong>{data?.phone}
-                        </label>
+                        </div>
                     </div>                    
                 </div>
             )}

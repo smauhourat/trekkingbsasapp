@@ -10,7 +10,6 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
 
     const [itemEdited, setItemEdited] = useState({})
     const { id } = useParams()
-    // console.log('tripId => ', id)
 
     const navigate = useNavigate()
     const goBack = () => navigate(-1);
@@ -20,7 +19,6 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
             setItemEdited({ id: id, value: e.target.value, rowIndex: rowIndex})
         else
             setItemEdited({ id: id, value: "", rowIndex: rowIndex })
-        // console.log(itemEdited)
     };
 
     const showBtnAdd = (rowIndex) => {
