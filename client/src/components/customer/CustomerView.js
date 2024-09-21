@@ -26,7 +26,7 @@ const CustomerView = () => {
 
     return (
         <section className='container'>
-            <h1>Cliente</h1>
+            <h1 className='large text-primary'>Cliente</h1>
             {isPending && <Spinner />}
             {!isPending && data && (
                 <div className='form bg-white p-1 my-1'>
