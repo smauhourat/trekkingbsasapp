@@ -28,8 +28,8 @@ const CustomerView = () => {
         <section className='container'>
             <h1>Customer View</h1>
             {isPending && <Spinner />}
-            {!isPending && (
-                <div className='form bg-white p-1 my-1'>
+            {!isPending && data && (
+                <div className='form text-center'>
                     <div className='form-group'>
                         <label>
                             <strong>Nombre: </strong>{data?.first_name}
@@ -40,6 +40,12 @@ const CustomerView = () => {
                             <strong>Apellido: </strong>{data?.last_name}
                         </label>
                     </div>
+                    <div className='form-group'>
+                        <label>
+                            <strong>Email: </strong>{data.user.email}
+                        </label>
+                    </div>
+
                     <div className='form-group'>
                         <label>
                             <strong>DNI: </strong>{data?.dni}

@@ -5,6 +5,10 @@ const CustomerSchema = new mongoose.Schema({
   _id: {
     type: Schema.Types.ObjectId
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'user'
+  },
   first_name: {
     type: String,
     required: true
