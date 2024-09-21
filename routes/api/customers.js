@@ -54,6 +54,7 @@ router.post('/',
       // Creamos el Customer
       const customer = await new Customer({
         _id: user._id,
+        user: user._id,
         first_name, last_name, dni, phone, birth_date, medical_status
       }).save()
 
@@ -149,7 +150,7 @@ router.get('/auth/',
   async (req, res) => {
     try {
       //console.log(req?.user)
-      const customer = await Customer.findById(req.user.id);
+      const customer = await Customer.findById(req.user.id)
 
       if (!customer) {
         return res.status(404).json({ msg: 'Miembro no encontrado' });
@@ -171,7 +172,7 @@ router.get('/:id',
   checkObjectId('id'),
   async (req, res) => {
     try {
-      const customer = await Customer.findById(req.params.id);
+      const customer = await Customer.findById(req.params.id).populate('user');
 
       if (!customer) {
         return res.status(404).json({ msg: 'Miembro no encontrado' });
