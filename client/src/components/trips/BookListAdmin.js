@@ -59,66 +59,68 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                     </p>    
                     {data?.length > 0 ?
                     (
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th className="no-wrap">Codigo</th>
-                                <th className="no-wrap hide-sm">Cliente</th>
-                                <th className="no-wrap hide-sm">Descripcion</th>
-                                <th className="no-wrap">Fecha</th>
-                                <th className="no-wrap">Estado</th>
-                                <th className="no-wrap">Precio</th>
-                                <th className="no-wrap">Comprobante</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data?.map((book, rowIndex) => {
-                                return (
-                                    <tr key={rowIndex} className="yellow">
-                                        <td>
-                                            <Link to={`/trip-details/${book.trip._id}`}>
-                                                {book.code}
-                                            </Link>
-                                        </td>
-                                        <td className="no-wrap hide-sm">
-                                            <Link to={`/customer-view/${book.customer._id}`}>
-                                                {book.customer.last_name}, {book.customer.first_name}
-                                            </Link>
-                                        </td>
-                                        <td className='hide-sm'>
-                                            {book.description}
-                                        </td>
-                                        <td>{formatDate(book.createdAt)}</td>
-                                        <td>
-                                            <div className={getCssStatusColor(book.status)}>
-                                                {book.status}
-                                            </div>
-                                        </td>
-                                        <td>${book.price}</td>
-                                        <td>
-                                            {
-                                            <div className="inline">
-                                                {book.status !== 'aceptada' ?
-                                                <input type="text" 
-                                                    id={book._id} 
-                                                    className="input-text-grid" 
-                                                    value={(itemEdited.rowIndex === rowIndex) ? itemEdited.value : book.transaction_number}
-                                                    placeholder='' 
-                                                    onChange={(e) => handleInputChange(e, rowIndex, book._id)}>
-                                                </input>
-                                                :
-                                                book.transaction_number
-                                                }
+                    <div className='scroll-x'>
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th className="no-wrap">Codigo</th>
+                                    <th className="no-wrap hide-sm">Cliente</th>
+                                    <th className="no-wrap hide-sm">Descripcion</th>
+                                    <th className="no-wrap">Fecha</th>
+                                    <th className="no-wrap">Estado</th>
+                                    <th className="no-wrap">Precio</th>
+                                    <th className="no-wrap">Comprobante</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data?.map((book, rowIndex) => {
+                                    return (
+                                        <tr key={rowIndex} className="yellow">
+                                            <td>
+                                                <Link to={`/trip-details/${book.trip._id}`}>
+                                                    {book.code}
+                                                </Link>
+                                            </td>
+                                            <td className="no-wrap hide-sm">
+                                                <Link to={`/customer-view/${book.customer._id}`}>
+                                                    {book.customer.last_name}, {book.customer.first_name}
+                                                </Link>
+                                            </td>
+                                            <td className='hide-sm'>
+                                                {book.description}
+                                            </td>
+                                            <td>{formatDate(book.createdAt)}</td>
+                                            <td>
+                                                <div className={getCssStatusColor(book.status)}>
+                                                    {book.status}
+                                                </div>
+                                            </td>
+                                            <td>${book.price}</td>
+                                            <td>
                                                 {
-                                                    showBtnAdd(rowIndex) && 
-                                                    <button className='btn btn-success mt-5 width-100' onClick={() => onAddTransactionNumber(rowIndex)}>ok</button>
-                                                }
-                                            </div>}
-                                        </td>
-                                    </tr>)
-                            })}
-                        </tbody>
-                    </table>
+                                                <div className="inline">
+                                                    {book.status !== 'aceptada' ?
+                                                    <input type="text" 
+                                                        id={book._id} 
+                                                        className="input-text-grid" 
+                                                        value={(itemEdited.rowIndex === rowIndex) ? itemEdited.value : book.transaction_number}
+                                                        placeholder='' 
+                                                        onChange={(e) => handleInputChange(e, rowIndex, book._id)}>
+                                                    </input>
+                                                    :
+                                                    book.transaction_number
+                                                    }
+                                                    {
+                                                        showBtnAdd(rowIndex) && 
+                                                        <button className='btn btn-success mt-5 width-100' onClick={() => onAddTransactionNumber(rowIndex)}>ok</button>
+                                                    }
+                                                </div>}
+                                            </td>
+                                        </tr>)
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                     ) : 
                     (
                     <div className='text-center m-3'>

@@ -22,19 +22,21 @@ const UsersList = ({ users, deleteUser }) => {
   return (
     <div>
       <h2 className='my-2'>Usuarios</h2>
-      <table className='table'>
-        <thead>
-          <tr>
-            <th width='25%'>Nombre</th>
-            <th width='50%' className='hide-sm'>Email</th>
-            <th width='25%' className='hide-sm'>Estado</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {usersList}
-        </tbody>
-      </table>
+      <div className='scroll-x'>
+        <table className='table'>
+          <thead>
+            <tr>
+              <th width='25%'>Nombre</th>
+              <th width='50%' className='hide-sm'>Email</th>
+              <th width='25%' className='hide-sm'>Estado</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {usersList}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

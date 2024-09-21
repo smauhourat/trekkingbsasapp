@@ -45,6 +45,10 @@ img {
   width: 100%;
 }
 
+.scroll-x {
+  overflow-x: scroll;
+}
+
 .img-logo {
   content: url("./img/logo.svg");
   width: 40px;
@@ -682,6 +686,10 @@ button {
 
 .form .social-input i.fa-linkedin {
   color: #0077b5;
+}
+
+.table {
+  overflow-x: scroll;
 }
 
 .table th,
