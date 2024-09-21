@@ -63,8 +63,8 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                         <thead>
                             <tr>
                                 <th className="no-wrap">Codigo</th>
-                                <th className="no-wrap">Cliente</th>
-                                <th className="no-wrap">Descripcion</th>
+                                <th className="no-wrap hide-sm">Cliente</th>
+                                <th className="no-wrap hide-sm">Descripcion</th>
                                 <th className="no-wrap">Fecha</th>
                                 <th className="no-wrap">Estado</th>
                                 <th className="no-wrap">Precio</th>
@@ -80,12 +80,12 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                                                 {book.code}
                                             </Link>
                                         </td>
-                                        <td className="no-wrap">
+                                        <td className="no-wrap hide-sm">
                                             <Link to={`/customer-view/${book.customer._id}`}>
                                                 {book.customer.last_name}, {book.customer.first_name}
                                             </Link>
                                         </td>
-                                        <td>
+                                        <td className='hide-sm'>
                                             {book.description}
                                         </td>
                                         <td>{formatDate(book.createdAt)}</td>

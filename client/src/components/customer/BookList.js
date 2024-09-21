@@ -54,7 +54,7 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                         <thead>
                             <tr>
                                 <th className="no-wrap">Codigo</th>
-                                <th className="no-wrap">Descripcion</th>
+                                <th className="no-wrap hide-sm">Descripcion</th>
                                 <th className="no-wrap">Fecha</th>
                                 <th className="no-wrap">Estado</th>
                                 <th className="no-wrap">Precio</th>
@@ -70,7 +70,7 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                                                 {book.code}
                                             </Link>
                                         </td>
-                                        <td className="no-wrap">
+                                        <td className="no-wrap hide-sm">
                                             {book.description}
                                         </td>
                                         <td>{formatDate(book.createdAt)}</td>
