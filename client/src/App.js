@@ -42,6 +42,7 @@ import CustomerRegister from './components/customer/CustomerRegister';
 import Customer from './components/customer/Customer';
 import CustomerView from './components/customer/CustomerView';
 import CustomerValidateEmail from './components/customer/CustomerValidateEmail';
+import VerifyEmail from './components/customer/VerifyEmail'
 import Unauthorized from './components/auth/Unauthorized'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -99,6 +100,7 @@ const App = () => {
               <Route path="reset-password/:id/:token" element={<ResetPassword />} />
               <Route path="reset-password-confirm" element={<ResetPasswordConfirm />} />
               <Route path="validate-email" element={<CustomerValidateEmail />} />
+              <Route path="verify-email/:id/:token" element={<VerifyEmail />} />
               <Route path="trips" element={<Trips />} />
               <Route path="trip-details/:id" element={<TripDetails />} />
               <Route path="contact" element={<MaintenanceRoute component={ContactForm} />} />

@@ -189,19 +189,19 @@ router.post('/verify-email/:id/:token',
     try {
       const { id, token } = req.params
       const user = await User.findOne({ _id: id });
-      if (!user) return res.status(400).send({ message: "Invalid link" });
+      if (!user) return res.status(400).send({ message: "Link invalido1" });
 
-      const tokendb = await Token.findOne({
-        userId: user._id,
-        token: token,
-      });
+      // const tokendb = await Token.findOne({
+      //   userId: user._id,
+      //   token: token,
+      // });
 
-      if (!tokendb) return res.status(400).send({ message: "Invalid link" });
-
+      // if (!tokendb) return res.status(400).send({ message: "Link invalido2" });
+      console.log('id =>>>>>', id)
       await User.updateOne({ _id: id }, { $set: { email_verified: true } })
       await tokendb.remove();
 
-      res.status(200).send({ message: "Email verified successfully" });
+      res.status(200).send({ message: "Email verificado correctamente" });
     } catch (error) {
       res.status(500).send({ message: "Internal Server Error", error: error });
     }

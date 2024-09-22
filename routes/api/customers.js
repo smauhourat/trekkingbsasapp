@@ -69,7 +69,7 @@ router.post('/',
       const subject = global.env.verifyEmailSubject
       const link = `${req.protocol}://${req.get('host')}/verify-email/${user._id}/${token.token}`
       const text = link
-      // const html = `<p>Hola ${customer.first_name} gracias por elegirnos!!</p><br><p>Recibimos tu datos de registro correctamente, por favor confirma el email hacieindo click en el siguiente </p><p><a href="${link}">LINK</a></p>`
+      // const html = `<p>Hola ${customer.first_name} gracias por elegirnos!!</p><br><p>Recibimos tu datos de registro correctamente, por favor confirma el email haciendo click en el siguiente </p><p><a href="${link}">LINK</a></p>`
 
       const html = `<!DOCTYPE html>
                       <html lang="es">
