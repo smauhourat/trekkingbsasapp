@@ -714,14 +714,19 @@ button {
   background-color: var(--bg-color-light-yellow);
 }
 
+.header-toolbar {
+  position: fixed; top: 0; width: 100%; z-index: 1; opacity: 0.9;
+}
+
 /* Menubar */
 .menubar {
   display: flex;
   justify-content: right;
   align-items: flex-start;
-  margin-top: 3.7rem;
+  /* margin-top: 3.7rem; */
   padding-right: 2.5rem;
-  position: fixed;
+  /* position: fixed; */
+  position: relative;
   z-index: 1;
   width: 100%;
   top: 0;
@@ -746,10 +751,11 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 0.7rem 2rem;
-  position: fixed;
+  /* position: fixed; */
+  position: relative;
   z-index: 1;
   width: 100%;
-  top: 0;
+  /* top: 0; */
   border-bottom: solid 1px var(--primary-color);
   opacity: 0.9;
 }
@@ -987,120 +993,6 @@ button {
     width: 150px;
   }
 } */
-
-/* Mobile Styles */
-@media (max-width: 700px) {
-  .logo-big {
-    width: 150px;
-  }
-
-  .container {
-    margin-top: 8rem;
-  }
-
-  .landing-inner {
-    margin-top: 4rem;
-  }
-
-  .hide-sm {
-    display: none;
-  }
-
-  /* Text Styles */
-  .x-large {
-    font-size: 2rem;
-  }
-
-  .large {
-    font-size: 1.6rem;
-  }
-
-  .lead {
-    font-size: 1rem;
-  }
-
-  /* Navbar */
-  .navbar {
-    display: block;
-    text-align: center;
-  }
-
-  .navbar ul {
-    text-align: center;
-    justify-content: center;
-  }
-
-  .navbar h1 {
-    margin-bottom: 1rem;
-  }
-
-  .navbar .welcome {
-    display: none;
-  }
-
-  /* Profiles Page */
-  .profile {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .profile ul {
-    display: none;
-  }
-
-  /* Profile Page */
-
-  .profile-top img,
-  .profile img {
-    width: 200px;
-    margin: auto;
-  }
-
-  .profile-grid {
-    grid-template-areas:
-      'top'
-      'about'
-      'exp'
-      'edu'
-      'github';
-  }
-
-  .profile-about .skills {
-    flex-direction: column;
-  }
-
-  .dash-buttons a {
-    display: block;
-    width: 100%;
-    margin-bottom: 0.2rem;
-  }
-
-  .post {
-    grid-template-columns: 1fr;
-  }
-
-  .post a,
-  .post button {
-    padding: 0.3rem 0.4rem;
-  }
-
-  .round-img-slow {
-    border-radius: 2%;
-    width: 150px;
-    height: 150px;
-  }
-
-  .img-logo {
-    /* content:url("./img/logo.svg"); */
-    width: 30px;
-  }
-
-  .brand-logo h1 {
-    font-size: 1.25rem;
-  }
-
-}
-/* End Mobile Styles */
 
 
 .alert-wrapper {
@@ -1806,3 +1698,117 @@ nav a:focus {
   color: var(--danger-color);
   font-weight: 600;
 }
+
+/* Mobile Styles */
+@media (max-width: 700px) {
+  .logo-big {
+    width: 150px;
+  }
+
+  .container {
+    margin-top: 8rem;
+  }
+
+  /* .landing-inner {
+    margin-top: 4rem;
+  } */
+
+  .hide-sm {
+    display: none;
+  }
+
+  /* Text Styles */
+  .x-large {
+    font-size: 2rem;
+  }
+
+  .large {
+    font-size: 1.6rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  /* Navbar */
+  .navbar {
+    display: block;
+    text-align: center;
+  }
+
+  .navbar ul {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .navbar h1 {
+    margin-bottom: 1rem;
+  }
+
+  .navbar .welcome {
+    display: none;
+  }
+
+  /* Profiles Page */
+  .profile {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .profile ul {
+    display: none;
+  }
+
+  /* Profile Page */
+
+  .profile-top img,
+  .profile img {
+    width: 200px;
+    margin: auto;
+  }
+
+  .profile-grid {
+    grid-template-areas:
+      'top'
+      'about'
+      'exp'
+      'edu'
+      'github';
+  }
+
+  .profile-about .skills {
+    flex-direction: column;
+  }
+
+  .dash-buttons a {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.2rem;
+  }
+
+  .post {
+    grid-template-columns: 1fr;
+  }
+
+  .post a,
+  .post button {
+    padding: 0.3rem 0.4rem;
+  }
+
+  .round-img-slow {
+    border-radius: 2%;
+    width: 150px;
+    height: 150px;
+  }
+
+  .img-logo {
+    /* content:url("./img/logo.svg"); */
+    width: 30px;
+  }
+
+  .brand-logo h1 {
+    font-size: 1.25rem;
+  }
+
+}
+/* End Mobile Styles */

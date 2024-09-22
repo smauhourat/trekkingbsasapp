@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Menubar from './components/layout/Menubar';
+import HeaderToolbar from './components/layout/HeaderToolbar';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import ForgotPassword from './components/auth/ForgotPassword';
@@ -84,8 +85,9 @@ const App = () => {
       <Router>
         <ErrorBoundary FallbackComponent={Fallback} onError={errorHandler}>
           <QueryClientProvider client={queryClient}>
-          <Navbar />
-          <Menubar />
+          {/* <Navbar />
+          <Menubar /> */}
+          <HeaderToolbar />
           <Alert />
           <Routes>
             <>
@@ -129,7 +131,7 @@ const App = () => {
             </>
             <Route exact path="/login" element={<Login />} />
           </Routes>
-          <ReactQueryDevtools initialIsOpen={true} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
           </QueryClientProvider>
         </ErrorBoundary>
       </Router>
