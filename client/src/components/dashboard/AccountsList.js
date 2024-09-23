@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import { getAccounts } from '../../http/account'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { getAccounts, deleteAccount } from '../../http/account'
 import Spinner from '../layout/Spinner';
 
 const AccountsList = () => {
@@ -14,6 +14,17 @@ const AccountsList = () => {
         queryFn: () => getAccounts()
     });    
 
+    const mutation = useMutation({
+        mutationFn: deleteAccount,
+        onSuccess: (data, error, variables, context) => {
+            queryClient.invalidateQueries({ queryKey: ['accounts'] })
+        }
+    })
+
+    const handleDeleteAccount = (e, id) => {
+        e.preventDefault()
+        mutation.mutate(id)
+    }
 
     return (
         <section className='container'>
@@ -43,7 +54,7 @@ const AccountsList = () => {
                                         <td>{account.active ? 'SI' : 'NO'}</td>
                                         <td>
                                             <button
-                                                onClick={() => deleteAccount(account._id)}
+                                                onClick={(e) => handleDeleteAccount(e, account._id)}
                                                 className='btn btn-small btn-square btn-danger'
                                             >
                                                 <i className='fas fa-trash-alt' title='Eliminar' />
