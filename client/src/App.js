@@ -46,6 +46,7 @@ import VerifyEmail from './components/customer/VerifyEmail'
 import Unauthorized from './components/auth/Unauthorized'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import AccountsList from './components/dashboard/AccountsList'
 
 import './App.css'
 // Redux
@@ -129,11 +130,12 @@ const App = () => {
                 <Route path="add-images/:id" element={<AddImages />} />
                 <Route path="add-user" element={<AddUser />} />
                 <Route path="books-admin/:id" element={<BookListAdmin />} />
+                <Route path="accounts" element={<AccountsList />} />
               </Route>
             </>
             <Route exact path="/login" element={<Login />} />
           </Routes>
-          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </ErrorBoundary>
       </Router>
