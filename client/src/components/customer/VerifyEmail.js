@@ -27,6 +27,9 @@ const VerifyEmail = () => {
       <h1 className='large text-primary'>Validacion Email</h1>
       <p className='lead'>{messageUser}</p>
       {!isMailVerified && <Spinner />}
+      <Link to={'/login'} className='btn btn-primary'>
+        <i className='text-primary' /> Ingresar
+      </Link>
     </section>
   )
 }
