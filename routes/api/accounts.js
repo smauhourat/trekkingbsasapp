@@ -3,6 +3,7 @@ const express = require('express');
 const authAdmin = require('../../middleware/authAdmin');
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const checkObjectId = require('../../middleware/checkObjectId')
 const Account = require('../../models/Account');
 const router = express.Router();
 
@@ -40,6 +41,38 @@ router.post('/',
         }
     })
 
+// @route   PUT api/accounts/:id
+// @desc    Update Account
+// @access  Private
+router.put('/:id',
+    checkObjectId('id'),
+    [
+        authAdmin,
+        [
+            check('bank', 'Debe ingresar el Banco/Entidad').not().isEmpty(),
+            check('currency', 'Debe ingresar el tipo de moneda').not().isEmpty(),
+            check('account_type', 'Debe ingresar el tipo de Cuenta (CA o CC)').not().isEmpty(),
+            check('account_number', 'Debe ingresar el Nro de Cuenta').not().isEmpty(),
+            check('account_cbu', 'Debe ingresar el CBU/CVU').not().isEmpty()
+        ]
+    ],
+    async (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
+
+        const { bank, currency, account_type, account_number, account_cbu, account_alias } = req.body;
+
+        try {
+            const account = await Account.findByIdAndUpdate(req.params.id, { bank, currency, account_type, account_number, account_cbu, account_alias }, { new: true })
+            res.json(account)
+        } catch (err) {
+            console.error(err)
+            res.status(500).send(err)
+        }
+    });
+
 // @route   GET api/accounts
 // @desc    Get all accounts
 // @access  Private
@@ -67,5 +100,31 @@ router.get('/',
             res.status(500).send('Server Error')
         }
     })
+
+
+// @route    DELETE api/accounts/:id
+// @desc     Delete a Account
+// @access   Private
+router.delete('/:id',
+    auth,
+    checkObjectId('id'),
+    async (req, res) => {
+        try {
+            const account = await Account.findById(req.params.id);
+
+            if (!account) {
+                return res.status(404).json({ msg: 'Cuenta no encontrada' });
+            }
+
+            await account.remove();
+
+            res.json({ msg: 'Cuenta eliminada' });
+        } catch (err) {
+            console.error(err.message);
+
+            return res.status(500).json({ msg: 'Server error' });
+        }
+    }
+);
 
 module.exports = router
