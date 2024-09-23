@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import api from '../../utils/api'
 import Spinner from '../layout/Spinner';
 
 const VerifyEmail = () => {
-  const navigate = useNavigate()
   const { id, token } = useParams()
   const [isMailVerified, setIsMailVerified] = useState(false)
   const [messageUser, setMessageUser] = useState('Espere por favor, estamos validando su direccion de email.')
@@ -17,7 +16,7 @@ const VerifyEmail = () => {
         setMessageUser(res.data.message)
       }
     }
-    console.log('useEffect()')
+    
     validateEmail()
   }, [id, token, isMailVerified])
 
