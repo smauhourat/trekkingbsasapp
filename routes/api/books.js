@@ -381,25 +381,49 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
     )
   })
 
+  const subject = `${global.env.bookSubject} - ${book.code}  - ${book.description}`
+  const html = `<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+</head>
+
+<body>
+
+  <table width="600" style="border:'1px'; text-align:'center;'" align="center" cellpadding="0" cellspacing="0"
+    style="font-family: Raleway, Helvetica, sans-serif;">
+    <tr>
+      <td bgcolor="#FAFAFA" width="650"
+        style="color:#666; text-align:center; font-size:13px;font-family:Raleway, Helvetica, sans-serif; padding:30px 50px 20px 50px;line-height:14px; border-radius:0 0 0 0 ;">
+        <img src="https://argentinoscaminando.com/static/media/logo.dea47b25aa3249587ec6.svg" />
+        <p style="font-size:16px; font-weight:600; color:#78777a; line-height: 1.6;">Hola <b>${customer.first_name}</b> gracias
+          por elegirnos!!</p>
+        <p style="font-size:14px; font-weight:550; color:#78777a;line-height: 1.6;">Recibimos tu RESERVA correctamente
+        </p>
+        <p><a href="${boolDetailslink}">Ver Detalle</a></p>
+        <p>Para completar el proceso, realice la Transferencia o Deposito en alguna de las siguientes cuentas</p>
+        <br>
+        ${accountsHtml}
+        <br>
+        <p>Por favor ingrese el nro de transaccion <a href="${boolDetailslink}">aqui</a> o bien envienos un mail con el
+          comprobante a ventas@trekkingbuenosaires.com.ar</p>
+        <br>
+        <p>Muchas Gracias</p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`
 
   const mail = {
     from: global.env.contact_user,
     to: user.email,
-    subject: `Reserva - ${book.code}  - ${book.description}`,
+    subject: subject,
     text: boolDetailslink,
-    html: `<p>Hola ${customer.first_name} gracias por elegirnos!!</p>
-    <br>
-    <p>Recibimos tu RESERVA correctamente, <strong>${book.code}</strong></p>
-    <p><a href="${boolDetailslink}">Ver Detalle</a></p>
-    <br>
-    <p>Para completar el proceso, realice la Transferencia o Deposito en alguna de las siguientes cuentas</p>
-    <br>
-    ${accountsHtml}
-    <br>
-    <p>Por favor ingrese el nro de transaccion <a href="${boolDetailslink}">aqui</a> o bien envienos un mail con el comprobante a ventas@trekkingbuenosaires.com.ar</p>
-    <br>
-    <p>Muchas Gracias</p>
-    `
+    html: html
   }
 
   transporter.sendMail(mail, (err, data) => {
