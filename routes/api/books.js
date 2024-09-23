@@ -404,11 +404,11 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
         <p style="font-size:14px; font-weight:550; color:#78777a;line-height: 1.6;">Recibimos tu RESERVA correctamente
         </p>
         <p><a href="${boolDetailslink}">Ver Detalle</a></p>
-        <p>Para completar el proceso, realice la Transferencia o Deposito en alguna de las siguientes cuentas</p>
+        <p>Para completar el proceso, realizá la Transferencia o Depósito en alguna de las siguientes cuentas</p>
         <br>
         ${accountsHtml}
         <br>
-        <p>Por favor ingrese el nro de transaccion <a href="${boolDetailslink}">aqui</a> o bien envienos un mail con el
+        <p>Por favor ingresá el nro de transaccion <a href="${boolDetailslink}">aqui</a> o bien envianos un mail con el
           comprobante a ventas@trekkingbuenosaires.com.ar</p>
         <br>
         <p>Muchas Gracias</p>

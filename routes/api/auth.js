@@ -113,8 +113,8 @@ router.post('/forgot-password', async (req, res) => {
           <td bgcolor="#FAFAFA" width="650"
             style="color:#666; text-align:center; font-size:13px;font-family:Raleway, Helvetica, sans-serif; padding:30px 50px 20px 50px;line-height:14px; border-radius:0 0 0 0 ;">
             <img src="https://argentinoscaminando.com/static/media/logo.dea47b25aa3249587ec6.svg" />
-            <p style="font-size:16px; font-weight:600; color:#78777a; line-height: 1.6;">Hola hemos recibido su petición para reestablecer la contraseña!!</p>
-            <p style="font-size:14px; font-weight:550; color:#78777a;line-height: 1.6;">Por favor haga click en el siguiente enlace </p>
+            <p style="font-size:16px; font-weight:600; color:#78777a; line-height: 1.6;">Hola hemos recibido tu pedido para reestablecer la contraseña!!</p>
+            <p style="font-size:14px; font-weight:550; color:#78777a;line-height: 1.6;">Por favor hace click en el siguiente enlace </p>
             <p><a href="${link}">RECUPERAR CONTRASEÑA</a></p>
           </td>
         </tr>
@@ -134,7 +134,8 @@ router.post('/forgot-password', async (req, res) => {
     // html: `<p>Para cambiar su contraseña por favor haga click <a href="${link}">aquí.</a></p>`
 
     transporter.sendMail(mail, (err, data) => {
-      if (err) {proxy
+      if (err) {
+        proxy
         res.json({
           status: 'fail',
           message: 'Error enviando el mail'
