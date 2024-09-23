@@ -195,11 +195,10 @@ router.post('/verify-email/:id/:token',
       //   userId: user._id,
       //   token: token,
       // });
-
       // if (!tokendb) return res.status(400).send({ message: "Link invalido2" });
-      console.log('id =>>>>>', id)
+
       await User.updateOne({ _id: id }, { $set: { email_verified: true } })
-      await tokendb.remove();
+      //await tokendb.remove();
 
       res.status(200).send({ message: "Email verificado correctamente" });
     } catch (error) {

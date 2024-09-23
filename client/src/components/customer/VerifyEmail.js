@@ -11,14 +11,13 @@ const VerifyEmail = () => {
 
   useEffect(() => {
     const validateEmail = async () => {
-      console.log('id =>', id)
-      console.log('token =>', token)
       const res = await api.post(`/users/verify-email/${id}/${token}`)
-      console.log('res =>', res)
-      // if (res.data.status === '200') {
-      //   setIsMailVerified(true)
-      // }
+      if (res.status === 200) {
+        setIsMailVerified(true)
+        setMessageUser(res.data.message)
+      }
     }
+    console.log('useEffect()')
     validateEmail()
   }, [id, token, isMailVerified])
 
@@ -30,8 +29,6 @@ const VerifyEmail = () => {
       {!isMailVerified && <Spinner />}
     </section>
   )
-
-
 }
 
 export default VerifyEmail
