@@ -25,7 +25,7 @@ const AccountsList = ({ setAlert }) => {
             queryClient.invalidateQueries({ queryKey: ['accounts'] })
         },
         onError: (error, variables, context) => {
-            console.log('error en ui =>', error)
+            // console.log('error en ui =>', error)
             setAlert(error.message, 'danger')
         }
     })
@@ -33,6 +33,11 @@ const AccountsList = ({ setAlert }) => {
     const handleDeleteAccount = (e, id) => {
         e.preventDefault()
         mutation.mutate(id)
+    }
+
+    const handleEditAccount = (e, id) => {
+        e.preventDefault()
+        navigate(`/edit-account/${id}`)
     }
 
     return (
@@ -61,7 +66,14 @@ const AccountsList = ({ setAlert }) => {
                                         <td>{account.account_cbu}</td>
                                         <td>{account.account_alias}</td>
                                         <td>{account.active ? 'SI' : 'NO'}</td>
-                                        <td>
+                                        <td className='no-wrap'>
+                                            <button
+                                                onClick={(e) => handleEditAccount(e, account._id)}
+                                                className='btn btn-small btn-square btn-success'
+                                            >
+                                                <i className='fas fa-edit' title='Editar' />
+                                            </button>
+
                                             <button
                                                 onClick={(e) => handleDeleteAccount(e, account._id)}
                                                 className='btn btn-small btn-square btn-danger'

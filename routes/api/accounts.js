@@ -45,6 +45,7 @@ router.post('/',
 // @desc    Update Account
 // @access  Private
 router.put('/:id',
+    [authAdmin],
     checkObjectId('id'),
     [
         authAdmin,
@@ -77,7 +78,7 @@ router.put('/:id',
 // @desc    Get all accounts
 // @access  Private
 router.get('/',
-    auth,
+    [authAdmin],
     async (_req, res) => {
         try {
             const accounts = await Account
@@ -106,7 +107,7 @@ router.get('/',
 // @desc     Delete a Account
 // @access   Private
 router.delete('/:id',
-    auth,
+    [authAdmin],
     checkObjectId('id'),
     async (req, res) => {
         try {
@@ -126,5 +127,29 @@ router.delete('/:id',
         }
     }
 );
+
+// @route    GET api/accounts/:id
+// @desc     Get account by Id
+// @access   Private
+router.get('/:id',
+    [authAdmin],
+    checkObjectId('id'),
+    async (req, res) => {
+
+        try {
+            const account = await Account.findById(req.params.id)
+
+            if (!account) {
+                return res.status(404).json({ msg: 'Cuenta no encontrada' });
+            }
+
+            res.json(account);
+        } catch (err) {
+            console.error(err.message);
+
+            res.status(500).send('Server Error');
+        }
+    });
+
 
 module.exports = router

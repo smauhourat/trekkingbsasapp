@@ -55,6 +55,7 @@ import store from './store'
 import { loadUser, loadCustomer } from './actions/auth'
 import setAuthToken from './utils/setAuthToken'
 import RequireAuth from './components/routing/RequireAuth';
+import EditAccount from './components/account/EditAccount';
 
 // Create a client
 const queryClient = new QueryClient()
@@ -131,6 +132,7 @@ const App = () => {
                 <Route path="add-user" element={<AddUser />} />
                 <Route path="books-admin/:id" element={<BookListAdmin />} />
                 <Route path="accounts" element={<AccountsList />} />
+                <Route path="edit-account/:id" element={<EditAccount />} />
               </Route>
             </>
             <Route exact path="/login" element={<Login />} />
