@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setAlert } from '../../actions/alert'
-import { getAccount } from '../../http/account'
+import { getAccount, updateAccount } from '../../http/account'
 import Spinner from '../layout/Spinner'
 
 const EditAccount = ({
@@ -18,6 +18,22 @@ const EditAccount = ({
         queryKey: ['account', id],
         queryFn: () => getAccount(id)
     });      
+
+    const queryClient = useQueryClient()
+
+    const mutation = useMutation({
+        mutationFn: updateAccount,
+        onSuccess: (data, error, variables, context) => {
+            queryClient.invalidateQueries({ queryKey: ['account'] })
+        },
+        onError: (error, variables, context) => {
+            console.log(error)
+            if (error.errors) {
+                error.errors.forEach(err => setAlert(err.msg, 'danger'))
+            }
+            setAlert(error.message, 'danger')
+        }
+    })
 
     const [editedAccount, setEditedAccount] = useState({
         bank: '',
@@ -54,7 +70,9 @@ const EditAccount = ({
     const onSubmit = async (e) => {
         e.preventDefault()
         if (validateForm()) {
-            console.log('updateTrip(id, editedTrip, navigate)')
+            console.log('submit() editedAccount =>', editedAccount)
+            mutation.mutate(id, editedAccount)
+            //updateAccount(id, editedAccount, navigate)
         }
     }
 

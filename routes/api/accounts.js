@@ -62,7 +62,7 @@ router.put('/:id',
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() })
         }
-
+        console.log('req.body =>', req.body)
         const { bank, currency, account_type, account_number, account_cbu, account_alias } = req.body;
 
         try {

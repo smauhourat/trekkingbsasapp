@@ -45,3 +45,29 @@ export const deleteAccount = async (id) => {
         throw error
     }
 }
+
+export const updateAccount = async (id, account) => {
+    try {
+
+        console.log('account =>', account)
+        //const res = await api.put(`/accounts/${id}`, account)
+
+        //return res
+    }
+    catch (err) {
+
+        const errors = err.response?.data?.errors
+        // errores de validacion de los inputs
+        // if (errors) {
+        //     errors.forEach(error => setAlert(error.msg, 'danger'))
+        // }
+
+        const error = new Error('Se produjo un error al intentar actualizar la Cuenta.');
+        error.message += err.response.data?.msg ? ` ${err.response.data?.msg}` : ""
+        error.code = err.response.status
+        error.info = err.response.data
+        error.errors = errors
+        console.log('error en http =>', JSON.stringify(err))
+        throw error
+    }
+}
