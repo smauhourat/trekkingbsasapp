@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getAccounts, deleteAccount } from '../../http/account'
 import Spinner from '../layout/Spinner';
 
@@ -8,6 +8,8 @@ const AccountsList = () => {
 
     const navigate = useNavigate();
     const goBack = () => navigate('/');
+
+    const queryClient = useQueryClient()
 
     const { data, isPending, isError } = useQuery({
         queryKey: ['accounts', {}],
@@ -18,6 +20,11 @@ const AccountsList = () => {
         mutationFn: deleteAccount,
         onSuccess: (data, error, variables, context) => {
             queryClient.invalidateQueries({ queryKey: ['accounts'] })
+            console.log(ON_SUCCESS)
+            console.log('data =>', data) 
+        },
+        onError: (error, variables, context) => {
+            console.log('error =>', error)
         }
     })
 
@@ -37,7 +44,7 @@ const AccountsList = () => {
                             <thead>
                                 <tr>
                                     <th width='15%'><div className='link'>Banco</div></th>
-                                    <th width='25%'><div className='link'>Tipo/Moneda</div></th>
+                                    <th width='25%'><div className='link'>Moneda/Tipo</div></th>
                                     <th width='25%'><div className='link'>CBU</div></th>
                                     <th width='25%'><div className='link'>Alias</div></th>
                                     <th width='5%'><div className='link'>Activa</div></th>
