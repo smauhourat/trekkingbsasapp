@@ -3,8 +3,11 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getAccounts, deleteAccount } from '../../http/account'
 import Spinner from '../layout/Spinner';
+import { connect } from 'react-redux'   
+import PropTypes from 'prop-types'
+import { setAlert } from '../../actions/alert'
 
-const AccountsList = () => {
+const AccountsList = ({ setAlert }) => {
 
     const navigate = useNavigate();
     const goBack = () => navigate('/');
@@ -20,11 +23,10 @@ const AccountsList = () => {
         mutationFn: deleteAccount,
         onSuccess: (data, error, variables, context) => {
             queryClient.invalidateQueries({ queryKey: ['accounts'] })
-            console.log(ON_SUCCESS)
-            console.log('data =>', data) 
         },
         onError: (error, variables, context) => {
-            console.log('error =>', error)
+            console.log('error en ui =>', error)
+            setAlert(error.message, 'danger')
         }
     })
 
@@ -85,4 +87,9 @@ const AccountsList = () => {
     )
 }
 
-export default AccountsList
+AccountsList.propTypes = {
+    setAlert: PropTypes.func.isRequired
+}
+
+
+export default connect(null, { setAlert })(AccountsList)
