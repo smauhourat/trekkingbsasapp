@@ -37,7 +37,7 @@ const Book = ({
     return (
         <>
             <section className='container'>
-                <h1 className='large text-primary'>Reservaa</h1>
+                <h1 className='large text-primary'>Reserva</h1>
                 <div className="profile-exp bg-white p-1">
                     <h2 className='text-primary'>Evento</h2>
                     <div>

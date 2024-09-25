@@ -249,6 +249,7 @@ router.get('/',
 
       const customers = await Customer
         .find(db_query)
+        .populate('user')
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order });

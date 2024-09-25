@@ -5,6 +5,7 @@ import DashboardActions from './DashboardActions'
 import UsersList from './UsersList'
 import TripsList from './TripsList'
 import AccountList from './AccountsList'
+import CustomersList from './CustomersList'
 import { getUsers } from '../../actions/user'
 import { clearTrip } from '../../actions/trip'
 import { Link } from 'react-router-dom';
@@ -27,13 +28,13 @@ const Dashboard = ({
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
         <i className='fas fa-user' /> Bienvenido {user && user.name }
-        {user?.super_admin ? " ISADMIN": ""}
       </p>
       <>
         <DashboardActions />
         <TripsList />
         <UsersList users={users} />
         <AccountList />
+        <CustomersList />
       </>
     </section>
   )
