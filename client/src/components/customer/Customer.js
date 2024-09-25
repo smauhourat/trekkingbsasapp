@@ -27,9 +27,6 @@ const Customer = ({
   });
 
   useEffect(() => {
-    // console.log('useEffect()')
-    // console.log('customer =>', customer)
-    // console.log('user =>', user)
 
     setFormData({ 
       email: user.email, 

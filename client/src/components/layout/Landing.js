@@ -25,27 +25,6 @@ const Landing = () => {
               </button>
             </div>
             <div className='search' />
-            {/*
-            <div className="search">
-              <input
-                type="text"
-                className="textinput"
-                placeholder="Que actividad estas buscando realizar?"
-                name="search"
-                value={search}
-                onChange={e => onChange(e)}
-                onKeyDown={handleKeyDown}
-              />
-              <div className="buttons">
-                <button
-                  onClick={() => navigate(`/trips/?q=${search}`)}
-                  className="btn btn-primary"
-                >
-                  Proximas Salidas
-                </button>
-              </div>
-            </div>
-            */}
             <div>
               <Link to={`/trips/?q=${search}&category=Trekking`} className='link'>
                 Trekking

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { deleteTrip, getTrip } from '../../actions/trip'
@@ -14,7 +14,6 @@ const TripsListContent = ({ trip: { trips: { data } }, deleteTrip, getTrip }) =>
   }
 
   const viewBooks = (id) => {
-    console.log('viewbooks =>', id)
     getTrip(id)
     navigate(`/books-admin/${id}`)
   }

@@ -8,7 +8,6 @@ import AccountList from './AccountsList'
 import CustomersList from './CustomersList'
 import { getUsers } from '../../actions/user'
 import { clearTrip } from '../../actions/trip'
-import { Link } from 'react-router-dom';
 
 const Dashboard = ({
   getUsers,
@@ -18,10 +17,7 @@ const Dashboard = ({
 }) => {
   useEffect(() => {
     getUsers()
-    //clearTrip()
   }, [getUsers])
-
-  // console.log(JSON.stringify(user))
 
   return (
       <section className='container'>

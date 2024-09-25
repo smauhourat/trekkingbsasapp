@@ -16,7 +16,6 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
             setItemEdited({ id: id, value: e.target.value, rowIndex: rowIndex})
         else
             setItemEdited({ id: id, value: "", rowIndex: rowIndex })
-        // console.log(itemEdited)
     };
 
     const showBtnAdd = (rowIndex) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getAccounts, deleteAccount } from '../../http/account'
 import Spinner from '../layout/Spinner';
@@ -10,7 +10,6 @@ import { setAlert } from '../../actions/alert'
 const AccountsList = ({ setAlert }) => {
 
     const navigate = useNavigate();
-    const goBack = () => navigate('/');
 
     const queryClient = useQueryClient()
 
@@ -25,7 +24,6 @@ const AccountsList = ({ setAlert }) => {
             queryClient.invalidateQueries({ queryKey: ['accounts'] })
         },
         onError: (error, variables, context) => {
-            // console.log('error en ui =>', error)
             setAlert(error.message, 'danger')
         }
     })
@@ -41,7 +39,6 @@ const AccountsList = ({ setAlert }) => {
     }
 
     return (
-        // <section className='container'>
         <>
             <h2 className='my-2'>Cuentas Bancos</h2>
             {isPending && <Spinner />}
@@ -90,13 +87,6 @@ const AccountsList = ({ setAlert }) => {
                 </>
 
             )}
-            {/* <div className='text-center m-3'>
-                <Link onClick={(e) => goBack()} className='btn btn-primary'>
-                    <i className='text-primary' /> Volver
-                </Link>
-            </div> */}
-
-        {/* </section> */}
     </>
     )
 }

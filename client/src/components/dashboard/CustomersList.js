@@ -1,16 +1,13 @@
 import React from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { getCustomers } from '../../http/customer'
 import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { setAlert } from '../../actions/alert'
+import formatDateTimeBsAs from '../../utils/formatDateTimeBsAs'
 
 const CustomersList = ({ setAlert }) => {
-
-    const navigate = useNavigate();
-    const goBack = () => navigate('/');
 
     const { data, isPending, isError } = useQuery({
         queryKey: ['customers', {}],
@@ -18,7 +15,6 @@ const CustomersList = ({ setAlert }) => {
     });
 
     return (
-        // <section className='container'>
         <>
             <h2 className='my-2'>Clientes</h2>
             {isPending && <Spinner />}
@@ -32,7 +28,7 @@ const CustomersList = ({ setAlert }) => {
                                     <th width='35%'><div className='link'>Email</div></th>
                                     <th width='15%'><div className='link'>DNI</div></th>
                                     <th width='10%'><div className='link'>Telefono</div></th>
-                                    <th width='5%'><div className='link'>Acciones</div></th>
+                                    <th width='5%'><div className='link'>Ult. Acceso</div></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,13 +38,7 @@ const CustomersList = ({ setAlert }) => {
                                     <td>{customer?.user?.email}</td>
                                     <td>{customer.dni}</td>
                                     <td>{customer.phone}</td>
-                                    <td className='no-wrap'>
-                                        <button
-                                            className='btn btn-small btn-square btn-success'
-                                        >
-                                            <i className='fas fa-edit' title='Editar' />
-                                        </button>
-                                    </td>
+                                    <td className='no-wrap'>{customer?.user?.last_access ? formatDateTimeBsAs(customer?.user?.last_access) : ""}</td>
                                 </tr>)
                                 )}
                             </tbody>
@@ -57,14 +47,7 @@ const CustomersList = ({ setAlert }) => {
                 </>
 
             )}
-            {/* <div className='text-center m-3'>
-                <Link onClick={(e) => goBack()} className='btn btn-primary'>
-                    <i className='text-primary' /> Volver
-                </Link>
-            </div> */}
-
         </>
-        // </section>
     )
 }
 

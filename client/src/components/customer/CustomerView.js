@@ -10,13 +10,6 @@ const CustomerView = () => {
     const goBack = () => navigate(-1);
 
     const customerId = useParams().id;
-    console.log('customerId => ', customerId)
-
-    // const { data, isPending, isError, error } = useQuery({
-    //     queryKey: ['customer', { customerId: customerId }],
-    //     queryFn: ({ signal }) => getCustomer({ signal, customerId }),
-    //     enabled: customerId !== undefined
-    // });
 
     const { data, isPending, isError } = useQuery({
         queryKey: ['customer', { id: customerId }],
