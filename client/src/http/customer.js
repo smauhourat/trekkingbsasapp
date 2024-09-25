@@ -4,8 +4,6 @@ export const getCustomer = async (id) => {
     try {
         const res = await api.get(`/customers/${id}`)
 
-        //console.log('res.data =>', res.data)
-
         return res.data
     }
     catch (err) {
@@ -20,7 +18,7 @@ export const getCustomers = async () => {
 
     try {
         const res = await api.get('/customers')
-        console.log(res.data)
+        
         return res.data.data
     }
     catch (err) {

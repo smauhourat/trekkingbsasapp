@@ -51,6 +51,9 @@ router.post(
         return res.status(400).json({ errors: [{ msg: 'Credenciales Invalidas' }] })
       }
 
+      // log last access
+      await User.updateOne({ _id: user._id }, { $set: { last_access: Date.now() } })
+
       // Return jsonwebtoken
       const payload = {
         user: {

@@ -25,6 +25,9 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  last_access: {
+    type: Date
+  }
 
 }, { timestamps: true })
 
