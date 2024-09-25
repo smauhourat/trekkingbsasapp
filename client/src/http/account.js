@@ -50,9 +50,9 @@ export const updateAccount = async (id, account) => {
     try {
 
         console.log('account =>', account)
-        //const res = await api.put(`/accounts/${id}`, account)
+        const res = await api.put(`/accounts/${id}`, account)
 
-        //return res
+        return res
     }
     catch (err) {
 

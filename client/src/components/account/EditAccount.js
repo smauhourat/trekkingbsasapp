@@ -45,9 +45,11 @@ const EditAccount = ({
         active: true
     })
 
+    console.log('editedAccount =>', editedAccount)
     useEffect(() => {
-        setEditedAccount(account)
-    }, [account])
+        if (!isPending)
+            setEditedAccount(account)
+    }, [isPending, account])
 
     if (isPending)
         return (<Spinner />)
