@@ -50,7 +50,7 @@ router.put('/:id',
     [
         authAdmin,
         [
-            check('bank', 'Debe ingresar el Banco/Entidad').not().isEmpty(),
+            check('bank', 'Debe ingresarr el Banco/Entidad').not().isEmpty(),
             check('currency', 'Debe ingresar el tipo de moneda').not().isEmpty(),
             check('account_type', 'Debe ingresar el tipo de Cuenta (CA o CC)').not().isEmpty(),
             check('account_number', 'Debe ingresar el Nro de Cuenta').not().isEmpty(),

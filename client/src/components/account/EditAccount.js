@@ -72,9 +72,7 @@ const EditAccount = ({
     const onSubmit = async (e) => {
         e.preventDefault()
         if (validateForm()) {
-            console.log('submit() editedAccount =>', editedAccount)
-            mutation.mutate(id, editedAccount)
-            //updateAccount(id, editedAccount, navigate)
+            mutation.mutate({ ...editedAccount })
         }
     }
 
