@@ -47,6 +47,7 @@ import Unauthorized from './components/auth/Unauthorized'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import AccountsList from './components/dashboard/AccountsList'
+import AddAccount from './components/account/AddAccount'
 
 import './App.css'
 // Redux
@@ -132,6 +133,7 @@ const App = () => {
                 <Route path="add-user" element={<AddUser />} />
                 <Route path="books-admin/:id" element={<BookListAdmin />} />
                 <Route path="accounts" element={<AccountsList />} />
+                <Route path="add-account" element={<AddAccount />} />
                 <Route path="edit-account/:id" element={<EditAccount />} />
               </Route>
             </>

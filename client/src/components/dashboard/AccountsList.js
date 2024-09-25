@@ -41,7 +41,8 @@ const AccountsList = ({ setAlert }) => {
     }
 
     return (
-        <section className='container'>
+        // <section className='container'>
+        <>
             <h2 className='my-2'>Cuentas Bancos</h2>
             {isPending && <Spinner />}
             {!isPending && (
@@ -89,13 +90,14 @@ const AccountsList = ({ setAlert }) => {
                 </>
 
             )}
-            <div className='text-center m-3'>
+            {/* <div className='text-center m-3'>
                 <Link onClick={(e) => goBack()} className='btn btn-primary'>
                     <i className='text-primary' /> Volver
                 </Link>
-            </div>
+            </div> */}
 
-        </section>
+        {/* </section> */}
+    </>
     )
 }
 

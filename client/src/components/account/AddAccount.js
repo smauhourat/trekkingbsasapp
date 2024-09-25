@@ -4,10 +4,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setAlert, setAlertNavigate } from '../../actions/alert'
-import { getAccount, updateAccount } from '../../http/account'
+import { addAccount } from '../../http/account'
 import Spinner from '../layout/Spinner'
 
-const EditAccount = ({
+const AddAccount = ({
     setAlert,
     setAlertNavigate
 }) => {
@@ -15,18 +15,13 @@ const EditAccount = ({
 
     const id = useParams().id
 
-    const { data: account, isPending, isError } = useQuery({
-        queryKey: ['account', id],
-        queryFn: () => getAccount(id)
-    });      
-
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
-        mutationFn: updateAccount,
+        mutationFn: addAccount,
         onSuccess: (data, error, variables, context) => {
             queryClient.invalidateQueries({ queryKey: ['account'] })
-            setAlertNavigate('Los datos se han actualizado correctamente.', 'success', navigate, '/dashboard', 2500)
+            setAlertNavigate('La Cuenta se ha creado correctamente.', 'success', navigate, '/dashboard', 2500)
         },
         onError: (error, variables, context) => {
             console.log(error)
@@ -48,13 +43,13 @@ const EditAccount = ({
     })
 
     // console.log('editedAccount =>', editedAccount)
-    useEffect(() => {
-        if (!isPending)
-            setEditedAccount(account)
-    }, [isPending, account])
+    // useEffect(() => {
+    //     if (!isPending)
+    //         setEditedAccount(account)
+    // }, [isPending, account])
 
-    if (isPending)
-        return (<Spinner />)
+    // if (isPending)
+    //     return (<Spinner />)
 
     const { bank, currency, account_type, account_number, account_cbu, account_alias, active } = editedAccount
 
@@ -81,7 +76,7 @@ const EditAccount = ({
     return (
         <section className='container'>
             <h1 className='large text-primary'>Cuentas Bancarias</h1>
-            <p className='lead'><i className='fas fa-book' /> Actualizar Cuenta</p>
+            <p className='lead'><i className='fas fa-book' /> Crear Cuenta</p>
             <p className='mini'>Los campos marcados con <span className='mark-danger'>*</span> son obligatorios</p>
             <form
                 className='form'
@@ -169,9 +164,9 @@ const EditAccount = ({
     )
 }
 
-EditAccount.propTypes = {
+AddAccount.propTypes = {
     setAlert: PropTypes.func.isRequired,
     setAlertNavigate: PropTypes.func.isRequired
 }
 
-export default connect(null, { setAlert, setAlertNavigate })(EditAccount)
+export default connect(null, { setAlert, setAlertNavigate })(AddAccount)

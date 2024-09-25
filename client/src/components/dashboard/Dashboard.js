@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import DashboardActions from './DashboardActions';
-import UsersList from './UsersList';
-import TripsList from './TripsList';
-import { getUsers } from '../../actions/user';
-import { clearTrip } from '../../actions/trip';
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import DashboardActions from './DashboardActions'
+import UsersList from './UsersList'
+import TripsList from './TripsList'
+import AccountList from './AccountsList'
+import { getUsers } from '../../actions/user'
+import { clearTrip } from '../../actions/trip'
 import { Link } from 'react-router-dom';
 
 const Dashboard = ({
@@ -32,6 +33,7 @@ const Dashboard = ({
         <DashboardActions />
         <TripsList />
         <UsersList users={users} />
+        <AccountList />
       </>
     </section>
   )

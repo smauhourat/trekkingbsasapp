@@ -64,3 +64,23 @@ export const updateAccount = async (account) => {
         throw error
     }
 }
+
+export const addAccount = async (account) => {
+    try {
+        const res = await api.post(`/accounts`, account)
+
+        return res
+    }
+    catch (err) {
+
+        const errors = err.response?.data?.errors
+
+        const error = new Error('Se produjo un error al intentar agregar la Cuenta.');
+        error.message += err.response.data?.msg ? ` ${err.response.data?.msg}` : ""
+        error.code = err.response.status
+        error.info = err.response.data
+        error.errors = errors
+        console.log('error en http =>', JSON.stringify(err))
+        throw error
+    }
+}

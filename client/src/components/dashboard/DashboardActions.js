@@ -10,6 +10,9 @@ const DashboardActions = () => {
       <Link to='/add-user' className='btn btn-light'>
         <i className='fas fa-user text-primary' /> Agregar Usuario
       </Link>
+      <Link to='/add-account' className='btn btn-light'>
+        <i className='fas fa-book text-primary' /> Agregar Cuenta Banco
+      </Link>
     </div>
   )
 }
