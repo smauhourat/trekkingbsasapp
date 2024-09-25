@@ -3,12 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { setAlert } from '../../actions/alert'
+import { setAlert, setAlertNavigate } from '../../actions/alert'
 import { getAccount, updateAccount } from '../../http/account'
 import Spinner from '../layout/Spinner'
 
 const EditAccount = ({
-    setAlert
+    setAlert,
+    setAlertNavigate
 }) => {
     const navigate = useNavigate()
 
@@ -25,6 +26,7 @@ const EditAccount = ({
         mutationFn: updateAccount,
         onSuccess: (data, error, variables, context) => {
             queryClient.invalidateQueries({ queryKey: ['account'] })
+            setAlertNavigate('Los datos se han actualizado correctamente.', 'success', navigate, '/accounts', 2500)
         },
         onError: (error, variables, context) => {
             console.log(error)
@@ -45,7 +47,7 @@ const EditAccount = ({
         active: true
     })
 
-    console.log('editedAccount =>', editedAccount)
+    // console.log('editedAccount =>', editedAccount)
     useEffect(() => {
         if (!isPending)
             setEditedAccount(account)
@@ -168,7 +170,8 @@ const EditAccount = ({
 }
 
 EditAccount.propTypes = {
-    setAlert: PropTypes.func.isRequired
+    setAlert: PropTypes.func.isRequired,
+    setAlertNavigate: PropTypes.func.isRequired
 }
 
-export default connect(null, { setAlert })(EditAccount)
+export default connect(null, { setAlert, setAlertNavigate })(EditAccount)

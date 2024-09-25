@@ -62,11 +62,11 @@ router.put('/:id',
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() })
         }
-        console.log('req.body =>', req.body)
-        const { bank, currency, account_type, account_number, account_cbu, account_alias } = req.body;
+
+        const { bank, currency, account_type, account_number, account_cbu, account_alias, active } = req.body;
 
         try {
-            const account = await Account.findByIdAndUpdate(req.params.id, { bank, currency, account_type, account_number, account_cbu, account_alias }, { new: true })
+            const account = await Account.findByIdAndUpdate(req.params.id, { bank, currency, account_type, account_number, account_cbu, account_alias, active }, { new: true })
             res.json(account)
         } catch (err) {
             console.error(err)

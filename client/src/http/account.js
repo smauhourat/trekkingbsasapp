@@ -18,7 +18,7 @@ export const getAccounts = async () => {
 export const getAccount = async(id) => {
     try {
         const res = await api.get(`/accounts/${id}`)
-        console.log(res)
+
         return res.data
     }
     catch (err) {
@@ -47,7 +47,6 @@ export const deleteAccount = async (id) => {
 
 export const updateAccount = async (account) => {
     try {
-
         const res = await api.put(`/accounts/${account._id}`, account)
 
         return res
