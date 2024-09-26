@@ -4,7 +4,6 @@ import environment from '../../utils/environment'
 const Pagination = ({
     currentPage,
     totalItems,
-    limitItems,
     onPageChange,
     isPreviousData,
 }) => {
@@ -33,8 +32,7 @@ const Pagination = ({
                 <li className='fas fa-angle-right' />
             </button>
             <div className='tiny inline'>
-                Página {currentPage} de {Math.ceil(totalItems / limitItems)} - total de registros: {totalItems}
-                {/* Página {trips?.metadata?.page} de {Math.ceil(trips?.metadata?.total / trips?.metadata?.limit)} - total de registros: {trips?.metadata?.total} */}
+                Página {currentPage} de {Math.ceil(totalItems / environment.recordsPerPage)} - total de registros: {totalItems}
             </div>
         </div>
     )

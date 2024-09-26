@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { setAlert } from '../../actions/alert'
 import { formatDateTimeBsAs } from '../../utils/dateHelper'
+import environment from '../../utils/environment'
 import Pagination from '../layout/Pagination'
 
 const CustomersList = ({ setAlert }) => {
@@ -14,15 +15,13 @@ const CustomersList = ({ setAlert }) => {
 
     const { data, isPending, isError, isFetching, isPreviousData } = useQuery({
         queryKey: ['customers', currentPage],
-        queryFn: () => getCustomers(`q=&page=${currentPage}&limit=5`),
+        queryFn: () => getCustomers(`q=&page=${currentPage}&limit=${environment.recordsPerPage}`),
         keepPreviousData: true
     });
 
     return (
         <>
             <h2 className='my-2'>Clientes</h2>
-            {isPending && <Spinner />}
-            {!isPending && (
                 <>
                     <div className='scroll-x'>
                         <table className='table'>
@@ -36,23 +35,25 @@ const CustomersList = ({ setAlert }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data?.customers?.map((customer, rowIndex) =>
-                                (<tr key={rowIndex}>
-                                    <td>{customer.last_name}, {customer.first_name}</td>
-                                    <td>{customer?.user?.email}</td>
-                                    <td>{customer.dni}</td>
-                                    <td>{customer.phone}</td>
-                                    <td className='no-wrap'>{customer?.user?.last_access ? formatDateTimeBsAs(customer?.user?.last_access) : ""}</td>
-                                </tr>)
-                                )}
+                                {isPending && (<tr><td colSpan='5'><Spinner /></td></tr>)}
+                                {!isPending && (
+                                    data?.customers?.map((customer, rowIndex) =>
+                                        (<tr key={rowIndex}>
+                                            <td>{customer.last_name}, {customer.first_name}</td>
+                                            <td>{customer?.user?.email}</td>
+                                            <td>{customer.dni}</td>
+                                            <td>{customer.phone}</td>
+                                            <td className='no-wrap'>{customer?.user?.last_access ? formatDateTimeBsAs(customer?.user?.last_access) : ""}</td>
+                                            </tr>)
+                                        )
+                                    )}
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colSpan='5'>
                                         <Pagination 
                                             currentPage={currentPage}
-                                            totalItems={data.metadata.total}
-                                            limitItems={data.metadata.limit}
+                                            totalItems={data?.metadata.total}
                                             onPageChange={(page) => setCurrentPage(page)}
                                             isPreviousData={isPreviousData}
                                         />
@@ -62,8 +63,6 @@ const CustomersList = ({ setAlert }) => {
                         </table>
                     </div>
                 </>
-
-            )}
         </>
     )
 }

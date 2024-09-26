@@ -14,9 +14,7 @@ export const getCustomer = async (id) => {
 export const getCustomers = async (query='q=') => {
 
     try {
-        console.log('query =>', query)
         const res = await api.get(`/customers?${query}`)
-        console.log('data => ', res.data)
         return res.data
     }
     catch (err) {

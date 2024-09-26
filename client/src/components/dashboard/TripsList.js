@@ -92,7 +92,7 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
               </tr>
             </thead>
             <tbody>
-              {loading ? (<tr><td /><td colSpan='5'><Spinner /></td></tr>) : (<TripsListContent />)}
+              {loading ? (<tr><td colSpan='6'><Spinner /></td></tr>) : (<TripsListContent />)}
             </tbody>
             <tfoot>
               <tr>
