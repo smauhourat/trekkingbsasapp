@@ -238,8 +238,7 @@ router.get('/',
           { last_name: { $regex: query, '$options': 'i' } },
           { phone: { $regex: query, '$options': 'i' } },
           { dni: { $regex: query, '$options': 'i' } },
-          { medical_status: { $regex: query, '$options': 'i' } },
-          { email: { $regex: query, '$options': 'i' } },
+          { medical_status: { $regex: query, '$options': 'i' } }
         ]
       };
 
