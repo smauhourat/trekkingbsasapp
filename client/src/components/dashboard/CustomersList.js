@@ -40,6 +40,7 @@ const CustomersList = ({ setAlert }) => {
     const handleOnChangeOrder = (e) => {
         setSort(e)
         setOrder(order === 1 ? -1 : 1)
+        setCurrentPage(1)
     }
 
     const { data, isPending, isError, isFetching, isPreviousData } = useQuery({
