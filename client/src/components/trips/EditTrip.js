@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setAlert } from '../../actions/alert'
 import { updateTrip } from '../../actions/trip'
-import formatDateISO from '../../utils/formatDateISO'
+import { formatDateISO } from '../../utils/dateHelper'
 import training_levels from '../../models/TrainingLevel.json'
 
 const EditTrip = ({

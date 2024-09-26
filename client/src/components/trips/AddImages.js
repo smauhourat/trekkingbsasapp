@@ -7,7 +7,7 @@ import ImagesList from './ImagesList'
 import Spinner from '../layout/Spinner'
 import { addImage } from '../../actions/trip'
 import imageFileIsValid from '../../utils/imageFileIsValid'
-import formatDate from '../../utils/formatDate'
+import { formatDate } from '../../utils/dateHelper'
 
 const AddImages = ({ addImage, setAlert, loading, trip: { trips } }) => {
   const [editedTrip, setEditedTrip] = useState({

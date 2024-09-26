@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { updateBook, getBooks } from '../../actions/book'
-import formatDate from '../../utils/formatDate'
+import { formatDate } from '../../utils/dateHelper'
 
 const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, auth }) => {
 

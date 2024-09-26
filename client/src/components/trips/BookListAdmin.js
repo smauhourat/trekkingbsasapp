@@ -4,7 +4,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { updateBook, getBooksByTrip } from '../../actions/book'
-import formatDate from '../../utils/formatDate'
+import { formatDate } from '../../utils/dateHelper'
 
 const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, book: { books: { data }, loading }, auth }) => {
 

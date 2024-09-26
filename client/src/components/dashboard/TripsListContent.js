@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { deleteTrip, getTrip } from '../../actions/trip'
-import formatDate from '../../utils/formatDate'
+import { formatDate } from '../../utils/dateHelper'
 
 const TripsListContent = ({ trip: { trips: { data } }, deleteTrip, getTrip }) => {
   const navigate = useNavigate()

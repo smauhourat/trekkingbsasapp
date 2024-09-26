@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { addCustomer } from '../../actions/customer';
-import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
-import dateGetDiffYears from '../../utils/dateGetDiffYears'
+// import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
+import { dateGetDiffYears, formatDateISOFromDate } from '../../utils/dateHelper'
 
 const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => {
     const navigate = useNavigate();

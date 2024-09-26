@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import { getTrips } from '../../actions/trip'
 import TripsListContent from './TripsListContent'
 import Spinner from '../layout/Spinner'
-import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
+// import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
+import { formatDateISOFromDate } from '../../utils/dateHelper'
 import environment from '../../utils/environment'
 
 const TripsList = ({ getTrips, trip: { trips, loading } }) => {

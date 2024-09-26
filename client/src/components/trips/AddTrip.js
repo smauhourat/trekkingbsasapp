@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { setAlert } from '../../actions/alert'
 import { addTrip } from '../../actions/trip'
 import training_levels from '../../models/TrainingLevel.json'
-import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
+import { formatDateISOFromDate } from '../../utils/dateHelper'
 
 const AddTrip = ({ setAlert, addTrip }) => {
   const navigate = useNavigate()

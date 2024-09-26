@@ -5,7 +5,7 @@ import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { setAlert } from '../../actions/alert'
-import formatDateTimeBsAs from '../../utils/formatDateTimeBsAs'
+import { formatDateTimeBsAs } from '../../utils/dateHelper'
 
 const CustomersList = ({ setAlert }) => {
 

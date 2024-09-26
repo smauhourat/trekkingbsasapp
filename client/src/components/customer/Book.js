@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createBook } from '../../services';
 import { setAlert } from '../../actions/alert'
-import formatDate from '../../utils/formatDate'
+import { formatDate } from '../../utils/dateHelper'
 import convertToSlug from '../../utils/convertToSlug';
 
 const Book = ({ 

@@ -4,9 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setAlert } from '../../actions/alert'
 import { updateCustomer } from '../../actions/customer'
-import formatDateISO from '../../utils/formatDateISO'
-import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
-import dateGetDiffYears from '../../utils/dateGetDiffYears'
+import { dateGetDiffYears, formatDateISOFromDate, formatDateISO } from '../../utils/dateHelper'
 
 const Customer = ({ 
   auth: { user, customer },
