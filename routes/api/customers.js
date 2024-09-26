@@ -262,7 +262,7 @@ router.get('/',
           "limit": limit,
           "page": page
         },
-        "data": customers
+        "customers": customers
       });
 
       if (!customers) {

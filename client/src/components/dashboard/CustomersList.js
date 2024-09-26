@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getCustomers } from '../../http/customer'
 import Spinner from '../layout/Spinner';
@@ -6,12 +6,16 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { setAlert } from '../../actions/alert'
 import { formatDateTimeBsAs } from '../../utils/dateHelper'
+import Pagination from '../layout/Pagination'
 
 const CustomersList = ({ setAlert }) => {
 
-    const { data, isPending, isError } = useQuery({
-        queryKey: ['customers', {}],
-        queryFn: () => getCustomers()
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const { data, isPending, isError, isFetching, isPreviousData } = useQuery({
+        queryKey: ['customers', currentPage],
+        queryFn: () => getCustomers(`q=&page=${currentPage}&limit=5`),
+        keepPreviousData: true
     });
 
     return (
@@ -32,7 +36,7 @@ const CustomersList = ({ setAlert }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data?.map((customer, rowIndex) =>
+                                {data?.customers?.map((customer, rowIndex) =>
                                 (<tr key={rowIndex}>
                                     <td>{customer.last_name}, {customer.first_name}</td>
                                     <td>{customer?.user?.email}</td>
@@ -42,6 +46,19 @@ const CustomersList = ({ setAlert }) => {
                                 </tr>)
                                 )}
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colSpan='5'>
+                                        <Pagination 
+                                            currentPage={currentPage}
+                                            totalItems={data.metadata.total}
+                                            limitItems={data.metadata.limit}
+                                            onPageChange={(page) => setCurrentPage(page)}
+                                            isPreviousData={isPreviousData}
+                                        />
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </>

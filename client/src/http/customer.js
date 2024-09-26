@@ -11,11 +11,13 @@ export const getCustomer = async (id) => {
     }    
 }
 
-export const getCustomers = async () => {
+export const getCustomers = async (query='q=') => {
 
     try {
-        const res = await api.get('/customers')
-        return res.data.data
+        console.log('query =>', query)
+        const res = await api.get(`/customers?${query}`)
+        console.log('data => ', res.data)
+        return res.data
     }
     catch (err) {
         handleError(err, 'Se produjo un error leyendo los datos de los Clientes')
