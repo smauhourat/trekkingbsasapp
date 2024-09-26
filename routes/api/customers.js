@@ -248,6 +248,7 @@ router.get('/',
 
       const customers = await Customer
         .find(db_query)
+        .collation({ locale: "en" })
         .populate('user')
         .limit(limit)
         .skip(limit * (page - 1))

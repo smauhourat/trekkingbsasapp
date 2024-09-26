@@ -32,6 +32,15 @@ const CustomersList = ({ setAlert }) => {
         // console.log('triggerSearch =>', triggerSearch)
     }
 
+    const sortOrderIcon = (e) => {
+        const classIcon = order === 1 ? 'fas fa-arrow-down' : 'fas fa-arrow-up'
+        return e === sort ? <i className={classIcon} /> : ''
+    }
+
+    const handleOnChangeOrder = (e) => {
+        setSort(e)
+        setOrder(order === 1 ? -1 : 1)
+    }
 
     const { data, isPending, isError, isFetching, isPreviousData } = useQuery({
         queryKey: ['customers', currentPage, triggerSearch, sort, order],
@@ -49,9 +58,9 @@ const CustomersList = ({ setAlert }) => {
                 <table className='table'>
                     <thead>
                         <tr>
-                            <th width='35%'><div className='link'>Nombre</div></th>
+                            <th width='35%'><div className='link' onClick={() => handleOnChangeOrder('last_name')}>Nombre {sortOrderIcon('last_name')}</div></th>
                             <th width='35%'><div className='link'>Email</div></th>
-                            <th width='15%'><div className='link'>DNI</div></th>
+                            <th width='15%'><div className='link' onClick={() => handleOnChangeOrder('dni')}>DNI {sortOrderIcon('dni')}</div></th>
                             <th width='10%'><div className='link'>Telefono</div></th>
                             <th width='5%'><div className='link'>Ult. Acceso</div></th>
                         </tr>

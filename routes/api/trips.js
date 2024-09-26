@@ -78,6 +78,7 @@ router.get('/',
 
       const trips = await Trip
         .find(dbQuery)
+        .collation({ locale: "en" })
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order })
