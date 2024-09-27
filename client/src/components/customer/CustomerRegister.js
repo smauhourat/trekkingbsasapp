@@ -10,6 +10,8 @@ import { dateGetDiffYears, formatDateISOFromDate } from '../../utils/dateHelper'
 const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => {
     const navigate = useNavigate();
 
+    const [disableSubmit, setDisableSubmit] = useState(false)
+
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
@@ -55,6 +57,7 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
     const onSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
+            setDisableSubmit(true)
             addCustomer({ first_name, last_name, email, dni, phone, birth_date, medical_status, password }, navigate)
         }
     }
@@ -149,7 +152,7 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
                         onChange={onChange} />
                 </div>
                 
-                <input type="submit" className="btn btn-primary" value="Aceptar" />
+                <input type="submit" className="btn btn-primary" value="Aceptar" disabled={disableSubmit} />
                 <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/')} />
             </form>
         </section>
