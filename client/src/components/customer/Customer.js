@@ -14,6 +14,8 @@ const Customer = ({
 
   const navigate = useNavigate();
 
+  const [disableSubmit, setDisableSubmit] = useState(false)
+
   const [formData, setFormData] = useState({
       first_name: '',
       last_name: '',
@@ -65,6 +67,7 @@ const Customer = ({
   const onSubmit = async (e) => {
     e.preventDefault()
     if (validateForm()) {
+      setDisableSubmit(true)
       updateCustomer(customer._id, formData, navigate)
     }
   }  
@@ -147,7 +150,7 @@ const Customer = ({
                         onChange={onChange} />
                 </div>
                
-                <input type="submit" className="btn btn-primary" value="Aceptar" />
+                <input type="submit" className="btn btn-primary" value="Aceptar" disabled={disableSubmit} />
                 <input type="button" className="btn btn-secondary" value="Cancelar" onClick={() => navigate('/')} />
             </form>
     </section>

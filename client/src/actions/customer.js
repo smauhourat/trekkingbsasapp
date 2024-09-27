@@ -45,7 +45,7 @@ export const updateCustomer = (id, formData, navigate) => async (dispatch) => {
         })
 
         dispatch(loadCustomer())
-        dispatch(setAlertNavigate('Datos modificados con exito', 'success', navigate, 2000))
+        dispatch(setAlertNavigate('Datos modificados con exito', 'success', navigate, '/', 2000))
 
     } catch (err) {
         const errors = err.response.data.errors
