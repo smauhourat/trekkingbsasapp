@@ -55,7 +55,14 @@ router.post('/',
       const customer = await new Customer({
         _id: user._id,
         user: user._id,
-        first_name, last_name, dni, phone, birth_date, medical_status
+        email: email,
+        first_name,
+        last_name,
+        full_name: last_name + ", " + first_name,
+        dni,
+        phone,
+        birth_date,
+        medical_status
       }).save()
 
       // Generamos el token para la verificacion del mail del usuario
@@ -159,9 +166,10 @@ router.put('/:id',
     }
 
     const { first_name, last_name, dni, phone, birth_date, medical_status } = req.body;
+    const full_name = last_name + ", " + first_name
 
     try {
-      const customer = await Customer.findByIdAndUpdate(req.params.id, { first_name, last_name, dni, phone, birth_date, medical_status }, { new: true });
+      const customer = await Customer.findByIdAndUpdate(req.params.id, { first_name, last_name, full_name, dni, phone, birth_date, medical_status }, { new: true });
       res.json(customer);
     } catch (err) {
       console.error(err);
@@ -239,6 +247,7 @@ router.get('/',
           { phone: { $regex: query, '$options': 'i' } },
           { dni: { $regex: query, '$options': 'i' } },
           { medical_status: { $regex: query, '$options': 'i' } },
+          { email: { $regex: query, '$options': 'i' } },
         ]
       };
 

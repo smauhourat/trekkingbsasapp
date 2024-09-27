@@ -17,6 +17,12 @@ const CustomerSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  full_name: {
+    type: String
+  },
+  email: {
+    type: String
+  },
   dni: {
     type: String,
     required: true
