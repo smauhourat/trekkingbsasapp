@@ -30,3 +30,4 @@ Cypress.Commands.add('login', ({ email, password }) => {
   cy.get('[placeholder="Contraseña"]').type(password)
   cy.get('#form-login-submit-button').click()
 })
+

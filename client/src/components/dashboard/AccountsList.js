@@ -45,7 +45,7 @@ const AccountsList = ({ setAlert }) => {
             {!isPending && (
                 <>  
                     <div className='scroll-x'>
-                        <table className='table'>
+                        <table id="test_table_accounts" className='table'>
                             <thead>
                                 <tr>
                                     <th width='15%'><div className='link'>Banco</div></th>
@@ -72,7 +72,7 @@ const AccountsList = ({ setAlert }) => {
                                                 <i className='fas fa-edit' title='Editar' />
                                             </button>
 
-                                            <button
+                                            <button name="test_delete_row"
                                                 onClick={(e) => handleDeleteAccount(e, account._id)}
                                                 className='btn btn-small btn-square btn-danger'
                                             >

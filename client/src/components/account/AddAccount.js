@@ -157,7 +157,7 @@ const AddAccount = ({
                     />
                     <label>Activa</label>
                 </div>
-                <input type='submit' className='btn btn-primary' value='Aceptar' />
+                <input type='submit' id='form-account-submit-button' className='btn btn-primary' value='Aceptar' />
                 <input type='button' className='btn btn-secondary' value='Cancelar' onClick={() => navigate('/dashboard')} />
             </form>
         </section>
