@@ -1,15 +1,15 @@
 import React, { Fragment, useEffect } from 'react'
-import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import BookList from '../../components/customer/BookList';
 
 const DashboardCustomer = () => {
 
   return (
     <Fragment>
-      <section className="container">
+      {/* <section className="container">
           <h1 className="large text-primary">Dashboard del Cliente</h1>
-      </section>
+      </section> */}
+      <BookList />
     </Fragment>
   )
 }

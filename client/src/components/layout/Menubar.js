@@ -10,13 +10,16 @@ const Menubar = ({ auth: { isAuthenticated, isAdmin, user }, logout }) => {
     return (
       <nav className='menubar bg-dark'>
         <ul>
-          {!isAdmin && (<>
-            <li><Link to='/books'>Mis Reservas</Link></li>
-            <li><Link to='/customer'>Mis Datos</Link></li>
-            </>
-          )
+          {
+          !isAdmin && (<>
+            {/* <li><Link to='/books'>Mis Reservas</Link></li> */}
+            {/* <li><Link to='/customer'>Mis Datos</Link></li> */}
+            <li><Link to='/customer'>{user?.name}</Link></li>
+            </>)
           }
-          <li>{user?.name}</li>
+          {isAdmin && (
+            <li>{user?.name}</li>
+          )}
         </ul>
       </nav>
     ) 
