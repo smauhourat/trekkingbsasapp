@@ -37,7 +37,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
   }, [query, getTrips, monthSearch])
 
   return (
-    <section className={isCalendar ? 'container-bottom' : 'container'}>
+    <section className={isCalendar ? 'container-bottom' : 'trips-container'}>
       {loading
         ? (
           <Spinner />
@@ -56,7 +56,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
                   <h1 className='title-search-result'>Actividades</h1>
                 </>
                 )}
-            <div className='profiles'>
+            <div className='trips'>
               {trips?.data?.length > 0
                 ? (
                     trips.data.map((trip) => (

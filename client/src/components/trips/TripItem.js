@@ -7,13 +7,15 @@ const TripItem = ({
   trip
 }) => {
   return (
-    <div className='profile bg-white'>
-      <img
-        className='round-img-slow'
-        src={trip.images[0]?.url}
-        alt=''
-      />
-      <div>
+    <div className='trip-grid bg-white'>
+      <div className='trip-top'>
+        <img
+          className='round-img-slow'
+          src={trip.images[0]?.url}
+          alt=''
+          />
+      </div>
+      <div className='trip-desc'>
         <h2>{trip.title}</h2>
         <p>{trip.subtitle}</p>
         <p>{trip.location}</p>
@@ -21,10 +23,12 @@ const TripItem = ({
           <i className='text-primary' /> Ver Detalle
         </Link>
       </div>
-      <div>
+      <div className='trip-foot1'>
         {trip.category &&
           (<span><h3>Categoria:</h3><div>{trip.category}</div></span>)}
         <h3>Fecha:</h3>{formatDate(trip.date)}
+      </div>
+      <div className='trip-foot2'>
         <h3>Duración:</h3>{trip.duration}
         <h3>Disponibilidad:</h3>{trip?.quota - trip?.reservations} lugares
       </div>
