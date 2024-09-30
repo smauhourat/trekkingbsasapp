@@ -9,7 +9,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  loading: true,
+  loading: false,
   books: [],
   selectedBook: {},
   error: {}

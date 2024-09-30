@@ -59,8 +59,8 @@ const CustomersList = ({ setAlert }) => {
                 <table className='table'>
                     <thead>
                         <tr>
-                            <th width='35%'><div className='link' onClick={() => handleOnChangeOrder('last_name')}>Nombre {sortOrderIcon('last_name')}</div></th>
-                            <th width='30%'><div className='link'>Email</div></th>
+                            <th width='35%'><div className='link' onClick={() => handleOnChangeOrder('full_name')}>Nombre {sortOrderIcon('full_name')}</div></th>
+                            <th width='30%'><div className='link' onClick={() => handleOnChangeOrder('email')}>Email {sortOrderIcon('email')}</div></th>
                             <th width='15%'><div className='link' onClick={() => handleOnChangeOrder('dni')}>DNI {sortOrderIcon('dni')}</div></th>
                             <th width='10%'><div className='link'>Telefono</div></th>
                             <th width='5%'><div className='link'>Ult. Acceso</div></th>

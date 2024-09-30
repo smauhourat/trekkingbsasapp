@@ -1,3 +1,4 @@
+// it.only() para solo ejecutar ese test
 describe('Trekk App', () => {
   it('frontend can be opened', () => {
     cy.visit(Cypress.env('baseUrl'))

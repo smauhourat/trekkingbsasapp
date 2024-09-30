@@ -78,6 +78,7 @@ export const getBooks = (customerId) => async (dispatch) => {
 export const getBooksByTrip = (tripId) => async (dispatch) => {
   // dispatch({ type: BOOK_CLEAR });
   try {
+    dispatch({ type: BOOK_CLEAR });
     const res = await api.get(`/books/by-trip/${tripId}`);
     // console.log(res.data);
     dispatch({
