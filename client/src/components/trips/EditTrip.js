@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setAlert } from '../../actions/alert'
 import { updateTrip } from '../../actions/trip'
-import { formatDateISO } from '../../utils/dateHelper'
+import { formatDateISO, formatDateTimeBsAs } from '../../utils/dateHelper'
 import training_levels from '../../models/TrainingLevel.json'
+
 
 const EditTrip = ({
   setAlert,
@@ -61,6 +62,16 @@ const EditTrip = ({
       setAlert('Las Reservas no pueden ser mayores al Cupo', 'danger')
       return false
     }
+    console.log('date =>', formatDateTimeBsAs(date))
+    const dateTrip = new Date(date)
+    console.log('dateTrip =>', dateTrip)
+    const currentDate = new Date();
+    console.log('currentDate =>', currentDate)
+
+    if (dateTrip < currentDate) {
+      setAlert('La fecha del Evento, es anterior a la fecha actual!!!', 'warning')
+    }
+
     return true
   }
 

@@ -1348,10 +1348,9 @@ nav a:focus {
 }
 
 .sticker {
-  /* background-color: #ee6c19; */
   background-color: #F15A2A;
   color: #ffffff !important;
-  z-index: 1;
+  z-index: 0;
   position: absolute;
   float: right;
   margin-top: 20px;
