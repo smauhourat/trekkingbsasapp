@@ -928,6 +928,16 @@ button {
   grid-gap: 1rem;
 }
 
+.profile-grid2 {
+  display: grid;
+  grid-template-areas:
+    'top top'
+    'about about'
+    'exp exp'
+    'github github';
+  grid-gap: 1rem;
+}
+
 .profile-top {
   grid-area: top;
   display: flex;
@@ -1338,17 +1348,17 @@ nav a:focus {
 }
 
 .sticker {
-    /* background-color: #ee6c19; */
-    background-color: #F15A2A;
-    color: #ffffff !important;
-    z-index: 1;
-    position: absolute;
-    float: right;
-    margin-top: 20px;
-    margin-left: 10px;
-    transform: rotate(-5deg);
-    padding: 0.2rem;
-    border-radius: 3px;
+  /* background-color: #ee6c19; */
+  background-color: #F15A2A;
+  color: #ffffff !important;
+  z-index: 1;
+  position: absolute;
+  float: right;
+  margin-top: 20px;
+  margin-left: 10px;
+  transform: rotate(-5deg);
+  padding: 0.2rem;
+  border-radius: 3px;
 }
 
 /********************************************************************/
@@ -1412,7 +1422,7 @@ nav a:focus {
     height: 210px;
     overflow: hidden;
     background-color: #bacede;
-  } 
+  }
 }
 
 /* Mobile Styles */
@@ -1422,6 +1432,7 @@ nav a:focus {
     overflow: hidden;
     background-color: #bacede;
   }
+
   .trips {
     display: grid;
     grid-template-columns: 1fr;
@@ -1538,6 +1549,7 @@ nav a:focus {
   }
 
 }
+
 /* End Mobile Styles */
 
 @media (max-width: 480px) {
@@ -1968,5 +1980,3 @@ nav a:focus {
   color: var(--danger-color);
   font-weight: 600;
 }
-
-

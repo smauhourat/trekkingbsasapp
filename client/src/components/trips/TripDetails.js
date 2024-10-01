@@ -8,8 +8,6 @@ import training_levels from '../../models/TrainingLevel.json'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { getTrip } from '../../actions/trip';
-import convertToSlug from '../../utils/convertToSlug';
-import { createBookOrder } from '../../services';
 import { setAlert } from '../../actions/alert';
 
 const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
@@ -43,42 +41,29 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
     return false
   }
 
-  // const handleBookMP = async (e) => {
-  //   try {
-  //     const tripId = id;
-  //     const bookData = {
-  //       customer: '6487b403410255f5c0148ae1', // Juan Pedro (juanpedro@hotmail.com)
-  //       trip: tripId,
-  //       price: selectedTrip.booking_price,
-  //       description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`
-  //     };
+  const haveExtras = () => {
+    return (selectedTrip.suggested_equipment || selectedTrip.included_services)
+  }
 
-  //     const orderData = {
-  //       userId: '6487b403410255f5c0148ae1', // Juan Pedro (juanpedro@hotmail.com)
-  //       item_id: tripId,
-  //       title: selectedTrip.title,
-  //       description: `reserva-${convertToSlug(selectedTrip.title)}-${selectedTrip.date.substring(0, 10)}`,
-  //       unit_price: selectedTrip.booking_price,
-  //       currency_id: 'ARS',
-  //       quantity: 1
-  //     };
-  //     // console.log(bookData);
+  const showExtras = () => {
 
-  //     const res = await createBookOrder(bookData, orderData);
-  //     console.log(res.data.url_redirect)
-  //     if (res)
-  //       window.location.href = res.data.url_redirect;
-  //     else
-  //       setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
-  //   } catch (err) {
-  //     console.log(err);
-  //     const errors = err.response.data.errors;
-
-  //     if (errors) {
-  //       setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
-  //     }
-  //   }
-  // }
+    if (!selectedTrip.suggested_equipment && !selectedTrip.included_services) return
+    
+    return (
+      <div className='profile-edu bg-white p-2'>
+        {(selectedTrip.suggested_equipment && 
+        <>
+          <h2 className='text-primary'>Equipo Sugerido</h2>
+          <div><p><strong>Detalle: </strong>{selectedTrip?.suggested_equipment}</p></div>
+        </>)}
+        {(selectedTrip.included_services && 
+        <>
+          <h2 className='text-primary'>Servicios Incluidos</h2>
+          <div><p>{selectedTrip?.included_services}</p></div>
+        </>)}
+      </div>
+    )
+  }
 
   return (
     <section className='container'>
@@ -87,7 +72,7 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
           <Spinner />
         ) : (
           <>
-            <div className='profile-grid my-1'>
+            <div className={haveExtras() ? 'profile-grid my-1' : 'profile-grid2 my-1'}>
               <div className='profile-top p-2'>
                 <h1 className='medium mg-top-1'>{selectedTrip?.title}</h1>
                 <p className='small'>{selectedTrip?.subtitle}</p>
@@ -117,17 +102,15 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
                   <p><strong>Precio Reserva: </strong>${selectedTrip?.booking_price} (por persona)</p>
 
                 </div>
-                <div>
-                  <h2 className='text-primary'>Itinerario</h2>
-                  <p>{selectedTrip?.itinerary}</p>
-                </div>
+                {selectedTrip.itinerary && (
+                    <div>
+                      <h2 className='text-primary'>Itinerario</h2>
+                      <p>{selectedTrip.itinerary}</p>
+                    </div>
+                )}
               </div>
 
-              <div>
-                {/* <Link to={'/trips'} state={{ data: selectedTrip }} className='btn btn-primary'>
-                  <i className='text-primary' /> Volver
-                </Link> */}
-
+              <div className='profile-github'>
                   <Link onClick={(e) => goBack()} className='btn btn-primary'>
                     <i className='text-primary' /> Volver
                   </Link>                
@@ -141,25 +124,7 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
                 }
 
               </div>
-
-              <div className='profile-edu bg-white p-2'>
-                <h2 className='text-primary'>Equipo Sugerido</h2>
-                <div>
-                  <p>
-                    <strong>Detalle: </strong>{selectedTrip?.suggested_equipment}
-                  </p>
-                </div>
-                {selectedTrip?.included_services && (
-                  <>
-                    <h2 className='text-primary'>Servicios Incluidos</h2>
-                    <div>
-                      <p>
-                        {selectedTrip?.included_services}
-                      </p>
-                    </div>
-                  </>
-                )}
-              </div>
+              {showExtras()}
             </div>
           </>
         )
