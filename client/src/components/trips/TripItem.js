@@ -21,7 +21,7 @@ const TripItem = ({
       <div className='trip-desc'>
         <h2>{trip.title}</h2>
         <p>{trip.subtitle}</p>
-        <p>{trip.location}</p>
+        <p className='mt-15'>{trip.location}</p>
         <Link to={'/trip-details/' + trip._id} state={{ data: trip }} className='btn btn-primary mt-10'>
           <i className='text-primary' /> Ver Detalle
         </Link>
@@ -32,7 +32,7 @@ const TripItem = ({
         <h3>Fecha:</h3>{formatDate(trip.date)}
       </div>
       <div className='trip-foot2'>
-        <h3>Duración:</h3>{trip.duration}
+        {trip.duration && (<><h3>Duración:</h3>{trip.duration}</>)}
         <h3>Disponibilidad:</h3>{trip?.quota - trip?.reservations} lugares
       </div>
     </div>
