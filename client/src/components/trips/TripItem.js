@@ -8,7 +8,7 @@ const TripItem = ({
 }) => {
   return (
     <div className='trip-grid bg-white'>
-      <div className='trip-top'>
+      <div className='trip-top crop'>
         <img
           className='round-img-slow'
           src={trip.images[0]?.url}
@@ -19,7 +19,7 @@ const TripItem = ({
         <h2>{trip.title}</h2>
         <p>{trip.subtitle}</p>
         <p>{trip.location}</p>
-        <Link to={'/trip-details/' + trip._id} state={{ data: trip }} className='btn btn-primary'>
+        <Link to={'/trip-details/' + trip._id} state={{ data: trip }} className='btn btn-primary mt-10'>
           <i className='text-primary' /> Ver Detalle
         </Link>
       </div>

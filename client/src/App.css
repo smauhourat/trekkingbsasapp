@@ -1331,33 +1331,10 @@ nav a:focus {
   opacity: 0.9;
 }
 
-@media (max-width: 480px) {
-  .trips-container {
-    /* max-width: 1100px; */
-    width: 100%;
-    /* margin: auto; */
-    overflow: hidden;
-    padding: 0 1rem;
-    margin-top: 6rem;
-    margin-bottom: 3rem;
-  }
-
-  .trips {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 0.2rem;
-
-  }
-
-  .trip-grid {
-    display: grid;
-    grid-template-areas:
-      'top'
-      'desc'
-      'foot1'
-      'foot2';
-    grid-gap: 1rem;
-  }
+.crop {
+  height: 200px;
+  overflow: hidden;
+  background-color: #bacede;
 }
 
 /********************************************************************/
@@ -1392,7 +1369,6 @@ nav a:focus {
   }
 }
 
-
 @media (max-width: 1024px) {
   .trips-container {
     /* max-width: 1100px; */
@@ -1411,6 +1387,180 @@ nav a:focus {
   }
 }
 
+@media (max-width: 768px) {
+  .trips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1.2rem;
+  }
+
+  .crop {
+    height: 210px;
+    overflow: hidden;
+    background-color: #bacede;
+  } 
+}
+
+/* Mobile Styles */
+@media (max-width: 700px) {
+  .crop {
+    height: 350px;
+    overflow: hidden;
+    background-color: #bacede;
+  }
+  .trips {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1.2rem;
+  }
+
+  .logo-big {
+    width: 150px;
+  }
+
+  .container {
+    margin-top: 8rem;
+  }
+
+  /* .landing-inner {
+    margin-top: 4rem;
+  } */
+
+  .hide-sm {
+    display: none;
+  }
+
+  /* Text Styles */
+  .x-large {
+    font-size: 2rem;
+  }
+
+  .large {
+    font-size: 1.6rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  /* Navbar */
+  .navbar {
+    display: block;
+    text-align: center;
+  }
+
+  .navbar ul {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .navbar h1 {
+    margin-bottom: 1rem;
+  }
+
+  .navbar .welcome {
+    display: none;
+  }
+
+  /* Profiles Page */
+  .profile {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .profile ul {
+    display: none;
+  }
+
+  /* Profile Page */
+
+  .profile-top img,
+  .profile img {
+    width: 200px;
+    margin: auto;
+  }
+
+  .profile-grid {
+    grid-template-areas:
+      'top'
+      'about'
+      'exp'
+      'edu'
+      'github';
+  }
+
+  .profile-about .skills {
+    flex-direction: column;
+  }
+
+  .dash-buttons a {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.2rem;
+  }
+
+  .post {
+    grid-template-columns: 1fr;
+  }
+
+  .post a,
+  .post button {
+    padding: 0.3rem 0.4rem;
+  }
+
+  .round-img-slow {
+    border-radius: 2%;
+    width: 150px;
+    /* height: 150px; */
+  }
+
+  .img-logo {
+    /* content:url("./img/logo.svg"); */
+    width: 30px;
+  }
+
+  .brand-logo h1 {
+    font-size: 1.25rem;
+  }
+
+}
+/* End Mobile Styles */
+
+@media (max-width: 480px) {
+  .trips-container {
+    /* max-width: 1100px; */
+    width: 100%;
+    /* margin: auto; */
+    overflow: hidden;
+    padding: 0 1rem;
+    margin-top: 6rem;
+    margin-bottom: 3rem;
+  }
+
+  .crop {
+    height: 250px;
+    overflow: hidden;
+    background-color: #bacede;
+  }
+
+  .trips {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 0.2rem;
+
+  }
+
+  .trip-grid {
+    display: grid;
+    grid-template-areas:
+      'top'
+      'desc'
+      'foot1'
+      'foot2';
+    grid-gap: 1rem;
+    margin-top: 2rem;
+  }
+}
 
 /* Deafult Margin & Padding */
 
@@ -1805,133 +1955,4 @@ nav a:focus {
   font-weight: 600;
 }
 
-@media (max-width: 768px) {
-  .trips {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1.2rem;
-  }
-}
 
-
-/* Mobile Styles */
-@media (max-width: 700px) {
-
-  .trips {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1.2rem;
-  }
-
-  .logo-big {
-    width: 150px;
-  }
-
-  .container {
-    margin-top: 8rem;
-  }
-
-  /* .landing-inner {
-    margin-top: 4rem;
-  } */
-
-  .hide-sm {
-    display: none;
-  }
-
-  /* Text Styles */
-  .x-large {
-    font-size: 2rem;
-  }
-
-  .large {
-    font-size: 1.6rem;
-  }
-
-  .lead {
-    font-size: 1rem;
-  }
-
-  /* Navbar */
-  .navbar {
-    display: block;
-    text-align: center;
-  }
-
-  .navbar ul {
-    text-align: center;
-    justify-content: center;
-  }
-
-  .navbar h1 {
-    margin-bottom: 1rem;
-  }
-
-  .navbar .welcome {
-    display: none;
-  }
-
-  /* Profiles Page */
-  .profile {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .profile ul {
-    display: none;
-  }
-
-  /* Profile Page */
-
-  .profile-top img,
-  .profile img {
-    width: 200px;
-    margin: auto;
-  }
-
-  .profile-grid {
-    grid-template-areas:
-      'top'
-      'about'
-      'exp'
-      'edu'
-      'github';
-  }
-
-  .profile-about .skills {
-    flex-direction: column;
-  }
-
-  .dash-buttons a {
-    display: block;
-    width: 100%;
-    margin-bottom: 0.2rem;
-  }
-
-  .post {
-    grid-template-columns: 1fr;
-  }
-
-  .post a,
-  .post button {
-    padding: 0.3rem 0.4rem;
-  }
-
-  .round-img-slow {
-    border-radius: 2%;
-    width: 150px;
-    /* height: 150px; */
-  }
-
-  .img-logo {
-    /* content:url("./img/logo.svg"); */
-    width: 30px;
-  }
-
-  .brand-logo h1 {
-    font-size: 1.25rem;
-  }
-
-}
-
-/* End Mobile Styles */
