@@ -9,6 +9,9 @@ const TripItem = ({
   return (
     <div className='trip-grid bg-white'>
       <div className='trip-top crop'>
+          <span className='sticker'>
+          {formatDate(trip.date)}
+          </span>
         <img
           className='round-img-slow'
           src={trip.images[0]?.url}
