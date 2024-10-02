@@ -74,7 +74,8 @@ router.post('/',
       //TODO: OJOOO Comentado porq no anda en AADI
       // Enviamos el mail con el link para la verficacion de mail del customer
       const subject = global.env.verifyEmailSubject
-      const link = `${req.protocol}://${req.get('host')}/verify-email/${user._id}/${token.token}`
+      const requestedUrl = req.headers['client-base-url']
+      const link = `${requestedUrl}/verify-email/${user._id}/${token.token}`
       const text = link
       // const html = `<p>Hola ${customer.first_name} gracias por elegirnos!!</p><br><p>Recibimos tu datos de registro correctamente, por favor confirma el email haciendo click en el siguiente </p><p><a href="${link}">LINK</a></p>`
 
