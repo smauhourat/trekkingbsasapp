@@ -24,3 +24,6 @@ cypress/downloads
 # winston
 *-audit.json
 *.log
+
+# client build
+client/build
