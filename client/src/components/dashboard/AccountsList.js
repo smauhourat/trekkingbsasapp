@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getAccounts, deleteAccount } from '../../http/account'
@@ -6,10 +6,13 @@ import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux'   
 import PropTypes from 'prop-types'
 import { setAlert } from '../../actions/alert'
+import ConfirmationModal from '../layout/ConfirmationModal'
 
 const AccountsList = ({ setAlert }) => {
 
     const navigate = useNavigate();
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+    const [idToDelete, setIdToDelete] = useState()
 
     const queryClient = useQueryClient()
 
@@ -28,16 +31,32 @@ const AccountsList = ({ setAlert }) => {
         }
     })
 
-    const handleDeleteAccount = (e, id) => {
-        e.preventDefault()
-        mutation.mutate(id)
-    }
+    // const handleDeleteAccount = (e, id) => {
+    //     e.preventDefault()
+    //     mutation.mutate(id)
+    // }
 
     const handleEditAccount = (e, id) => {
         e.preventDefault()
         navigate(`/edit-account/${id}`)
     }
 
+    const handleDeleteAccountModal = (e, id) => {
+        e.preventDefault()
+        setIdToDelete(id)
+        setShowConfirmationModal(true)
+    }
+
+    const handleCancelDelete = () => {
+        setShowConfirmationModal(false);
+    }
+
+    const handleOkDelete = (id) => {
+        setShowConfirmationModal(false);
+        setIdToDelete(null)
+        mutation.mutate(id)
+    }      
+  
     return (
         <>
             <h2 className='my-2'>Cuentas Bancos</h2>
@@ -72,17 +91,24 @@ const AccountsList = ({ setAlert }) => {
                                                 <i className='fas fa-edit' title='Editar' />
                                             </button>
 
-                                            <button name="test_delete_row"
+                                            {/* <button name="test_delete_row"
                                                 onClick={(e) => handleDeleteAccount(e, account._id)}
                                                 className='btn btn-small btn-square btn-danger'
                                             >
                                                 <i className='fas fa-trash-alt' title='Eliminar' />
+                                            </button> */}
+
+                                            <button name="test_delete_row" 
+                                                className='btn btn-small btn-square btn-danger' 
+                                                onClick={(e) => handleDeleteAccountModal(e, account._id)}>
+                                                    <i className='fas fa-trash-alt' title='Eliminar' />
                                             </button>
                                         </td>
                                     </tr>)                                
                                 )}
                             </tbody>
                         </table>
+                        <ConfirmationModal show={showConfirmationModal} message="Está seguro que desea eliminar la Cuenta?" params={idToDelete} onCancel={handleCancelDelete} onOk={handleOkDelete}/>
                     </div>
                 </>
 
