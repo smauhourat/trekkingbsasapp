@@ -1,3 +1,5 @@
+const morgan = require('morgan')
+
 const environment = require('./environment')
 global.env = environment
 
@@ -9,6 +11,11 @@ const cors = require('cors')
 const app = express()
 
 app.use(cors())
+
+// Setup Morgan for request logging
+app.use(morgan('combined'));
+
+
 // Connect DB
 connectDB()
 

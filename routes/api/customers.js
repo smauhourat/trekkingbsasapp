@@ -11,6 +11,7 @@ const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
 const sendEmail = require("../../utils/sendEmail")
 const { linkSync } = require('fs')
+const logger = require('../../utils/logger');
 
 // @route   POST api/customers
 // @desc    Add Customer
@@ -196,9 +197,8 @@ router.get('/auth/',
 
       res.json(customer);
     } catch (err) {
-      console.error(err.message);
-
-      res.status(500).send('Server Error');
+      console.error(err.message)
+      res.status(500).send('Server Error')
     }
   }
 );

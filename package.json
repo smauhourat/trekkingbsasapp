@@ -45,7 +45,9 @@
     "mongoose": "^6.2.7",
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.5",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "winston": "^3.14.2",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "eslintConfig": {
     "extends": [

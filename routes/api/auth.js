@@ -1,4 +1,5 @@
 const express = require('express')
+const logger = require('../../utils/logger');
 const transporter = require('../../config/mailer')
 const router = express.Router()
 const auth = require('../../middleware/auth')
@@ -71,6 +72,7 @@ router.post(
           res.json({ token })
         }
       )
+      logger.info(`User <${email}> logged`)
     } catch (err) {
       console.error(err)
       res.status(500).send(err)
