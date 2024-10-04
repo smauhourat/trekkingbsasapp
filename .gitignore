@@ -16,6 +16,8 @@ ngrok.exe
 .env.production
 .env.production.local
 .vercel
+client/.env
+client/.env.test
 client/.env.development
 client/.env.production
 cypress/videos
