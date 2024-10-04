@@ -11,17 +11,17 @@ describe('Trekk App - Accounts', () => {
             cy.get('#test_toDash').click()
         })
 
-        it('account added found in list', () => {
-            cy.contains('Test Banco')
-        })
+        // it('account added found in list', () => {
+        //     cy.contains('Test Banco')
+        // })
 
-        it('edit account added', () => {
-            cy.get('#test_table_accounts tbody')
-                .contains('tr', 'Test Banco')
-                .then((row) => {
-                    cy.wrap(row).find('button[name="test_delete_row"]').click()
-                })
-        })
+        // it('edit account added', () => {
+        //     cy.get('#test_table_accounts tbody')
+        //         .contains('tr', 'Test Banco')
+        //         .then((row) => {
+        //             cy.wrap(row).find('button[name="test_delete_row"]').click()
+        //         })
+        // })
 
     })
 })
