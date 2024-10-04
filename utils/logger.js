@@ -29,6 +29,7 @@ const logger = winston.createLogger({
     fileRotateTransport
     // new winston.transports.File({ filename: 'combined.log' })
   ]
-});
+})
+
 
 module.exports = logger

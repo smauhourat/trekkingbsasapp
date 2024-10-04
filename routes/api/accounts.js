@@ -6,6 +6,7 @@ const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId')
 const Account = require('../../models/Account');
 const router = express.Router();
+const logger = require('../../utils/logger')
 
 // @route   POST api/accounts
 // @desc    Add Account
@@ -26,17 +27,19 @@ router.post('/',
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { bank, currency, account_type, account_number, account_cbu, account_alias } = req.body;
+        const { bank, currency, account_type, account_number, account_cbu, account_alias, active } = req.body;
 
         try {
             const account = await new Account({
-                bank, currency, account_type, account_number, account_cbu, account_alias
+                bank, currency, account_type, account_number, account_cbu, account_alias, active
             }).save()
 
             res.json(account)
+            logger.info('Account added')
         }
         catch (err) {
             console.error(err)
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
             res.status(500).send(err)
         }
     })
@@ -70,6 +73,7 @@ router.put('/:id',
             res.json(account)
         } catch (err) {
             console.error(err)
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
             res.status(500).send(err)
         }
     });
@@ -97,7 +101,7 @@ router.get('/',
             }
         } catch (err) {
             console.error(err.message)
-
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
             res.status(500).send('Server Error')
         }
     })
@@ -121,8 +125,8 @@ router.delete('/:id',
 
             res.json({ msg: 'Cuenta eliminada' });
         } catch (err) {
-            console.error(err.message);
-
+            console.error(err);
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
             return res.status(500).json({ msg: 'Server error' });
         }
     }
@@ -145,8 +149,8 @@ router.get('/:id',
 
             res.json(account);
         } catch (err) {
-            console.error(err.message);
-
+            console.error(err);
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
             res.status(500).send('Server Error');
         }
     });

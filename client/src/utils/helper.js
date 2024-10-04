@@ -4,8 +4,10 @@ function handleError (err, defaultMessage) {
   error.code = err.response.status
   error.info = err.response.data
   error.errors = err.response?.data?.errors
-  console.log('error en http =>', JSON.stringify(err))
-
+  // console.log('http error.errors', error.errors)
+  // console.log('error en http =>', JSON.stringify(err))
+  //console.log('handleError()', error.message)
+  
   throw error
 }
 

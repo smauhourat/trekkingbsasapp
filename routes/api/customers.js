@@ -115,9 +115,9 @@ router.post('/',
 
     } catch (err) {
       console.error(err);
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send(err);
     }
-
   }
 );
 
@@ -139,8 +139,8 @@ router.delete('/:id',
 
       res.json({ msg: 'Miembro eliminado' });
     } catch (err) {
-      console.error(err.message);
-
+      console.error(err);
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       return res.status(500).json({ msg: 'Server error' });
     }
   }
@@ -175,6 +175,7 @@ router.put('/:id',
       res.json(customer);
     } catch (err) {
       console.error(err);
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send(err);
     }
 
@@ -197,7 +198,8 @@ router.get('/auth/',
 
       res.json(customer);
     } catch (err) {
-      console.error(err.message)
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send('Server Error')
     }
   }
@@ -218,8 +220,8 @@ router.get('/:id',
 
       res.json(customer);
     } catch (err) {
-      console.error(err.message);
-
+      console.error(err);
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send('Server Error');
     }
   }
@@ -279,8 +281,8 @@ router.get('/',
         return res.status(404).json({ msg: 'Miembros no encontrados' });
       }
     } catch (err) {
-      console.error(err.message);
-
+      console.error(err);
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send('Server Error');
     }
   });

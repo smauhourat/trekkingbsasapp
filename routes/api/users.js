@@ -201,8 +201,10 @@ router.post('/verify-email/:id/:token',
       //await tokendb.remove();
 
       res.status(200).send({ message: "Email verificado correctamente" });
-    } catch (error) {
-      res.status(500).send({ message: "Internal Server Error", error: error });
+    } catch (err) {
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+      res.status(500).send({ message: "Internal Server Error", error: err });
     }
 
   })

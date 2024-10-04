@@ -47,6 +47,6 @@ export const addAccount = async (account) => {
         return res
     }
     catch (err) {
-        handleError(err, 'Se produjo un error al intentar agregar la Cuenta.')
+        throw handleError(err, 'Se produjo un error al intentar agregar la Cuenta.')
     }
 }

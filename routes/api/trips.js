@@ -5,11 +5,10 @@ const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 const mongoose = require('mongoose');
-
 const cloudinary = require('cloudinary').v2
-
 const Trip = require('../../models/Trip');
 const Book = require('../../models/Book');
+const logger = require('../../utils/logger')
 
 cloudinary.config({
   cloud_name: global.env.cloudName,
@@ -33,8 +32,8 @@ router.get('/:id',
 
       res.json(trip)
     } catch (err) {
-      console.error(err.message)
-
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send('Server Error')
     }
   })
@@ -100,8 +99,8 @@ router.get('/',
         return res.status(404).json({ msg: 'Evento no encontrado' })
       }
     } catch (err) {
-      console.error(err.message)
-
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send('Server Error')
     }
   })
@@ -157,6 +156,7 @@ router.post('/',
       res.json(trip)
     } catch (err) {
       console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send(err)
     }
 
@@ -196,8 +196,8 @@ router.delete('/:id',
 
       res.json({ msg: 'Evento eliminado' })
     } catch (err) {
-      console.error(err.message)
-
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       return res.status(500).json({ msg: 'Server error' })
     }
   })
@@ -227,6 +227,7 @@ router.put('/:id',
       res.json(trip)
     } catch (err) {
       console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send(err)
     }
   });

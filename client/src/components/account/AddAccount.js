@@ -24,11 +24,10 @@ const AddAccount = ({
             setAlertNavigate('La Cuenta se ha creado correctamente.', 'success', navigate, '/dashboard', 2500)
         },
         onError: (error, variables, context) => {
-            console.log(error)
+            setAlert(error.message, 'danger')
             if (error.errors) {
                 error.errors.forEach(err => setAlert(err.msg, 'danger'))
             }
-            setAlert(error.message, 'danger')
         }
     })
 
@@ -41,15 +40,6 @@ const AddAccount = ({
         account_alias: '',
         active: true
     })
-
-    // console.log('editedAccount =>', editedAccount)
-    // useEffect(() => {
-    //     if (!isPending)
-    //         setEditedAccount(account)
-    // }, [isPending, account])
-
-    // if (isPending)
-    //     return (<Spinner />)
 
     const { bank, currency, account_type, account_number, account_cbu, account_alias, active } = editedAccount
 

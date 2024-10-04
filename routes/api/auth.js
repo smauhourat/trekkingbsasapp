@@ -1,5 +1,4 @@
 const express = require('express')
-const logger = require('../../utils/logger');
 const transporter = require('../../config/mailer')
 const router = express.Router()
 const auth = require('../../middleware/auth')
@@ -7,6 +6,7 @@ const User = require('../../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator')
+const logger = require('../../utils/logger')
 
 // @route   GET api/auth
 // @desc    Test route
@@ -17,7 +17,8 @@ router.get('/', auth, async (req, res) => {
     const user = await User.findById(req.user.id).select('-password')
     res.json(user)
   } catch (err) {
-    console.error(err.message)
+    console.error(err)
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
     res.status(500).send('Server error')
   }
 })
@@ -75,6 +76,7 @@ router.post(
       logger.info(`User <${email}> logged`)
     } catch (err) {
       console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send(err)
     }
   }
@@ -152,7 +154,11 @@ router.post('/forgot-password', async (req, res) => {
         })
       }
     })
-  } catch (error) { }
+  } catch (err) {
+    console.error(err)
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+    res.status(500).send(err)
+  }
 })
 
 // @route   GET api/auth/reset-password/:id/:token
@@ -168,9 +174,9 @@ router.get('/reset-password/:id/:token', async (req, res) => {
   try {
     const verify = jwt.verify(token, secret)
     res.json({ email: verify.email, status: 'No verificado' })
-  } catch (error) {
-    console.log(error)
-    // res.send("No verificado");
+  } catch (err) {
+    console.error(err)
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
     res.json({ status: 'fail', message: 'No verificado, el token ha expirado' })
   }
 })
@@ -204,8 +210,9 @@ router.post('/reset-password/:id/:token', async (req, res) => {
       status: 'success',
       message: 'La contraseña se ha cambiado con exito'
     })
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.error(err)
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
     res.json({ status: 'Ocurrio un error inesperado', error })
   }
 })
