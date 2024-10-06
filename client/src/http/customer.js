@@ -7,7 +7,7 @@ export const getCustomer = async (id) => {
         return res.data
     }
     catch (err) {
-        handleError(err, 'Se produjo un error leyendo los datos del Cliente')
+        throw handleError(err, 'Se produjo un error leyendo los datos del Cliente')
     }    
 }
 
@@ -20,7 +20,16 @@ export const getCustomers = async (query='q=') => {
         return res.data
     }
     catch (err) {
-        handleError(err, 'Se produjo un error leyendo los datos de los Clientes')
+        throw handleError(err, 'Se produjo un error leyendo los datos de los Clientes')
     }    
+}
 
+export const resendEmailValidation = async (email) => {
+    try {
+        const res = await api.post(`/customers/verifyemail/${email}`)
+        return res.data
+    }
+    catch (err) {
+        throw handleError(err, 'Se produjo un error al intentar enviar el mail de validacion')
+    }      
 }

@@ -7,7 +7,7 @@ export const getAccounts = async () => {
         return res.data.data
     }
     catch (err) {
-        handleError(err, 'Se produjo un error leyendo los datos')
+        throw handleError(err, 'Se produjo un error leyendo los datos')
     }
 }
 
@@ -17,7 +17,7 @@ export const getAccount = async(id) => {
         return res.data
     }
     catch (err) {
-        handleError(err, 'Se produjo un error leyendo los datos')
+        throw handleError(err, 'Se produjo un error leyendo los datos')
     }
 }
 
@@ -27,7 +27,7 @@ export const deleteAccount = async (id) => {
         return res
     }
     catch (err) {
-        handleError(err, 'Se produjo un error al intentar eliminar la Cuenta.')
+        throw handleError(err, 'Se produjo un error al intentar eliminar la Cuenta.')
     }
 }
 
@@ -37,7 +37,7 @@ export const updateAccount = async (account) => {
         return res
     }
     catch (err) {
-        handleError(err, 'Se produjo un error al intentar actualizar la Cuenta.')
+        throw handleError(err, 'Se produjo un error al intentar actualizar la Cuenta.')
     }
 }
 

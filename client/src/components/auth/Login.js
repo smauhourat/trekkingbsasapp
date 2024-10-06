@@ -74,6 +74,9 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
                 <Link to='/forgot-password' className="align-left">Perdio su Contraseña?</Link>
                 <Link to='/customer-register'>Registrarse</Link>
             </div>
+            <div className='form-group form-button-noborder'>
+              <Link to={`/re-validate-email/${email}`} className="align-left">Aun no valido su email?</Link>
+            </div>
           </form>
         </div>
       </section>

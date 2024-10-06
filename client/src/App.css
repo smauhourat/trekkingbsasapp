@@ -1341,6 +1341,13 @@ nav a:focus {
   opacity: 0.9;
 }
 
+.form-button-noborder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0.9;
+}
+
 .crop {
   height: 200px;
   overflow: hidden;

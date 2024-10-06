@@ -49,6 +49,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import AccountsList from './components/dashboard/AccountsList'
 import CustomersList from './components/dashboard/CustomersList'
 import AddAccount from './components/account/AddAccount'
+import CustomerResendEmailValidate from './components/customer/CustomerResendEmailValidate'
 
 import './App.css'
 // Redux
@@ -103,7 +104,8 @@ const App = () => {
               <Route path="forgot-password-confirm/:email" element={<ForgotPasswordConfirm />} />
               <Route path="reset-password/:id/:token" element={<ResetPassword />} />
               <Route path="reset-password-confirm" element={<ResetPasswordConfirm />} />
-              <Route path="validate-email" element={<CustomerValidateEmail />} />
+              <Route path="validate-email/:email?" element={<CustomerValidateEmail />} />
+              <Route path="re-validate-email/:email?" element={<CustomerResendEmailValidate />} />
               <Route path="verify-email/:id/:token" element={<VerifyEmail />} />
               <Route path="trips" element={<Trips />} />
               <Route path="trip-details/:id" element={<TripDetails />} />

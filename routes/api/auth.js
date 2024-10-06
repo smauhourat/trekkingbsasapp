@@ -44,12 +44,14 @@ router.post(
       const user = await User.findOne({ email })
 
       if (!user) {
+        logger.error(`User <${email}> not exists`)
         return res.status(400).json({ errors: [{ msg: 'Credenciales Invalidas' }] })
       }
 
       const isMatch = await bcrypt.compare(password, user.password)
 
       if (!isMatch) {
+        logger.error(`User <${email}> invalid password`)
         return res.status(400).json({ errors: [{ msg: 'Credenciales Invalidas' }] })
       }
 
