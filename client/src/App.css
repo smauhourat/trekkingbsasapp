@@ -863,6 +863,13 @@ button {
   margin-bottom: 3rem;
 }
 
+.trips-container-bottom {
+  width: 100%;
+  overflow: hidden;
+  padding: 0 6rem;
+  margin-bottom: 3rem;
+}
+
 .trips {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -1410,6 +1417,13 @@ nav a:focus {
     margin-bottom: 3rem;
   }
 
+  .trips-container-bottom {
+    width: 100%;
+    overflow: hidden;
+    padding: 0 2rem;
+    margin-bottom: 3rem;
+  }
+
   .trips {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1566,6 +1580,13 @@ nav a:focus {
     overflow: hidden;
     padding: 0 1rem;
     margin-top: 6rem;
+    margin-bottom: 3rem;
+  }
+
+  .trips-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 0 1rem;
     margin-bottom: 3rem;
   }
 

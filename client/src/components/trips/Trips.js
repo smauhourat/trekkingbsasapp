@@ -37,7 +37,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
   }, [query, getTrips, monthSearch])
 
   return (
-    <section className={isCalendar ? 'container-bottom' : 'trips-container'}>
+    <section className={isCalendar ? 'trips-container-bottom' : 'trips-container'}>
       {loading
         ? (
           <Spinner />
