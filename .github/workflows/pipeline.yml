@@ -3,36 +3,26 @@ name: Deploy to Donweb Cloud
 on:
     push:
         branches:
-            - master
+            - develop
 jobs:
-    deploy:
+    deploy_to_develop:
+        name: deploy dev
         runs-on: ubuntu-22.04
+
         steps:
-            - name: Echo the message    
-              run: echo "Hola Santiago"
-            - name: Checkout 
-              uses: actions/checkout@v4
+            - name: executing remote ssh commands using ssh key
+              uses: appleboy/ssh-action@v1.0.0
               with:
-                fetch-depth: 0
-            - name: Node
-              uses: actions/setup-node@v4
-              with: 
-                node-version: 18.20.4
-            - name: Install server
-              run: npm i --no-audit --no-fund --no-optional
-            - name: Install client
-              run: npm i --prefix client
-            - name: Build client
-              run: npm run build --prefix client
-            - name: Copy ssh
-              uses: appleboy/ssh-action@master
-              with:
-                host: ${{ secrets.DESTINATION_HOST }}
-                username: ${{ secrets.SSH_USERNAME }}
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USER }}
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
-                port: ${{ secrets.DESTINATION_SSH_PORT }}
+                port: ${{ secrets.SSH_PORT }}
                 script: |
-                  cd /var/www/temp2
-                  rm -rf *
-                  scp -r . santi@66.97.47.170:/var/www/temp2
-                
+                  cd ${{ secrets.WORK_DIR }} 
+                  git fetch 
+                  git checkout ${{ secrets.MAIN_BRANCH }} 
+                  git pull 
+                  npm install 
+                  npm i --prefix client
+                  npm run build --prefix client
+                  exit
