@@ -71,15 +71,6 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
     }
   }
 
-  // const handleCancelDelete = () => {
-  //   setShowConfirmationModal(false);
-  // }
-
-  // const handleOkDelete = () => {
-  //   alert('dalete element')
-  //   setShowConfirmationModal(false);
-  // }
-
   return (
     <>
       <div>
