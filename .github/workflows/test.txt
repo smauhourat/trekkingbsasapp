@@ -36,3 +36,14 @@ jobs:
                   rm -rf *
                   scp -r . santi@66.97.47.170:/var/www/temp2
                 
+
+
+
+
+
+                  git fetch 
+                  git checkout ${{ secrets.MAIN_BRANCH }} 
+                  git pull 
+                  npm install 
+                  npm i --prefix client
+                  npm run build --prefix client                
