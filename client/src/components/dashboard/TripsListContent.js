@@ -89,7 +89,6 @@ const handleOkDelete = (id) => {
 
           </div>
         </td>
-        <ConfirmationModal show={showConfirmationModal} message="Está seguro que desea eliminar el Evento?" params={trip._id} onCancel={handleCancelDelete} onOk={handleOkDelete}/>
       </tr>
     ))
 
