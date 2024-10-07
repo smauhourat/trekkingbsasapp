@@ -6,16 +6,19 @@ const User = require('../../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator')
+const logger = require('../../utils/logger')
 
 // @route   GET api/auth
 // @desc    Test route
 // @access  Public
 router.get('/', auth, async (req, res) => {
   try {
+    //console.log(req.user)
     const user = await User.findById(req.user.id).select('-password')
     res.json(user)
   } catch (err) {
-    console.error(err.message)
+    console.error(err)
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
     res.status(500).send('Server error')
   }
 })
@@ -41,19 +44,25 @@ router.post(
       const user = await User.findOne({ email })
 
       if (!user) {
+        logger.error(`User <${email}> not exists`)
         return res.status(400).json({ errors: [{ msg: 'Credenciales Invalidas' }] })
       }
 
       const isMatch = await bcrypt.compare(password, user.password)
 
       if (!isMatch) {
+        logger.error(`User <${email}> invalid password`)
         return res.status(400).json({ errors: [{ msg: 'Credenciales Invalidas' }] })
       }
+
+      // log last access
+      await User.updateOne({ _id: user._id }, { $set: { last_access: Date.now() } })
 
       // Return jsonwebtoken
       const payload = {
         user: {
-          id: user.id
+          id: user.id,
+          admin: user.super_admin
         }
       }
 
@@ -66,8 +75,10 @@ router.post(
           res.json({ token })
         }
       )
+      logger.info(`User <${email}> logged`)
     } catch (err) {
       console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send(err)
     }
   }
@@ -90,18 +101,50 @@ router.post('/forgot-password', async (req, res) => {
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
       expiresIn: '10m'
     })
+    const subject = global.env.resetPasswordSubject
     const requestedUrl = req.headers['client-base-url']
     const link = `${requestedUrl}/reset-password/${oldUser._id}/${token}`
+    const text = ""
+    const html = `<!DOCTYPE html>
+    <html lang="es">
+
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    </head>
+
+    <body>
+
+      <table width="600" style="border:'1px'; text-align:'center;'" align="center" cellpadding="0" cellspacing="0"
+        style="font-family: Raleway, Helvetica, sans-serif;">
+        <tr>
+          <td bgcolor="#FAFAFA" width="650"
+            style="color:#666; text-align:center; font-size:13px;font-family:Raleway, Helvetica, sans-serif; padding:30px 50px 20px 50px;line-height:14px; border-radius:0 0 0 0 ;">
+            <img src="https://argentinoscaminando.com/static/media/logo.dea47b25aa3249587ec6.svg" />
+            <p style="font-size:16px; font-weight:600; color:#78777a; line-height: 1.6;">Hola hemos recibido tu pedido para reestablecer la contraseña!!</p>
+            <p style="font-size:14px; font-weight:550; color:#78777a;line-height: 1.6;">Por favor hace click en el siguiente enlace </p>
+            <p><a href="${link}">RECUPERAR CONTRASEÑA</a></p>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>`
+
+
     const mail = {
       from: global.env.contact_user,
       to: email,
-      subject: 'Reestablecer Contraseña - TrekkingBuenosAires.com',
+      subject: subject,
       text: link,
-      html: `<p>Para cambiar su contraseña por favor haga click <a href="${link}">aquí.</a></p>`
+      html: html
     }
+
+    // html: `<p>Para cambiar su contraseña por favor haga click <a href="${link}">aquí.</a></p>`
 
     transporter.sendMail(mail, (err, data) => {
       if (err) {
+        proxy
         res.json({
           status: 'fail',
           message: 'Error enviando el mail'
@@ -113,7 +156,11 @@ router.post('/forgot-password', async (req, res) => {
         })
       }
     })
-  } catch (error) { }
+  } catch (err) {
+    console.error(err)
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+    res.status(500).send(err)
+  }
 })
 
 // @route   GET api/auth/reset-password/:id/:token
@@ -129,9 +176,9 @@ router.get('/reset-password/:id/:token', async (req, res) => {
   try {
     const verify = jwt.verify(token, secret)
     res.json({ email: verify.email, status: 'No verificado' })
-  } catch (error) {
-    console.log(error)
-    // res.send("No verificado");
+  } catch (err) {
+    console.error(err)
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
     res.json({ status: 'fail', message: 'No verificado, el token ha expirado' })
   }
 })
@@ -165,8 +212,9 @@ router.post('/reset-password/:id/:token', async (req, res) => {
       status: 'success',
       message: 'La contraseña se ha cambiado con exito'
     })
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.error(err)
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
     res.json({ status: 'Ocurrio un error inesperado', error })
   }
 })

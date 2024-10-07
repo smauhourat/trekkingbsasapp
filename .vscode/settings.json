@@ -5,5 +5,6 @@
     },
     "eslint.validate": [
         "javascript"
-    ]
+    ],
+    "eslint.codeActionsOnSave.rules": null
 }

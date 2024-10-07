@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { getTrips } from '../../actions/trip'
 import TripsListContent from './TripsListContent'
 import Spinner from '../layout/Spinner'
-import formatDateISOFromDate from '../../utils/formatDateISOFromDate'
+import { formatDateISOFromDate } from '../../utils/dateHelper'
 import environment from '../../utils/environment'
 
 const TripsList = ({ getTrips, trip: { trips, loading } }) => {
@@ -79,45 +79,47 @@ const TripsList = ({ getTrips, trip: { trips, loading } }) => {
           <input type='checkbox' id='showActive' onChange={handleOnChangeActive} /><label htmlFor='showActive' alt='asda asdads'> Mostrar solo activos</label>{showActive}
           <input type='text' className='input-text' value={search} onChange={handleOnChangeSearch} onKeyDown={handleOnKeyDownSearch} /><button className='btn btn-primary btn-link' onClick={handleOnClickSearch}><i className='fas fa-search' title='Buscar' /></button>
         </div>
-        <table className='table'>
-          <thead>
-            <tr>
-              <th width='20%'><div className='link' onClick={() => handleOnChangeOrder('date')}>Fecha {sortOrderIcon('date')}</div></th>
-              <th width='35%'><div className='link' onClick={() => handleOnChangeOrder('title')}>Titulo {sortOrderIcon('title')}</div></th>
-              <th width='5%'><div className='link' onClick={() => handleOnChangeOrder('quota')}>Cupo {sortOrderIcon('quota')}</div></th>
-              <th width='5%' className='no-wrap'><div className='link' onClick={() => handleOnChangeOrder('reservations')}>Reservas  {sortOrderIcon('reservations')}</div></th>
-              <th width='5%'>Publicado</th>
-              <th width='30%'>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (<tr><td /><td colSpan='5'><Spinner /></td></tr>) : (<TripsListContent />)}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan='6'>
-                <button
-                  onClick={() => goToPrevPage()}
-                  className='btn btn-primary btn-small'
-                  title='Anterior'
-                >
-                  <li className='fas fa-angle-left' />
-                </button>
+        <div className='scroll-x'>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th width='20%'><div className='link' onClick={() => handleOnChangeOrder('date')}>Fecha {sortOrderIcon('date')}</div></th>
+                <th width='35%'><div className='link' onClick={() => handleOnChangeOrder('title')}>Titulo {sortOrderIcon('title')}</div></th>
+                <th width='5%'><div className='link' onClick={() => handleOnChangeOrder('quota')}>Cupo {sortOrderIcon('quota')}</div></th>
+                <th width='5%' className='no-wrap'><div className='link' onClick={() => handleOnChangeOrder('reservations')}>Reservas  {sortOrderIcon('reservations')}</div></th>
+                <th width='5%'>Publicado</th>
+                <th width='30%'>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (<tr><td colSpan='6'><Spinner /></td></tr>) : (<TripsListContent />)}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan='6'>
+                  <button
+                    onClick={() => goToPrevPage()}
+                    className='btn btn-primary btn-small'
+                    title='Anterior'
+                  >
+                    <li className='fas fa-angle-left' />
+                  </button>
 
-                <button
-                  onClick={() => goToNextPage()}
-                  className='btn btn-primary btn-small'
-                  title='Siguiente'
-                >
-                  <li className='fas fa-angle-right' />
-                </button>
-                <div className='tiny inline'>
-                  Página {trips?.metadata?.page} de {Math.ceil(trips?.metadata?.total / trips?.metadata?.limit)} - total de registros: {trips?.metadata?.total}
-                </div>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+                  <button
+                    onClick={() => goToNextPage()}
+                    className='btn btn-primary btn-small'
+                    title='Siguiente'
+                  >
+                    <li className='fas fa-angle-right' />
+                  </button>
+                  <div className='tiny inline'>
+                    Página {trips?.metadata?.page} de {Math.ceil(trips?.metadata?.total / trips?.metadata?.limit)} - total de registros: {trips?.metadata?.total}
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
     </>
   )

@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken')
 module.exports = function (req, res, next) {
   // Get token from header
   const token = req.header('x-auth-token')
-  if (token === process.env.TOKEN_API && token !== '' & token !== undefined) {
-    req.user = { id: '646358101568fc5f4116a1aa' }
-    next()
-    return
-  }
-
+  //console.log(token)
+  // if (token === process.env.TOKEN_API && token !== '' & token !== undefined) {
+  //   req.user = { id: '646358101568fc5f4116a1aa' }
+  //   next()
+  //   return
+  // }
   // Check if not token from header
   if (!token) {
     return res.status(401).json({ msg: 'Token not found' })
@@ -21,6 +21,7 @@ module.exports = function (req, res, next) {
     req.user = decodedToken.user
     next()
   } catch (err) {
+    console.log(err)
     return res.status(401).json({ msg: 'Token not valid' })
   }
 }

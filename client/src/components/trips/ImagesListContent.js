@@ -17,13 +17,15 @@ const ImagesListContent = ({ trip: { selectedTrip }, deleteImage }) => {
                 formato: {img.format} | tamaño: {formatBytes(img.bytes)} | dimensiones {img.width} x {img.height}
               </span>
             </p>
-            <hr />
-            <button
-              onClick={() => deleteImage(selectedTrip._id, img.public_id)}
-              className='btn btn-danger m'
-            >
-              <i className='fas fa-trash-alt' title='Eliminar' />
-            </button>
+            <div>
+              <hr />
+              <button
+                onClick={() => deleteImage(selectedTrip._id, img.public_id)}
+                className='btn btn-danger m'
+                >
+                <i className='fas fa-trash-alt' title='Eliminar' />
+              </button>
+            </div>
           </li>
         ))
 

@@ -13,8 +13,10 @@ const ForgotPassword = ({ forgotPassword }) => {
   const [disableSubmit, setDisableSubmit] = useState(false)
 
   const { email } = formData
-  const onChange = e =>
+  const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    setDisableSubmit(false)
+  }
 
   const onSubmit = async e => {
     e.preventDefault()

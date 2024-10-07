@@ -1,17 +1,24 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { logout } from '../../actions/auth'
 
-const Navbar = ({ auth: { isAuthenticated }, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, isAdmin, user }, logout }) => {
   const loginLink = (
     <li><Link to='/login'>Login</Link></li>
   )
 
+  const navigate = useNavigate()
+
+  const onLogout = async (e) => {
+    logout()
+    navigate('/')
+  }
+
   const logoutLink = (
     <li>
-      <a onClick={logout} href='#!'>
+      <a onClick={e => onLogout(e)} href='#!'>
         <i className='fas fa-sign-out-alt' />{' '}
         <span className='hide-sm'>Logout</span>
       </a>
@@ -36,7 +43,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         <li><Link to='calendar'>Calendario</Link></li>
         <li><Link to='company'>Nuestro Grupo</Link></li>
         <li><Link to='contact'>Contacto</Link></li>
-        {isAuthenticated ? <li><Link to='dashboard'>Dashboard</Link></li> : ''}
+        {isAuthenticated ? <li><Link id="test_toDash" to='dashrouter'>{isAdmin ? "Dashboard": "Mis Reservas"}</Link></li> : ''}
         {isAuthenticated ? logoutLink : loginLink}
       </ul>
     </nav>
@@ -53,3 +60,4 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, { logout })(Navbar)
+

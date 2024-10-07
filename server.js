@@ -1,3 +1,5 @@
+const morgan = require('morgan')
+
 const environment = require('./environment')
 global.env = environment
 
@@ -5,10 +7,16 @@ const express = require('express')
 const connectDB = require('./config/db')
 const path = require('path')
 const cors = require('cors')
+const logger = require('./utils/logger')
 
 const app = express()
 
 app.use(cors())
+
+// Setup Morgan for request logging
+app.use(morgan('combined'));
+
+
 // Connect DB
 connectDB()
 
@@ -29,14 +37,20 @@ app.get('/api/test', (req, res) => {
 })
 
 // Define Routes
-app.use('/api/users', require('./routes/api/users'))
-app.use('/api/members', require('./routes/api/members'))
-app.use('/api/trips', require('./routes/api/trips'))
-app.use('/api/auth', require('./routes/api/auth'))
-app.use('/api/image-upload', require('./routes/api/image-upload'))
-app.use('/api/trips/:id/images', require('./routes/api/images'))
-app.use('/api/contact', require('./routes/api/contact'))
-app.use('/api/appconf', require('./routes/api/appconf'))
+app.use('/api/users', require('./routes/api/users'));
+//app.use('/api/users/:id/verify-email/:token', require('./routes/api/users'));
+app.use('/api/customers', require('./routes/api/customers'));
+app.use('/api/trips', require('./routes/api/trips'));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/image-upload', require('./routes/api/image-upload'));
+app.use('/api/trips/:id/images', require('./routes/api/images'));
+app.use('/api/contact', require('./routes/api/contact'));
+app.use('/api/appconf', require('./routes/api/appconf'));
+app.use('/api/books', require('./routes/api/books'));
+app.use('/api/accounts', require('./routes/api/accounts'));
+app.use('/api/tests', require('./routes/api/tests'));
+
+console.log('Server Environment => ', process.env.NODE_ENV)
 
 // Serve static assets in production
 // if (process.env.NODE_ENV === 'production') {
@@ -58,3 +72,5 @@ app.get('*', (req, res) => {
 const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+
+logger.info(`Server started on port ${PORT}`)

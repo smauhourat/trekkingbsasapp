@@ -10,7 +10,9 @@ import {
   FORGOT_PASS_SUCCESS,
   FORGOT_PASS_FAIL,
   RESET_PASS_SUCCESS,
-  RESET_PASS_FAIL
+  RESET_PASS_FAIL,
+  CUSTOMER_LOADED,
+  CUSTOMER_LOADED_FAIL
 } from './types'
 
 // Load User
@@ -31,7 +33,26 @@ export const loadUser = () => async (dispatch) => {
   }
 }
 
-export const login = (email, password) => async dispatch => {
+// Load Customer
+export const loadCustomer = () => async (dispatch) => {
+  try {
+    const res = await api.get('/customers/auth')
+
+    dispatch({
+      type: CUSTOMER_LOADED,
+      payload: res.data
+    })
+
+  } catch (err) {
+    console.log(err.message)
+    dispatch({
+      type: CUSTOMER_LOADED_FAIL,
+      payload: err.message
+    })
+  }
+}
+
+export const login = (email, password, navigate) => async dispatch => {
   const body = JSON.stringify({ email, password })
   try {
     const res = await api.post('/auth', body)
@@ -40,8 +61,10 @@ export const login = (email, password) => async dispatch => {
       payload: res.data
     })
     dispatch(loadUser())
+    dispatch(loadCustomer())
   } catch (err) {
-    const errors = err.response.data.errors
+    const errors = err.response?.data?.errors
+    console.log(err)
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
     }

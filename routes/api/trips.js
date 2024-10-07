@@ -1,13 +1,14 @@
-const moment = require('moment')
-const express = require('express')
-const router = express.Router()
-const auth = require('../../middleware/auth')
-const { check, validationResult } = require('express-validator')
-const checkObjectId = require('../../middleware/checkObjectId')
-
+const moment = require('moment');
+const express = require('express');
+const router = express.Router();
+const auth = require('../../middleware/auth');
+const { check, validationResult } = require('express-validator');
+const checkObjectId = require('../../middleware/checkObjectId');
+const mongoose = require('mongoose');
 const cloudinary = require('cloudinary').v2
-
-const Trip = require('../../models/Trip')
+const Trip = require('../../models/Trip');
+const Book = require('../../models/Book');
+const logger = require('../../utils/logger')
 
 cloudinary.config({
   cloud_name: global.env.cloudName,
@@ -31,8 +32,8 @@ router.get('/:id',
 
       res.json(trip)
     } catch (err) {
-      console.error(err.message)
-
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send('Server Error')
     }
   })
@@ -44,7 +45,7 @@ router.get('/',
   async (req, res) => {
     try {
       const currentDate = new Date()
-
+      //console.log(req.query)
       const query = req.query.q ? req.query.q : ''
       const dateFrom = req.query.df ? req.query.df : '1900-01-01'
       const dateTo = req.query.dt ? req.query.dt : moment(currentDate).add(5, 'year').format('YYYY-MM-DD')
@@ -76,6 +77,7 @@ router.get('/',
 
       const trips = await Trip
         .find(dbQuery)
+        .collation({ locale: "en" })
         .limit(limit)
         .skip(limit * (page - 1))
         .sort({ [sort]: order })
@@ -97,8 +99,8 @@ router.get('/',
         return res.status(404).json({ msg: 'Evento no encontrado' })
       }
     } catch (err) {
-      console.error(err.message)
-
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send('Server Error')
     }
   })
@@ -123,7 +125,7 @@ router.post('/',
       return res.status(400).json({ errors: errors.array() })
     }
 
-    const { title, subtitle, category, description, itinerary, suggested_equipment, included_services, date, departure, arrival, duration, price, booking_price, location, grading, quota, reservations, training_level, payment_link } = req.body
+    const { title, subtitle, category, description, itinerary, suggested_equipment, included_services, date, departure, arrival, duration, price, booking_price, location, grading, quota, reservations, published, training_level, payment_link } = req.body
 
     try {
       const newTrip = new Trip({
@@ -142,8 +144,9 @@ router.post('/',
         booking_price,
         location,
         grading,
-        quota,
-        reservations,
+        quota: quota == null || quota == '' ? 0 : quota,
+        reservations: reservations == null || reservations == '' ? 0 : reservations,
+        published,
         user: req.user.id,
         training_level,
         payment_link
@@ -153,10 +156,11 @@ router.post('/',
       res.json(trip)
     } catch (err) {
       console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send(err)
     }
-  }
-)
+
+  });
 
 // @route    DELETE api/trips/:id
 // @desc     Delete a Trip
@@ -166,10 +170,14 @@ router.delete('/:id',
   checkObjectId('id'),
   async (req, res) => {
     try {
-      const trip = await Trip.findById(req.params.id)
-
+      const trip = await Trip.findById(req.params.id);
       if (!trip) {
-        return res.status(404).json({ msg: 'Evento no encontrado' })
+        return res.status(404).json({ msg: 'Evento no encontrado' });
+      }
+
+      const book = await Book.find({ trip: mongoose.Types.ObjectId(trip.id) });
+      if (book && book.length > 0) {
+        return res.status(404).json({ msg: 'El Evento tiene reservas' });
       }
 
       if (trip.images.length > 0) {
@@ -188,8 +196,8 @@ router.delete('/:id',
 
       res.json({ msg: 'Evento eliminado' })
     } catch (err) {
-      console.error(err.message)
-
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       return res.status(500).json({ msg: 'Server error' })
     }
   })
@@ -219,9 +227,9 @@ router.put('/:id',
       res.json(trip)
     } catch (err) {
       console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send(err)
     }
-  }
-)
+  });
 
 module.exports = router

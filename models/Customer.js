@@ -1,6 +1,14 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const MemberSchema = new mongoose.Schema({
+const CustomerSchema = new mongoose.Schema({
+  _id: {
+    type: Schema.Types.ObjectId
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'user'
+  },
   first_name: {
     type: String,
     required: true
@@ -9,10 +17,11 @@ const MemberSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  full_name: {
+    type: String
+  },
   email: {
-    type: String,
-    required: true,
-    unique: true
+    type: String
   },
   dni: {
     type: String,
@@ -33,6 +42,6 @@ const MemberSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-})
+}, { timestamps: true });
 
-module.exports = mongoose.model('member', MemberSchema)
+module.exports = mongoose.model('customer', CustomerSchema);

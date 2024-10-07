@@ -5,9 +5,11 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator')
 const checkObjectId = require('../../middleware/checkObjectId')
-
+const Token = require('../../models/Token')
 const User = require('../../models/User')
+const logger = require('../../utils/logger')
 
+// TODO: Ojo, no deberia ser publico
 // @route   POST api/users
 // @desc    Add user
 // @access  Public
@@ -17,7 +19,7 @@ router.post(
   [
     check('name', 'Nombre es requerido').not().isEmpty(),
     check('email', 'Por favor incluya el mail').isEmail(),
-    check('password', 'Por favor ingrese la contraseña con 6 o mas caracteres').isLength({ min: 8 })
+    check('password', 'Por favor ingrese la contraseña con 6 o mas caracteres').isLength({ min: 6 })
   ],
   async (req, res) => {
     const errors = validationResult(req)
@@ -37,13 +39,15 @@ router.post(
       user = new User({
         name,
         email,
-        password
+        password,
+        super_admin: true
       })
 
       const salt = await bcrypt.genSalt(10)
       user.password = await bcrypt.hash(password, salt)
 
       await user.save()
+      logger.info(`User <${email}> added`)
 
       const payload = {
         user: {
@@ -63,6 +67,7 @@ router.post(
       )
     } catch (err) {
       console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send(err)
     }
   }
@@ -90,6 +95,7 @@ router.put(
       res.json(user)
     } catch (err) {
       console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send(err)
     }
   }
@@ -111,8 +117,8 @@ router.get('/:id',
 
       res.json(user)
     } catch (err) {
-      console.error(err.message)
-
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send('Server Error')
     }
   })
@@ -141,25 +147,25 @@ router.delete('/:id',
       }
 
       await user.remove()
-
+      logger.info(`User <${user.email}> deleted`)
       res.json({ msg: 'Usuario eliminado' })
     } catch (err) {
-      console.error(err.message)
-
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send('Server Error')
     }
   })
 
 // @route   GET api/users
-// @desc    Get all users
+// @desc    Get all users (por defecto solo devuelve los usuarios administradores)
 // @access  Private
 router.get('/',
   auth,
   async (_req, res) => {
     try {
       const users = await User
-        .find()
-        .sort({ date: 'asc' })
+        .find({ super_admin: true })
+        .sort({ createdAt: 'asc' })
 
       res.json({
         metadata: {
@@ -172,10 +178,46 @@ router.get('/',
         return res.status(404).json({ msg: 'Usuario no encontrado' })
       }
     } catch (err) {
-      console.error(err.message)
-
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
       res.status(500).send('Server Error')
     }
   })
+
+
+// @route   POST api/users/verify-email/:id/:token
+// @dest    Verify email es valid
+// @access  Public
+router.post('/verify-email/:id/:token',
+  async (req, res) => {
+    try {
+      const { id, token } = req.params
+      const user = await User.findOne({ _id: id });
+      if (!user) {
+        logger.error(`VerifyEmail (${id}-${token}) link not valid`)
+        return res.status(400).send({ message: "Link invalido" });
+      }
+
+      const tokendb = await Token.findOne({
+        userId: user._id,
+        token: token,
+        tokenType: "email-verification"
+      }, {}, { sort: { createdAt: -1 }});
+      if (!tokendb) {
+        logger.error(`VerifyEmail (${id}-${token}) token expired`)
+        return res.status(400).send({ message: "Link invalido" });
+      }
+
+      await User.updateOne({ _id: id }, { $set: { email_verified: true } })
+      await tokendb.remove();
+      logger.error(`Verify Email (${id}-${token}) correctly`)
+      res.status(200).send({ message: "Email verificado correctamente" });
+    } catch (err) {
+      console.error(err)
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+      res.status(500).send({ message: "Internal Server Error", error: err });
+    }
+  })
+
 
 module.exports = router

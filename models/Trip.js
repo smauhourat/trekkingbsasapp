@@ -30,10 +30,6 @@ const TripSchema = new mongoose.Schema({
   included_services: {
     type: String
   },
-  created: {
-    type: Date,
-    default: Date.now
-  },
   date: {
     type: Date
     // required: true
@@ -61,10 +57,12 @@ const TripSchema = new mongoose.Schema({
     type: Number
   },
   quota: {
-    type: Number
+    type: Number,
+    default: 0
   },
   reservations: {
-    type: Number
+    type: Number,
+    default: 0
   },
   published: {
     type: Boolean,
@@ -104,6 +102,6 @@ const TripSchema = new mongoose.Schema({
       }
     }
   ]
-})
+}, { timestamps: true });
 
 module.exports = mongoose.model('trip', TripSchema)

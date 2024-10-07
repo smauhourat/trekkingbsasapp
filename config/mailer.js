@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const logger = require('../utils/logger');
 //const config = require('config');
 //const environment = require('./environment');
 
@@ -17,6 +18,7 @@ transporter.verify(function (error, success) {
         console.log(error);
     } else {
         console.log("Server is ready to take our email messages");
+        logger.info("Server is ready to take our email messages")
     }
 });
 

@@ -7,7 +7,7 @@ import ImagesList from './ImagesList'
 import Spinner from '../layout/Spinner'
 import { addImage } from '../../actions/trip'
 import imageFileIsValid from '../../utils/imageFileIsValid'
-import formatDate from '../../utils/formatDate'
+import { formatDate } from '../../utils/dateHelper'
 
 const AddImages = ({ addImage, setAlert, loading, trip: { trips } }) => {
   const [editedTrip, setEditedTrip] = useState({
@@ -99,10 +99,13 @@ const AddImages = ({ addImage, setAlert, loading, trip: { trips } }) => {
             )
           : (
             <>
-              <label htmlFor='fileInput' className='btn btn-success btn-link no-wrap'>
-                <i className='fas fa-cloud-upload-alt' /> Seleccione una Imagen
-              </label>
+              <p className='mb-5'>
+                <span className='tiny'>La recomendación es imágenes no mayores a <strong>1Mb</strong>, con un ancho no mayor a <strong>1920px</strong> y con un ratio aspect de <strong>3 : 2</strong></span>
+              </p>
               <div className='inline'>
+                <label htmlFor='fileInput' className='btn btn-success btn-link no-wrap'>
+                  <i className='fas fa-cloud-upload-alt' /> Seleccione una Imagen
+                </label>
                 <input id='fileInput' type='file' name='image' accept='image/*' onChange={handleFileInputChange} value={fileInput} />
                 <input className='btn btn-primary' type='submit' disabled={!fileLoaded} value='Aceptar' />
                 <input type='button' className='btn btn-secondary' value='Cancelar' onClick={() => navigate('/dashboard')} />

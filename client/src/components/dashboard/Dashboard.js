@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import DashboardActions from './DashboardActions'
 import UsersList from './UsersList'
 import TripsList from './TripsList'
+import AccountList from './AccountsList'
+import CustomersList from './CustomersList'
 import { getUsers } from '../../actions/user'
 import { clearTrip } from '../../actions/trip'
 
@@ -15,19 +17,20 @@ const Dashboard = ({
 }) => {
   useEffect(() => {
     getUsers()
-    clearTrip()
-  }, [getUsers, clearTrip])
+  }, [getUsers])
 
   return (
-    <section className='container'>
+      <section className='container'>
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
-        <i className='fas fa-user' /> Bienvenido {user && user.name}
+        <i className='fas fa-user' /> Bienvenido {user && user.name }
       </p>
       <>
         <DashboardActions />
         <TripsList />
         <UsersList users={users} />
+        <AccountList />
+        <CustomersList />
       </>
     </section>
   )

@@ -30,14 +30,14 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
 
   const query = (isCalendar ? getQueryCalendar() : getQueryGral(search)) + '&published=1&sort=date&order=1'
 
-  console.log('query', query)
+  // console.log('query', query)
 
   useEffect(() => {
     getTrips(query)
   }, [query, getTrips, monthSearch])
 
   return (
-    <section className={isCalendar ? 'container-bottom' : 'container'}>
+    <section className={isCalendar ? 'trips-container-bottom' : 'trips-container'}>
       {loading
         ? (
           <Spinner />
@@ -56,7 +56,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
                   <h1 className='title-search-result'>Actividades</h1>
                 </>
                 )}
-            <div className='profiles'>
+            <div className='trips'>
               {trips?.data?.length > 0
                 ? (
                     trips.data.map((trip) => (
@@ -64,7 +64,9 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
                     ))
                   )
                 : (
-                  <h4>No se encontraron Eventos...</h4>
+                  <div className='text-center m-3'>
+                    <h4>No se encontraron Eventos...</h4>
+                  </div>
                   )}
             </div>
           </>

@@ -7,8 +7,8 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
-    unique: true
+    required: true
+    //unique: true
   },
   password: {
     type: String,
@@ -17,14 +17,18 @@ const UserSchema = new mongoose.Schema({
   avatar: {
     type: String
   },
-  date: {
-    type: Date,
-    default: Date.now
-  },
   super_admin: {
     type: Boolean,
     default: false
+  },
+  email_verified: {
+    type: Boolean,
+    default: false
+  },
+  last_access: {
+    type: Date
   }
-})
+
+}, { timestamps: true })
 
 module.exports = mongoose.model('user', UserSchema)

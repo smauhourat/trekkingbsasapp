@@ -5,14 +5,19 @@ import {
   USER_LOADED,
   LOGOUT,
   FORGOT_PASS_SUCCESS,
-  FORGOT_PASS_FAIL
+  FORGOT_PASS_FAIL,
+  CUSTOMER_LOADED,
+  CUSTOMER_LOADED_FAIL
 } from '../actions/types'
 
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
+  isAdmin: false,
   loading: true,
+  loadingCustomer: true,
   user: null,
+  customer: null,
   error: {}
 }
 
@@ -24,6 +29,7 @@ export default function auth (state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
+        isAdmin: payload.super_admin,
         loading: false,
         user: payload
       }
@@ -39,6 +45,7 @@ export default function auth (state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
+        isAdmin: null,
         loading: false
       }
     case AUTH_ERROR:
@@ -47,8 +54,10 @@ export default function auth (state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
+        isAdmin: null,
         loading: false,
-        user: null
+        user: null,
+        customer: null
       }
     case FORGOT_PASS_SUCCESS:
       return {
@@ -60,6 +69,20 @@ export default function auth (state = initialState, action) {
       return {
         ...state,
         loading: false
+      }
+    case CUSTOMER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isAdmin: false,
+        loading: false,
+        customer: payload
+      }
+    case CUSTOMER_LOADED_FAIL:
+      return {
+        ...state,
+        loading: false,
+        customer: null
       }
     default:
       return state
