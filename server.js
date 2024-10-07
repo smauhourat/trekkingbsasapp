@@ -1,61 +1,76 @@
-const environment = require('./environment');
-global.env = environment;
+const morgan = require('morgan')
 
-const express = require('express');
-const connectDB = require('./config/db');
-const path = require('path');
-const morgan = require('morgan');
-const cors = require('cors');
+const environment = require('./environment')
+global.env = environment
 
-const app = express();
+const express = require('express')
+const connectDB = require('./config/db')
+const path = require('path')
+const cors = require('cors')
+const logger = require('./utils/logger')
 
-app.use(cors());
+const app = express()
+
+app.use(cors())
+
+// Setup Morgan for request logging
+app.use(morgan('combined'));
+
+
 // Connect DB
-connectDB();
+connectDB()
 
 // Init Middleware
 app.use(express.json({ extended: false, limit: '50mb' }))
-//app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 
 app.use((_req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 
-    return next();
-});
+  return next()
+})
 
-app.get("/api/test", (req, res) => {
-    res.send("test");
-});
+app.get('/api/test', (req, res) => {
+  res.send('test')
+})
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
-app.use('/api/members', require('./routes/api/members'));
+//app.use('/api/users/:id/verify-email/:token', require('./routes/api/users'));
+app.use('/api/customers', require('./routes/api/customers'));
 app.use('/api/trips', require('./routes/api/trips'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/image-upload', require('./routes/api/image-upload'));
 app.use('/api/trips/:id/images', require('./routes/api/images'));
 app.use('/api/contact', require('./routes/api/contact'));
 app.use('/api/appconf', require('./routes/api/appconf'));
+app.use('/api/books', require('./routes/api/books'));
+app.use('/api/accounts', require('./routes/api/accounts'));
+app.use('/api/tests', require('./routes/api/tests'));
+
+console.log('Server Environment => ', process.env.NODE_ENV)
 
 // Serve static assets in production
-//if (process.env.NODE_ENV === 'production') {
+// if (process.env.NODE_ENV === 'production') {
 // Set static folder
-//app.use(express.static('client/build'));
-app.use(express.static(path.join(__dirname, "./client/build")));
+// app.use(express.static('client/build'));
+app.use(express.static(path.join(__dirname, './client/build')))
 
 app.get('*', (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "./client/build/index.html"),
-        function (err) {
-            if (err) {
-                res.status(500).send(err);
-            }
-        }
-    );
+  res.sendFile(
+    path.join(__dirname, './client/build/index.html'),
+    function (err) {
+      if (err) {
+        res.status(500).send(err)
+      }
+    }
+  )
 })
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+
+logger.info(`Server started on port ${PORT}`)

@@ -1,3 +1,4 @@
+[![Deploy to Donweb Cloud](https://github.com/smauhourat/trekkingbsasapp/actions/workflows/pipeline.yml/badge.svg)](https://github.com/smauhourat/trekkingbsasapp/actions/workflows/pipeline.yml)
 # TrekkingBuenosAires - App Eventos Turisticos
 
 ## Configuration steps
@@ -47,6 +48,7 @@ CONTACT_PORT** with a valid stmp account
 
 1. run **npm run build-client**
 2. run **git push origin master**
+2. run **git push vercel master**
 
 // TODO
 
@@ -55,3 +57,15 @@ CONTACT_PORT** with a valid stmp account
 ### Miscellaneous - Update Mongo Schema
 
 db.collection.updateMany({<filter>}, {$set:{<new_field>: <defautl_value>}}, {})
+
+
+26-09-2023
+ojo no perder la confirmacion de borrado de Trips de la rama DEVELOP
+
+28-08-2024
+creacion nueva rama  **etapa2**
+merge test con etapa2 (tiene lo de books y customers a medias) la base es test de Atlas
+
+04-09-2024
+usar ngrok para publicar localhost
+  `ngrok http 4000`

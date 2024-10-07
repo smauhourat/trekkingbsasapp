@@ -8,6 +8,7 @@
     "server": "nodemon server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server-prod": "SET NODE_ENV=production & nodemon server",
     "server-test": "SET NODE_ENV=test & nodemon server.js",
     "client-test": "SET NODE_ENV=test & npm start --prefix client",
     "test": "concurrently \"npm run server-test\" \"npm run client-test\"",
@@ -16,7 +17,8 @@
     "cypress:open": "cypress open",
     "server-development": "SET NODE_ENV=development & nodemon server",
     "client-development": "SET NODE_ENV=development & npm start --prefix client",
-    "development": "concurrently \"npm run server-development\" \"npm run client-development\""
+    "development": "concurrently \"npm run server-development\" \"npm run client-development\"",
+    "eslint": "eslint './**/*.{js}'"
   },
   "repository": {
     "type": "git",
@@ -38,11 +40,19 @@
     "express-validator": "^6.14.0",
     "gravatar": "^1.8.2",
     "jsonwebtoken": "^8.5.1",
+    "mercadopago": "^1.5.16",
     "moment": "^2.29.1",
     "mongoose": "^6.2.7",
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.5",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "winston": "^3.14.2",
+    "winston-daily-rotate-file": "^5.0.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      ""
+    ]
   },
   "devDependencies": {
     "concurrently": "^7.0.0",

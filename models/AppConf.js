@@ -1,11 +1,10 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
 
 const TripSchema = new mongoose.Schema({
-    online: {
-        type: Boolean,
-        default: true
-    },
-});
+  online: {
+    type: Boolean,
+    default: true
+  }
+})
 
-module.exports = mongoose.model('appconf', TripSchema);
+module.exports = mongoose.model('appconf', TripSchema)

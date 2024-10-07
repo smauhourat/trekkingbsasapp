@@ -1,8 +1,8 @@
-const path = require('path');
-const dotenv = require('dotenv');
-const env_file = process.env.NODE_ENV !== undefined ? `.env.${process.env.NODE_ENV.trim()}` : '.env';
-dotenv.config({ path: path.resolve(__dirname, env_file) })
-const env = process.env;
+const path = require('path')
+const dotenv = require('dotenv')
+const envFile = process.env.NODE_ENV !== undefined ? `.env.${process.env.NODE_ENV.trim()}` : '.env'
+dotenv.config({ path: path.resolve(__dirname, envFile) })
+const env = process.env
 
 const environment = {
   port: env.PORT,
@@ -15,7 +15,13 @@ const environment = {
   contact_port: env.CONTACT_PORT,
   cloudName: env.CLOUD_NAME,
   apiKey: env.API_KEY,
-  apiSecret: env.API_SECRET
+  apiSecret: env.API_SECRET,
+  mp_api_key: env.MP_API_KEY,
+  mp_client_id: env.MP_CLIENT_ID,
+  mp_client_secret: env.MP_CLIENT_SECRET,
+  verifyEmailSubject: env.VERIFY_EMAIL_SUBJECT,
+  resetPasswordSubject: env.RESET_PASS_SUBJECT,
+  bookSubject: env.BOOK_SUBJECT
 }
 
-module.exports = environment;
+module.exports = environment

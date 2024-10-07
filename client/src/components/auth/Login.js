@@ -1,78 +1,99 @@
-import React, { Fragment, useState } from "react";
-import { Link, Navigate } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+//import { useNavigate, useLocation } from 'react-router';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
 
-const Login = ({ login, isAuthenticated }) => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
+const Login = ({ login, isAuthenticated, isAdmin }) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
 
-    const { email, password } = formData;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-    const onChange = e => 
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+  const { email, password } = formData;
 
-    const onSubmit = async e => {
-        e.preventDefault();
-        login(email, password);
-    }
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    // Redirect if is logged in
-    if (isAuthenticated) {
-       return <Navigate to="/dashboard" />
-    }
+  const onSubmit = async e => {
+    e.preventDefault();
+    login(email, password, navigate)
+    // navigate(from, { replace: true })
+  }
+
+  useEffect(() => {
+     if (isAuthenticated) {
+       if (location.state?.from) {
+         navigate(location.state.from)
+       } else {
+         navigate('/');
+       }
+     }
+  }, [isAuthenticated])
+
 
   return (
-    <Fragment>
-      <section className="container">
-        <h1 className="large text-primary">Ingreso</h1>
-        <p className="lead"><i className="fas fa-user"></i> Ingrese a su cuenta</p>
-        <form className="form" onSubmit={e => onSubmit(e)}>
-          <div className="form-group">
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={email}
-              onChange={e => onChange(e)}
-              required
-              autoFocus
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              placeholder="Contraseña"
-              name="password"
-              value={password}
-              onChange={e => onChange(e)}
-              minLength="6"
-              autoComplete="on"
-            />
-          </div>
-          <input id="form-login-submit-button" type="submit" className="btn btn-primary" value="Ingresar" />
-          <div className="form-group">
-            <Link to="/forgot-password">Perdio su Contraseña?</Link>
-          </div>
-        </form>
+    <>
+      <section className='container align-center'>
+        <div className="login-form">
+          <h1 className='large text-primary'>Ingreso</h1>
+          <p className='lead'><i className='fas fa-user' /> Ingrese a su cuenta</p>
+          <form className='form' onSubmit={e => onSubmit(e)}>
+            <div className='form-group'>
+              <input
+                type='email'
+                placeholder='Email'
+                name='email'
+                value={email}
+                onChange={e => onChange(e)}
+                required
+                autoFocus
+              />
+            </div>
+            <div className='form-group'>
+              <input
+                type='password'
+                placeholder='Contraseña'
+                name='password'
+                value={password}
+                onChange={e => onChange(e)}
+                minLength='6'
+                autoComplete='on'
+              />
+            </div>
+            <div className='form-group'>
+              <input id='form-login-submit-button' type='submit' className='btn btn-primary' value='Ingresar' />
+            </div>
+            <div className='form-group form-button'>
+                <Link to='/forgot-password' className="align-left">Perdio su Contraseña?</Link>
+                <Link to='/customer-register'>Registrarse</Link>
+            </div>
+            <div className='form-group form-button-noborder'>
+              <Link to={`/re-validate-email/${email}`} className="align-left">Aun no valido su email?</Link>
+            </div>
+          </form>
+        </div>
       </section>
-    </Fragment>
-  );
-};
+    </>
+  )
+}
 
 Login.propTypes = {
   setAlert: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
+  isAdmin: PropTypes.bool
 }
 
-
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
-});
+  isAuthenticated: state.auth.isAuthenticated,
+  isAdmin: state.auth.isAdmin
+})
 
-export default connect(mapStateToProps, { setAlert, login })(Login);
+export default connect(mapStateToProps, { setAlert, login })(Login)

@@ -34,7 +34,7 @@ const ConfirmationModal = ({ show, message, params, onCancel, onOk }) => {
         }}
       >
         <h3>{message}</h3>
-        <h3>{params}<br></br></h3>
+        <h3><br></br></h3>
         <div style={{ display: "flex", alignItems: "center" }}>
           <button className="btn btn-default" onClick={onCancel}>Cancelar</button>
           <button className="btn btn-success" onClick={(e) => onOk(params)}>Aceptar</button>
