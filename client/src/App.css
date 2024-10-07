@@ -1571,9 +1571,6 @@ nav a:focus {
 }
 
 /* End Mobile Styles */
-<<<<<<< HEAD
-/********************************************************************/
-=======
 
 @media (max-width: 480px) {
   .trips-container {
@@ -2010,4 +2007,3 @@ nav a:focus {
   color: var(--danger-color);
   font-weight: 600;
 }
->>>>>>> master
