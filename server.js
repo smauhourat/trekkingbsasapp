@@ -7,6 +7,7 @@ const express = require('express')
 const connectDB = require('./config/db')
 const path = require('path')
 const cors = require('cors')
+const logger = require('./utils/logger')
 
 const app = express()
 
@@ -71,3 +72,5 @@ app.get('*', (req, res) => {
 const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+
+logger.info(`Server started on port ${PORT}`)
