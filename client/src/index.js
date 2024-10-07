@@ -4,7 +4,7 @@ import App from './App'
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 import { createRoot } from 'react-dom/client'
 
-console.log('CLIENT ENVIRONMENT: ', process.env.NODE_ENV)
+console.log('Client Environment => ', process.env.NODE_ENV)
 
 //if (process.env.NODE_ENV === 'production') {
 //  disableReactDevTools();

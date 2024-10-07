@@ -50,7 +50,7 @@ app.use('/api/books', require('./routes/api/books'));
 app.use('/api/accounts', require('./routes/api/accounts'));
 app.use('/api/tests', require('./routes/api/tests'));
 
-console.log('SERVER ENVIRONMENT: ', process.env.NODE_ENV)
+console.log('Server Environment => ', process.env.NODE_ENV)
 
 // Serve static assets in production
 // if (process.env.NODE_ENV === 'production') {
