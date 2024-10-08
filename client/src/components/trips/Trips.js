@@ -53,22 +53,27 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
               : (
                 <>
                   <div className='my'>&nbsp;</div>
-                  <h1 className='title-search-result'>Actividades</h1>
+                  {/* <h1 className='title-search-result'>Actividades</h1> */}
                 </>
                 )}
-            <div className='trips'>
-              {trips?.data?.length > 0
-                ? (
-                    trips.data.map((trip) => (
+
+            {trips?.data?.length > 0 ? 
+              (<>
+                <div className='trips'>
+                  {trips.data.map((trip) => (
+                    <>
                       <TripItem key={trip._id} trip={trip} />
-                    ))
-                  )
-                : (
-                  <div className='text-center m-3'>
-                    <h4>No se encontraron Eventos...</h4>
-                  </div>
-                  )}
-            </div>
+                    </>
+                  ))}
+                </div>
+              </>) 
+              : 
+              (<>
+                <div className='text-center m-3'>
+                  <h4>No se encontraron Eventos...</h4>
+                </div>
+              </>)
+            }
           </>
           )}
     </section>
