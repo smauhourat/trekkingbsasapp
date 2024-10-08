@@ -26,5 +26,5 @@ jobs:
                   npm install 
                   npm i --prefix client
                   npm run build --prefix client     
-                  pm2 restart testtrekkingbsasapp --update-env
+                  pm2 restart trekkingbsasapptest --update-env
                   exit
