@@ -9,9 +9,6 @@ import Recaptcha from 'react-recaptcha'
 const ContactForm = ({ setAlert }) => {
   const navigate = useNavigate()
 
-  // console.log('REACT_APP_RECAPTCHA_KEY', process.env.REACT_APP_RECAPTCHA_KEY)
-  // console.log('REACT_APP_RECAPTCHA_SECRET', process.env.REACT_APP_RECAPTCHA_SECRET)
-
   const [formData, setFormData] = useState({
     title: '',
     email: '',
@@ -21,7 +18,9 @@ const ContactForm = ({ setAlert }) => {
 
   const { title, email, subject, message } = formData
 
-  const [isVerified, setIsVerified] = useState(false)
+  // OJOOO
+  //const [isVerified, setIsVerified] = useState(false)
+  const [isVerified, setIsVerified] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const reRef = useRef()
 
@@ -35,7 +34,7 @@ const ContactForm = ({ setAlert }) => {
       subject: '',
       message: ''
     })
-    reRef.current.reset()
+    // reRef.current.reset()
     setIsVerified(false)
   }
 
@@ -60,14 +59,14 @@ const ContactForm = ({ setAlert }) => {
     try {
       const res = await api.post('/contact', formData)
       if (res.data.status === 'success') {
-        setAlert('Mensaje enviado', 'success')
+        setAlert('Mensaje enviado, muchas gracias', 'success')
         resetForm()
         console.log('Mensaje enviado')
       } else {
-        setAlert('Mensaje erroneo', 'danger')
+        setAlert('Mensaje erroneo, intente más tarde', 'danger')
       }
     } catch (err) {
-      setAlert('Mensaje erroneo', 'danger')
+      setAlert('Mensaje erroneo, intente más tarde', 'danger')
       console.error(err)
     }
     setIsSubmitting(false)
@@ -108,14 +107,14 @@ const ContactForm = ({ setAlert }) => {
               onChange={onChange}
             />
           </div>
-          <Recaptcha
+          {/* <Recaptcha
             sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
             render='explicit'
             ref={reRef}
             verifyCallback={verifyRecaptcha}
             onloadCallback={onLoadRecaptcha}
             hl='es'
-          />
+          /> */}
           <input type='submit' className='btn btn-primary my-1' value={isSubmitting ? 'Enviando' : 'Enviar'} disabled={!isVerified || isSubmitting} />
           <input type='button' className='btn btn-light my-1' value='Volver' onClick={() => navigate('/')} />
         </form>
