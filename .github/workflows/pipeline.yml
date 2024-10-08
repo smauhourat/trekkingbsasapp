@@ -1,4 +1,4 @@
-name: Deploy to Donweb Cloud Productionn
+name: Deploy to Donweb Cloud Production
 
 on:
     push:
@@ -7,7 +7,7 @@ on:
     workflow_dispatch:
 jobs:
     deploy_to_develop:
-        name: deploy dev
+        name: deploy prod
         runs-on: ubuntu-22.04
 
         steps:
