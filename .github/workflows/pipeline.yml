@@ -1,9 +1,9 @@
-name: Deploy to Donweb Cloud
+name: Deploy to Donweb Cloud Productionn
 
 on:
     push:
         branches:
-            - develop
+            - master
     workflow_dispatch:
 jobs:
     deploy_to_develop:
@@ -19,12 +19,12 @@ jobs:
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 port: ${{ secrets.SSH_PORT }}
                 script: |
-                  cd ${{ secrets.WORK_DIR }} 
+                  cd ${{ secrets.WORK_DIR_PROD }} 
                   git fetch 
-                  git checkout ${{ secrets.MAIN_BRANCH }} 
+                  git checkout ${{ secrets.MAIN_BRANCH_PROD }} 
                   git pull 
                   npm install 
                   npm i --prefix client
                   npm run build --prefix client     
-                  pm2 restart trekkingbsasapptest --update-env
+                  pm2 restart trekkingbsasapp --update-env
                   exit
