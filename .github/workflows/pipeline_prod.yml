@@ -1,0 +1,30 @@
+name: Deploy to Donweb Cloud Production
+
+on:
+    push:
+        branches:
+            - master
+    workflow_dispatch:
+jobs:
+    deploy_to_develop:
+        name: deploy prod
+        runs-on: ubuntu-22.04
+
+        steps:
+            - name: executing remote ssh commands using ssh key
+              uses: appleboy/ssh-action@v1.0.0
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USER }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                port: ${{ secrets.SSH_PORT }}
+                script: |
+                  cd ${{ secrets.WORK_DIR_PROD }} 
+                  git fetch 
+                  git checkout ${{ secrets.MAIN_BRANCH_PROD }} 
+                  git pull 
+                  npm install 
+                  npm i --prefix client
+                  npm run build --prefix client     
+                  pm2 restart trekkingbsasapp --update-env
+                  exit
