@@ -808,7 +808,7 @@ button {
 /* Company */
 .company {
   position: relative;
-  background: url('./img/company.jpg') no-repeat center center/cover;
+  background: url('./img/company.webp') no-repeat center center/cover;
   min-height: 100vh;
 }
 
