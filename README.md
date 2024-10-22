@@ -93,3 +93,4 @@ For serving this app we select "Donweb Cloud server", and how CI/CD we select Gi
 `db.collection.updateMany({<filter>}, {$set:{<new_field>: <defautl_value>}}, {})`
 
 
+add more recipes
