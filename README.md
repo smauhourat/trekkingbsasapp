@@ -1,4 +1,6 @@
-[![Deploy to Donweb Cloud](https://github.com/smauhourat/trekkingbsasapp/actions/workflows/pipeline.yml/badge.svg)](https://github.com/smauhourat/trekkingbsasapp/actions/workflows/pipeline.yml)
+[![Deploy to Donweb Cloud Production](https://github.com/smauhourat/trekkingbsasapp/actions/workflows/pipeline_prod.yml/badge.svg)](https://github.com/smauhourat/trekkingbsasapp/actions/
+workflows/pipeline_prod.yml)
+[![Deploy to Donweb Cloud Develop](https://github.com/smauhourat/trekkingbsasapp/actions/workflows/pipeline_dev.yml/badge.svg)](https://github.com/smauhourat/trekkingbsasapp/actions/workflows/pipeline_dev.yml)
 # TrekkingBuenosAires - Travel Agency App
 
 ## Configuration steps
