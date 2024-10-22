@@ -63,7 +63,7 @@ const ResetPassword = ({ setAlert, resetPassword }) => {
               minLength='8'
               autoComplete='on'
             />
-            <label className='mini'>Debe contener al menos una letra mayuscula, una minuscula, y un simbolo (@$!%*_?&), y un largo minimo de 8 caracteres </label>
+            {/* <label className='mini'>Debe contener al menos una letra mayuscula, una minuscula, y un simbolo (@$!%*_?&), y un largo minimo de 8 caracteres </label> */}
           </div>
           <div className='form-group'>
             <input

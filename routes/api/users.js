@@ -19,7 +19,7 @@ router.post(
   [
     check('name', 'Nombre es requerido').not().isEmpty(),
     check('email', 'Por favor incluya el mail').isEmail(),
-    check('password', 'Por favor ingrese la contraseña con 6 o mas caracteres').isLength({ min: 6 })
+    check('password', 'Por favor ingrese la contraseña con 6 o mas caracteres.').isLength({ min: 6 })
   ],
   async (req, res) => {
     const errors = validationResult(req)
@@ -202,7 +202,7 @@ router.post('/verify-email/:id/:token',
         userId: user._id,
         token: token,
         tokenType: "email-verification"
-      }, {}, { sort: { createdAt: -1 }});
+      }, {}, { sort: { createdAt: -1 } });
       if (!tokendb) {
         logger.error(`VerifyEmail (${id}-${token}) token expired`)
         return res.status(400).send({ message: "Link invalido" });

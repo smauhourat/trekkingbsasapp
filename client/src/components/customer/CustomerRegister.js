@@ -26,8 +26,10 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
 
     const { first_name, last_name, email, dni, phone, birth_date, medical_status, password, password2 } = formData;
 
-    const onChange = (e) =>
+    const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        setDisableSubmit(false)
+    }
 
     const validateForm = () => {
 
@@ -44,6 +46,11 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
         if (dateGetDiffYears(birth_date, formatDateISOFromDate(new Date())) < 18) {
           setAlert('Debe ser mayor de 18 años para poder registrarse', 'danger')
           return false
+        }
+
+        if (password.length < 6) {
+            setAlert('Por favor ingrese la contraseña con 6 o mas caracteres', 'danger')
+            return false
         }
 
         if (password !== password2) {

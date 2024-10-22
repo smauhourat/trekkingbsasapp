@@ -1,5 +1,5 @@
 [![Deploy to Donweb Cloud](https://github.com/smauhourat/trekkingbsasapp/actions/workflows/pipeline.yml/badge.svg)](https://github.com/smauhourat/trekkingbsasapp/actions/workflows/pipeline.yml)
-# TrekkingBuenosAires - App Eventos Turisticos
+# TrekkingBuenosAires - Travel Agency App
 
 ## Configuration steps
 
@@ -27,45 +27,69 @@ CONTACT_HOST
 CONTACT_PORT** with a valid stmp account
 2. set **CONTACT_TO** environment variable with receipt mail account
 
-### Intial user creation
+### Initial user creation
 
 2. set **TOKEN_API** to create initial user admin with PostMan
 
 
-## Run App
+## Run
 
-1. run **npm run dev**, the frontend app will listen on http://localhost:3000, and the backend api will listen on http://localhost:5000
+### Run App in Develop
+
+1. run **npm run dev**, the frontend app will listen on http://localhost:3000, and the backend api will listen on http://localhost:4000.
 2. create initial user admin with PostMan
 
-         `post to "http://localhost:5000/api/users"`
-         `set header`
-         `"x-auth-token": <TOKEN_API>`
-         `set body`
-         `{ "name": "<name_of_user", "email": "<valid_email_user>", "password": "<strong_password>"}`
+  ```
+        post to "http://localhost:4000/api/users"
+        set header
+        "x-auth-token": <TOKEN_API>
+        set body
+        { "name": "<name_of_user", "email": "<valid_email_user>", "password": "<strong_password>"}
+  ``` 
 
 
-## Deploy to Vercel
+### Run App in Develop with NODE_ENV=development to test purpose
 
-1. run **npm run build-client**
-2. run **git push origin master**
-2. run **git push vercel master**
-
-// TODO
+1. run **npm run development**, the frontend app will listen on http://localhost:3000, and the backend api will listen on http://localhost:4004
+   if the frontend is compiled, it is served through the backend.
 
 
 
-### Miscellaneous - Update Mongo Schema
+## Testing
 
-db.collection.updateMany({<filter>}, {$set:{<new_field>: <defautl_value>}}, {})
+### Testing with Cypress
+1. run **npm run development**, the frontend app will listen on http://localhost:3000
+2. run **cypress:open**, this run ui cypress test running integration test
 
 
-26-09-2023
-ojo no perder la confirmacion de borrado de Trips de la rama DEVELOP
+## Deploy
 
-28-08-2024
-creacion nueva rama  **etapa2**
-merge test con etapa2 (tiene lo de books y customers a medias) la base es test de Atlas
+### Deploy to Private Cloud Server
+For serving this app we select "Donweb Cloud server", and how CI/CD we select GitHub Actions. We have two pipelines (dev and prod), thise connect via sshh, doing chekout to the indicated  branch, install client and server dependencies, build the client app, and run pm2 restarting the app.
 
-04-09-2024
-usar ngrok para publicar localhost
-  `ngrok http 4000`
+
+-      git push origin develop (deploy to develop stage in CloudServer)
+-      git push origin master (deploy to production stage in CloudServer)
+
+> Here explain how install Private Cloud Server in "DonWeb" 
+        - ➡️ "How install server"
+
+### Deploy to Vercel
+
+1.      npm run build-client
+2.      git push origin master
+3.      git push vercel master
+
+
+
+## 
+
+
+
+## Miscellaneous
+
+### - Update Mongo Schema
+
+`db.collection.updateMany({<filter>}, {$set:{<new_field>: <defautl_value>}}, {})`
+
+
