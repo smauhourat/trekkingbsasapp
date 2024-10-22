@@ -1,4 +1,4 @@
-name: Deploy to Donweb Cloud
+name: Deploy to Donweb Cloud Develop
 
 on:
     push:
