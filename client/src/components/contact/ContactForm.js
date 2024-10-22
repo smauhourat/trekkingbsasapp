@@ -35,7 +35,7 @@ const ContactForm = ({ setAlert }) => {
       message: ''
     })
     // reRef.current.reset()
-    setIsVerified(false)
+    // setIsVerified(false)
   }
 
   const onLoadRecaptcha = () => {
