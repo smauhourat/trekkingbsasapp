@@ -77,7 +77,7 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                                     return (
                                         <tr key={rowIndex} className="yellow">
                                             <td>
-                                                <Link to={`/trip-details/${book.trip._id}`}>
+                                                <Link to={`/trip-details/${book.trip._id}/true`}>
                                                     {book.code}
                                                 </Link>
                                             </td>

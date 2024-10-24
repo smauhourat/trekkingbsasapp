@@ -108,7 +108,7 @@ const App = () => {
               <Route path="re-validate-email/:email?" element={<CustomerResendEmailValidate />} />
               <Route path="verify-email/:id/:token" element={<VerifyEmail />} />
               <Route path="trips" element={<Trips />} />
-              <Route path="trip-details/:id" element={<TripDetails />} />
+              <Route path="trip-details/:id/:view" element={<TripDetails />} />
               <Route path="contact" element={<MaintenanceRoute component={ContactForm} />} />
               <Route path="company" element={<MaintenanceRoute component={Company} />} />
               <Route path="test" element={<MaintenanceRoute component={Test} />} />
