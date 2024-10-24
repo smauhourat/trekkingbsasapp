@@ -7,7 +7,7 @@ const TripItem = ({
   trip
 }) => {
   return (
-    <div className='trip-grid bg-white'>
+    <div key={trip._id} className='trip-grid bg-white'>
       <div className='trip-top crop'>
           <span className='sticker'>
           {formatDate(trip.date)}

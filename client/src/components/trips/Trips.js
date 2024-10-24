@@ -62,7 +62,7 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
                 <div className='trips'>
                   {trips.data.map((trip) => (
                     <>
-                      <TripItem key={trip._id} trip={trip} />
+                      <TripItem trip={trip} />
                     </>
                   ))}
                 </div>
