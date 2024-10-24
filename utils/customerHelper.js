@@ -114,26 +114,6 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
 
   await sendEmail(user.email, subject, boolDetailslink, html)
 
-  // const mail = {
-  //   from: global.env.contact_user,
-  //   to: user.email,
-  //   subject: subject,
-  //   text: boolDetailslink,
-  //   html: html
-  // }
-
-  // transporter.sendMail(mail, (err, data) => {
-  //   if (err) {
-  //     res.json({
-  //       status: 'fail'
-  //     })
-  //   } else {
-  //     res.json({
-  //       status: 'success'
-  //     })
-  //   }
-  // })
-
   logger.info(`Send Booking <${book.code}> by Email to User <${user.email}>`)
 }
 
