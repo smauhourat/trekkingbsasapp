@@ -438,6 +438,8 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
       })
     }
   })
+
+  logger.info(`Send Booking <${book.code}> by Email to User <${user.email}>`)
 }
 
 module.exports = router;
