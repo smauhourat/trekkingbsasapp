@@ -25,6 +25,10 @@ const Book = ({
         } catch (err) {
             if (err.response.status === 400)
                 setAlert(err.response.data.message, "danger")
+            if (err.response.status === 500) {
+                setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+                return
+            }
 
             const errors = err.response.data.errors;
 

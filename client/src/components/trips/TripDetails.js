@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react'
 import Spinner from '../layout/Spinner'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate, useHistory } from 'react-router-dom'
 import { formatDateISOFromDate, formatDate } from '../../utils/dateHelper'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
@@ -14,7 +14,9 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
 
   const currentDate = new Date();
 
-  const id = useParams().id
+  const { id, view } = useParams()
+  // console.log('view =>', view)
+  // console.log('BOOL view =>', !!!view)
 
   const navigate = useNavigate()
 
@@ -33,7 +35,15 @@ const TripDetails = ({ getTrip, setAlert, trip: { selectedTrip } }) => {
 
   const showBookButton = () => {
     if (
-      ((selectedTrip?.quota - selectedTrip?.reservations) > 0) && (selectedTrip.price > 0) && (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate))
+      (
+        (selectedTrip?.quota - selectedTrip?.reservations) > 0) 
+        && 
+        (selectedTrip.price > 0) 
+        && 
+        (formatDateISOFromDate(selectedTrip.date) >= formatDateISOFromDate(currentDate) 
+        &&
+        view === 'false'
+      )
     ) {
       return true
     }

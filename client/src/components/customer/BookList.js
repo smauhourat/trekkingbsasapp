@@ -66,7 +66,7 @@ const BookList = ({ updateBook, getBooks, book: { books: { data }, loading }, au
                                     return (
                                         <tr key={rowIndex} className="yellow">
                                             <td>
-                                                <Link to={`/trip-details/${book.trip._id}`}>
+                                                <Link to={`/trip-details/${book.trip._id}/true`}>
                                                     {book.code}
                                                 </Link>
                                             </td>

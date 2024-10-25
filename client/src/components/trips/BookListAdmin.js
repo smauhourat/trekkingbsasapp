@@ -2,13 +2,23 @@ import React, { Fragment, useEffect, useState, useRef } from 'react'
 import Spinner from '../layout/Spinner';
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { sendBookingEmail } from '../../services';
 import PropTypes from 'prop-types'
 import { updateBook, getBooksByTrip } from '../../actions/book'
 import { formatDate } from '../../utils/dateHelper'
+import { setAlert } from '../../actions/alert'
 
-const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, book: { books: { data }, loading }, auth }) => {
+const BookListAdmin = ({ 
+    updateBook, 
+    getBooksByTrip, 
+    setAlert, 
+    trip: { selectedTrip }, 
+    book: { books: { data }, 
+    loading
+}, auth }) => {
 
     const [itemEdited, setItemEdited] = useState({})
+    const [loadingSendBooking, setLoadingSendBooking] = useState(false)
     const { id } = useParams()
 
     const navigate = useNavigate()
@@ -32,15 +42,45 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
         setItemEdited({})
     }
 
+    const handleSendBooking = async (id) => {
+        setLoadingSendBooking(true)
+        try {
+            const res = await sendBookingEmail(id)
+
+            setAlert('Email con la Reserva ha sido enviado', 'success')
+            
+        } catch (err) {
+            console.log('err =>', err)
+            if (err.response?.status === 400)
+                setAlert(err.response?.data.message, "danger")
+            if (err.response?.status === 500) {
+                setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+                return
+            }
+
+            const errors = err.response?.data.errors;
+
+            if (errors) {
+                setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+            }
+        } finally {
+            setLoadingSendBooking(false)
+        }
+    }
+
     const getCssStatusColor = (status) => {
         switch (status) {
             case 'pendiente':
-                return 'bg-danger-light p-05'
+                return 'bg-danger-light p-04 br-2'
             case 'procesando':
-                return 'bg-warning-light p-05'
+                return 'bg-warning-light p-04 br-2'
             case 'aceptada':
-                return 'bg-success-light p-05'
+                return 'bg-success-light p-04 br-2'
         }
+    }
+
+    const getCssSendBookingButton = () => {
+        return loadingSendBooking ? 'btn btn-small btn-square btn-disabled' : 'btn btn-small btn-square btn-success'
     }
 
     useEffect(() => {
@@ -68,6 +108,7 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                                     <th className="no-wrap hide-sm">Descripcion</th>
                                     <th className="no-wrap">Fecha</th>
                                     <th className="no-wrap">Estado</th>
+                                    <th className="no-wrap">Reenviar Mail</th>
                                     <th className="no-wrap">Precio</th>
                                     <th className="no-wrap">Comprobante</th>
                                 </tr>
@@ -77,7 +118,7 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                                     return (
                                         <tr key={rowIndex} className="yellow">
                                             <td>
-                                                <Link to={`/trip-details/${book.trip._id}`}>
+                                                <Link to={`/trip-details/${book.trip._id}/true`}>
                                                     {book.code}
                                                 </Link>
                                             </td>
@@ -94,6 +135,16 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                                                 <div className={getCssStatusColor(book.status)}>
                                                     {book.status}
                                                 </div>
+                                            </td>
+                                            <td className='text-center'>
+                                                {/* <input type='button' className='btn btn-primary' value='Reenviar' onClick={() => handleSendBooking(book._id)} /> */}
+                                                <button
+                                                    onClick={() => handleSendBooking(book._id)}
+                                                    className={getCssSendBookingButton()}
+                                                    disabled={loadingSendBooking}
+                                                >
+                                                    <i className='fas fa-envelope' title='Reenviar Mail' />
+                                                </button>                                                
                                             </td>
                                             <td>${book.price}</td>
                                             <td>
@@ -144,7 +195,8 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
 BookListAdmin.propTypes = {
     updateBook: PropTypes.func.isRequired,
     getBooksByTrip: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    setAlert: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -153,4 +205,4 @@ const mapStateToProps = (state) => ({
     trip: state.trip
 });
 
-export default connect(mapStateToProps, { updateBook, getBooksByTrip })(BookListAdmin);
+export default connect(mapStateToProps, { updateBook, getBooksByTrip, setAlert })(BookListAdmin);

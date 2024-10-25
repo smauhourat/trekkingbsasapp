@@ -7,7 +7,7 @@ const TripItem = ({
   trip
 }) => {
   return (
-    <div className='trip-grid bg-white'>
+    <div key={trip._id} className='trip-grid bg-white'>
       <div className='trip-top crop'>
           <span className='sticker'>
           {formatDate(trip.date)}
@@ -22,7 +22,7 @@ const TripItem = ({
         <h2>{trip.title}</h2>
         <p>{trip.subtitle}</p>
         <p className='mt-15'>{trip.location}</p>
-        <Link to={'/trip-details/' + trip._id} state={{ data: trip }} className='btn btn-primary mt-10'>
+        <Link to={`/trip-details/${trip._id}/false`} state={{ data: trip }} className='btn btn-primary mt-10'>
           <i className='text-primary' /> Ver Detalle
         </Link>
       </div>
