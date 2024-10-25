@@ -18,6 +18,7 @@ const BookListAdmin = ({
 }, auth }) => {
 
     const [itemEdited, setItemEdited] = useState({})
+    const [loadingSendBooking, setLoadingSendBooking] = useState(false)
     const { id } = useParams()
 
     const navigate = useNavigate()
@@ -42,6 +43,7 @@ const BookListAdmin = ({
     }
 
     const handleSendBooking = async (id) => {
+        setLoadingSendBooking(true)
         try {
             const res = await sendBookingEmail(id)
 
@@ -61,6 +63,8 @@ const BookListAdmin = ({
             if (errors) {
                 setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
             }
+        } finally {
+            setLoadingSendBooking(false)
         }
     }
 
@@ -73,6 +77,10 @@ const BookListAdmin = ({
             case 'aceptada':
                 return 'bg-success-light p-04 br-2'
         }
+    }
+
+    const getCssSendBookingButton = () => {
+        return loadingSendBooking ? 'btn btn-small btn-square btn-disabled' : 'btn btn-small btn-square btn-success'
     }
 
     useEffect(() => {
@@ -132,7 +140,8 @@ const BookListAdmin = ({
                                                 {/* <input type='button' className='btn btn-primary' value='Reenviar' onClick={() => handleSendBooking(book._id)} /> */}
                                                 <button
                                                     onClick={() => handleSendBooking(book._id)}
-                                                    className='btn btn-small btn-square btn-success'
+                                                    className={getCssSendBookingButton()}
+                                                    disabled={loadingSendBooking}
                                                 >
                                                     <i className='fas fa-envelope' title='Reenviar Mail' />
                                                 </button>                                                
