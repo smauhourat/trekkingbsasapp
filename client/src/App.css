@@ -330,7 +330,7 @@ img {
 }
 
 .text-center {
-  text-align: center;
+  text-align: center !important;
 }
 
 .text-primary {
@@ -363,6 +363,10 @@ img {
 /* Padding */
 .p {
   padding: 0.5rem;
+}
+
+.p-04 {
+  padding: 0.4rem;
 }
 
 .p-05 {
@@ -432,6 +436,28 @@ img {
 
 .mg-top-1 {
   margin-top: 1rem;
+}
+
+/* Border Radius*/
+
+.br-1 {
+  border-radius: 1px;
+}
+
+.br-2 {
+  border-radius: 2px;
+}
+
+.br-3 {
+  border-radius: 3px;
+}
+
+.br-4 {
+  border-radius: 4px;
+}
+
+.br-5 {
+  border-radius: 5px;
 }
 
 /* Buttons */

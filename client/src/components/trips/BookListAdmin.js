@@ -67,11 +67,11 @@ const BookListAdmin = ({
     const getCssStatusColor = (status) => {
         switch (status) {
             case 'pendiente':
-                return 'bg-danger-light p-05'
+                return 'bg-danger-light p-04 br-2'
             case 'procesando':
-                return 'bg-warning-light p-05'
+                return 'bg-warning-light p-04 br-2'
             case 'aceptada':
-                return 'bg-success-light p-05'
+                return 'bg-success-light p-04 br-2'
         }
     }
 
@@ -100,7 +100,7 @@ const BookListAdmin = ({
                                     <th className="no-wrap hide-sm">Descripcion</th>
                                     <th className="no-wrap">Fecha</th>
                                     <th className="no-wrap">Estado</th>
-                                    <th></th>
+                                    <th className="no-wrap">Reenviar Mail</th>
                                     <th className="no-wrap">Precio</th>
                                     <th className="no-wrap">Comprobante</th>
                                 </tr>
@@ -128,7 +128,15 @@ const BookListAdmin = ({
                                                     {book.status}
                                                 </div>
                                             </td>
-                                            <td><input type='button' className='btn btn-primary' value='Reenviar' onClick={() => handleSendBooking(book._id)} /></td>
+                                            <td className='text-center'>
+                                                {/* <input type='button' className='btn btn-primary' value='Reenviar' onClick={() => handleSendBooking(book._id)} /> */}
+                                                <button
+                                                    onClick={() => handleSendBooking(book._id)}
+                                                    className='btn btn-small btn-square btn-success'
+                                                >
+                                                    <i className='fas fa-envelope' title='Reenviar Mail' />
+                                                </button>                                                
+                                            </td>
                                             <td>${book.price}</td>
                                             <td>
                                                 {
