@@ -11,10 +11,10 @@ import { setAlert } from '../../actions/alert'
 const BookListAdmin = ({ 
     updateBook, 
     getBooksByTrip, 
+    setAlert, 
     trip: { selectedTrip }, 
     book: { books: { data }, 
-    loading,
-    setAlert 
+    loading
 }, auth }) => {
 
     const [itemEdited, setItemEdited] = useState({})
@@ -46,6 +46,7 @@ const BookListAdmin = ({
             const res = await sendBookingEmail(id)
 
             setAlert('Email con la Reserva ha sido enviado', 'success')
+            
         } catch (err) {
             console.log('err =>', err)
             if (err.response?.status === 400)
