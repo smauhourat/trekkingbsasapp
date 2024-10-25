@@ -115,6 +115,10 @@ img {
   display: inline-block;
 }
 
+.inline-flex {
+  display: inline-flex;
+}
+
 /* .footer {
   display: flex;
   justify-content: space-between;

@@ -19,6 +19,7 @@ const BookListAdmin = ({
 }, auth }) => {
 
     const fakeApiCall = ms => new Promise(resolve => setTimeout(resolve, ms))
+    const fakeApiCallError = ms => new Promise((resolve, reject) => setTimeout(reject, ms))
 
     const [itemEdited, setItemEdited] = useState({})
     const [loadingSendBooking, setLoadingSendBooking] = useState(false)
@@ -71,15 +72,16 @@ const BookListAdmin = ({
         }
     }
 
-    const handleApiCall = async() => {
-        try {
-            const res = await fakeApiCall(2000)
+    // const handleApiCall = async(id) => {
+    //     try {
+    //         console.log('id =>', id)
+    //         const res = await fakeApiCallError(2000)
 
-            setAlert('Todo ha sido exitoso', 'success');
-        } catch(err) {
-            setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
-        }
-    }
+    //         setAlert('Todo ha sido exitoso', 'success');
+    //     } catch(err) {
+    //         setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+    //     }
+    // }
 
 
     const getCssStatusColor = (status) => {
@@ -151,14 +153,14 @@ const BookListAdmin = ({
                                                 </div>
                                             </td>
                                             <td className='text-center'>
-                                                <ButtonState onClick={() => handleApiCall()} loadingText='Enviando..' >Reenviar</ButtonState>
-                                                <button
+                                                <ButtonState onClick={() => handleSendBooking(book._id)} loadingText='Enviando..' >Reenviar</ButtonState>
+                                                {/* <button
                                                     onClick={() => handleSendBooking(book._id)}
                                                     className={getCssSendBookingButton()}
                                                     disabled={loadingSendBooking}
                                                 >
                                                     <i className='fas fa-envelope' title='Reenviar Mail' />
-                                                </button>                                                
+                                                </button>                                                 */}
                                             </td>
                                             <td>${book.price}</td>
                                             <td>

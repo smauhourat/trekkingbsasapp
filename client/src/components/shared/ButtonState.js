@@ -22,13 +22,15 @@ const ButtonState = ({ onClick, loadingText, children }) => {
       onClick={handleClick}
       disabled={isLoading}
     >
+          <div className='inline-flex'>
         {isLoading && (
             <i
                 className="fa fa-spinner fa-spin"
                 style={{ marginRight: "5px" }}
             />
         )}        
-          {isLoading ? loadingText : children}
+          <span>{isLoading ? loadingText : children}</span>
+          </div>
     </button>
   );
 };
