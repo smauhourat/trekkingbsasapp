@@ -37,3 +37,14 @@ export const updateBookPayment = async (bookId, transaction_number) => {
         throw err
     }
 }
+
+export const sendBookingEmail = async (bookId) => {
+    try {
+        const res = await api.post(`/books/${bookId}/sendmail`);
+        console.log(res);
+
+    } catch (err) {
+        console.log(err.response.data)
+        throw err
+    }
+}

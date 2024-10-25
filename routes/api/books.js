@@ -358,6 +358,36 @@ router.post('/:id/payment',
     }
   })
 
+
+// @route   POST pai/:id/sendmail
+// @desc    Resend Booking email to Customer
+// @access  Private
+router.post('/:id/sendmail',
+  auth,
+  checkObjectId('id'),
+  async (req, res) => {
+
+    try {
+      const book = await Book.findById(req.params.id)
+        .populate('trip')
+        .populate({ path: 'customer', select: '-password' });
+
+      if (!book) {
+        return res.status(404).json({ msg: 'Reserva no encontrada' });
+      }
+
+      await sendBookingCustomerMail(await getBaseUrl(req), book)
+
+      res.status(200).send({ message: "Email enviado correctamente" });
+
+    } catch (err) {
+      console.error(err);
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+      res.status(500).send({ message: "Internal Server Error", error: error });
+    }
+  }
+)
+
 const incrementReservationTrip = async (id) => {
   const trip = await Trip.findByIdAndUpdate(id, { $inc: { reservations: 1 } }, { new: true });
   return trip;

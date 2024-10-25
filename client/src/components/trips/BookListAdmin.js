@@ -2,11 +2,20 @@ import React, { Fragment, useEffect, useState, useRef } from 'react'
 import Spinner from '../layout/Spinner';
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { sendBookingEmail } from '../../services';
 import PropTypes from 'prop-types'
 import { updateBook, getBooksByTrip } from '../../actions/book'
 import { formatDate } from '../../utils/dateHelper'
+import { setAlert } from '../../actions/alert'
 
-const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, book: { books: { data }, loading }, auth }) => {
+const BookListAdmin = ({ 
+    updateBook, 
+    getBooksByTrip, 
+    trip: { selectedTrip }, 
+    book: { books: { data }, 
+    loading,
+    setAlert 
+}, auth }) => {
 
     const [itemEdited, setItemEdited] = useState({})
     const { id } = useParams()
@@ -30,6 +39,28 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
     const onAddTransactionNumber = (rowIndex)  => {
         updateBook(itemEdited.id, itemEdited.value)
         setItemEdited({})
+    }
+
+    const handleSendBooking = async (id) => {
+        try {
+            const res = await sendBookingEmail(id)
+
+            setAlert('Email con la Reserva ha sido enviado', 'success')
+        } catch (err) {
+            console.log('err =>', err)
+            if (err.response?.status === 400)
+                setAlert(err.response?.data.message, "danger")
+            if (err.response?.status === 500) {
+                setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+                return
+            }
+
+            const errors = err.response?.data.errors;
+
+            if (errors) {
+                setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+            }
+        }
     }
 
     const getCssStatusColor = (status) => {
@@ -68,6 +99,7 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                                     <th className="no-wrap hide-sm">Descripcion</th>
                                     <th className="no-wrap">Fecha</th>
                                     <th className="no-wrap">Estado</th>
+                                    <th></th>
                                     <th className="no-wrap">Precio</th>
                                     <th className="no-wrap">Comprobante</th>
                                 </tr>
@@ -95,6 +127,7 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
                                                     {book.status}
                                                 </div>
                                             </td>
+                                            <td><input type='button' className='btn btn-primary' value='Reenviar' onClick={() => handleSendBooking(book._id)} /></td>
                                             <td>${book.price}</td>
                                             <td>
                                                 {
@@ -144,7 +177,8 @@ const BookListAdmin = ({ updateBook, getBooksByTrip, trip: { selectedTrip }, boo
 BookListAdmin.propTypes = {
     updateBook: PropTypes.func.isRequired,
     getBooksByTrip: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    setAlert: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -153,4 +187,4 @@ const mapStateToProps = (state) => ({
     trip: state.trip
 });
 
-export default connect(mapStateToProps, { updateBook, getBooksByTrip })(BookListAdmin);
+export default connect(mapStateToProps, { updateBook, getBooksByTrip, setAlert })(BookListAdmin);
