@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import { updateBook, getBooksByTrip } from '../../actions/book'
 import { formatDate } from '../../utils/dateHelper'
 import { setAlert } from '../../actions/alert'
+import ButtonState from '../shared/ButtonState'
 
 const BookListAdmin = ({ 
     updateBook, 
@@ -16,6 +17,8 @@ const BookListAdmin = ({
     book: { books: { data }, 
     loading
 }, auth }) => {
+
+    const fakeApiCall = ms => new Promise(resolve => setTimeout(resolve, ms))
 
     const [itemEdited, setItemEdited] = useState({})
     const [loadingSendBooking, setLoadingSendBooking] = useState(false)
@@ -67,6 +70,17 @@ const BookListAdmin = ({
             setLoadingSendBooking(false)
         }
     }
+
+    const handleApiCall = async() => {
+        try {
+            const res = await fakeApiCall(2000)
+
+            setAlert('Todo ha sido exitoso', 'success');
+        } catch(err) {
+            setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+        }
+    }
+
 
     const getCssStatusColor = (status) => {
         switch (status) {
@@ -137,7 +151,7 @@ const BookListAdmin = ({
                                                 </div>
                                             </td>
                                             <td className='text-center'>
-                                                {/* <input type='button' className='btn btn-primary' value='Reenviar' onClick={() => handleSendBooking(book._id)} /> */}
+                                                <ButtonState onClick={() => handleApiCall()} loadingText='Enviando..' >Reenviar</ButtonState>
                                                 <button
                                                     onClick={() => handleSendBooking(book._id)}
                                                     className={getCssSendBookingButton()}
