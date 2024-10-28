@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ButtonState.css'; // Import your CSS file
 
-const ButtonState = ({ onClick, loadingText, children }) => {
+const ButtonState = ({ onClick, cssClass, cssSuccessClass, loadingText, children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {
@@ -18,7 +18,7 @@ const ButtonState = ({ onClick, loadingText, children }) => {
 
   return (
     <button
-      className={`btn btn-small ${isLoading ? 'btn-disabled' : 'btn-success'}`}
+      className={`btn ${cssClass} ${isLoading ? 'btn-disabled' : (cssSuccessClass ? cssSuccessClass : 'btn-success')}`}
       onClick={handleClick}
       disabled={isLoading}
     >

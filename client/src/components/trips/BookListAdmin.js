@@ -72,16 +72,16 @@ const BookListAdmin = ({
         }
     }
 
-    // const handleApiCall = async(id) => {
-    //     try {
-    //         console.log('id =>', id)
-    //         const res = await fakeApiCallError(2000)
+    const handleApiCall = async(id) => {
+        try {
+            console.log('id =>', id)
+            const res = await fakeApiCallError(2000)
 
-    //         setAlert('Todo ha sido exitoso', 'success');
-    //     } catch(err) {
-    //         setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
-    //     }
-    // }
+            setAlert('Todo ha sido exitoso', 'success');
+        } catch(err) {
+            setAlert('Ha ocurrido un error, intente mas tarde', 'danger');
+        }
+    }
 
 
     const getCssStatusColor = (status) => {
@@ -153,7 +153,7 @@ const BookListAdmin = ({
                                                 </div>
                                             </td>
                                             <td className='text-center'>
-                                                <ButtonState onClick={() => handleSendBooking(book._id)} loadingText='Enviando..' >Reenviar</ButtonState>
+                                                <ButtonState onClick={() => handleApiCall(book._id)} cssClass='btn-small' loadingText='Enviando..' >Reenviar</ButtonState>
                                                 {/* <button
                                                     onClick={() => handleSendBooking(book._id)}
                                                     className={getCssSendBookingButton()}
