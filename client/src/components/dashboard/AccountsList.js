@@ -68,8 +68,10 @@ const AccountsList = ({ setAlert }) => {
                             <thead>
                                 <tr>
                                     <th width='15%'><div className='link'>Banco</div></th>
-                                    <th width='25%'><div className='link'>Moneda/Tipo</div></th>
+                                    {/* <th width='25%'><div className='link'>Moneda/Tipo</div></th> */}
                                     <th width='25%'><div className='link'>CBU</div></th>
+                                    <th width='25%'><div className='link'>Razon Social</div></th>
+                                    <th width='25%'><div className='link'>CUIT</div></th>
                                     <th width='25%'><div className='link'>Alias</div></th>
                                     <th width='5%'><div className='link'>Activa</div></th>
                                     <th width='5%'><div className='link'>Acciones</div></th>
@@ -79,8 +81,10 @@ const AccountsList = ({ setAlert }) => {
                                 {data.map((account, rowIndex) => 
                                     (<tr key={rowIndex}>
                                         <td>{account.bank}</td>
-                                        <td>{account.currency} - {account.account_type}</td>
+                                        {/* <td>{account.currency} - {account.account_type}</td> */}
                                         <td>{account.account_cbu}</td>
+                                        <td>{account.account_holder}</td>
+                                        <td>{account.account_cuit}</td>
                                         <td>{account.account_alias}</td>
                                         <td>{account.active ? 'SI' : 'NO'}</td>
                                         <td className='no-wrap'>

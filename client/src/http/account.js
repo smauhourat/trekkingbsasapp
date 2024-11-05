@@ -33,6 +33,7 @@ export const deleteAccount = async (id) => {
 
 export const updateAccount = async (account) => {
     try {
+        console.log('account =>', account)
         const res = await api.put(`/accounts/${account._id}`, account)
         return res
     }

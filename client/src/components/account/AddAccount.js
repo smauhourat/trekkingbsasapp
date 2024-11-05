@@ -37,11 +37,13 @@ const AddAccount = ({
         account_type: '',
         account_number: '',
         account_cbu: '',
+        account_holder: '',
+        account_cuit: '',
         account_alias: '',
         active: true
     })
 
-    const { bank, currency, account_type, account_number, account_cbu, account_alias, active } = editedAccount
+    const { bank, currency, account_type, account_number, account_cbu, account_holder, account_cuit, account_alias, active } = editedAccount
 
     const onChange = (e) => {
         const newValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value
@@ -127,6 +129,28 @@ const AddAccount = ({
                         required
                     />
                 </div>
+                <div className='form-group'>
+                    <label className='mark-danger small'>*</label> <label>Razon Social</label>
+                    <input
+                        type='text'
+                        placeholder='Razon Social'
+                        name='account_holder'
+                        value={account_holder}
+                        onChange={onChange}
+                        required
+                    />
+                </div>                
+                <div className='form-group'>
+                    <label className='mark-danger small'>*</label> <label>CUIT</label>
+                    <input
+                        type='text'
+                        placeholder='CUIT'
+                        name='account_cuit'
+                        value={account_cuit}
+                        onChange={onChange}
+                        required
+                    />
+                </div>                
                 <div className='form-group'>
                     <label className='mark-danger small'>*</label> <label>Alias</label>
                     <input

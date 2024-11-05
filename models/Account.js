@@ -30,8 +30,15 @@ const AccountSchema = new mongoose.Schema({
     active: {
         type: Boolean,
         default: true
+    },
+    account_holder: {
+        type: String,
+        required: true
+    },
+    account_cuit: {
+        type: String,
+        required: true
     }
-
 
 }, { timestamps: true });
 
