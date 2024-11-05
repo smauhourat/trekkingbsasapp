@@ -53,6 +53,12 @@ const BookSchema = new mongoose.Schema({
             account_alias: {
                 type: String
             },
+            account_holder: {
+                type: String
+            },
+            account_cuit: {
+                type: String
+            }
         }
     ],
     transaction_number: {

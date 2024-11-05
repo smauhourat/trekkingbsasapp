@@ -18,7 +18,9 @@ router.post('/',
         check('currency', 'Debe ingresar el tipo de moneda').not().isEmpty(),
         check('account_type', 'Debe ingresar el tipo de Cuenta (CA o CC)').not().isEmpty(),
         check('account_number', 'Debe ingresar el Nro de Cuenta').not().isEmpty(),
-        check('account_cbu', 'Debe ingresar el CBU/CVU').not().isEmpty()
+        check('account_cbu', 'Debe ingresar el CBU/CVU').not().isEmpty(),
+        check('account_holder', 'Debe ingresar la Razon Social').not().isEmpty(),
+        check('account_cuit', 'Debe ingresar el CUIT').not().isEmpty()
     ],
     async (req, res) => {
 
@@ -27,11 +29,11 @@ router.post('/',
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { bank, currency, account_type, account_number, account_cbu, account_alias, active } = req.body;
+        const { bank, currency, account_type, account_number, account_cbu, account_holder, account_cuit, account_alias, active } = req.body;
 
         try {
             const account = await new Account({
-                bank, currency, account_type, account_number, account_cbu, account_alias, active
+                bank, currency, account_type, account_number, account_cbu, account_holder, account_cuit, account_alias, active
             }).save()
 
             res.json(account)
@@ -57,7 +59,9 @@ router.put('/:id',
             check('currency', 'Debe ingresar el tipo de moneda').not().isEmpty(),
             check('account_type', 'Debe ingresar el tipo de Cuenta (CA o CC)').not().isEmpty(),
             check('account_number', 'Debe ingresar el Nro de Cuenta').not().isEmpty(),
-            check('account_cbu', 'Debe ingresar el CBU/CVU').not().isEmpty()
+            check('account_cbu', 'Debe ingresar el CBU/CVU').not().isEmpty(),
+            check('account_holder', 'Debe ingresar la Razon Social').not().isEmpty(),
+            check('account_cuit', 'Debe ingresar el CUIT').not().isEmpty()
         ]
     ],
     async (req, res) => {
@@ -66,10 +70,10 @@ router.put('/:id',
             return res.status(400).json({ errors: errors.array() })
         }
 
-        const { bank, currency, account_type, account_number, account_cbu, account_alias, active } = req.body;
+        const { bank, currency, account_type, account_number, account_cbu, account_holder, account_cuit, account_alias, active } = req.body;
 
         try {
-            const account = await Account.findByIdAndUpdate(req.params.id, { bank, currency, account_type, account_number, account_cbu, account_alias, active }, { new: true })
+            const account = await Account.findByIdAndUpdate(req.params.id, { bank, currency, account_type, account_number, account_cbu, account_holder, account_cuit, account_alias, active }, { new: true })
             res.json(account)
         } catch (err) {
             console.error(err)
