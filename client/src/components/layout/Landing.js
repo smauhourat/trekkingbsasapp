@@ -25,7 +25,7 @@ const Landing = () => {
               </button>
             </div>
             <div className='search' />
-            <div>
+            {/* <div>
               <Link to={`/trips/?q=${search}&category=Trekking`} className='link'>
                 Trekking
               </Link>
@@ -41,10 +41,10 @@ const Landing = () => {
               <Link to={`/trips/?q=${search}&category=Mountain Bike`} className='link'>
                 Mountain Bike
               </Link>
-            </div>
-            <div className='my-1 bg-dark'>
+            </div> */}
+            {/* <div className='my-1 bg-dark'>
               <Link to='/conditions' className='text-link'>Condiciones del Grupo</Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
