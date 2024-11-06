@@ -11,12 +11,10 @@ const Company = props => {
               <h1 className='large'>Trekking Buenos Aires</h1>
               <div className='m-1' />
               <p className='small2'>
-                Somos un grupo de amigos, y amigos de amigos, sin intenciones de lucro que hacemos caminos de
-                trekking, los inventamos y los conquistamos!!!!
+                Somos un grupo de viajeros y caminantes apasionados por descubrir lugares nuevos y explorarlos.
               </p>
               <p className='small2'>
-                Nuestros caminos incluyen espinas, piedras, ríos, vados, barro y montaña, en muchos lugares no hay
-                senderos, los hacemos nosotros!!
+                Nuestros caminos incluyen espinas, piedras, ríos, vados, barro y montaña, y donde no hay senderos, los inventamos!
               </p>
               <ul className='list-inline'>
                 <li className='list-inline-item m-3'>

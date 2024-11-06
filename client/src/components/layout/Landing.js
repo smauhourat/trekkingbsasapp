@@ -14,7 +14,7 @@ const Landing = () => {
             <h1 className='x-large'>Bienvenidos a Trekking Buenos Aires</h1>
             <h1 className='large'>Cruzando los límites</h1>
             <p className='lead'>
-              Somos un grupo de amigos, y amigos de amigos haciendo trekking.
+              Somos un grupo de viajeros y caminantes apasionados por descubrir lugares nuevos y explorarlos.
             </p>
             <div className='buttons'>
               <button

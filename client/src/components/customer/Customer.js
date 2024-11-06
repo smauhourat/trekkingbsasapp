@@ -141,7 +141,7 @@ const Customer = ({
                         required />
                 </div>
                 <div className="form-group">
-                    <label>Estado de Salud</label>
+                    <label>Apto Medico Anual</label>
                     <input
                         type="text"
                         placeholder="Estado de Salud"

@@ -47,6 +47,11 @@ const CustomerView = () => {
                             <strong>Telefono: </strong>{data?.phone}
                         </div>
                     </div>                    
+                    <div className='form-group'>
+                        <div className='form-group label-medium'>
+                            <strong>Apto Medico Anual: </strong>{data?.medical_status}
+                        </div>
+                    </div>                    
                 </div>
             )}
             <div className='text-center m-3'>
