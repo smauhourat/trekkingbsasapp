@@ -21,7 +21,12 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
 
     const lastDay = (new Date(currentYear, selectedMonth, 0)).getDate()
 
-    const ret = 'df=' + currentYear + '-' + selectedMonth + '-01&dt=' + currentYear + '-' + selectedMonth + '-' + lastDay
+    //const ret = 'df=' + currentYear + '-' + selectedMonth + '-01&dt=' + currentYear + '-' + selectedMonth + '-' + lastDay
+
+    const ret = 'df=' + (selectedMonth < currentMonth ? currentYear + 1 : currentYear) + '-' + selectedMonth + '-01&dt=' + (selectedMonth < currentMonth ? currentYear + 1 : currentYear) + '-' + selectedMonth + '-' + lastDay
+
+    console.log('currentMonth =>', currentMonth)
+    console.log('query-calendar =>', ret)
     return ret
   }
 
