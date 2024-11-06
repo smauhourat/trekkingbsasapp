@@ -58,15 +58,15 @@ const EditTrip = ({
   }
 
   const validateForm = () => {
-    if (reservations > quota) {
+    if (parseInt(reservations) > parseInt(quota)) {
       setAlert('Las Reservas no pueden ser mayores al Cupo', 'danger')
       return false
     }
-    console.log('date =>', formatDateTimeBsAs(date))
+    //console.log('date =>', formatDateTimeBsAs(date))
     const dateTrip = new Date(date)
-    console.log('dateTrip =>', dateTrip)
+    //console.log('dateTrip =>', dateTrip)
     const currentDate = new Date();
-    console.log('currentDate =>', currentDate)
+    //console.log('currentDate =>', currentDate)
 
     if (dateTrip < currentDate) {
       setAlert('La fecha del Evento, es anterior a la fecha actual!!!', 'warning')
