@@ -40,7 +40,7 @@ const AddTrip = ({ setAlert, addTrip }) => {
   }
 
   const validateForm = () => {
-    if (reservations > quota) {
+    if (parseInt(reservations) > parseInt(quota)) {
       setAlert('Las Reservas no pueden ser mayores al Cupo', 'danger')
       return false
     }
