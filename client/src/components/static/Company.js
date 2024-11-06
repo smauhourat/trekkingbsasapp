@@ -19,7 +19,7 @@ const Company = props => {
               <ul className='list-inline'>
                 <li className='list-inline-item m-3'>
                   <h1 className='medium'><i className='fas fa-walking' /></h1>
-                  <h2> + <CountUp end={350} duration='1' /></h2>
+                  <h2> + <CountUp end={15000} duration='1' /></h2>
                   <div>Amigos Satisfechos</div>
                 </li>
                 <li className='list-inline-item m-3'>
