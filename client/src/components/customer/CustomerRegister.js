@@ -135,7 +135,7 @@ const CustomerRegister = ({ customer: { customer }, setAlert, addCustomer }) => 
                 <div className="form-group">
                     <input
                         type="text"
-                        placeholder="Estado de Salud"
+                        placeholder="Posee apto medico anual? (SI/NO)"
                         name="medical_status"
                         value={medical_status}
                         onChange={onChange} />
