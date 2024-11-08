@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
+    "to-version": "node client\\generate-buildno.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server-prod": "SET NODE_ENV=production & nodemon server",
