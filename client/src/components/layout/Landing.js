@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import metadata from '../../metadata.json'
 
 const Landing = () => {
   const [search] = useState('')
@@ -49,7 +50,10 @@ const Landing = () => {
         </div>
       </section>
       <footer id='footer' className='bg-dark'>
-        <p>Desarrollado por <a href='http://adhentux.com' target='_blank' rel='noreferrer'>Adhentux</a></p>
+        <div>
+          <p>Desarrollado por <a href='http://adhentux.com' target='_blank' rel='noreferrer'>Adhentux</a></p>
+          <p>{`v${metadata.buildMajor}.${metadata.buildMinor}.${metadata.buildRevision} ${metadata.buildTag}`}</p>
+        </div>
       </footer>
     </>
   )
