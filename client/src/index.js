@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client'
 console.log('Client Environment => ', process.env.NODE_ENV)
 
 //if (process.env.NODE_ENV === 'production') {
-//  disableReactDevTools();
+ disableReactDevTools();
 //}
 
 const container = document.getElementById('root')
