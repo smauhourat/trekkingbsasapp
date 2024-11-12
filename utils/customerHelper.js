@@ -109,7 +109,7 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
                           <br>
                           <p>Muchas Gracias</p>
                           <br>
-                          <p>Si no funcionan los links de forma directa, podes copiar el siguiente link y pegarlo en tu navegador: ${boolDetailslink}</p>
+                          <p>Si no funcionan los links de forma directa, podes copiar el siguiente link y pegarlo en tu navegador: <strong> ${boolDetailslink}</strong></p>
                         </td>
                       </tr>
                     </table>
