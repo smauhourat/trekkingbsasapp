@@ -21,7 +21,9 @@ const environment = {
   mp_client_secret: env.MP_CLIENT_SECRET,
   verifyEmailSubject: env.VERIFY_EMAIL_SUBJECT,
   resetPasswordSubject: env.RESET_PASS_SUBJECT,
-  bookSubject: env.BOOK_SUBJECT
+  bookSubject: env.BOOK_SUBJECT,
+  bookWspContact: env.BOOK_WSP_CONTACT,
+  bookEmailContact: env.BOOK_EMAIL_CONTACT
 }
 
 module.exports = environment

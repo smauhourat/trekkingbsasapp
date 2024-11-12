@@ -105,10 +105,9 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
                           ${accountsHtml}
                           <br>
                           <p>Por favor ingresá el nro de transaccion <a href="${boolDetailslink}">aqui</a> o bien envianos un mail con el
-                            comprobante a hebert2312@gmail.com</p>
+                            comprobante a ${global.env.bookEmailContact}</p>, o escribenos al WhatsApp <a href="https://api.whatsapp.com/send?phone=${global.env.bookWspContact}&text=Hola%20ArgentinosCaminando,%20tengo%20una%20consulta%21%20Podes%20ayudarme?">${global.env.bookWspContact}</a>
                           <br>
-                          <p>Muchas Gracias</p>
-                          <br>
+                          <p>Muchas Gracias</p>                          <br>
                           <p>Si no funcionan los links de forma directa, podes copiar el siguiente link y pegarlo en tu navegador: <strong> ${boolDetailslink}</strong></p>
                         </td>
                       </tr>
