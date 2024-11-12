@@ -43,7 +43,7 @@ const sendEmailVerification = async (req, user, customer) => {
                           <tr>
                             <td bgcolor="#FAFAFA" width="650"
                               style="color:#666; text-align:center; font-size:13px;font-family:Raleway, Helvetica, sans-serif; padding:30px 50px 20px 50px;line-height:14px; border-radius:0 0 0 0 ;">
-                              <img src="https://trekkingbuenosaires.adhentux.com/logo_mail.svg" />
+                              <img src="${baseUrl}/logo192.png" alt="logo argentinoscaminando"/>
                               <p style="font-size:16px; font-weight:600; color:#78777a; line-height: 1.6;">Hola <b>${user.name}</b> gracias
                                 por elegirnos!!</p>
                               <p style="font-size:14px; font-weight:550; color:#78777a;line-height: 1.6;">Recibimos tu datos de registro
