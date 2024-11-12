@@ -94,7 +94,7 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
                       <tr>
                         <td bgcolor="#FAFAFA" width="650"
                           style="color:#666; text-align:center; font-size:13px;font-family:Raleway, Helvetica, sans-serif; padding:30px 50px 20px 50px;line-height:14px; border-radius:0 0 0 0 ;">
-                          <img src="https://trekkingbuenosaires.adhentux.com/logo_mail.svg" />
+                          <img src="${baseUrl}/logo_mail.svg" />
                           <p style="font-size:16px; font-weight:600; color:#78777a; line-height: 1.6;">Hola <b>${customer.first_name}</b> gracias
                             por elegirnos!!</p>
                           <p style="font-size:14px; font-weight:550; color:#78777a;line-height: 1.6;">Recibimos tu RESERVA correctamente
@@ -105,9 +105,11 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
                           ${accountsHtml}
                           <br>
                           <p>Por favor ingresá el nro de transaccion <a href="${boolDetailslink}">aqui</a> o bien envianos un mail con el
-                            comprobante a ventas@trekkingbuenosaires.com.ar</p>
+                            comprobante a hebert2312@gmail.com</p>
                           <br>
                           <p>Muchas Gracias</p>
+                          <br>
+                          <p>Si no funcionan los links de forma directa, podes copiar el siguiente link y pegarlo en tu navegador: ${boolDetailslink}</p>
                         </td>
                       </tr>
                     </table>
