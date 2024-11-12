@@ -94,8 +94,8 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
                       <tr>
                         <td bgcolor="#FAFAFA" width="650"
                           style="color:#666; text-align:center; font-size:13px;font-family:Raleway, Helvetica, sans-serif; padding:30px 50px 20px 50px;line-height:14px; border-radius:0 0 0 0 ;">
-                          <img src="${baseUrl}/images/logo_mail.svg" alt="log argentinoscaminando"/>
-                          <img src="https://res.cloudinary.com/adhentux/image/upload/v1731425365/logo_mail_aotdkc.svg" alt="logo argentinos"/>
+                          <img src="${baseUrl}/images/logo_mail.svg" alt="logo argentinoscaminando"/>
+                          <img src="${baseUrl}/logo192.png" alt="logo argentinos"/>
                           <p style="font-size:16px; font-weight:600; color:#78777a; line-height: 1.6;">Hola <b>${customer.first_name}</b> gracias
                             por elegirnos!!</p>
                           <p style="font-size:14px; font-weight:550; color:#78777a;line-height: 1.6;">Recibimos tu RESERVA correctamente
