@@ -111,6 +111,33 @@ router.delete('/:id',
   }
 );
 
+
+// https://stackoverflow.com/questions/17935248/flatten-a-nested-json-structure-in-mongodb
+// @route   GET api/customers/toexcel
+// @desc    Get all customers to excel export 
+// @access  Private
+router.get('/toexcel/',
+  auth,
+  async (req, res) => {
+    try {
+      const customers = await Customer
+        .find({}, { full_name: 1, email: 1, dni: 1, phone: 1, birth_date: 1, medical_status: 1 }, {})
+        .collation({ locale: "en" })
+
+      if (!customers) {
+        return res.status(404).json({ msg: 'Miembros no encontrados' });
+      }
+      res.json({
+        "data": customers
+      });
+
+    } catch (err) {
+      console.error(err);
+      logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+      res.status(500).send('Server Error');
+    }
+  });
+
 // @route   PUT api/customers/:id
 // @desc    Update Customer
 // @access  Private
@@ -253,7 +280,6 @@ router.get('/',
       res.status(500).send('Server Error');
     }
   });
-
 
 router.post('/verifyemail/:email',
   async (req, res) => {

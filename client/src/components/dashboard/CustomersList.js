@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { getCustomers } from '../../http/customer'
+import { getCustomers, getCustomersToExcel } from '../../http/customer'
 import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -8,6 +8,7 @@ import { setAlert } from '../../actions/alert'
 import { formatDateTimeBsAs, formatDate } from '../../utils/dateHelper'
 import environment from '../../utils/environment'
 import Pagination from '../layout/Pagination'
+import exportToExcel from '../../utils/exportToExcel'
 
 const CustomersList = ({ setAlert }) => {
 
@@ -16,6 +17,15 @@ const CustomersList = ({ setAlert }) => {
     const [order, setOrder] = useState(-1)
     const [search, setSearch] = useState('')
     const [triggerSearch, setTriggerSearch] = useState(false)
+
+    //const columnHeaders = ['_id', 'Nombre', 'Apellido']
+    const columnHeaders = []
+
+    const handleExport = async () => {
+        const data = await getCustomersToExcel()
+        console.log(data)
+        exportToExcel(data, 'customers-all', columnHeaders);
+    };    
 
     const handleOnChangeSearch = (e) => {
         setSearch(e.target.value)
@@ -54,6 +64,7 @@ const CustomersList = ({ setAlert }) => {
             <h2 className='my-2'>Clientes</h2>
             <div className='search-panelXX'>
                 <input type='text' className='input-text' value={search} onChange={handleOnChangeSearch} onKeyDown={handleOnKeyDownSearch} /><button className='btn btn-primary btn-link' onClick={handleOnClickSearch}><i className='fas fa-search' title='Buscar' /></button>
+                <button className='btn btn-success' onClick={handleExport}><i className='fas fa-file-excel' title='Exportar a Excel' /></button>
             </div>
             <div className='scroll-x'>
                 <table className='table'>

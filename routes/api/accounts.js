@@ -87,7 +87,7 @@ router.put('/:id',
 // @access  Private
 router.get('/',
     [authAdmin],
-    async (_req, res) => {
+    async (req, res) => {
         try {
             const accounts = await Account
                 .find({ super_admin: true })

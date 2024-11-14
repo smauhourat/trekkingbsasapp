@@ -24,6 +24,19 @@ export const getCustomers = async (query='q=') => {
     }    
 }
 
+export const getCustomersToExcel = async () => {
+
+    try {
+        const res = await api.get(`/customers/toexcel`)
+        //console.log("data =>", res.data.data)
+        return res.data.data
+    }
+    catch (err) {
+        throw handleError(err, 'Se produjo un error leyendo los datos de los Clientes')
+    }
+}
+
+
 export const resendEmailValidation = async (email) => {
     try {
         const res = await api.post(`/customers/verifyemail/${email}`)
