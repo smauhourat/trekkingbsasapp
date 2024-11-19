@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getCustomer } from '../../http/customer'
 import Spinner from '../layout/Spinner';
+import { formatDate } from '../../utils/dateHelper';
 
 const CustomerView = () => {
 
@@ -45,6 +46,11 @@ const CustomerView = () => {
                     <div className='form-group'>
                         <div className='form-group label-medium'>
                             <strong>Telefono: </strong>{data?.phone}
+                        </div>
+                    </div>                    
+                    <div className='form-group'>
+                        <div className='form-group label-medium'>
+                            <strong>Fecha Nacimiento: </strong>{formatDate(data?.birth_date)}
                         </div>
                     </div>                    
                     <div className='form-group'>

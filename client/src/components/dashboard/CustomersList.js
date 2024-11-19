@@ -74,6 +74,7 @@ const CustomersList = ({ setAlert }) => {
                             <th width='30%'><div className='link' onClick={() => handleOnChangeOrder('email')}>Email {sortOrderIcon('email')}</div></th>
                             <th width='15%'><div className='link' onClick={() => handleOnChangeOrder('dni')}>DNI {sortOrderIcon('dni')}</div></th>
                             <th width='10%'><div className='link'>Telefono</div></th>
+                            <th width='10%'><div className='link'>Fec. Nac</div></th>
                             <th width='5%'><div className='link'>Ult. Acceso</div></th>
                             <th width='5%'><div className='link'>F. Alta</div></th>
                         </tr>
@@ -88,6 +89,7 @@ const CustomersList = ({ setAlert }) => {
                                     <td>{customer?.user?.email}</td>
                                     <td>{customer.dni}</td>
                                     <td>{customer.phone}</td>
+                                    <td>{formatDate(customer?.birth_date)}</td>
                                     <td className='no-wrap'>{customer?.user?.last_access ? formatDateTimeBsAs(customer?.user?.last_access) : ""}</td>
                                     <td className='no-wrap'>{customer?.createdAt ? formatDate(customer?.createdAt) : ""}</td>
                                 </tr>)
@@ -96,7 +98,7 @@ const CustomersList = ({ setAlert }) => {
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colSpan='6'>
+                            <td colSpan='7'>
                                 <Pagination 
                                     currentPage={currentPage}
                                     totalItems={data?.metadata.total}
