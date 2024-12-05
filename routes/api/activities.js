@@ -138,7 +138,7 @@ router.post('/:id/add-year',
             }
 
             let updatedActivity
-            for (let i = 0; i < 12; i++)
+            for (let i = 1; i <= 12; i++)
                 updatedActivity = await addMonthToCalendar(activity, year, i, availableSpots)
 
             res.status(200).json(updatedActivity);
@@ -160,7 +160,7 @@ router.post(
         [
             check('date', 'Fecha es requerida').not().isEmpty(),
             check('numberOfPlaces', 'Número de lugares es requerido').isInt({ min: 1 }),
-            check('user', 'Usuario es requerido').not().isEmpty()
+            check('customer', 'Cliente es requerido').not().isEmpty()
         ]
     ],
     async (req, res) => {
@@ -170,7 +170,7 @@ router.post(
         }
 
         const { id } = req.params;
-        const { date, numberOfPlaces, user } = req.body;
+        const { date, numberOfPlaces, customer } = req.body;
 
         try {
             const activity = await Activity.findById(id);
@@ -195,9 +195,10 @@ router.post(
 
             // Crear una nueva reserva
             const newReservation = {
-                user: user,
+                customer: customer,
                 numberOfPlaces: numberOfPlaces,
-                reservationDate: new Date()
+                reservationDate: new Date(),
+                price: numberOfPlaces * activity.booking_price
             };
 
             // Agregar la reserva al calendario

@@ -3,10 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ReservationSchema = new Schema({
-    user: {
+    customer: {
         type: Schema.Types.ObjectId,
-        ref: 'users',
-        required: true
+        ref: 'customer'
     },
     numberOfPlaces: {
         type: Number,
@@ -15,7 +14,11 @@ const ReservationSchema = new Schema({
     reservationDate: {
         type: Date,
         default: Date.now
-    }
+    },
+    price: {
+        type: Number,
+        required: true
+    },
 });
 
 module.exports = ReservationSchema;
