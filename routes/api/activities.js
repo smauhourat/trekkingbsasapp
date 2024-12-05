@@ -149,4 +149,73 @@ router.post('/:id/add-year',
         }
     });
 
+
+// @route   POST api/activities/:id/add-reservation
+// @desc    Add Reservation to Calendar
+// @access  Private
+router.post(
+    '/:id/add-reservation',
+    [
+        //auth,
+        [
+            check('date', 'Fecha es requerida').not().isEmpty(),
+            check('numberOfPlaces', 'Número de lugares es requerido').isInt({ min: 1 }),
+            check('user', 'Usuario es requerido').not().isEmpty()
+        ]
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { id } = req.params;
+        const { date, numberOfPlaces, user } = req.body;
+
+        try {
+            const activity = await Activity.findById(id);
+            if (!activity) {
+                return res.status(404).json({ message: 'Actividad no encontrada' });
+            }
+
+            // Convertir la fecha a un objeto Date
+            const reservationDate = new Date(date);
+
+            // Buscar la entrada de calendario correspondiente a la fecha
+            const calendarEntry = activity.calendar.find(entry => entry.date.toISOString().split('T')[0] === reservationDate.toISOString().split('T')[0]);
+
+            if (!calendarEntry) {
+                return res.status(404).json({ message: 'Fecha no encontrada en el calendario' });
+            }
+
+            // Verificar si hay suficientes lugares disponibles
+            if (calendarEntry.availableSpots < numberOfPlaces) {
+                return res.status(400).json({ message: 'No hay suficientes lugares disponibles' });
+            }
+
+            // Crear una nueva reserva
+            const newReservation = {
+                user: user,
+                numberOfPlaces: numberOfPlaces,
+                reservationDate: new Date()
+            };
+
+            // Agregar la reserva al calendario
+            calendarEntry.reservations.push(newReservation);
+
+            // Actualizar los lugares disponibles
+            calendarEntry.availableSpots -= numberOfPlaces;
+
+            // Guardar la actividad actualizada
+            const updatedActivity = await activity.save();
+
+            res.status(200).json(updatedActivity);
+        } catch (err) {
+            console.error(err);
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+            res.status(500).send(err);
+        }
+    }
+);
+
 module.exports = router;
