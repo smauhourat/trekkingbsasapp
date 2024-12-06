@@ -7,10 +7,11 @@ const checkObjectId = require('../../middleware/checkObjectId');
 const mongoose = require('mongoose');
 const cloudinary = require('cloudinary').v2
 const Activity = require('../../models/Activity');
-const CalendarEntry = require('../../models/CalendarEntry');
+const Account = require('../../models/Account');
 const logger = require('../../utils/logger')
 const getBookCode = require('../../utils/getBookCode')
 const { convertToSlug } = require('../../utils/convertToSlug')
+const { sendReservationCustomerMail } = require('../../utils/customerHelper')
 
 cloudinary.config({
     cloud_name: global.env.cloudName,
@@ -195,8 +196,8 @@ router.post(
                 return res.status(400).json({ message: 'No hay suficientes lugares disponibles' });
             }
             const code = await getBookCode()
-            console.log('calendarEntry.date =>', calendarEntry.date)
             const description = `reserva-${convertToSlug(activity.title)}-${calendarEntry.date.toISOString().substring(0, 10)}`
+            const accounts = await Account.find({ active: true }).select(['-_id', '-createdAt', '-updatedAt', '-__v', '-active'])
 
             // Crear una nueva reserva
             const newReservation = {
@@ -205,7 +206,8 @@ router.post(
                 customer: customer,
                 numberOfPlaces: numberOfPlaces,
                 reservationDate: new Date(),
-                price: numberOfPlaces * activity.booking_price
+                price: numberOfPlaces * activity.booking_price,
+                accounts: accounts
             };
 
             // Agregar la reserva al calendario
@@ -216,6 +218,8 @@ router.post(
 
             // Guardar la actividad actualizada
             const updatedActivity = await activity.save();
+
+            await sendReservationCustomerMail(await getBaseUrl(req), updatedActivity)
 
             res.status(200).json(updatedActivity);
         } catch (err) {
@@ -267,7 +271,13 @@ router.get(
                 return calendarDate >= startDate && calendarDate <= endDate;
             });
 
-            res.status(200).json(filteredReservations);
+            res.status(200).json({
+                metadata: {
+                    total: filteredReservations.length,
+                    dateFrom,
+                    dateTo
+                }, data: filteredReservations
+            });
         } catch (err) {
             console.error(err);
             logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);

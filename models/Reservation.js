@@ -26,6 +26,43 @@ const ReservationSchema = new Schema({
         type: Number,
         required: true
     },
+    status: {
+        type: String,
+        default: 'pendiente'
+    },
+
+    accounts: [
+        {
+            bank: {
+                type: String
+            },
+            currency: {
+                type: String
+            },
+            account_type: {
+                type: String
+            },
+            account_number: {
+                type: String
+            },
+            account_cbu: {
+                type: String
+            },
+            account_alias: {
+                type: String
+            },
+            account_holder: {
+                type: String
+            },
+            account_cuit: {
+                type: String
+            }
+        }
+    ],
+    transaction_number: {
+        type: String
+    }
+
 });
 
 module.exports = ReservationSchema;
