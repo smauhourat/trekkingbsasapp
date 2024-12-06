@@ -66,7 +66,7 @@ router.post('/',
         }
     });
 
-const addMonthToCalendar = async (activity, year, month, availableSpots) => {
+const addMonthToCalendar = async (activity, year, month, availableSpots, daysOfWeekExcluded) => {
     // Crear un array de fechas para el mes completo
     const dates = [];
     const startDate = new Date(year, month - 1, 1); // Meses en JavaScript son 0-indexed
@@ -99,17 +99,17 @@ router.post('/:id/add-month',
     async (req, res) => {
 
         const { id } = req.params;
-        const { year, month, availableSpots, daysOfWeek } = req.body;
+        const { year, month, availableSpots, daysOfWeekExcluded } = req.body;
 
         // TODO : considerar el siguiente parametro
-        // daysOfWeek es un arreglo del tipo ['Monday', 'Twesday', 'Wedensay', ...]
+        // daysOfWeekExcluded es un arreglo del tipo ['Monday', 'Twesday', 'Wedensay', ...]
         try {
             const activity = await Activity.findById(id);
             if (!activity) {
                 return res.status(404).json({ message: 'Actividad no encontrada' });
             }
 
-            const updatedActivity = await addMonthToCalendar(activity, year, month, availableSpots)
+            const updatedActivity = await addMonthToCalendar(activity, year, month, availableSpots, daysOfWeekExcluded)
 
             res.status(200).json(updatedActivity);
         } catch (err) {
@@ -127,7 +127,7 @@ router.post('/:id/add-year',
     async (req, res) => {
 
         const { id } = req.params;
-        const { year, availableSpots, daysOfWeek } = req.body;
+        const { year, availableSpots, daysOfWeekExcluded } = req.body;
 
         // TODO : considerar el siguiente parametro
         // daysOfWeek es un arreglo del tipo ['Monday', 'Twesday', 'Wedensay', ...]
@@ -139,7 +139,7 @@ router.post('/:id/add-year',
 
             let updatedActivity
             for (let i = 1; i <= 12; i++)
-                updatedActivity = await addMonthToCalendar(activity, year, i, availableSpots)
+                updatedActivity = await addMonthToCalendar(activity, year, i, availableSpots, daysOfWeekExcluded)
 
             res.status(200).json(updatedActivity);
         } catch (err) {
@@ -211,6 +211,58 @@ router.post(
             const updatedActivity = await activity.save();
 
             res.status(200).json(updatedActivity);
+        } catch (err) {
+            console.error(err);
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+            res.status(500).send(err);
+        }
+    }
+);
+
+// @route   GET api/activities/:id/reservations
+// @desc    Get all reservations for an activity with customer details
+// @access  Private
+router.get(
+    '/:id/reservations',
+    [
+        //auth, 
+        checkObjectId('id')],
+    async (req, res) => {
+        const { id } = req.params;
+        const { dateFrom, dateTo } = req.query;
+
+        // Establecer valores por defecto si no se proporcionan
+        const defaultDateFrom = new Date();
+        const defaultDateTo = new Date();
+        defaultDateTo.setFullYear(defaultDateTo.getFullYear() + 1);
+
+        const startDate = dateFrom ? new Date(dateFrom) : defaultDateFrom;
+        const endDate = dateTo ? new Date(dateTo) : defaultDateTo;
+
+        try {
+            const activity = await Activity.findById(id)
+                .populate('calendar.reservations.customer', 'last_name first_name email') // Popula los detalles del cliente
+
+            if (!activity) {
+                return res.status(404).json({ message: 'Actividad no encontrada' });
+            }
+            // Extraer todas las reservas del calendario
+            const reservations = activity.calendar.flatMap(entry => {
+                return entry.reservations.map(reservation => ({
+                    ...reservation.toObject(),
+                    calendarDate: entry.date
+                }));
+            });
+
+            console.log('startDate =>', startDate)
+            console.log('endDate =>', endDate)
+            // Filtrar las reservas por fecha del CalendarEntry
+            const filteredReservations = reservations.filter(reservation => {
+                const calendarDate = new Date(reservation.calendarDate);
+                return calendarDate >= startDate && calendarDate <= endDate;
+            });
+
+            res.status(200).json(filteredReservations);
         } catch (err) {
             console.error(err);
             logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
