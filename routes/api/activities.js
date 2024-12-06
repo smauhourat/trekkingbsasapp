@@ -9,6 +9,8 @@ const cloudinary = require('cloudinary').v2
 const Activity = require('../../models/Activity');
 const CalendarEntry = require('../../models/CalendarEntry');
 const logger = require('../../utils/logger')
+const getBookCode = require('../../utils/getBookCode')
+const { convertToSlug } = require('../../utils/convertToSlug')
 
 cloudinary.config({
     cloud_name: global.env.cloudName,
@@ -192,9 +194,14 @@ router.post(
             if (calendarEntry.availableSpots < numberOfPlaces) {
                 return res.status(400).json({ message: 'No hay suficientes lugares disponibles' });
             }
+            const code = await getBookCode()
+            console.log('calendarEntry.date =>', calendarEntry.date)
+            const description = `reserva-${convertToSlug(activity.title)}-${calendarEntry.date.toISOString().substring(0, 10)}`
 
             // Crear una nueva reserva
             const newReservation = {
+                code: code,
+                description: description,
                 customer: customer,
                 numberOfPlaces: numberOfPlaces,
                 reservationDate: new Date(),
@@ -254,8 +261,6 @@ router.get(
                 }));
             });
 
-            console.log('startDate =>', startDate)
-            console.log('endDate =>', endDate)
             // Filtrar las reservas por fecha del CalendarEntry
             const filteredReservations = reservations.filter(reservation => {
                 const calendarDate = new Date(reservation.calendarDate);
