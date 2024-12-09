@@ -261,7 +261,25 @@ router.get(
             const reservations = activity.calendar.flatMap(entry => {
                 return entry.reservations.map(reservation => ({
                     ...reservation.toObject(),
-                    calendarDate: entry.date
+                    calendarDate: entry.date,
+                    activity: {
+                        _id: activity._id,
+                        title: activity.title,
+                        subtitle: activity.subtitle,
+                        category: activity.category,
+                        description: activity.description,
+                        itinerary: activity.itinerary,
+                        suggested_equipment: activity.suggested_equipment,
+                        included_services: activity.included_services,
+                        duration: activity.duration,
+                        price: activity.price,
+                        booking_price: activity.booking_price,
+                        location: activity.location,
+                        grading: activity.grading,
+                        quota: activity.quota,
+                        published: activity.published,
+                        training_level: activity.training_level
+                    }
                 }));
             });
 
