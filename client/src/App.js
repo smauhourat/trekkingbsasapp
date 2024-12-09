@@ -15,6 +15,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import DashRouter from './components/dashboard/DashRouter';
 import DashboardCustomer from './components/customer/DashboardCustomer';
 import Trips from './components/trips/Trips';
+import Activities from './components/activity/Activities';
 import AddUser from './components/user/AddUser';
 import AddTrip from './components/trips/AddTrip';
 import EditTrip from './components/trips/EditTrip';
@@ -109,6 +110,7 @@ const App = () => {
               <Route path="re-validate-email/:email?" element={<CustomerResendEmailValidate />} />
               <Route path="verify-email/:id/:token" element={<VerifyEmail />} />
               <Route path="trips" element={<Trips />} />
+              <Route path="activities" element={<Activities />} />
               <Route path="trip-details/:id/:view" element={<TripDetails />} />
               <Route path="contact" element={<MaintenanceRoute component={ContactForm} />} />
               <Route path="company" element={<MaintenanceRoute component={Company} />} />

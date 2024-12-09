@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import TripItem from './TripItem'
 import { getTrips } from '../../actions/trip'
 import Spinner from '../layout/Spinner'
+import Activities from '../activity/Activities'
 
 const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
   function getQueryGral (arg) {
@@ -21,8 +22,6 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
 
     const lastDay = (new Date(currentYear, selectedMonth, 0)).getDate()
 
-    //const ret = 'df=' + currentYear + '-' + selectedMonth + '-01&dt=' + currentYear + '-' + selectedMonth + '-' + lastDay
-
     const ret = 'df=' + (selectedMonth < currentMonth ? currentYear + 1 : currentYear) + '-' + selectedMonth + '-01&dt=' + (selectedMonth < currentMonth ? currentYear + 1 : currentYear) + '-' + selectedMonth + '-' + lastDay
 
     console.log('currentMonth =>', currentMonth)
@@ -34,8 +33,6 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
   const search = useLocation().search
 
   const query = (isCalendar ? getQueryCalendar() : getQueryGral(search)) + '&published=1&sort=date&order=1'
-
-  // console.log('query', query)
 
   useEffect(() => {
     getTrips(query)
@@ -49,6 +46,10 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
           )
         : (
           <>
+            <>
+              <Activities />
+            </>
+
             {!isCalendar
               ? (
                 <>
@@ -60,8 +61,8 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
                   <div className='my'>&nbsp;</div>
                   {/* <h1 className='title-search-result'>Actividades</h1> */}
                 </>
-                )}
-
+                )
+            }
             {trips?.data?.length > 0 ? 
               (<>
                 <div className='trips'>
