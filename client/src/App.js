@@ -49,6 +49,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import AccountsList from './components/dashboard/AccountsList'
 import CustomersList from './components/dashboard/CustomersList'
 import AddAccount from './components/account/AddAccount'
+import AddActivity from './components/activity/AddActivity'
 import CustomerResendEmailValidate from './components/customer/CustomerResendEmailValidate'
 
 import './App.css'
@@ -131,6 +132,7 @@ const App = () => {
                 <Route path="customer-view/:id" element={<CustomerView />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="add-trip" element={<AddTrip />} />
+                <Route path="add-activity" element={<AddActivity />} />
                 <Route path="edit-trip/:id" element={<EditTrip />} />
                 <Route path="add-images/:id" element={<AddImages />} />
                 <Route path="add-user" element={<AddUser />} />

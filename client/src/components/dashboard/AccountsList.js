@@ -10,7 +10,7 @@ import ConfirmationModal from '../layout/ConfirmationModal'
 
 const AccountsList = ({ setAlert }) => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate();     
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [idToDelete, setIdToDelete] = useState()
 

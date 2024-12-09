@@ -7,6 +7,9 @@ const DashboardActions = () => {
       <Link to='/add-trip' className='btn btn-light'>
         <i className='fas fa-calendar text-primary' /> Agregar Evento
       </Link>
+      <Link to='/add-activity' className='btn btn-light'>
+        <i className='fas fa-calendar text-primary' /> Agregar Actividad
+      </Link>
       <Link to='/add-user' className='btn btn-light'>
         <i className='fas fa-user text-primary' /> Agregar Usuario
       </Link>

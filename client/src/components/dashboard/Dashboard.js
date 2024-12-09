@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import DashboardActions from './DashboardActions'
 import UsersList from './UsersList'
 import TripsList from './TripsList'
+import ActivitiesList from './ActivitiesList'
 import AccountList from './AccountsList'
 import CustomersList from './CustomersList'
 import { getUsers } from '../../actions/user'
@@ -28,6 +29,7 @@ const Dashboard = ({
       <>
         <DashboardActions />
         <TripsList />
+        <ActivitiesList />
         <UsersList users={users} />
         <AccountList />
         <CustomersList />
