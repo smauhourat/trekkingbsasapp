@@ -235,6 +235,61 @@ router.post(
     }
 );
 
+// @route   GET api/activities
+// @desc    Get all activities
+// @access  Private
+router.get('/',
+    //[authAdmin],
+    async (req, res) => {
+        try {
+            const activities = await Activity
+                .find({})
+                .sort({ createdAt: 'asc' })
+
+            res.json({
+                metadata: {
+                    count: activities.length
+                },
+                data: activities
+            })
+
+            if (!activities) {
+                return res.status(404).json({ msg: 'Actividades no encontradas' })
+            }
+        } catch (err) {
+            console.error(err.message)
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+            res.status(500).send('Server Error')
+        }
+    })
+
+// @route    GET api/activities/:id
+// @desc     Get Activity by Id
+// @access   Private
+router.get('/:id',
+    [
+        checkObjectId('id')
+    ],
+    async (req, res) => {
+        const { id } = req.params;
+
+        try {
+            const activity = await Activity.findById(id)
+                .populate('calendar.reservations.customer', 'last_name first_name email') // Popula los detalles del cliente
+
+            if (!activity) {
+                return res.status(404).json({ message: 'Actividad no encontrada' });
+            }
+
+            res.json(activity);
+        } catch (err) {
+            console.error(err);
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+            res.status(500).send(err);
+        }
+    }
+)
+
 // @route   GET api/activities/:id/reservations
 // @desc    Get all reservations for an activity with customer details
 // @access  Private
