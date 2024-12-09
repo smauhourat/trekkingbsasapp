@@ -8,9 +8,11 @@ const mongoose = require('mongoose');
 const cloudinary = require('cloudinary').v2
 const Activity = require('../../models/Activity');
 const Account = require('../../models/Account');
+const Customer = require('../../models/Customer');
 const logger = require('../../utils/logger')
 const getBookCode = require('../../utils/getBookCode')
 const { convertToSlug } = require('../../utils/convertToSlug')
+const { getBaseUrl } = require('../../config/config')
 const { sendReservationCustomerMail } = require('../../utils/customerHelper')
 
 cloudinary.config({
@@ -219,7 +221,10 @@ router.post(
             // Guardar la actividad actualizada
             const updatedActivity = await activity.save();
 
-            await sendReservationCustomerMail(await getBaseUrl(req), updatedActivity)
+            const customerObj = await Customer.findById(customer)
+            newReservation.customer = customerObj
+
+            await sendReservationCustomerMail(await getBaseUrl(req), newReservation)
 
             res.status(200).json(updatedActivity);
         } catch (err) {

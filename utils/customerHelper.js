@@ -64,8 +64,9 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
   const user = await User.findById(book.customer)
 
   const boolDetailslink = `${baseUrl}/booking-success/${book._id}`
+  const accontsText = reservation.accounts.length > 0 ? "realizá la Transferencia o Depósito en alguna de las siguientes cuentas" : "ponete por favor en contacto con el mail o el telefono suministrado mas abajo."
+
   const accountsHtml = book.accounts.map((account) => {
-    console.log('account.account_alias', account.account_alias === undefined)
     return (
       "<p><strong>" + account.bank + "</strong></p>" +
       "<p>" + account.account_type + " - " + account.currency + " Nro " + account.account_number + "</p>" +
@@ -100,7 +101,7 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
                           <p style="font-size:14px; font-weight:550; color:#78777a;line-height: 1.6;">Recibimos tu RESERVA correctamente
                           </p>
                           <p><a href="${boolDetailslink}">Ver Detalle</a></p>
-                          <p>Para completar el proceso, realizá la Transferencia o Depósito en alguna de las siguientes cuentas</p>
+                          <p>Para completar el proceso, ${accontsText}</p>
                           <br>
                           ${accountsHtml}
                           <br>
@@ -122,9 +123,10 @@ const sendBookingCustomerMail = async (baseUrl, book) => {
 
 const sendReservationCustomerMail = async (baseUrl, reservation) => {
 
+  // console.log('reservation =>', reservation)
   const reservationDetailslink = `${baseUrl}/reservation-success/${reservation._id}`
+  const accontsText = reservation.accounts.length > 0 ? "realizá la Transferencia o Depósito en alguna de las siguientes cuentas" : "ponete por favor en contacto con el mail o el telefono suministrado mas abajo."
   const accountsHtml = reservation.accounts.map((account) => {
-    console.log('account.account_alias', account.account_alias === undefined)
     return (
       "<p><strong>" + account.bank + "</strong></p>" +
       "<p>" + account.account_type + " - " + account.currency + " Nro " + account.account_number + "</p>" +
@@ -159,7 +161,7 @@ const sendReservationCustomerMail = async (baseUrl, reservation) => {
                           <p style="font-size:14px; font-weight:550; color:#78777a;line-height: 1.6;">Recibimos tu RESERVA correctamente
                           </p>
                           <p><a href="${reservationDetailslink}">Ver Detalle</a></p>
-                          <p>Para completar el proceso, realizá la Transferencia o Depósito en alguna de las siguientes cuentas</p>
+                          <p>Para completar el proceso, ${accontsText}</p>
                           <br>
                           ${accountsHtml}
                           <br>
