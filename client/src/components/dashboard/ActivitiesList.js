@@ -36,6 +36,11 @@ const ActivitiesList = ({ setAlert }) => {
         navigate(`/edit-activity/${id}`)
     }
 
+    const handleEditCalendarActivity = (e, id) => {
+        e.preventDefault()
+        navigate(`/edit-calendar-activity/${id}`)
+    }
+
     const handleDeleteActivityModal = (e, id) => {
         e.preventDefault()
         setIdToDelete(id)
@@ -83,6 +88,13 @@ const ActivitiesList = ({ setAlert }) => {
                                         >
                                             <i className='fas fa-edit' title='Editar' />
                                         </button>
+                                        <button
+                                            onClick={(e) => handleEditCalendarActivity(e, item._id)}
+                                            className='btn btn-small btn-square btn-warning'
+                                        >
+                                            <i className='fas fa-calendar' title='Calendario' />
+                                        </button>
+
                                         <button name="test_delete_row"
                                             className='btn btn-small btn-square btn-danger'
                                             onClick={(e) => handleDeleteActivityModal(e, item._id)}>
