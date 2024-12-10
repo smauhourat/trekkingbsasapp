@@ -1,9 +1,10 @@
 import api from '../utils/api';
 import handleError from '../utils/helper'
 
-export const getActivities = async () => {
+export const getActivities = async (publishedFilter=false) => {
     try {
-        const res = await api.get(`/activities`)
+        const url = publishedFilter ? '/?published=1' :  ''
+        const res = await api.get(`/activities${url}`)
         return res.data.data
     }
     catch (err) {
@@ -27,18 +28,17 @@ export const deleteActivity = async (id) => {
         return res
     }
     catch (err) {
-        throw handleError(err, 'Se produjo un error al intentar eliminar la Cuenta.')
+        throw handleError(err, 'Se produjo un error al intentar eliminar la Actividad.')
     }
 }
 
 export const updateActivity = async (activity) => {
     try {
-        //console.log('account =>', account)
         const res = await api.put(`/activities/${activity._id}`, activity)
         return res
     }
     catch (err) {
-        throw handleError(err, 'Se produjo un error al intentar actualizar la Cuenta.')
+        throw handleError(err, 'Se produjo un error al intentar actualizar la Actividad.')
     }
 }
 
@@ -48,6 +48,6 @@ export const addActivity = async (activity) => {
         return res
     }
     catch (err) {
-        throw handleError(err, 'Se produjo un error al intentar agregar la Cuenta.')
+        throw handleError(err, 'Se produjo un error al intentar agregar la Actividad.')
     }
 }

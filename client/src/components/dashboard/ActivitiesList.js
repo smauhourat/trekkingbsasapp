@@ -70,7 +70,7 @@ const ActivitiesList = ({ setAlert }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((item, rowIndex) =>
+                                {data?.map((item, rowIndex) =>
                                 (<tr key={rowIndex}>
                                     <td>{item.title}</td>
                                     <td style={{ textAlign: 'center' }}>{item.quota}</td>

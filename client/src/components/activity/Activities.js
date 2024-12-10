@@ -9,18 +9,16 @@ const Activities = () => {
 
     const { data, isPending, isError } = useQuery({
         queryKey: ['activities', {}],
-        queryFn: () => getActivities()
+        queryFn: () => getActivities(true)
     });
 
     return (
         <>
-            <h1 className='large text-primary'>Actividades</h1>
-            {isPending && <Spinner />}
+            {/* {isPending && <Spinner />} */}
             {!isPending && (
-                <div className='trips'>
+                <>
                     {data?.map((activity) => (
                         <>
-                            
                             <div key={activity._id} className='trip-grid bg-white'>
                                 <div className='trip-top crop'>
                                     <span className='sticker'>
@@ -52,8 +50,7 @@ const Activities = () => {
 
                         </>
                     ))}
-                </div>
-
+                </>
             )}
         </>
     )

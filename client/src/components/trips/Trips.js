@@ -46,40 +46,19 @@ const Trips = ({ getTrips, trip: { trips, loading }, monthSearch }) => {
           )
         : (
           <>
-            <>
+            {!isCalendar ? (<></>) : (<><div className='my'>&nbsp;</div></>)}
+            <div className='trips'>
               <Activities />
-            </>
-
-            {!isCalendar
-              ? (
-                <>
-                  <h1 className='large text-primary'>Eventos</h1>
-                </>
-                )
-              : (
-                <>
-                  <div className='my'>&nbsp;</div>
-                  {/* <h1 className='title-search-result'>Actividades</h1> */}
-                </>
-                )
-            }
-            {trips?.data?.length > 0 ? 
-              (<>
-                <div className='trips'>
-                  {trips.data.map((trip) => (
-                    <>
-                      <TripItem trip={trip} />
-                    </>
-                  ))}
-                </div>
-              </>) 
-              : 
-              (<>
-                <div className='text-center m-3'>
-                  <h4>No se encontraron Eventos...</h4>
-                </div>
-              </>)
-            }
+              {trips?.data?.length > 0 &&
+                (<>
+                    {trips.data.map((trip) => (
+                      <>
+                        <TripItem trip={trip} />
+                      </>
+                    ))}
+                </>)
+              }
+            </div>
           </>
           )}
     </section>

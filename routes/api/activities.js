@@ -1,7 +1,8 @@
 const moment = require('moment');
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
+//const auth = require('../../middleware/auth');
+const authAdmin = require('../../middleware/authAdmin');
 const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 const mongoose = require('mongoose');
@@ -26,7 +27,7 @@ cloudinary.config({
 // @access  Private
 router.post('/',
     [
-        auth,
+        authAdmin,
         [
             check('title', 'Titulo es requerido').not().isEmpty(),
             check('subtitle', 'Subtitulo es requerido').not().isEmpty(),
@@ -71,6 +72,38 @@ router.post('/',
         }
     });
 
+// @route   PUT api/activities/:id
+// @desc    Update Activity
+// @access  Private
+router.put('/:id',
+    checkObjectId('id'),
+    [
+        authAdmin,
+        [
+            check('title', 'Titulo es requerido').not().isEmpty(),
+            check('subtitle', 'Subtitulo es requerido').not().isEmpty(),
+            check('description', 'Descripcion es requerido').not().isEmpty(),
+            check('location', 'Lugar es requerido').not().isEmpty()
+        ]
+    ],
+    async (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
+
+        const { title, subtitle, category, description, itinerary, suggested_equipment, included_services, duration, price, booking_price, location, grading, quota, published, training_level } = req.body
+
+        try {
+            const activity = await Activity.findByIdAndUpdate(req.params.id, { title, subtitle, category, description, itinerary, suggested_equipment, included_services, duration, price, booking_price, location, grading, quota, published, training_level }, { new: true })
+            res.json(activity)
+        } catch (err) {
+            console.error(err)
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+            res.status(500).send(err)
+        }
+    });
+
 const addMonthToCalendar = async (activity, year, month, availableSpots, daysOfWeekExcluded) => {
     // Crear un array de fechas para el mes completo
     const dates = [];
@@ -100,7 +133,7 @@ const addMonthToCalendar = async (activity, year, month, availableSpots, daysOfW
 // @desc    Add Calendar by Month
 // @access  Private
 router.post('/:id/add-month',
-    //[auth],
+    [authAdmin],
     async (req, res) => {
 
         const { id } = req.params;
@@ -128,7 +161,7 @@ router.post('/:id/add-month',
 // @desc    Add Calendar by Year
 // @access  Private
 router.post('/:id/add-year',
-    //[auth],
+    [authAdmin],
     async (req, res) => {
 
         const { id } = req.params;
@@ -158,8 +191,7 @@ router.post('/:id/add-year',
 // @route   POST api/activities/:id/add-reservation
 // @desc    Add Reservation to Calendar
 // @access  Private
-router.post(
-    '/:id/add-reservation',
+router.post('/:id/add-reservation',
     [
         //auth,
         [
@@ -242,8 +274,13 @@ router.get('/',
     //[authAdmin],
     async (req, res) => {
         try {
+            const query = req.query.q ? req.query.q : ''
+
+            const published = req.query.published ? (req.query.published === '1') : ''
+            const dbQuery = published != '' ? { published: true } : {}
+            console.log(dbQuery)
             const activities = await Activity
-                .find({})
+                .find(dbQuery)
                 .sort({ createdAt: 'asc' })
 
             res.json({
@@ -293,8 +330,7 @@ router.get('/:id',
 // @route   GET api/activities/:id/reservations
 // @desc    Get all reservations for an activity with customer details
 // @access  Private
-router.get(
-    '/:id/reservations',
+router.get('/:id/reservations',
     [
         //auth, 
         checkObjectId('id')],
