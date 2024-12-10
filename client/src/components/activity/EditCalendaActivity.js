@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setAlert, setAlertNavigate } from '../../actions/alert'
 import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 const EditCalendarActivity = ({
     setAlert,
@@ -12,10 +13,16 @@ const EditCalendarActivity = ({
 
     const navigate = useNavigate()
 
+    const [value, onChange] = useState(new Date());
+
+    const handleOnClickDay = (value, event) => {
+        alert('Clicked day: ', value)
+    }
+
     return (
         <section className='container'>
             <h1 className='large text-primary'>Calendario</h1>
-            <Calendar />
+            <Calendar onClickDay={(value, e) => handleOnClickDay(value, e)} onChange={onChange}  value={value} />
         </section>
     )
 }
