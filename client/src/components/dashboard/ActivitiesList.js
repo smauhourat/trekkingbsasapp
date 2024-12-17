@@ -92,7 +92,7 @@ const ActivitiesList = ({ setAlert }) => {
                                             onClick={(e) => handleEditCalendarActivity(e, item._id)}
                                             className='btn btn-small btn-square btn-warning'
                                         >
-                                            <i className='fas fa-calendar' title='Calendario' />
+                                            <i className='fas fa-calendar' title='Reservas' />
                                         </button>
 
                                         <button name="test_delete_row"

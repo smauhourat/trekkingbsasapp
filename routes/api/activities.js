@@ -346,6 +346,9 @@ router.get('/:id/reservations',
         const startDate = dateFrom ? new Date(dateFrom) : defaultDateFrom;
         const endDate = dateTo ? new Date(dateTo) : defaultDateTo;
 
+        // Add one day to endDate
+        endDate.setDate(endDate.getDate() + 1);
+
         try {
             const activity = await Activity.findById(id)
                 .populate('calendar.reservations.customer', 'last_name first_name email') // Popula los detalles del cliente
@@ -382,8 +385,11 @@ router.get('/:id/reservations',
             // Filtrar las reservas por fecha del CalendarEntry
             const filteredReservations = reservations.filter(reservation => {
                 const calendarDate = new Date(reservation.calendarDate);
-                return calendarDate >= startDate && calendarDate <= endDate;
+                return calendarDate >= startDate && calendarDate < endDate;
             });
+
+            // const matchesCustomerId = customerId ? reservation.customer._id.toString() === customerId : true;
+            // return calendarDate >= startDate && calendarDate <= endDate && matchesCustomerId;
 
             res.status(200).json({
                 metadata: {
