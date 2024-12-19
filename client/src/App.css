@@ -2042,6 +2042,24 @@ nav a:focus {
   font-weight: 600;
 }
 
+/* CSS Grid Example */
+.two-columns-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+  /* Optional: Adds space between columns */
+}
+
+.column-1 {
+  /* background-color: var(--bg-color-gray-400); */
+  padding: 1rem;
+}
+
+.column-2 {
+  /* background-color: var(--bg-color-gray-500); */
+  padding: 1rem;
+}
+
 /* fonts */
 /* cyrillic-ext */
 /* @font-face {

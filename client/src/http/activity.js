@@ -22,6 +22,16 @@ export const getActivity = async (id) => {
     }
 }
 
+export const getActivityReservations = async (id, date) => {
+    try {
+        const res = await api.get(`/activities/${id}/reservations?dateFrom=${date}&dateTo=${date}`)
+        return res.data
+    }
+    catch (err) {
+        throw handleError(err, 'Se produjo un error leyendo los datos')
+    }
+}
+
 export const deleteActivity = async (id) => {
     try {
         const res = await api.delete(`/activities/${id}`)

@@ -40,6 +40,11 @@ const ActivitiesList = ({ setAlert }) => {
         e.preventDefault()
         navigate(`/edit-calendar-activity/${id}`)
     }
+    
+    const handleReservationsActivity = (e, id) => {
+        e.preventDefault()
+        navigate(`/reservations-activity/${id}`)
+    }
 
     const handleDeleteActivityModal = (e, id) => {
         e.preventDefault()
@@ -90,9 +95,15 @@ const ActivitiesList = ({ setAlert }) => {
                                         </button>
                                         <button
                                             onClick={(e) => handleEditCalendarActivity(e, item._id)}
+                                            className='btn btn-small btn-square btn-dark'
+                                        >
+                                            <i className='fas fa-calendar-plus' title='Calendario' />
+                                        </button>                                        
+                                        <button
+                                            onClick={(e) => handleReservationsActivity(e, item._id)}
                                             className='btn btn-small btn-square btn-warning'
                                         >
-                                            <i className='fas fa-calendar' title='Reservas' />
+                                            <i className='fas fa-calendar-week' title='Reservas' />
                                         </button>
 
                                         <button name="test_delete_row"

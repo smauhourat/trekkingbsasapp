@@ -52,7 +52,8 @@ import CustomersList from './components/dashboard/CustomersList'
 import AddAccount from './components/account/AddAccount'
 import AddActivity from './components/activity/AddActivity'
 import EditActivity from './components/activity/EditActivity'
-import EditCalendaActivity from './components/activity/EditCalendaActivity'
+import EditCalendarActivity from './components/activity/EditCalendarActivity'
+import ReservationsActivity from './components/activity/ReservationsActivity'
 import CustomerResendEmailValidate from './components/customer/CustomerResendEmailValidate'
 
 import './App.css'
@@ -139,7 +140,8 @@ const App = () => {
                 <Route path="edit-trip/:id" element={<EditTrip />} />
                 <Route path="add-activity" element={<AddActivity />} />
                 <Route path="edit-activity/:id" element={<EditActivity />} />
-                <Route path="edit-calendar-activity/:id" element={<EditCalendaActivity />} />
+                <Route path="reservations-activity/:id" element={<ReservationsActivity />} />
+                <Route path="edit-calendar-activity/:id" element={<EditCalendarActivity />} />
                 <Route path="add-images/:id" element={<AddImages />} />
                 <Route path="add-user" element={<AddUser />} />
                 <Route path="books-admin/:id" element={<BookListAdmin />} />
