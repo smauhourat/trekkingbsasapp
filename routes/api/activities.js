@@ -151,6 +151,9 @@ const addRangeDatesToCalendar = async (activity, startDate, endDate, availableSp
 
 const deleteRangeDatesToCalendar = async (activity, startDate, endDate) => {
 
+    //Check if exists reservations in any date
+
+
     // Filter out the dates that fall within the range [startDate, endDate)
     activity.calendar = activity.calendar.filter(e => {
         const entryDate = new Date(e.date);
@@ -284,9 +287,25 @@ router.delete('/:id/del-range',
             if (isNaN(endDate.getDate()))
                 return res.status(400).json({ message: 'Las Fechas de Fin no es valida' });
 
+            // Ensure startDate is before endDate
+            if (startDate >= endDate) {
+                throw new Error('La Fecha de Inicio debe ser anterior a la Fecha de Fin');
+            }
+
             const activity = await Activity.findById(id);
             if (!activity) {
                 return res.status(404).json({ message: 'Actividad no encontrada' });
+            }
+
+            // Check for reservations within the date range
+            const hasReservations = activity.calendar.some(e => {
+                const entryDate = new Date(e.date);
+                return entryDate >= startDate && entryDate < endDate && e.reservations.length > 0;
+            });
+
+            if (hasReservations) {
+                //throw new Error('No se pueden eliminar fechas con reservas existentes');
+                return res.status(400).json({ message: 'No se pueden eliminar fechas con reservas existentes' });
             }
 
             const updatedActivity = await deleteRangeDatesToCalendar(activity, startDate, endDate);
