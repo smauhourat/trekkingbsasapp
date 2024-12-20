@@ -128,6 +128,37 @@ const addMonthToCalendar = async (activity, year, month, availableSpots, daysOfW
     return await activity.save();
 }
 
+const addRangeDatesToCalendar = async (activity, startDate, endDate, availableSpots) => {
+    const dates = []
+
+    for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+        if (activity.calendar.find(e => e.date.getTime() === date.getTime()) === undefined)
+            dates.push(new Date(date));
+    }
+
+    // Crear nuevas entradas de calendario para cada fecha
+    const newCalendarEntries = dates.map(date => ({
+        date: date,
+        availableSpots: availableSpots,
+        reservations: []
+    }))
+
+    // Agregar las nuevas entradas al calendario de la actividad
+    activity.calendar.push(...newCalendarEntries);
+
+    return await activity.save();
+}
+
+const deleteRangeDatesToCalendar = async (activity, startDate, endDate) => {
+
+    // Filter out the dates that fall within the range [startDate, endDate)
+    activity.calendar = activity.calendar.filter(e => {
+        const entryDate = new Date(e.date);
+        return entryDate.getTime() < startDate.getTime() || entryDate.getTime() > endDate.getTime();
+    });
+
+    return await activity.save();
+}
 
 // @route   POST api/activities
 // @desc    Add Calendar by Month
@@ -187,6 +218,86 @@ router.post('/:id/add-year',
         }
     });
 
+// @route   POST api/activities/:id/add-range
+// @desc    Add Calendar by range of dates
+// @access  Private
+router.post('/:id/add-range',
+    [authAdmin],
+    async (req, res) => {
+
+        const { id } = req.params
+        const { dateFrom, dateTo } = req.body
+        try {
+            // Validate that dateFrom and dateTo are provided
+            if (!dateFrom || !dateTo) {
+                return res.status(400).json({ message: 'Las fechas de inicio y fin son requeridas' });
+            }
+
+            const startDate = new Date(dateFrom)
+            const endDate = new Date(dateTo)
+
+            if (isNaN(startDate.getDate()))
+                return res.status(400).json({ message: 'La Fecha de Inicio no es valida' });
+
+            if (isNaN(endDate.getDate()))
+                return res.status(400).json({ message: 'Las Fechas de Fin no es valida' });
+
+            const activity = await Activity.findById(id);
+            if (!activity) {
+                return res.status(404).json({ message: 'Actividad no encontrada' });
+            }
+
+            const availableSpots = 10 //TODO esto esta harcodeado
+            const daysOfWeekExcluded = null
+            const updatedActivity = await addRangeDatesToCalendar(activity, startDate, endDate, availableSpots, daysOfWeekExcluded)
+
+            res.status(200).json(updatedActivity);
+        } catch (err) {
+            console.error(err)
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+            res.status(500).send(err)
+        }
+    });
+
+// @route   DELETE api/activities/:id/del-range
+// @desc    Delete Calendar by Date Range
+// @access  Private
+router.delete('/:id/del-range',
+    [authAdmin],
+    async (req, res) => {
+
+        const { id } = req.params;
+        const { dateFrom, dateTo } = req.body;
+
+        try {
+            // Validate that dateFrom and dateTo are provided
+            if (!dateFrom || !dateTo) {
+                return res.status(400).json({ message: 'Las fechas de inicio y fin son requeridas' });
+            }
+
+            const startDate = new Date(dateFrom)
+            const endDate = new Date(dateTo)
+
+            if (isNaN(startDate.getDate()))
+                return res.status(400).json({ message: 'La Fecha de Inicio no es valida' });
+
+            if (isNaN(endDate.getDate()))
+                return res.status(400).json({ message: 'Las Fechas de Fin no es valida' });
+
+            const activity = await Activity.findById(id);
+            if (!activity) {
+                return res.status(404).json({ message: 'Actividad no encontrada' });
+            }
+
+            const updatedActivity = await deleteRangeDatesToCalendar(activity, startDate, endDate);
+
+            res.status(200).json(updatedActivity);
+        } catch (err) {
+            console.error(err);
+            logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+            res.status(500).send(err);
+        }
+    });
 
 // @route   POST api/activities/:id/add-reservation
 // @desc    Add Reservation to Calendar
