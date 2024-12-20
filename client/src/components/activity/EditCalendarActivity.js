@@ -7,6 +7,7 @@ import Calendar from 'react-calendar'
 import { useQuery, useQueryClient } from '@tanstack/react-query'    
 import 'react-calendar/dist/Calendar.css';
 import Spinner from '../layout/Spinner';
+import { getActivity } from '../../http/activity'
 
 const EditCalendarActivity = ({
     setAlert,
@@ -30,14 +31,15 @@ const EditCalendarActivity = ({
         // }
     }
 
-    // const { data, refetch, isPending, isError } = useQuery({
-    //     queryKey: ['reservations', value],
-    //     queryFn: () => getActivityReservations(id, value.toISOString().substring(0, 10)),
-    // });    
+    const { data, refetch, isPending, isError } = useQuery({
+        queryKey: ['activity'],
+        queryFn: () => getActivity(id),
+    });    
 
     const handleOnClickDay = (value) => {
         console.log(value.toISOString().substring(0, 10))
         //refetch()
+        console.log('data =>', data.calendar)
     }
 
     const onChange = (e) => {
@@ -49,11 +51,22 @@ const EditCalendarActivity = ({
     return (
         <section className='container'>
             <h1 className='large text-primary'>Calendario</h1>
-            <div class="two-columns-grid">
-                <div class="column-1">
-                    <Calendar onClickDay={(value, e) => handleOnClickDay(value)} onChange={onChangeDate} value={value}/>
+            <div className="two-columns-grid">
+                <div className="column-1">
+                    {isPending && (
+                        <Spinner />
+                    )}
+                    {!isPending && (
+                        <Calendar 
+                            onClickDay={(value, e) => handleOnClickDay(value)} 
+                            onChange={onChangeDate} 
+                            value={value} 
+                            tileDisabled={({ date }) => date.getDate() === 0} 
+                            />
+                            //tileDisabled={({ date }) => (data.calendar.find(e => e.date.getTime() === date.getTime()) === undefined)}
+                    )}
                 </div>
-                <div class="column-2">
+                <div className="column-2">
                     {/* <strong> {value.toISOString().substring(0,10)}</strong> */}
                     <h2><strong>Administrar agenda</strong></h2>
                     <hr></hr>
