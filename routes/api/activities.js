@@ -157,11 +157,14 @@ const validateDateRange = (req, res, next) => {
     next();
 };
 
-const addRangeDatesToCalendar = async (activity, startDate, endDate, availableSpots) => {
+const addRangeDatesToCalendar = async (activity, startDate, endDate, availableSpots, daysOfWeekExcluded) => {
     const dates = []
+    const excludedDays = daysOfWeekExcluded ? daysOfWeekExcluded : []
 
     for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
-        if (activity.calendar.find(e => e.date.getTime() === date.getTime()) === undefined)
+        const dayOfWeek = date.getDay() == 6 ? 0 : date.getDay() + 1
+        console.log(`date: ${date.toISOString()} - dayOfWeek: ${dayOfWeek}`)
+        if ((activity.calendar.find(e => e.date.getTime() === date.getTime()) === undefined) && (!excludedDays.includes(dayOfWeek)))
             dates.push(new Date(date));
     }
 
@@ -257,8 +260,9 @@ router.post('/:id/add-range',
     [authAdmin, validateDateRange, checkObjectId('id')],
     async (req, res) => {
 
+        //daysOfWeekExcluded is array from 0 to 6 or Monday to Saturday
         const { id } = req.params
-        const { dateFrom, dateTo } = req.body
+        const { dateFrom, dateTo, daysOfWeekExcluded } = req.body
 
         try {
             const startDate = new Date(dateFrom)
@@ -270,7 +274,6 @@ router.post('/:id/add-range',
             }
 
             const availableSpots = 10 //TODO esto esta harcodeado
-            const daysOfWeekExcluded = null
             const updatedActivity = await addRangeDatesToCalendar(activity, startDate, endDate, availableSpots, daysOfWeekExcluded)
 
             res.status(200).json(updatedActivity);
