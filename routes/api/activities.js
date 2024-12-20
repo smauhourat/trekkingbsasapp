@@ -128,6 +128,35 @@ const addMonthToCalendar = async (activity, year, month, availableSpots, daysOfW
     return await activity.save();
 }
 
+const validateDateRange = (req, res, next) => {
+    const { dateFrom, dateTo } = req.body;
+
+    // Check if dateFrom and dateTo are provided
+    if (!dateFrom || !dateTo) {
+        return res.status(400).json({ message: 'Las fechas de inicio y fin son requeridas' });
+    }
+
+    // Convert dateFrom and dateTo to Date objects
+    const start = new Date(dateFrom);
+    const end = new Date(dateTo);
+
+    // Validate that dateFrom and dateTo are valid Date objects
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+        return res.status(400).json({ message: 'Las fechas proporcionadas no son válidas' });
+    }
+
+    // Ensure dateFrom is before dateTo
+    if (start >= end) {
+        return res.status(400).json({ message: 'La fecha de inicio debe ser anterior a la fecha de fin' });
+    }
+
+    // Attach the parsed dates to the request object
+    req.dateFrom = start;
+    req.dateTo = end;
+
+    next();
+};
+
 const addRangeDatesToCalendar = async (activity, startDate, endDate, availableSpots) => {
     const dates = []
 
@@ -225,25 +254,15 @@ router.post('/:id/add-year',
 // @desc    Add Calendar by range of dates
 // @access  Private
 router.post('/:id/add-range',
-    [authAdmin],
+    [authAdmin, validateDateRange, checkObjectId('id')],
     async (req, res) => {
 
         const { id } = req.params
         const { dateFrom, dateTo } = req.body
-        try {
-            // Validate that dateFrom and dateTo are provided
-            if (!dateFrom || !dateTo) {
-                return res.status(400).json({ message: 'Las fechas de inicio y fin son requeridas' });
-            }
 
+        try {
             const startDate = new Date(dateFrom)
             const endDate = new Date(dateTo)
-
-            if (isNaN(startDate.getDate()))
-                return res.status(400).json({ message: 'La Fecha de Inicio no es valida' });
-
-            if (isNaN(endDate.getDate()))
-                return res.status(400).json({ message: 'Las Fechas de Fin no es valida' });
 
             const activity = await Activity.findById(id);
             if (!activity) {
@@ -266,31 +285,15 @@ router.post('/:id/add-range',
 // @desc    Delete Calendar by Date Range
 // @access  Private
 router.delete('/:id/del-range',
-    [authAdmin],
+    [authAdmin, validateDateRange, checkObjectId('id')],
     async (req, res) => {
 
         const { id } = req.params;
         const { dateFrom, dateTo } = req.body;
 
         try {
-            // Validate that dateFrom and dateTo are provided
-            if (!dateFrom || !dateTo) {
-                return res.status(400).json({ message: 'Las fechas de inicio y fin son requeridas' });
-            }
-
             const startDate = new Date(dateFrom)
             const endDate = new Date(dateTo)
-
-            if (isNaN(startDate.getDate()))
-                return res.status(400).json({ message: 'La Fecha de Inicio no es valida' });
-
-            if (isNaN(endDate.getDate()))
-                return res.status(400).json({ message: 'Las Fechas de Fin no es valida' });
-
-            // Ensure startDate is before endDate
-            if (startDate >= endDate) {
-                throw new Error('La Fecha de Inicio debe ser anterior a la Fecha de Fin');
-            }
 
             const activity = await Activity.findById(id);
             if (!activity) {
