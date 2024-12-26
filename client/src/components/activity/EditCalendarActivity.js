@@ -36,17 +36,58 @@ const EditCalendarActivity = ({
         queryFn: () => getActivity(id),
     });    
 
-    const handleOnClickDay = (value) => {
-        console.log(value.toISOString().substring(0, 10))
-        //refetch()
-        console.log('data =>', data.calendar)
-    }
-
     const onChange = (e) => {
         const newValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value
         //setFormData({ ...formData, [e.target.name]: newValue })
     }
 
+    function tileDisabled({ date, view }) {
+        //console.log(date.toISOString().substring(0, 10))
+        //console.log(date.toISOString())
+        // if (data.calendar.find(e => e.date === date.toISOString()) === undefined)
+        //     return true
+        //console.log('find4', data.calendar.find(e => e.date === (date.toISOString().substring(0, 10) + 'T00:00:00.000Z')) === undefined)
+        return data.calendar.find(e => e.date === (date.toISOString().substring(0, 10) + 'T00:00:00.000Z')) === undefined
+    }
+
+    // const now = new Date();
+    // const tomorrow = addDays(now, 1);
+    // const in3Days = addDays(now, 3);
+    // const in5Days = addDays(now, 5);
+
+    //const highlightedDates = [tomorrow, in3Days, in5Days];
+    const highlightedDates = [(new Date('2024-12-11'))];
+
+    function isSameDay(a, b) {
+        //return differenceInCalendarDays(a, b) === 0;
+        return a === b;
+    }
+
+    function tileClassName({ date, view }) {
+        if (
+            view === 'month' &&
+            data.calendar.find(e => e.date === (date.toISOString().substring(0, 10) + 'T00:00:00.000Z')) !== undefined
+            //highlightedDates.find((dDate) => dDate === (date.toISOString().substring(0, 10) + 'T00:00:00.000Z'))
+        ) {
+            return 'react-calendar-highlight';
+        }        
+    }
+
+    const handleOnClickDay = (value) => {
+        //refetch()
+        // console.log(value.getTime())
+        // console.log(value.toISOString().substring(0, 10))
+        // console.log(value)
+        // console.log('data =>', data.calendar)
+        // console.log('data[16] =>', data.calendar[16].date)
+        // console.log('find', data.calendar.find(e => e._id.toString() === '6765b6cad599517370cc5600'))
+        // console.log('find2', data.calendar.find(e => e.date === '2024-12-22T00:00:00.000Z'))
+        // console.log('find3', data.calendar.find(e => e.date === (new Date('2026-12-22')).toISOString()))
+        const date = new Date('2024-12-11')
+        console.log('highlightedDate1 =>', highlightedDates[0])
+        console.log('highlightedDate2 =>', highlightedDates.find((dDate) => dDate === (date.toISOString().substring(0, 10) + 'T00:00:00.000Z')))
+
+    }
 
     return (
         <section className='container'>
@@ -60,11 +101,21 @@ const EditCalendarActivity = ({
                         <Calendar 
                             onClickDay={(value, e) => handleOnClickDay(value)} 
                             onChange={onChangeDate} 
-                            value={value} 
-                            tileDisabled={({ date }) => date.getDate() === 0} 
+                            value={value}   
+                            tileClassName={tileClassName}
+                            tileDisabled={tileDisabled}
                             />
-                            //tileDisabled={({ date }) => (data.calendar.find(e => e.date.getTime() === date.getTime()) === undefined)}
                     )}
+                    <div>
+                        <br/>
+                        {/* Referencias<br /> */}
+                        <div className='p-1'>
+                            <div className="react-calendar-ref-available inline mx"></div>
+                            <div className="inline vertical-align">Disponible</div>
+                            <div className="react-calendar-ref-notavailable inline mx"></div>
+                            <div className="inline vertical-align">No Disponible</div>
+                        </div>
+                    </div>
                 </div>
                 <div className="column-2">
                     {/* <strong> {value.toISOString().substring(0,10)}</strong> */}
